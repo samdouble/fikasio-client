@@ -55,7 +55,7 @@ const dataAsBodyPayload = data => {
 };
 
 const perform = async (endpoint, ressources) => {
-  return fetch(`/api/v1${endpoint}`, ressources)
+  return fetch(`/v1${endpoint}`, ressources)
     .then(checkStatus);
 };
 
