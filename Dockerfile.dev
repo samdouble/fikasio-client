@@ -1,0 +1,8 @@
+FROM node:18.14.0
+
+WORKDIR /client
+COPY . /client/
+EXPOSE 3000 1880
+
+RUN ["chmod", "+x", "/client/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]

@@ -1,0 +1,12 @@
+.templateRow td {
+  border-left: none;
+  border-right: none;
+}
+
+.templateRow_comments_editable {
+  border: 1px solid transparent;
+}
+.templateRow_comments:hover > .templateRow_comments_editable {
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+}

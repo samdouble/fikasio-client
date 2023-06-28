@@ -1,0 +1,231 @@
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import RBForm from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import DatePicker from 'react-datepicker';
+import { Form, Field } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
+import { DateTime } from 'luxon';
+import uniqBy from 'lodash.uniqby';
+import { operations } from 'services';
+import { getActivities } from 'services/activities/endpoints';
+import { Activity } from 'services/activities/types';
+import { RootState } from 'services/store';
+import { processFormData } from 'utils/forms';
+import SuggestionsList from './SuggestionsList';
+import './ActivityPane.scss';
+
+export interface ActivityPaneProps {
+  activity: Partial<Activity>,
+}
+
+const ActivityPane = ({
+  activity: activityProp,
+}: ActivityPaneProps) => {
+  const dispatch = useDispatch();
+  const activities = useSelector((state: RootState) => state.activities);
+  const activity = activityProp.id ? (activities || []).find(a => a.id === activityProp.id) : activityProp;
+  const [startTime, setStartTime] = useState(
+    activity && activity.startTime
+      ? DateTime.fromISO(activity.startTime).toJSDate()
+      : null,
+  );
+  const [endTime, setEndTime] = useState(
+    activity && activity.endTime
+      ? DateTime.fromISO(activity.endTime).toJSDate()
+      : null,
+  );
+  const [comments, setComments] = useState(activity?.comments);
+  const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
+
+  const handleChangeComments = e => {
+    const text = e.target.value;
+    if (text.length >= 3) {
+      getActivities(null, text)
+        .then((res: { activities: Activity[] }) => {
+          const suggestedActivities = uniqBy(res.activities, el => el.comments);
+          setCommentsSuggestions(suggestedActivities);
+        });
+    } else {
+      setCommentsSuggestions([]);
+    }
+  };
+
+  const onSubmit = async values => {
+    const formData: any = processFormData(values);
+    if (formData.durationUnits === 'hours') {
+      formData.duration *= 60;
+    }
+    delete formData.durationUnits;
+    if (activity?.id) {
+      operations.activities.updateActivity(activity?.id, formData)(dispatch)
+        .then(() => dispatch(operations.pane.clearPaneContent()));
+    } else {
+      operations.activities.createActivity(formData)(dispatch)
+        .then(() => dispatch(operations.pane.clearPaneContent()));
+    }
+  };
+
+  return (
+    <Form
+      onSubmit={onSubmit}
+      initialValues={activity}
+      mutators={{
+        ...arrayMutators,
+        setComments: (args, state, utils) => {
+          const [comments] = args;
+          utils.changeValue(state, 'comments', () => comments);
+        },
+      }}
+      render={({ form, handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <h4>{ activity && activity.name }</h4>
+          <RBForm.Group>
+            <RBForm.Label>Temps</RBForm.Label>
+            <br />
+            <Field
+              component={
+                ({ input }) => (
+                  <DatePicker
+                    className="form-control"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    onChange={date => {
+                      const timestamp = DateTime.fromJSDate(date)
+                        .set({ millisecond: 0 });
+                      if (activity?.id) {
+                        dispatch(
+                          operations.activities.patchActivity(activity?.id, {
+                            startTime: timestamp.toISO(),
+                          }),
+                        );
+                      }
+                      setStartTime(timestamp.toJSDate());
+                      input.onChange(timestamp.toJSDate());
+                    }}
+                    selected={startTime}
+                    showTimeSelect
+                    timeCaption="Heure"
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                  />
+                )
+              }
+              defaultValue={startTime}
+              name="startTime"
+            />
+            <br />
+            <br />
+            <Field
+              component={
+                ({ input }) => (
+                  <DatePicker
+                    className="form-control"
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    onChange={date => {
+                      const timestamp = DateTime.fromJSDate(date)
+                        .set({ millisecond: 0 });
+                      if (activity?.id) {
+                        operations.activities.patchActivity(activity?.id, { endTime: timestamp.toISO() })(dispatch);
+                      }
+                      setEndTime(timestamp.toJSDate());
+                      input.onChange(timestamp.toJSDate());
+                    }}
+                    selected={endTime}
+                    showTimeSelect
+                    timeCaption="Heure"
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                  />
+                )
+              }
+              defaultValue={endTime}
+              name="endTime"
+            />
+          </RBForm.Group>
+          <br />
+          <br />
+          <RBForm.Group>
+            <RBForm.Label>Durée</RBForm.Label>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <Field
+                      name="number:duration"
+                      component="input"
+                      defaultValue={activity && activity.duration}
+                      className="form-control"
+                      style={{ width: 100 }}
+                    />
+                  </td>
+                  <td>
+                    <Field
+                      name="durationUnits"
+                      component="select"
+                      className="form-control"
+                      style={{ width: 250 }}
+                    >
+                      <option value="minutes">minutes</option>
+                      <option value="hours">heures</option>
+                    </Field>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </RBForm.Group>
+          <RBForm.Group>
+            <RBForm.Label>Modèle</RBForm.Label>
+            <Field
+              name="template"
+              component="select"
+              className="form-control"
+              style={{ width: 250 }}
+            >
+              <option value="DEFAULT">-</option>
+            </Field>
+          </RBForm.Group>
+          <RBForm.Group>
+            <RBForm.Label>Commentaires</RBForm.Label>
+            <Field
+              name="comments"
+              component="textarea"
+              className="form-control"
+              onInput={handleChangeComments}
+              rows={6}
+              value={comments}
+            />
+          </RBForm.Group>
+          <SuggestionsList
+            onSelectSuggestion={suggestion => {
+              setComments(suggestion.comments);
+              form.mutators.setComments(suggestion.comments);
+            }}
+            suggestions={commentsSuggestions}
+          />
+          <div
+            style={{
+              float: 'right',
+              bottom: 10,
+              paddingBottom: 15,
+              position: 'absolute',
+              right: 30,
+            }}>
+            <Button
+              variant="outline-secondary"
+              onClick={() => dispatch(operations.pane.clearPaneContent())}
+            >
+              Annuler
+            </Button>
+            {
+              activity
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
+            }
+          </div>
+        </form>
+      )}
+    />
+  );
+};
+
+export default ActivityPane;

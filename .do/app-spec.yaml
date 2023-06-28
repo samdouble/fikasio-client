@@ -1,0 +1,23 @@
+domains:
+- domain: fikas.io
+  type: PRIMARY
+  zone: fikas.io
+envs:
+- key: REACT_APP_SERVER
+  scope: RUN_AND_BUILD_TIME
+  value: https://api.fikas.io
+name: fikasio-client
+region: tor
+services:
+- http_port: 3000
+  image:
+    deploy_on_push:
+      enabled: true
+    registry_type: DOCR
+    repository: fikasio-client
+    tag: latest
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: fikasio-client
+  routes:
+  - path: /

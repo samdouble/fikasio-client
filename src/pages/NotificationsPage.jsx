@@ -1,0 +1,108 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Table from 'react-bootstrap/Table';
+import { DateTime } from 'luxon';
+import ResourcesHandler from 'components/ResourcesHandler';
+import TasksView from 'components/tasks/TasksView';
+import { calculateNotifications } from 'components/notifications/utils';
+import BasePage from 'components/UI/BasePage';
+import { operations } from 'services';
+import links from 'utils/links';
+import './style.scss';
+
+const NotificationsPage = ({
+  tasks, fetchTasks,
+  projects, fetchProjects,
+  setPaneContent,
+}) => {
+  const getPage = () => {
+    const notifications = tasks && projects && calculateNotifications(tasks, projects);
+    const lateTasks = notifications && notifications.lateTasks;
+    const tasksDueAfterProjectDue = notifications && notifications.tasksDueAfterProjectDue;
+    const lateTasksCount = lateTasks?.length;
+    const tasksDueAfterProjectDueCount = tasksDueAfterProjectDue && tasksDueAfterProjectDue.length;
+    return (
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
+          <Breadcrumb.Item active>Notifications</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>Notifications</h4>
+        {
+          lateTasksCount ? (
+            <>
+              <div>
+                Vous avez <b>{lateTasksCount} tâche{lateTasksCount > 1 && 's'} en retard</b>.
+              </div>
+              <TasksView
+                onTaskSelect={taskId => setPaneContent({
+                  type: 'TASK',
+                  id: taskId,
+                })}
+                tasks={lateTasks}
+              />
+            </>
+          ) : (
+            <div>
+              Vous n'avez aucune tâche en retard.
+            </div>
+          )
+        }
+        {
+          !!tasksDueAfterProjectDueCount && (
+            <>
+              <div>
+                Vous avez <b>{tasksDueAfterProjectDueCount} tâche{tasksDueAfterProjectDueCount > 1 && 's'} qui sont dûes pour une date postérieure à la fin d'un projet dont elles font partie</b>.
+              </div>
+              <Table responsive bordered hover>
+                <tbody>
+                  {
+                    tasksDueAfterProjectDue
+                      .map(({ task, project }) => {
+                        return (
+                          <tr key={task.id}>
+                            <td>{ task && task.description }</td>
+                            <td>{ task && task.dueAt && DateTime.fromISO(task.dueAt).toFormat('yyyy-MM-dd') }</td>
+                            <td>{ project && project.name }</td>
+                            <td>{ project && project.dueAt && DateTime.fromISO(project.dueAt).toFormat('yyyy-MM-dd') }</td>
+                          </tr>
+                        );
+                      })
+                  }
+                </tbody>
+              </Table>
+            </>
+          )
+        }
+      </BasePage>
+    );
+  }
+
+  return (
+    <ResourcesHandler
+      resources={[tasks, projects]}
+      resourceFetchers={[fetchTasks, fetchProjects]}
+      getContents={getPage}
+    />
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    tasks: state.tasks,
+    projects: state.projects,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    fetchTasks: operations.tasks.fetchTasks,
+    fetchProjects: operations.projects.fetchProjects,
+    setPaneContent: operations.pane.setPaneContent,
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationsPage);

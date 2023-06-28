@@ -1,0 +1,6 @@
+enum Types {
+  GET_EVENTS_REQUEST = 'GET_EVENTS_REQUEST',
+  GET_EVENTS_RESPONSE = 'GET_EVENTS_RESPONSE',
+}
+
+export default Types;

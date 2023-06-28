@@ -1,0 +1,18 @@
+.footer {
+  background-color: #420076;
+  color: #ffffff;
+  width: 100%;
+  height: 80px;
+  padding-top: 20px;
+  position: absolute;
+  bottom: 0;
+  z-index: 100;
+}
+
+.footer a {
+  color: #ffffff;
+}
+
+.footer a:hover {
+  color: #dddddd;
+}
