@@ -6,10 +6,11 @@
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
-    "test": "react-scripts test --env=jsdom --collectCoverage",
-    "test-ci": "react-scripts test --env=jsdom --ci --collectCoverage",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "serve": "serve -s build -l 3000",
+    "test": "react-scripts test --env=jsdom --collectCoverage",
+    "test-ci": "react-scripts test --env=jsdom --ci --collectCoverage"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
