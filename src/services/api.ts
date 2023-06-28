@@ -55,7 +55,11 @@ const dataAsBodyPayload = data => {
 };
 
 const perform = async (endpoint, ressources) => {
-  return fetch(`/v1${endpoint}`, ressources)
+  const server = (process.env.NODE_ENV === 'production') ? 'https://api.fikas.io' : '';
+  return fetch(`${server}/v1${endpoint}`, {
+    ...ressources,
+    credentials: 'include',
+  })
     .then(checkStatus);
 };
 
