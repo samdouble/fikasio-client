@@ -24,17 +24,8 @@ services:
         container_name: fikasio-server
         restart: always
         environment:
-            - COINBASE_API_KEY=ac099394-8a7d-4d91-9552-feaa99762bca
-            - COINBASE_WEBHOOK_SECRET=9ab952b6-5554-45e0-9c83-98d3afcbd060
-            - HTTP_PORT=8000
-            - JWT_SECRET=c581a23cbcb811eab3de0242ac130004
-            - MONGO_URL=mongodb+srv://admin:HoJXkbEEb6bL8RiBqXW6xRcVV3GjDJyNb694e5ZMxsq6sCx5rjiV9V5C@clustersports.rt2re.mongodb.net/app?w=majority
+            - MONGO_URL=mongodb://127.0.0.1:27017/
             - NODE_ENV=development
-            - SMTP_HOST=email-smtp.us-east-1.amazonaws.com
-            - SMTP_PORT=465
-            - SMTP_PASSWORD=BAAe78HyM/pfyRp0yzu2jYfUNqGLpbN0NsbepZeeqk6u
-            - SMTP_USERNAME=AKIA4EDTOL4M2A3KDITK
-            - STRIPE_SECRET_KEY=sk_test_51MPzjFKNaseDhZXFfRi9oJZzmKtNJlYiLgr31527b5ybUbdStNgVBCODD8mTHnIKiMwZOA0i08P9LQ8DShBGNqUE005Lq34a3K
         ports:
             - 8000:8000
         networks:
