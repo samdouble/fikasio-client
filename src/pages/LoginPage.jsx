@@ -76,7 +76,7 @@ class LoginPage extends Component {
               type="text"
               name='emailAddress'
               autoFocus
-              placeholder='Adresse courriel'
+              placeholder="Adresse courriel"
               style={{ marginBottom: 10 }}
             />
           </Form.Group>

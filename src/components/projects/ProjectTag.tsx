@@ -34,8 +34,8 @@ const ProjectTag = ({
     >
       <Tooltip id={`project_${project.id}`} />
       {
-        (project.name.length > 12)
-          ? project.name.substr(0, 12).concat('...')
+        (project.name.length > 10)
+          ? project.name.substr(0, 10).concat('...')
           : project.name
       }
     </div>

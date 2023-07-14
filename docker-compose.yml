@@ -20,17 +20,86 @@ services:
             - /node_modules
 
     server:
-        image: registry.digitalocean.com/samdouble/fikasio-api:1.0.14
+        image: registry.digitalocean.com/samdouble/fikasio-api:latest
         container_name: fikasio-server
         restart: always
         environment:
-            - MONGO_URL=mongodb://127.0.0.1:27017/
+            - JWT_SECRET=9e274c25f744410b80cb83005dff7a52
+            - MONGO_URL=mongodb://mongo0:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
             - NODE_ENV=development
+        links:
+            - mongodb-init
+            - mongo0
+            - mongo1
+            - mongo2
         ports:
             - 8000:8000
         networks:
             - appnetwork
+            - dbnetwork
+
+    mongodb-init:
+        build: ./db
+        links:
+            - mongo0
+            - mongo1
+            - mongo2
+        networks:
+            - dbnetwork
+        logging:
+            driver: none
+
+    mongo0:
+        hostname: mongo0
+        container_name: mongo0
+        image: mongo:5.0.8
+        ports:
+            - 27017:27017
+        expose:
+            - 27017
+        restart: always
+        entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
+        environment:
+            - MONGO_INITDB_DATABASE=RD
+        networks:
+            - dbnetwork
+        volumes:
+            - ./volume-database:/data/db
+        logging:
+            driver: none
+
+    mongo1:
+        hostname: mongo1
+        container_name: mongo1
+        image: mongo:5.0.8
+        ports:
+            - 27018:27017
+        expose:
+            - 27018
+        restart: always
+        entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
+        networks:
+            - dbnetwork
+        logging:
+            driver: none
+
+    mongo2:
+        hostname: mongo2
+        container_name: mongo2
+        image: mongo:5.0.8
+        ports:
+            - 27019:27017
+        expose:
+            - 27019
+        restart: always
+        entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
+        networks:
+            - dbnetwork
+        logging:
+            driver: none
 
 networks:
     appnetwork:
+        driver: bridge
+    dbnetwork:
         driver: bridge

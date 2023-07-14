@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Home = () => {
+const Page404 = () => {
   return (
     <div>
       404
@@ -8,4 +8,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default Page404;
