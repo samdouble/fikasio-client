@@ -55,34 +55,38 @@ const TasksView = ({
 
   return (
     <>
-      <div
-        style={{
-          position: 'relative',
-        }}
-      >
-        <Button
-          onClick={() => undefined}
+      {
+        /*
+        <div
           style={{
-            float: 'right',
+            position: 'relative',
           }}
-          variant="primary"
         >
-          <FontAwesomeIcon
-            icon="caret-down"
-            size="1x"
+          <Button
+            onClick={() => undefined}
+            style={{
+              float: 'right',
+            }}
+            variant="primary"
+          >
+            <FontAwesomeIcon
+              icon="caret-down"
+              size="1x"
+            />
+          </Button>
+          <AddTaskButton
+            onClick={onTaskSelect}
+            style={{
+              float: 'right',
+              marginRight: 5,
+              position: 'absolute',
+              right: 0,
+              top: 38,
+            }}
           />
-        </Button>
-        <AddTaskButton
-          onClick={onTaskSelect}
-          style={{
-            float: 'right',
-            marginRight: 5,
-            position: 'absolute',
-            right: 0,
-            top: 38,
-          }}
-        />
-      </div>
+        </div>
+        */
+      }
       {
         showAddButton && (
           <AddTaskButton

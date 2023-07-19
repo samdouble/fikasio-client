@@ -81,7 +81,7 @@ const TimesheetPage = () => {
             float: 'right',
           }}
         >
-          Modèles
+          Champs
         </Button>
       </Link>
       <CSVLink

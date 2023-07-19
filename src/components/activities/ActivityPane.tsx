@@ -24,6 +24,7 @@ const ActivityPane = ({
 }: ActivityPaneProps) => {
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
+  const templates = useSelector((state: RootState) => state.templates);
   const activity = activityProp.id ? (activities || []).find(a => a.id === activityProp.id) : activityProp;
   const [startTime, setStartTime] = useState(
     activity && activity.startTime
@@ -181,7 +182,14 @@ const ActivityPane = ({
               className="form-control"
               style={{ width: 250 }}
             >
-              <option value="DEFAULT">-</option>
+              {
+                templates?.sort((t1, t2) => (t1.name < t2.name ? -1 : 1))
+                  .map(template => (
+                    <option value={template.id}>
+                      { template.name }
+                    </option>
+                  ))
+              }
             </Field>
           </RBForm.Group>
           <RBForm.Group>

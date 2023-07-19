@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,11 +7,13 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
 import { processFormData } from 'utils/forms';
+import links from 'utils/links';
 
 const EntityInformationsForm = ({
   entity,
 }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);
@@ -18,7 +21,10 @@ const EntityInformationsForm = ({
       operations.entities.updateEntity(entity.id, formData)(dispatch);
     } else {
       operations.entities.createEntity(formData)(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+        .then(() => {
+          dispatch(operations.pane.clearPaneContent());
+          history.push(links.paths.entities);
+        });
     }
   };
 

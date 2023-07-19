@@ -31,17 +31,9 @@ const TemplatesList = ({
         </tr>
       </thead>
       <tbody>
-        <TemplateRow
-          deletable={false}
-          onSelect={onTemplateSelect}
-          template={{
-            id: 'DEFAULT',
-            name: 'Default',
-          }}
-        />
         {
           templates
-            .sort((p1, p2) => (p1.startTime < p2.startTime ? -1 : 1))
+            .sort((t1, t2) => (t1.startTime < t2.startTime ? -1 : 1))
             .map(template => (
               <TemplateRow
                 deletable

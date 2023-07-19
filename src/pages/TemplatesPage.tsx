@@ -19,6 +19,7 @@ const TemplatesPage = ({
     <BasePage>
       <Breadcrumb>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
         <Breadcrumb.Item active>Modèles</Breadcrumb.Item>
       </Breadcrumb>
       <h4>Modèles</h4>
