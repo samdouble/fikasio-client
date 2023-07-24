@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
 import { operations } from 'services';
 import { Activity } from 'services/activities/types';
+import { RootState } from 'services/store';
 import Toolbar from './Toolbar';
 import { convertActivitiesToCalendarEvents } from './utils';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -20,7 +21,7 @@ const ActivitiesCalendar = ({
   onActivitySelect,
 }) => {
   const dispatch = useDispatch();
-  const loginState = useSelector(state => state.login);
+  const loginState = useSelector((state: RootState) => state.login);
   const me = loginState.user;
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
