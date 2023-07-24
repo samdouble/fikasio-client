@@ -76,6 +76,21 @@ const ActivitiesCalendar = ({
     }
   }
 
+  const onEventDrop: withDragAndDropProps['onEventDrop'] = ({ event, start, end, isAllDay }) => {
+    const activity = activities.find(a => a.id === event.id);
+    const startTime = DateTime.fromJSDate(start);
+    const endTime = DateTime.fromJSDate(end);
+    const duration = endTime.diff(startTime, 'minutes').minutes;
+    dispatch(
+      operations.activities.patchActivity(activity.id, {
+        startTime: startTime.toISO(),
+        endTime: endTime.toISO(),
+        duration,
+      }),
+    );
+  };
+
+
   const onEventResize: withDragAndDropProps['onEventResize'] = ({ start, end, event }) => {
     const activity = activities.find(a => a.id === event.id);
     const hasDraggedStart = event.start !== start;
@@ -88,7 +103,7 @@ const ActivitiesCalendar = ({
       : DateTime.fromISO(activity.endTime);
     const duration = endTime.diff(startTime, 'minutes').minutes;
     dispatch(
-      operations.activities.patchActivity(event.id, {
+      operations.activities.patchActivity(activity.id, {
         ...(hasDraggedStart && { startTime: startTime.toISO() }),
         ...(hasDraggedEnd && { endTime: endTime.toISO() }),
         duration,
@@ -110,6 +125,7 @@ const ActivitiesCalendar = ({
         week: 'Semaine',
         day: 'Jour'
       }}
+      onEventDrop={onEventDrop}
       onEventResize={onEventResize}
       onNavigate={() => undefined}
       onSelectEvent={event => onActivitySelect({ id: event.id })}
