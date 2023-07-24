@@ -76,7 +76,7 @@ const ActivitiesCalendar = ({
     }
   }
 
-  const onEventDrop: withDragAndDropProps['onEventDrop'] = ({ event, start, end, isAllDay }) => {
+  const onEventDrop: withDragAndDropProps['onEventDrop'] = ({ event, start, end }) => {
     const activity = activities.find(a => a.id === event.id);
     const startTime = DateTime.fromJSDate(start);
     const endTime = DateTime.fromJSDate(end);
@@ -89,7 +89,6 @@ const ActivitiesCalendar = ({
       }),
     );
   };
-
 
   const onEventResize: withDragAndDropProps['onEventResize'] = ({ start, end, event }) => {
     const activity = activities.find(a => a.id === event.id);
