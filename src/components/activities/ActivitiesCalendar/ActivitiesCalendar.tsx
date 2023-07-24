@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, luxonLocalizer, Event } from 'react-big-calendar';
 import withDragAndDrop, { withDragAndDropProps } from 'react-big-calendar/lib/addons/dragAndDrop';
 import { DateTime } from 'luxon';
@@ -20,13 +20,15 @@ const ActivitiesCalendar = ({
   onActivitySelect,
 }) => {
   const dispatch = useDispatch();
+  const loginState = useSelector(state => state.login);
+  const me = loginState.user;
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
-  const [events, setEvents] = useState<Event[]>(convertActivitiesToCalendarEvents(activities));
+  const [events, setEvents] = useState<Event[]>(convertActivitiesToCalendarEvents(activities, me.censoredWords));
 
   useEffect(() => {
     setEvents(
-      convertActivitiesToCalendarEvents(activities),
+      convertActivitiesToCalendarEvents(activities, me.censoredWords),
     );
   }, [activities]);
 
