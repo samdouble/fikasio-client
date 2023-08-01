@@ -1,5 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import DatePicker from 'react-datepicker';
+import DatePicker, { ReactDatePicker } from 'react-datepicker';
+
+interface DatepickerProps {
+  defaultValue: Date;
+  isOpen: boolean;
+  name?: string;
+  onChange: (date: Date) => void;
+  showTimeSelect?: boolean;
+  timeCaption?: string;
+  timeFormat?: string;
+  timeIntervals?: number;
+}
 
 const Datepicker = ({
   defaultValue,
@@ -10,8 +21,8 @@ const Datepicker = ({
   timeCaption,
   timeFormat,
   timeIntervals,
-}) => {
-  let _calendar = useRef(null);
+}: DatepickerProps) => {
+  let _calendar = useRef(null) as ReactDatePicker;
 
   useEffect(() => {
     if (_calendar) {

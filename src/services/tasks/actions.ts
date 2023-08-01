@@ -14,7 +14,7 @@ export enum TaskActionTypes {
 }
 
 export type TaskAction =
-  | { type: TaskActionTypes.CREATE_TASK_REQUEST; payload: { task: Task } }
+  | { type: TaskActionTypes.CREATE_TASK_REQUEST; payload: { task: Partial<Task> } }
   | { type: TaskActionTypes.CREATE_TASK_RESPONSE; payload: { task: Task } }
   | { type: TaskActionTypes.GET_TASKS_REQUEST; payload: { tasks: Task[] } }
   | { type: TaskActionTypes.GET_TASKS_RESPONSE; payload: { tasks: Task[] } }
@@ -25,7 +25,7 @@ export type TaskAction =
   | { type: TaskActionTypes.DELETE_TASK_REQUEST; payload: { taskId: string } }
   | { type: TaskActionTypes.DELETE_TASK_RESPONSE; payload: { taskId: string } };
 
-export const createTaskRequest = (task: Task): TaskAction => ({
+export const createTaskRequest = (task: Partial<Task>): TaskAction => ({
   type: TaskActionTypes.CREATE_TASK_REQUEST,
   payload: { task },
 });

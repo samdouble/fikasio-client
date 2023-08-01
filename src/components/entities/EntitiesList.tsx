@@ -27,7 +27,11 @@ const EntitiesList = ({
   };
 
   return entities && (
-    <Table responsive bordered hover>
+    <Table
+      responsive
+      bordered
+      hover
+    >
       <thead>
         <tr>
           <th>Nom</th>

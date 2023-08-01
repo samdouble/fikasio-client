@@ -9,6 +9,7 @@ import ProjectTag from 'components/projects/ProjectTag';
 import Checkbox from 'components/UI/Checkbox';
 import Datepicker from 'components/UI/Datepicker';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import AssigneeButton from './AssigneeButton';
 
 const TaskRow = ({
@@ -19,10 +20,10 @@ const TaskRow = ({
   projectId,
   task,
 }) => {
-  const tasks = useSelector(state => state.tasks);
+  const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
   const [description, setIDescription] = useState((task && task.description) || '');
-  const [delay, setDelay] = useState(null);
+  const [delay, setDelay] = useState<number | null>(null);
   const [, setSaved] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
@@ -82,10 +83,10 @@ const TaskRow = ({
   };
 
   const toggleCheckTaskClick = async task => {
-    const { isCompleted } = tasks.find(t => t.id === task.id && t.dueAt === task.dueAt);
+    const taskIfExists = tasks?.find(t => t.id === task.id && t.dueAt === task.dueAt);
     if (task.id) {
       operations.tasks.patchTask(task.id, {
-        isCompleted: !isCompleted,
+        isCompleted: !taskIfExists?.isCompleted,
       })(dispatch);
     } else {
       operations.tasks.createTask({
@@ -98,7 +99,7 @@ const TaskRow = ({
 
   const toggleCheckTaskKey = async (e, task) => {
     if (e.key === 'Enter') {
-      toggleCheckTaskClick(task.id, task.dueAt);
+      toggleCheckTaskClick(task);
     }
   };
 

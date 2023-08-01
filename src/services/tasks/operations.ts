@@ -34,7 +34,7 @@ const fetchTasks = (filter = {}) => {
   );
 };
 
-const createTask = (task: Task) => {
+const createTask = (task: Partial<Task>) => {
   return (dispatch: TaskDispatch) => {
     dispatch(createTaskRequest(task));
     return APIcreateTask(task)
