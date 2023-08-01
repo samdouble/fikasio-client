@@ -6,6 +6,7 @@ import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
+import { Tooltip } from 'react-tooltip';
 import { operations } from 'services';
 import NotificationsCounter from '../notifications/NotificationsCounter';
 import ResourcesHandler from '../ResourcesHandler';
@@ -18,6 +19,7 @@ const menuItems = {
   METRICS: 'metrics',
   NOTIFICATIONS: 'notifications',
   OBJECTIVES: 'objectives',
+  ORGANIZATIONS: 'organizations',
   PROJECTS: 'projects',
   TASKS: 'tasks',
   TIMESHEET: 'timesheet',
@@ -41,6 +43,7 @@ const Sidebar = ({
   const getDefaultSelectedMenuItem = () => {
     if (location.pathname === '/dashboard') return menuItems.DASHBOARD;
     if (location.pathname === '/objectives') return menuItems.OBJECTIVES;
+    if (location.pathname === '/organizations') return menuItems.ORGANIZATIONS;
     if (location.pathname === '/metrics') return menuItems.METRICS;
     if (location.pathname === '/tasks') return menuItems.TASKS;
     if (location.pathname === '/projects') return menuItems.PROJECTS;
@@ -73,8 +76,13 @@ const Sidebar = ({
         >
           <SideNav.Toggle />
           <SideNav.Nav defaultSelected={getDefaultSelectedMenuItem() || menuItems.DASHBOARD}>
-            <NavItem eventKey={menuItems.DASHBOARD}>
+            <NavItem
+              data-tooltip-id="dashboard"
+              data-tooltip-content={t('dashboard')}
+              eventKey={menuItems.DASHBOARD}
+            >
               <NavIcon>
+                <Tooltip id="dashboard" />
                 <FontAwesomeIcon
                   icon="chart-bar"
                   size="lg"
@@ -84,8 +92,13 @@ const Sidebar = ({
                 {t('dashboard')}
               </NavText>
             </NavItem>
-            <NavItem eventKey={menuItems.PROJECTS}>
+            <NavItem
+              data-tooltip-id="projects"
+              data-tooltip-content={t('projects')}
+              eventKey={menuItems.PROJECTS}
+            >
               <NavIcon>
+                <Tooltip id="projects" />
                 <FontAwesomeIcon
                   icon="project-diagram"
                   size="lg"
@@ -95,8 +108,13 @@ const Sidebar = ({
                 {t('projects')}
               </NavText>
             </NavItem>
-            <NavItem eventKey={menuItems.OBJECTIVES}>
+            <NavItem
+              data-tooltip-id="objectives"
+              data-tooltip-content={t('objectives')}
+              eventKey={menuItems.OBJECTIVES}
+            >
               <NavIcon>
+                <Tooltip id="objectives" />
                 <FontAwesomeIcon
                   icon="bullseye"
                   size="lg"
@@ -106,8 +124,13 @@ const Sidebar = ({
                 {t('objectives')}
               </NavText>
             </NavItem>
-            <NavItem eventKey={menuItems.TASKS}>
+            <NavItem
+              data-tooltip-id="tasks"
+              data-tooltip-content={t('tasks')}
+              eventKey={menuItems.TASKS}
+            >
               <NavIcon>
+                <Tooltip id="tasks" />
                 <FontAwesomeIcon
                   icon="check-square"
                   size="lg"
@@ -117,8 +140,13 @@ const Sidebar = ({
                 {t('tasks')}
               </NavText>
             </NavItem>
-            <NavItem eventKey={menuItems.ENTITIES}>
+            <NavItem
+              data-tooltip-id="entities"
+              data-tooltip-content={t('entities')}
+              eventKey={menuItems.ENTITIES}
+            >
               <NavIcon>
+                <Tooltip id="entities" />
                 <FontAwesomeIcon
                   icon="shapes"
                   size="lg"
@@ -128,8 +156,13 @@ const Sidebar = ({
                 {t('entities')}
               </NavText>
             </NavItem>
-            <NavItem eventKey={menuItems.METRICS}>
+            <NavItem
+              data-tooltip-id="metrics"
+              data-tooltip-content={t('metrics')}
+              eventKey={menuItems.METRICS}
+            >
               <NavIcon>
+                <Tooltip id="metrics" />
                 <FontAwesomeIcon
                   icon="ruler"
                   size="lg"
@@ -139,8 +172,13 @@ const Sidebar = ({
                 {t('metrics')}
               </NavText>
             </NavItem>
-            <NavItem eventKey={menuItems.TIMESHEET}>
+            <NavItem
+              data-tooltip-id="timesheet"
+              data-tooltip-content={t('timesheet')}
+              eventKey={menuItems.TIMESHEET}
+            >
               <NavIcon>
+                <Tooltip id="timesheet" />
                 <FontAwesomeIcon
                   icon="clock"
                   size="lg"
@@ -150,8 +188,13 @@ const Sidebar = ({
                 {t('timesheet')}
               </NavText>
             </NavItem>
-            <NavItem eventKey={menuItems.NOTIFICATIONS}>
+            <NavItem
+              data-tooltip-id="notifications"
+              data-tooltip-content={t('notifications')}
+              eventKey={menuItems.NOTIFICATIONS}
+            >
               <NavIcon>
+                <Tooltip id="notifications" />
                 <FontAwesomeIcon
                   icon="bell"
                   size="lg"
@@ -184,6 +227,22 @@ const Sidebar = ({
                     </>
                   )
                 }
+              </NavText>
+            </NavItem>
+            <NavItem
+              data-tooltip-id="organizations"
+              data-tooltip-content={t('organizations')}
+              eventKey={menuItems.ORGANIZATIONS}
+            >
+              <NavIcon>
+                <Tooltip id="organizations" />
+                <FontAwesomeIcon
+                  icon="sitemap"
+                  size="lg"
+                />
+              </NavIcon>
+              <NavText>
+                {t('organizations')}
               </NavText>
             </NavItem>
           </SideNav.Nav>

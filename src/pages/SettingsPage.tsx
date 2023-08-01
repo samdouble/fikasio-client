@@ -70,7 +70,7 @@ const SettingsPage = ({ login, patchUserMe }) => {
               render={({ handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
                   <RBForm.Group>
-                    <RBForm.Label>Censure</RBForm.Label>
+                    <RBForm.Label>Mots censurés</RBForm.Label>
                     <FieldArray name="censoredWords">
                       {({ fields }) => (
                         <div>

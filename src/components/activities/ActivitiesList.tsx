@@ -11,6 +11,7 @@ import './ActivitiesList.scss';
 
 const ActivitiesList = ({
   activities,
+  date,
   onActivitySelect,
   onAddActivity,
 }) => {
@@ -53,7 +54,12 @@ const ActivitiesList = ({
       <tbody>
         {
           activities
-            .sort((p1, p2) => (DateTime.fromISO(p1.startTime) < DateTime.fromISO(p2.startTime) ? -1 : 1))
+            .filter(a => {
+              const startOfDay = date.startOf('day');
+              const endOfDay = date.endOf('day');
+              return DateTime.fromISO(a.startTime) <= endOfDay && DateTime.fromISO(a.endTime) >= startOfDay;
+            })
+            .sort((a1, a2) => (DateTime.fromISO(a1.startTime) < DateTime.fromISO(a2.startTime) ? -1 : 1))
             .map(activity => (
               <ActivityRow
                 key={activity.id}

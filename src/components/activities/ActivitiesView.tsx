@@ -22,6 +22,7 @@ const ActivitiesView = ({
     activityView = (
       <ActivitiesList
         activities={activities}
+        date={date}
         onAddActivity={addActivity}
         onActivitySelect={onActivitySelect}
       />

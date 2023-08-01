@@ -8,6 +8,7 @@ const fr = {
   metrics: 'Mesures',
   notifications: 'Notifications',
   objectives: 'Objectifs',
+  organizations: 'Organisations',
   projects: 'Projets',
   save: 'Sauvegarder',
   settings: 'Paramètres',

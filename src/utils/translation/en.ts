@@ -8,6 +8,7 @@ const en = {
   metrics: 'Metrics',
   notifications: 'Notifications',
   objectives: 'Objectives',
+  organizations: 'Organizations',
   projects: 'Projects',
   save: 'Save',
   settings: 'Settings',
