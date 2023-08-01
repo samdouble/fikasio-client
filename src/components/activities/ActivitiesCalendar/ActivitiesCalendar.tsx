@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, luxonLocalizer, Event } from 'react-big-calendar';
 import withDragAndDrop, { withDragAndDropProps } from 'react-big-calendar/lib/addons/dragAndDrop';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
 import { operations } from 'services';
 import { Activity } from 'services/activities/types';
+import { RootState } from 'services/store';
 import Toolbar from './Toolbar';
 import { convertActivitiesToCalendarEvents } from './utils';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -20,13 +21,15 @@ const ActivitiesCalendar = ({
   onActivitySelect,
 }) => {
   const dispatch = useDispatch();
+  const loginState = useSelector((state: RootState) => state.login);
+  const me = loginState.user;
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
-  const [events, setEvents] = useState<Event[]>(convertActivitiesToCalendarEvents(activities));
+  const [events, setEvents] = useState<Event[]>(convertActivitiesToCalendarEvents(activities, me.censoredWords));
 
   useEffect(() => {
     setEvents(
-      convertActivitiesToCalendarEvents(activities),
+      convertActivitiesToCalendarEvents(activities, me.censoredWords),
     );
   }, [activities]);
 
@@ -74,6 +77,20 @@ const ActivitiesCalendar = ({
     }
   }
 
+  const onEventDrop: withDragAndDropProps['onEventDrop'] = ({ event, start, end }) => {
+    const activity = activities.find(a => a.id === event.id);
+    const startTime = DateTime.fromJSDate(start);
+    const endTime = DateTime.fromJSDate(end);
+    const duration = endTime.diff(startTime, 'minutes').minutes;
+    dispatch(
+      operations.activities.patchActivity(activity.id, {
+        startTime: startTime.toISO(),
+        endTime: endTime.toISO(),
+        duration,
+      }),
+    );
+  };
+
   const onEventResize: withDragAndDropProps['onEventResize'] = ({ start, end, event }) => {
     const activity = activities.find(a => a.id === event.id);
     const hasDraggedStart = event.start !== start;
@@ -86,7 +103,7 @@ const ActivitiesCalendar = ({
       : DateTime.fromISO(activity.endTime);
     const duration = endTime.diff(startTime, 'minutes').minutes;
     dispatch(
-      operations.activities.patchActivity(event.id, {
+      operations.activities.patchActivity(activity.id, {
         ...(hasDraggedStart && { startTime: startTime.toISO() }),
         ...(hasDraggedEnd && { endTime: endTime.toISO() }),
         duration,
@@ -108,6 +125,7 @@ const ActivitiesCalendar = ({
         week: 'Semaine',
         day: 'Jour'
       }}
+      onEventDrop={onEventDrop}
       onEventResize={onEventResize}
       onNavigate={() => undefined}
       onSelectEvent={event => onActivitySelect({ id: event.id })}

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TasksViewer from './TasksViewer/TasksViewer';
 import AddTaskButton from './AddTaskButton';
 import TasksCompletionFilter from './TasksCompletionFilter';
