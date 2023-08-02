@@ -1,3 +1,6 @@
+import RBForm from 'react-bootstrap/Form';
+import { Field } from 'react-final-form';
+
 export const processFormData = formData => Object
   .entries(formData)
   .reduce((obj, input) => {
@@ -34,6 +37,41 @@ export const getFormData = idHTML => {
   const formData: any = new FormData(document.querySelector(`#${idHTML}`)! as HTMLFormElement);
   return processFormData(Object.fromEntries(formData));
 };
+
+export const getFormFieldForType = (name: string, type?: string) => {
+  switch (type) {
+    case 'BOOLEAN':
+      return (
+        <Field
+          component="input"
+          className="form-control"
+          name={name}
+          type="checkbox"
+        >
+          {
+            props => (
+              <div>
+                <RBForm.Check
+                  {...props.input}
+                  type="switch"
+                />
+              </div>
+            )
+          }
+        </Field>
+      );
+    case 'NUMBER':
+    case 'STRING':
+    default:
+      return (
+        <Field
+          component="input"
+          className="form-control"
+          name={name}
+        />
+      );
+  }
+}
 
 export default {
   getFormData,

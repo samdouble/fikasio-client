@@ -271,7 +271,12 @@ const TaskInformationsForm = ({
               right: 30,
             }}
           >
-            <Button variant="outline-secondary" onClick={() => onClose && onClose()}>Annuler</Button>
+            <Button
+              onClick={() => onClose && onClose()}
+              variant="outline-secondary"
+            >
+              Annuler
+            </Button>
             {
               task
                 ? <Button type="submit" variant='success'>Sauvegarder</Button>

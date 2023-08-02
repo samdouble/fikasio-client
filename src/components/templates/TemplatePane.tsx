@@ -28,12 +28,12 @@ const TemplatePane = ({
     if (template.id) {
       updateTemplate(template.id, formData)
         .then(() => {
-          onClose();
+          onClose && onClose();
         });
     } else {
       createTemplate(formData)
         .then(() => {
-          onClose();
+          onClose && onClose();
         });
     }
   };
@@ -139,7 +139,12 @@ const TemplatePane = ({
               right: 30,
             }}
           >
-            <Button variant="outline-secondary" onClick={() => onClose()}>Annuler</Button>
+            <Button
+              onClick={() => onClose()}
+              variant="outline-secondary"
+            >
+              Annuler
+            </Button>
             {
               template
                 ? <Button type="submit" variant='success'>Sauvegarder</Button>

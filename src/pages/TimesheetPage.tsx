@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Button from 'react-bootstrap/Button';
+import { Tooltip } from 'react-tooltip';
 import { CSVLink } from 'react-csv';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'react-i18next';
 import ActivitiesView from 'components/activities/ActivitiesView';
 import { calculateFilledTime } from 'components/activities/utils';
 import BasePage from 'components/UI/BasePage';
@@ -20,7 +22,9 @@ import './style.scss';
 const TimesheetPage = () => {
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
+  const templates = useSelector((state: RootState) => state.templates);
   const [date, setDate] = useState(DateTime.now());
+  const { t } = useTranslation();
 
   const startTs = date.set({
     hour: 0,
@@ -81,7 +85,7 @@ const TimesheetPage = () => {
             float: 'right',
           }}
         >
-          Champs
+          Modèles
         </Button>
       </Link>
       <CSVLink
@@ -90,16 +94,19 @@ const TimesheetPage = () => {
         headers={CSVHeaders}
       >
         <Button
-          variant="light"
+          data-tooltip-id="exportToCsv"
+          data-tooltip-content={t('exportToCsv')}
           style={{
             float: 'right',
           }}
+          variant="light"
         >
           <FontAwesomeIcon
             icon="download"
             size="1x"
           />
         </Button>
+        <Tooltip id="exportToCsv" />
       </CSVLink>
       <h4>
         Feuille de temps
@@ -169,8 +176,10 @@ const TimesheetPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[]}
-      resourceFetchers={[]}
+      resources={[templates]}
+      resourceFetchers={[
+        () => dispatch(operations.templates.fetchTemplates()),
+      ]}
       getContents={getPage}
     />
   );

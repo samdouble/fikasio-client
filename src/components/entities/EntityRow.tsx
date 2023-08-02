@@ -19,7 +19,13 @@ const EntityRow = ({
         style={{ textDecoration: 'none' }}
         to={links.entity(entity.id)}
       >
-        <div style={{ color: '#000', height: '100%', width: '100%' }}>
+        <div
+          style={{
+            color: '#000',
+            height: '100%',
+            width: '100%',
+          }}
+        >
           {entity.name}
         </div>
       </Link>

@@ -8,46 +8,11 @@ import { FieldArray } from 'react-final-form-arrays';
 import { operations } from 'services';
 import { EntityField } from 'services/entities/types';
 import { RootState } from 'services/store';
-import { processFormData } from 'utils/forms';
+import { getFormFieldForType, processFormData } from 'utils/forms';
 
 export interface ItemInformationsFormProps {
   entityId: string;
   id: string;
-}
-
-const getFormFieldForType = (name: string, type?: string) => {
-  switch (type) {
-    case 'BOOLEAN':
-      return (
-        <Field
-          component="input"
-          className="form-control"
-          name={name}
-          type="checkbox"
-        >
-          {
-            props => (
-              <div>
-                <RBForm.Check
-                  {...props.input}
-                  type="switch"
-                />
-              </div>
-            )
-          }
-        </Field>
-      );
-    case 'NUMBER':
-    case 'STRING':
-    default:
-      return (
-        <Field
-          component="input"
-          className="form-control"
-          name={name}
-        />
-      );
-  }
 }
 
 const ItemInformationsForm = ({

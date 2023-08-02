@@ -3,6 +3,7 @@ const fr = {
   dashboard: 'Tableau de bord',
   documentation: 'Documentation',
   entities: 'Entités',
+  exportToCsv: 'Exporter en CSV',
   login: 'Connexion',
   logout: 'Déconnexion',
   metrics: 'Mesures',

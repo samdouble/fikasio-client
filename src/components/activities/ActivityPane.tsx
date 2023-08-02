@@ -5,13 +5,14 @@ import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
 import { DateTime } from 'luxon';
 import uniqBy from 'lodash.uniqby';
 import { operations } from 'services';
 import { getActivities } from 'services/activities/endpoints';
 import { Activity } from 'services/activities/types';
 import { RootState } from 'services/store';
-import { processFormData } from 'utils/forms';
+import { getFormFieldForType, processFormData } from 'utils/forms';
 import SuggestionsList from './SuggestionsList';
 import './ActivityPane.scss';
 
@@ -37,7 +38,10 @@ const ActivityPane = ({
       : null,
   );
   const [comments, setComments] = useState(activity?.comments);
+  const [templateId, setTemplateId] = useState(activity?.templateId);
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
+  const template = templates?.find(t => t.id === templateId);
+  console.log(templateId, template);
 
   const handleChangeComments = e => {
     const text = e.target.value;
@@ -50,6 +54,10 @@ const ActivityPane = ({
     } else {
       setCommentsSuggestions([]);
     }
+  };
+
+  const handleChangeTemplate = templateId => {
+    setTemplateId(templateId);
   };
 
   const onSubmit = async values => {
@@ -152,18 +160,18 @@ const ActivityPane = ({
                 <tr>
                   <td>
                     <Field
-                      name="number:duration"
+                      className="form-control"
                       component="input"
                       defaultValue={activity && activity.duration}
-                      className="form-control"
+                      name="number:duration"
                       style={{ width: 100 }}
                     />
                   </td>
                   <td>
                     <Field
-                      name="durationUnits"
-                      component="select"
                       className="form-control"
+                      component="select"
+                      name="durationUnits"
                       style={{ width: 250 }}
                     >
                       <option value="minutes">minutes</option>
@@ -177,21 +185,77 @@ const ActivityPane = ({
           <RBForm.Group>
             <RBForm.Label>Modèle</RBForm.Label>
             <Field
-              name="template"
-              component="select"
               className="form-control"
+              component="select"
+              defaultValue={templateId}
+              name="templateId"
               style={{ width: 250 }}
             >
               {
-                templates?.sort((t1, t2) => (t1.name < t2.name ? -1 : 1))
-                  .map(template => (
-                    <option value={template.id}>
-                      { template.name }
-                    </option>
-                  ))
+                ({ input, options }) => {
+                  return (
+                    <select
+                      className="form-control"
+                      defaultValue={input.value}
+                      name={input.name}
+                      onChange={e => {
+                        input.onChange(e);
+                        handleChangeTemplate(e.target.value);
+                      }}
+                    >
+                      <option />
+                      {
+                        templates?.sort((t1, t2) => (t1.name < t2.name ? -1 : 1))
+                          .map(t => (
+                            <option
+                              key={t.id}
+                              value={t.id}
+                            >
+                              { t.name }
+                            </option>
+                          ))
+                      }
+                    </select>
+                  );
+                }
               }
             </Field>
           </RBForm.Group>
+          {
+            template && (
+              <RBForm.Group>
+                <FieldArray name="values">
+                  {
+                    ({ fields }) => (
+                      <div>
+                        {
+                          fields
+                            .map((name, index) => (
+                              <div key={name}>
+                                <RBForm.Label>{template?.fields[index].name}</RBForm.Label>
+                                <Field name={`${name}.fieldId`}>
+                                  {
+                                    ({ input }) => (
+                                      <input {...input} type="hidden" name={`${name}.fieldId`} />
+                                    )
+                                  }
+                                </Field>
+                                {
+                                  getFormFieldForType(
+                                    `${name}.value`,
+                                    template?.fields[index].type,
+                                  )
+                                }
+                              </div>
+                            ))
+                        }
+                      </div>
+                    )
+                  }
+                </FieldArray>
+              </RBForm.Group>
+            )
+          }
           <RBForm.Group>
             <RBForm.Label>Commentaires</RBForm.Label>
             <Field

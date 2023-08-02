@@ -3,6 +3,7 @@ const en = {
   dashboard: 'Dashboard',
   documentation: 'Documentation',
   entities: 'Entities',
+  exportToCsv: 'Export to CSV',
   login: 'Login',
   logout: 'Logout',
   metrics: 'Metrics',

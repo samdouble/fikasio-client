@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,20 +9,21 @@ import ResourcesHandler from 'components/ResourcesHandler';
 import Card from 'components/dashboards/Card';
 import Sidebar from 'components/UI/Sidebar';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import { getTasks } from 'services/tasks/endpoints';
+import { Task } from 'services/tasks/types';
 import links from 'utils/links';
 import './style.scss';
 
-const DashboardPage = ({
-  objectives,
-  fetchObjectives,
-}) => {
-  const [tasks, setTasks] = useState([]);
+const DashboardPage = () => {
+  const objectives = useSelector((state: RootState) => state.objectives);
+  const dispatch = useDispatch();
+  const [tasks, setTasks] = useState<Task[]>([]);
   const nbTotal = tasks.length;
   const nbDone = tasks.filter(t => t.isCompleted).length;
 
   useEffect(() => {
-    getTasks()
+    getTasks({})
       .then(res => setTasks(res.tasks));
   }, []);
 
@@ -66,22 +66,12 @@ const DashboardPage = ({
   return (
     <ResourcesHandler
       resources={[objectives]}
-      resourceFetchers={[fetchObjectives]}
+      resourceFetchers={[
+        () => dispatch(operations.objectives.fetchObjectives()),
+      ]}
       getContents={getPage}
     />
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    objectives: state.objectives,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchObjectives: operations.objectives.fetchObjectives,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
+export default DashboardPage;
