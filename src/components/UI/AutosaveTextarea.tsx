@@ -9,7 +9,7 @@ const AutosaveTextarea = ({
   style,
 }) => {
   const [value, setIValue] = useState(defaultValue ? defaultValue.toString() : '');
-  const [delay, setDelay] = useState(null);
+  const [delay, setDelay] = useState<number | null>(null);
 
   const saveValue = () => {
     if (value !== '') {

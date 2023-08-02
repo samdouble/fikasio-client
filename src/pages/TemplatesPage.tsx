@@ -1,20 +1,19 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import TemplatesView from 'components/templates/TemplatesView';
 import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
-const TemplatesPage = ({
-  fetchTemplates,
-  setPaneContent,
-  templates,
-}) => {
+const TemplatesPage = () => {
+  const templates = useSelector((state: RootState) => state.templates);
+  const dispatch = useDispatch();
+
   const getPage = () => (
     <BasePage>
       <Breadcrumb>
@@ -25,10 +24,12 @@ const TemplatesPage = ({
       <h4>Modèles</h4>
       <TemplatesView
         templates={templates}
-        onTemplateSelect={templateId => setPaneContent({
-          type: 'TEMPLATE',
-          id: templateId,
-        })}
+        onTemplateSelect={
+          templateId => operations.pane.setPaneContent({
+            type: 'TEMPLATE',
+            id: templateId,
+          })(dispatch)
+        }
       />
     </BasePage>
   );
@@ -36,23 +37,12 @@ const TemplatesPage = ({
   return (
     <ResourcesHandler
       resources={[templates]}
-      resourceFetchers={[fetchTemplates]}
+      resourceFetchers={[
+        () => dispatch(operations.templates.fetchTemplates()),
+      ]}
       getContents={getPage}
     />
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    templates: state.templates,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchTemplates: operations.templates.fetchTemplates,
-    setPaneContent: operations.pane.setPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TemplatesPage);
+export default TemplatesPage;

@@ -20,8 +20,8 @@ const AddMetricButton = () => {
     <>
       <MetricModal
         isOpen={showModal}
+        metric={editedMetric}
         onClose={() => handleCloseModal()}
-        task={editedMetric}
       />
       <Button
         variant="primary"

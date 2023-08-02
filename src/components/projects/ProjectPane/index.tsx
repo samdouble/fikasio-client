@@ -1,30 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Table from 'react-bootstrap/Table';
 import ObjectivesView from 'components/objectives/ObjectivesView';
 import TasksView from 'components/tasks/TasksView';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import ProjectInformationsForm from './ProjectInformationsForm';
 import Stats from './Stats';
 
 const ProjectPane = ({
   defaultTab,
   id,
-  objectives,
-  projects,
-  setPaneContent,
-  tasks,
 }) => {
-  const project = (projects || []).find(p => p.id === id) || {};
-  const projectTasks = tasks
-    .filter(task => task.projects.some(tp => tp.id === project.id));
-  const projectTasksIncomplete = projectTasks
-    .filter(task => !task.isCompleted);
-  const projectObjectives = objectives
-    .filter(objective => objective.projects.some(op => op.id === project.id));
+  const objectives = useSelector((state: RootState) => state.objectives);
+  const projects = useSelector((state: RootState) => state.projects);
+  const tasks = useSelector((state: RootState) => state.tasks);
+  const dispatch = useDispatch();
+
+  const project = (projects || []).find(p => p.id === id);
+  const projectTasks = tasks?.filter(task => task.projects.some(tp => tp.id === project?.id));
+  const projectTasksIncomplete = projectTasks?.filter(task => !task.isCompleted);
+  const projectObjectives = objectives?.filter(objective => objective.projects.some(op => op.id === project?.id));
 
   return (
     <>
@@ -33,20 +31,22 @@ const ProjectPane = ({
         className="mb-3"
         defaultActiveKey={defaultTab || 'tasks'}
       >
-        <Tab eventKey="tasks" title={`Tâches (${projectTasksIncomplete.length})`}>
+        <Tab eventKey="tasks" title={`Tâches (${projectTasksIncomplete?.length})`}>
           <TasksView
-            onTaskSelect={taskId => setPaneContent({
-              type: 'TASK',
-              id: taskId,
-            })}
-            projectId={project.id}
+            onTaskSelect={
+              taskId => operations.pane.setPaneContent({
+                type: 'TASK',
+                id: taskId,
+              })(dispatch)
+            }
+            projectId={project?.id}
             showAddButton
             showCompletionFilter
             showDueDateFilter
             tasks={projectTasks}
           />
         </Tab>
-        <Tab eventKey="objectives" title={`Objectifs (${projectObjectives.length})`}>
+        <Tab eventKey="objectives" title={`Objectifs (${projectObjectives?.length})`}>
           <ObjectivesView
             objectives={projectObjectives}
             showAddButton
@@ -64,7 +64,7 @@ const ProjectPane = ({
         </Tab>
         <Tab eventKey="stats" title="Statistiques">
           <Stats
-            projectId={project.id}
+            projectId={project?.id}
           />
         </Tab>
         <Tab
@@ -80,18 +80,4 @@ const ProjectPane = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    objectives: state.objectives,
-    projects: state.projects,
-    tasks: state.tasks,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    setPaneContent: operations.pane.setPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectPane);
+export default ProjectPane;

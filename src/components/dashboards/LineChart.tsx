@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 
 const options = {
   scales: {
+    /*
     yAxes: [
       {
         ticks: {
@@ -11,11 +12,12 @@ const options = {
         },
       },
     ],
+    */
   },
 };
 
 const LineChart = props => {
-  const xAxis = [];
+  const xAxis: string[] = [];
   if (props.data.length) {
     const firstX = DateTime.fromJSDate(new Date(props.data[0].x));
     const lastX = DateTime.fromJSDate(new Date(props.data[props.data.length - 1].x));
@@ -41,8 +43,6 @@ const LineChart = props => {
           },
         ],
       }}
-      width={null}
-      height={null}
       options={options}
     />
   );

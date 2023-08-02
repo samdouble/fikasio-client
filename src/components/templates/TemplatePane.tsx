@@ -20,7 +20,7 @@ const TemplatePane = ({
   const template = (templates || []).find(t => t.id === id) || {};
 
   const onSubmit = async values => {
-    const formData = processFormData(values);
+    const formData: any = processFormData(values);
     if (formData.durationUnits === 'hours') {
       formData.duration *= 60;
     }

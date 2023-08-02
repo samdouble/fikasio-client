@@ -10,10 +10,11 @@ import SearchBar from 'components/UI/SearchBar';
 import links from 'utils/links';
 import Logo from 'images/logo.png';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import './style.scss';
 
 const TopMenu = () => {
-  const login = useSelector(state => state.login);
+  const login = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation();
