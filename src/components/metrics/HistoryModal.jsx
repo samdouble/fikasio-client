@@ -11,8 +11,11 @@ import LineChart from '../dashboards/LineChart';
 import Modal from '../UI/Modal';
 import 'react-tabs/style/react-tabs.css';
 
-function HistoryModal(props) {
-  const { isOpen, onClose, metric } = props;
+const HistoryModal = ({
+  isOpen,
+  onClose,
+  metric,
+}) => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {

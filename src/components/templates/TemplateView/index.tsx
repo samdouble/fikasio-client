@@ -17,7 +17,7 @@ const TemplateView = ({
   <div>
     <Tabs
       className="mb-3"
-      defaultActiveKey={defaultTab || 'LOGS'}
+      defaultActiveKey={defaultTab || 'INFOS'}
     >
       <Tab
         eventKey="INFOS"
