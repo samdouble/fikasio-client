@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { Entity } from 'services/entities/types';
-import { Item } from 'services/items/types';
 import { RootState } from 'services/store';
 import ItemsList from '../items/ItemsList';
 import EntityInformationsForm from './EntityInformationsForm';

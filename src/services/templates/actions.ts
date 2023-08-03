@@ -40,7 +40,11 @@ export type TemplateAction =
   | { type: TemplateActionTypes.CREATE_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; field: TemplateField } }
   | { type: TemplateActionTypes.GET_TEMPLATE_FIELDS_REQUEST; payload: { templateId: string; fields: TemplateField[] } }
   | { type: TemplateActionTypes.GET_TEMPLATE_FIELDS_RESPONSE; payload: { templateId: string; fields: TemplateField[] } }
-  | { type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_REQUEST; payload: { templateId: string; id: string; field: TemplateField } }
+  | { type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_REQUEST; payload: {
+    templateId: string;
+    id: string;
+    field: TemplateField;
+  } }
   | { type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; field: TemplateField } }
   | { type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_REQUEST; payload: {
     templateId: string;
@@ -121,7 +125,11 @@ export const getFieldsResponse = (payload: { templateId: string, fields: Templat
   payload,
 });
 
-export const updateFieldRequest = (payload: { templateId: string, id: string, field: TemplateField }): TemplateAction => ({
+export const updateFieldRequest = (payload: {
+  templateId: string,
+  id: string,
+  field: TemplateField,
+}): TemplateAction => ({
   type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_REQUEST,
   payload,
 });

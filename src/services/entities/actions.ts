@@ -40,7 +40,11 @@ export type EntityAction =
   | { type: EntityActionTypes.CREATE_ENTITY_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
   | { type: EntityActionTypes.GET_ENTITY_FIELDS_REQUEST; payload: { entityId: string; fields: EntityField[] } }
   | { type: EntityActionTypes.GET_ENTITY_FIELDS_RESPONSE; payload: { entityId: string; fields: EntityField[] } }
-  | { type: EntityActionTypes.UPDATE_ENTITY_FIELD_REQUEST; payload: { entityId: string; id: string; field: EntityField } }
+  | { type: EntityActionTypes.UPDATE_ENTITY_FIELD_REQUEST; payload: {
+    entityId: string;
+    id: string;
+    field: EntityField;
+  } }
   | { type: EntityActionTypes.UPDATE_ENTITY_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
   | { type: EntityActionTypes.PATCH_ENTITY_FIELD_REQUEST; payload: {
     entityId: string;

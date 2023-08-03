@@ -41,7 +41,6 @@ const ActivityPane = ({
   const [templateId, setTemplateId] = useState(activity?.templateId);
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
   const template = templates?.find(t => t.id === templateId);
-  console.log(templateId, template?.fields);
 
   const handleChangeComments = e => {
     const text = e.target.value;
