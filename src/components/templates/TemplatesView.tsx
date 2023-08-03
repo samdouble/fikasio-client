@@ -6,7 +6,6 @@ import AddTemplateButton from './AddTemplateButton';
 
 const TemplatesView = ({
   templates,
-  onTemplateSelect,
 }) => {
   const [viewMode, setViewMode] = useState('LIST');
 
@@ -14,7 +13,6 @@ const TemplatesView = ({
   if (viewMode === 'LIST') {
     templateView = <TemplatesList
       templates={templates}
-      onTemplateSelect={onTemplateSelect}
     />
   } else {
     templateView = null;
@@ -24,7 +22,6 @@ const TemplatesView = ({
     <>
       <div style={{ textAlign: 'left' }}>
         <AddTemplateButton
-          onClick={onTemplateSelect}
           style={{
             float: 'right',
             marginRight: 0,

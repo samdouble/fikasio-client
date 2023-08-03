@@ -8,7 +8,6 @@ import './style.scss';
 
 const TemplatesList = ({
   templates,
-  onTemplateSelect,
 }) => {
   const [delay, setDelay] = useState(null);
   const [newTemplate, setNewTemplate] = useState<Template | null>(null);
@@ -23,7 +22,11 @@ const TemplatesList = ({
   }, delay);
 
   return templates && (
-    <Table responsive bordered hover>
+    <Table
+      bordered
+      hover
+      responsive
+    >
       <thead>
         <tr>
           <th>{t('comment')}</th>
@@ -36,9 +39,7 @@ const TemplatesList = ({
             .sort((t1, t2) => (t1.startTime < t2.startTime ? -1 : 1))
             .map(template => (
               <TemplateRow
-                deletable
                 key={template.id}
-                onSelect={onTemplateSelect}
                 template={template}
               />
             ))

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import EntityView from 'components/entities/EntityView';
@@ -8,19 +7,18 @@ import AddItemButton from 'components/entities/items/AddItemButton';
 import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
-const EntityPage = ({
-  entities,
-  fetchEntities,
-  fetchItems,
-}) => {
+const EntityPage = () => {
   const { id } = useParams<{ id: string; }>();
+  const entities = useSelector((state: RootState) => state.entities);
   const entity = entities && entities.find(entity => entity.id === id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchItems(id);
+    dispatch(operations.items.fetchItems(id));
   }, [id]);
 
   const getPage = () => (
@@ -28,9 +26,9 @@ const EntityPage = ({
       <Breadcrumb>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>Entités</Breadcrumb.Item>
-        <Breadcrumb.Item active>{ entity.name }</Breadcrumb.Item>
+        <Breadcrumb.Item active>{ entity?.name }</Breadcrumb.Item>
       </Breadcrumb>
-      <Link to={links.itemUpsert(entity.id, 'NEW')}>
+      <Link to={links.itemUpsert(entity?.id, 'NEW')}>
         <AddItemButton
           entity={entity}
           style={{
@@ -39,35 +37,27 @@ const EntityPage = ({
           }}
         />
       </Link>
-      <h4>{ entity.name }</h4>
+      <h4>{ entity?.name }</h4>
       <br />
-      <EntityView
-        entity={entity}
-      />
+      {
+        entity && (
+          <EntityView
+            entity={entity}
+          />
+        )
+      }
     </BasePage>
   );
 
   return (
     <ResourcesHandler
       resources={[entities]}
-      resourceFetchers={[fetchEntities]}
+      resourceFetchers={[
+        () => dispatch(operations.entities.fetchEntities()),
+      ]}
       getContents={getPage}
     />
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    entities: state.entities,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchEntities: operations.entities.fetchEntities,
-    fetchItems: operations.items.fetchItems,
-    setPaneContent: operations.pane.setPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EntityPage);
+export default EntityPage;

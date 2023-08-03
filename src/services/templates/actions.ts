@@ -1,4 +1,4 @@
-import { Template } from './types';
+import { Template, TemplateField } from './types';
 
 export enum TemplateActionTypes {
   CREATE_TEMPLATE_REQUEST = 'CREATE_TEMPLATE_REQUEST',
@@ -11,6 +11,17 @@ export enum TemplateActionTypes {
   PATCH_TEMPLATE_RESPONSE = 'PATCH_TEMPLATE_RESPONSE',
   DELETE_TEMPLATE_REQUEST = 'DELETE_TEMPLATE_REQUEST',
   DELETE_TEMPLATE_RESPONSE = 'DELETE_TEMPLATE_RESPONSE',
+
+  CREATE_TEMPLATE_FIELD_REQUEST = 'CREATE_TEMPLATE_FIELD_REQUEST',
+  CREATE_TEMPLATE_FIELD_RESPONSE = 'CREATE_TEMPLATE_FIELD_RESPONSE',
+  GET_TEMPLATE_FIELDS_REQUEST = 'GET_TEMPLATE_FIELDS_REQUEST',
+  GET_TEMPLATE_FIELDS_RESPONSE = 'GET_TEMPLATE_FIELDS_RESPONSE',
+  UPDATE_TEMPLATE_FIELD_REQUEST = 'UPDATE_TEMPLATE_FIELD_REQUEST',
+  UPDATE_TEMPLATE_FIELD_RESPONSE = 'UPDATE_TEMPLATE_FIELD_RESPONSE',
+  PATCH_TEMPLATE_FIELD_REQUEST = 'PATCH_TEMPLATE_FIELD_REQUEST',
+  PATCH_TEMPLATE_FIELD_RESPONSE = 'PATCH_TEMPLATE_FIELD_RESPONSE',
+  DELETE_TEMPLATE_FIELD_REQUEST = 'DELETE_TEMPLATE_FIELD_REQUEST',
+  DELETE_TEMPLATE_FIELD_RESPONSE = 'DELETE_TEMPLATE_FIELD_RESPONSE',
 }
 
 export type TemplateAction =
@@ -23,7 +34,22 @@ export type TemplateAction =
   | { type: TemplateActionTypes.PATCH_TEMPLATE_REQUEST; payload: { id: string; template: Partial<Template> } }
   | { type: TemplateActionTypes.PATCH_TEMPLATE_RESPONSE; payload: { template: Template } }
   | { type: TemplateActionTypes.DELETE_TEMPLATE_REQUEST; payload: { templateId: string } }
-  | { type: TemplateActionTypes.DELETE_TEMPLATE_RESPONSE; payload: { templateId: string } };
+  | { type: TemplateActionTypes.DELETE_TEMPLATE_RESPONSE; payload: { templateId: string } }
+
+  | { type: TemplateActionTypes.CREATE_TEMPLATE_FIELD_REQUEST; payload: { templateId: string; field: TemplateField } }
+  | { type: TemplateActionTypes.CREATE_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; field: TemplateField } }
+  | { type: TemplateActionTypes.GET_TEMPLATE_FIELDS_REQUEST; payload: { templateId: string; fields: TemplateField[] } }
+  | { type: TemplateActionTypes.GET_TEMPLATE_FIELDS_RESPONSE; payload: { templateId: string; fields: TemplateField[] } }
+  | { type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_REQUEST; payload: { templateId: string; id: string; field: TemplateField } }
+  | { type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; field: TemplateField } }
+  | { type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_REQUEST; payload: {
+    templateId: string;
+    id: string;
+    field: Partial<TemplateField>;
+  } }
+  | { type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; field: TemplateField } }
+  | { type: TemplateActionTypes.DELETE_TEMPLATE_FIELD_REQUEST; payload: { templateId: string; fieldId: string } }
+  | { type: TemplateActionTypes.DELETE_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; fieldId: string } };
 
 export const createTemplateRequest = (template: Template): TemplateAction => ({
   type: TemplateActionTypes.CREATE_TEMPLATE_REQUEST,
@@ -72,5 +98,59 @@ export const deleteTemplateRequest = (templateId: string): TemplateAction => ({
 
 export const deleteTemplateResponse = (payload: { templateId: string }): TemplateAction => ({
   type: TemplateActionTypes.DELETE_TEMPLATE_RESPONSE,
+  payload,
+});
+
+export const createFieldRequest = (payload: { templateId: string, field: TemplateField }): TemplateAction => ({
+  type: TemplateActionTypes.CREATE_TEMPLATE_FIELD_REQUEST,
+  payload,
+});
+
+export const createFieldResponse = (payload: { templateId: string, field: TemplateField }): TemplateAction => ({
+  type: TemplateActionTypes.CREATE_TEMPLATE_FIELD_RESPONSE,
+  payload,
+});
+
+export const getFieldsRequest = (payload: { templateId: string, fields: TemplateField[] }): TemplateAction => ({
+  type: TemplateActionTypes.GET_TEMPLATE_FIELDS_REQUEST,
+  payload,
+});
+
+export const getFieldsResponse = (payload: { templateId: string, fields: TemplateField[] }): TemplateAction => ({
+  type: TemplateActionTypes.GET_TEMPLATE_FIELDS_RESPONSE,
+  payload,
+});
+
+export const updateFieldRequest = (payload: { templateId: string, id: string, field: TemplateField }): TemplateAction => ({
+  type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_REQUEST,
+  payload,
+});
+
+export const updateFieldResponse = (payload: { templateId: string, field: TemplateField }): TemplateAction => ({
+  type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_RESPONSE,
+  payload,
+});
+
+export const patchFieldRequest = (payload: {
+  templateId: string,
+  id: string,
+  field: Partial<TemplateField>,
+}): TemplateAction => ({
+  type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_REQUEST,
+  payload,
+});
+
+export const patchFieldResponse = (payload: { templateId: string, field: TemplateField }): TemplateAction => ({
+  type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_RESPONSE,
+  payload,
+});
+
+export const deleteFieldRequest = (payload: { templateId: string, fieldId: string }): TemplateAction => ({
+  type: TemplateActionTypes.DELETE_TEMPLATE_FIELD_REQUEST,
+  payload,
+});
+
+export const deleteFieldResponse = (payload: { templateId: string, fieldId: string }): TemplateAction => ({
+  type: TemplateActionTypes.DELETE_TEMPLATE_FIELD_RESPONSE,
   payload,
 });

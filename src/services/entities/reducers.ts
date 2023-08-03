@@ -22,7 +22,7 @@ export default function reducer(state: EntityReducerState = null, action: Entity
     case EntityActionTypes.DELETE_ENTITY_RESPONSE:
       return state?.filter(entity => entity.id !== action.payload.entityId);
 
-    case EntityActionTypes.CREATE_FIELD_RESPONSE:
+    case EntityActionTypes.CREATE_ENTITY_FIELD_RESPONSE:
       return state?.map(entity => {
         if (entity.id === action.payload.entityId) {
           return {
@@ -35,8 +35,8 @@ export default function reducer(state: EntityReducerState = null, action: Entity
         }
         return entity;
       });
-    case EntityActionTypes.UPDATE_FIELD_RESPONSE:
-    case EntityActionTypes.PATCH_FIELD_RESPONSE:
+    case EntityActionTypes.UPDATE_ENTITY_FIELD_RESPONSE:
+    case EntityActionTypes.PATCH_ENTITY_FIELD_RESPONSE:
       return state?.map(entity => {
         if (entity.id === action.payload.entityId) {
           return {
@@ -51,7 +51,7 @@ export default function reducer(state: EntityReducerState = null, action: Entity
         }
         return entity;
       });
-    case EntityActionTypes.DELETE_FIELD_RESPONSE:
+    case EntityActionTypes.DELETE_ENTITY_FIELD_RESPONSE:
       return state?.map(entity => {
         if (entity.id === action.payload.entityId) {
           return {

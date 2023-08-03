@@ -41,7 +41,7 @@ const ActivityPane = ({
   const [templateId, setTemplateId] = useState(activity?.templateId);
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
   const template = templates?.find(t => t.id === templateId);
-  console.log(templateId, template);
+  console.log(templateId, template?.fields);
 
   const handleChangeComments = e => {
     const text = e.target.value;
@@ -192,7 +192,7 @@ const ActivityPane = ({
               style={{ width: 250 }}
             >
               {
-                ({ input, options }) => {
+                ({ input }) => {
                   return (
                     <select
                       className="form-control"
@@ -231,12 +231,18 @@ const ActivityPane = ({
                         {
                           fields
                             .map((name, index) => (
-                              <div key={name}>
-                                <RBForm.Label>{template?.fields[index].name}</RBForm.Label>
+                              <div key={name as string}>
+                                <RBForm.Label>
+                                  {template?.fields[index].name}
+                                </RBForm.Label>
                                 <Field name={`${name}.fieldId`}>
                                   {
                                     ({ input }) => (
-                                      <input {...input} type="hidden" name={`${name}.fieldId`} />
+                                      <input
+                                        {...input}
+                                        type="hidden"
+                                        name={`${name}.fieldId`}
+                                      />
                                     )
                                   }
                                 </Field>

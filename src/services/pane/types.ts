@@ -5,15 +5,21 @@ interface ActivityPane {
   activity: Partial<Activity>;
 }
 
-interface FieldPane {
-  type: 'FIELD';
+interface EntityFieldPane {
+  type: 'ENTITY_FIELD';
   entityId: string;
+  id: string;
+}
+
+interface TemplateFieldPane {
+  type: 'TEMPLATE_FIELD';
+  templateId: string;
   id: string;
 }
 
 export type Pane = {
   type: string;
   id: string;
-} | ActivityPane | FieldPane;
+} | ActivityPane | EntityFieldPane | TemplateFieldPane;
 
 export default Pane;

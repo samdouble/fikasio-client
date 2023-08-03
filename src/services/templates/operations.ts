@@ -5,6 +5,11 @@ import {
   updateTemplate as APIupdateTemplate,
   patchTemplate as APIpatchTemplate,
   deleteTemplate as APIdeleteTemplate,
+  getFields as APIgetFields,
+  createField as APIcreateField,
+  updateField as APIupdateField,
+  patchField as APIpatchField,
+  deleteField as APIdeleteField,
 } from './endpoints';
 import { fetchOnceOperation } from '../fetchOperation';
 import {
@@ -18,9 +23,19 @@ import {
   patchTemplateResponse,
   deleteTemplateRequest,
   deleteTemplateResponse,
+  createFieldRequest,
+  createFieldResponse,
+  getFieldsRequest,
+  getFieldsResponse,
+  updateFieldRequest,
+  updateFieldResponse,
+  patchFieldRequest,
+  patchFieldResponse,
+  deleteFieldRequest,
+  deleteFieldResponse,
   TemplateAction,
 } from './actions';
-import { Template } from './types';
+import { Template, TemplateField } from './types';
 
 type TemplateDispatch = Dispatch<TemplateAction>;
 
@@ -66,12 +81,61 @@ function deleteTemplate(id: string) {
   };
 }
 
+function fetchFields(filter) {
+  return fetchOnceOperation(
+    getFieldsRequest,
+    getFieldsResponse,
+    APIgetFields,
+    state => state.fields,
+    [filter],
+  );
+}
+
+function createField(templateId: string, field: TemplateField) {
+  return (dispatch: TemplateDispatch) => {
+    dispatch(createFieldRequest({ templateId, field }));
+    return APIcreateField(templateId, field)
+      .then(res => dispatch(createFieldResponse({ templateId, ...res })));
+  };
+}
+
+function updateField(templateId: string, id: string, field: TemplateField) {
+  return (dispatch: TemplateDispatch) => {
+    dispatch(updateFieldRequest({ templateId, id, field }));
+    return APIupdateField(templateId, id, field)
+      .then(res => dispatch(updateFieldResponse({ templateId, ...res })));
+  };
+}
+
+function patchField(templateId: string, id, field: Partial<TemplateField>) {
+  return (dispatch: TemplateDispatch) => {
+    dispatch(patchFieldRequest({ templateId, id, field }));
+    return APIpatchField(templateId, id, field)
+      .then(res => dispatch(patchFieldResponse({ templateId, ...res })));
+  };
+}
+
+function deleteField(templateId: string, fieldId: string) {
+  return (dispatch: TemplateDispatch) => {
+    dispatch(deleteFieldRequest({ templateId, fieldId }));
+    return APIdeleteField(templateId, fieldId)
+      .then(res => dispatch(deleteFieldResponse({ templateId, ...res })));
+  };
+}
+
 const operations = {
   fetchTemplates,
   createTemplate,
   updateTemplate,
   patchTemplate,
   deleteTemplate,
+  fields: {
+    fetchFields,
+    createField,
+    updateField,
+    patchField,
+    deleteField,
+  },
 };
 
 export default operations;

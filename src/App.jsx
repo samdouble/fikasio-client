@@ -23,6 +23,7 @@ import ProjectsPage from './pages/ProjectsPage';
 import SettingsPage from './pages/SettingsPage';
 import TasksPage from './pages/TasksPage';
 import TimesheetPage from './pages/TimesheetPage';
+import TemplatePage from './pages/TemplatePage';
 import TemplatesPage from './pages/TemplatesPage';
 import Page404 from './pages/Page404';
 import links from './utils/links';
@@ -54,6 +55,7 @@ const App = () => {
           <PrivateRoute path={links.paths.projects} component={ProjectsPage} />
           <PrivateRoute path={links.paths.settings} component={SettingsPage} />
           <PrivateRoute path={links.paths.tasks} component={TasksPage} />
+          <PrivateRoute path={links.paths.template} component={TemplatePage} />
           <PrivateRoute path={links.paths.templates} component={TemplatesPage} />
           <PrivateRoute path={links.paths.timesheet} component={TimesheetPage} />
           <Route component={Page404} />

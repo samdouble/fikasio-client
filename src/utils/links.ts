@@ -15,6 +15,8 @@ const projects = () => '/projects';
 const settings = () => '/settings';
 const tasks = () => '/tasks';
 const templates = () => '/templates';
+const template = id => `/templates/${id}`;
+const templateUpsert = () => `/templates/create`;
 const timesheet = () => '/timesheet';
 
 const paths = {
@@ -35,6 +37,8 @@ const paths = {
   settings: settings(),
   tasks: tasks(),
   templates: templates(),
+  template: template(':id'),
+  templateUpsert: templateUpsert(),
   timesheet: timesheet(),
 };
 
@@ -56,6 +60,8 @@ const links = {
   settings: () => settings(),
   tasks: () => tasks(),
   templates: () => templates(),
+  template: id => template(id),
+  templateUpsert: () => templateUpsert(),
   timesheet: () => timesheet(),
   paths,
 };

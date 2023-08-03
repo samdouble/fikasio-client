@@ -12,16 +12,16 @@ export enum EntityActionTypes {
   DELETE_ENTITY_REQUEST = 'DELETE_ENTITY_REQUEST',
   DELETE_ENTITY_RESPONSE = 'DELETE_ENTITY_RESPONSE',
 
-  CREATE_FIELD_REQUEST = 'CREATE_FIELD_REQUEST',
-  CREATE_FIELD_RESPONSE = 'CREATE_FIELD_RESPONSE',
-  GET_FIELDS_REQUEST = 'GET_FIELDS_REQUEST',
-  GET_FIELDS_RESPONSE = 'GET_FIELDS_RESPONSE',
-  UPDATE_FIELD_REQUEST = 'UPDATE_FIELD_REQUEST',
-  UPDATE_FIELD_RESPONSE = 'UPDATE_FIELD_RESPONSE',
-  PATCH_FIELD_REQUEST = 'PATCH_FIELD_REQUEST',
-  PATCH_FIELD_RESPONSE = 'PATCH_FIELD_RESPONSE',
-  DELETE_FIELD_REQUEST = 'DELETE_FIELD_REQUEST',
-  DELETE_FIELD_RESPONSE = 'DELETE_FIELD_RESPONSE',
+  CREATE_ENTITY_FIELD_REQUEST = 'CREATE_ENTITY_FIELD_REQUEST',
+  CREATE_ENTITY_FIELD_RESPONSE = 'CREATE_ENTITY_FIELD_RESPONSE',
+  GET_ENTITY_FIELDS_REQUEST = 'GET_ENTITY_FIELDS_REQUEST',
+  GET_ENTITY_FIELDS_RESPONSE = 'GET_ENTITY_FIELDS_RESPONSE',
+  UPDATE_ENTITY_FIELD_REQUEST = 'UPDATE_ENTITY_FIELD_REQUEST',
+  UPDATE_ENTITY_FIELD_RESPONSE = 'UPDATE_ENTITY_FIELD_RESPONSE',
+  PATCH_ENTITY_FIELD_REQUEST = 'PATCH_ENTITY_FIELD_REQUEST',
+  PATCH_ENTITY_FIELD_RESPONSE = 'PATCH_ENTITY_FIELD_RESPONSE',
+  DELETE_ENTITY_FIELD_REQUEST = 'DELETE_ENTITY_FIELD_REQUEST',
+  DELETE_ENTITY_FIELD_RESPONSE = 'DELETE_ENTITY_FIELD_RESPONSE',
 }
 
 export type EntityAction =
@@ -36,20 +36,20 @@ export type EntityAction =
   | { type: EntityActionTypes.DELETE_ENTITY_REQUEST; payload: { entityId: string } }
   | { type: EntityActionTypes.DELETE_ENTITY_RESPONSE; payload: { entityId: string } }
 
-  | { type: EntityActionTypes.CREATE_FIELD_REQUEST; payload: { entityId: string; field: EntityField } }
-  | { type: EntityActionTypes.CREATE_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
-  | { type: EntityActionTypes.GET_FIELDS_REQUEST; payload: { entityId: string; fields: EntityField[] } }
-  | { type: EntityActionTypes.GET_FIELDS_RESPONSE; payload: { entityId: string; fields: EntityField[] } }
-  | { type: EntityActionTypes.UPDATE_FIELD_REQUEST; payload: { entityId: string; id: string; field: EntityField } }
-  | { type: EntityActionTypes.UPDATE_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
-  | { type: EntityActionTypes.PATCH_FIELD_REQUEST; payload: {
+  | { type: EntityActionTypes.CREATE_ENTITY_FIELD_REQUEST; payload: { entityId: string; field: EntityField } }
+  | { type: EntityActionTypes.CREATE_ENTITY_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
+  | { type: EntityActionTypes.GET_ENTITY_FIELDS_REQUEST; payload: { entityId: string; fields: EntityField[] } }
+  | { type: EntityActionTypes.GET_ENTITY_FIELDS_RESPONSE; payload: { entityId: string; fields: EntityField[] } }
+  | { type: EntityActionTypes.UPDATE_ENTITY_FIELD_REQUEST; payload: { entityId: string; id: string; field: EntityField } }
+  | { type: EntityActionTypes.UPDATE_ENTITY_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
+  | { type: EntityActionTypes.PATCH_ENTITY_FIELD_REQUEST; payload: {
     entityId: string;
     id: string;
     field: Partial<EntityField>;
   } }
-  | { type: EntityActionTypes.PATCH_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
-  | { type: EntityActionTypes.DELETE_FIELD_REQUEST; payload: { entityId: string; fieldId: string } }
-  | { type: EntityActionTypes.DELETE_FIELD_RESPONSE; payload: { entityId: string; fieldId: string } };
+  | { type: EntityActionTypes.PATCH_ENTITY_FIELD_RESPONSE; payload: { entityId: string; field: EntityField } }
+  | { type: EntityActionTypes.DELETE_ENTITY_FIELD_REQUEST; payload: { entityId: string; fieldId: string } }
+  | { type: EntityActionTypes.DELETE_ENTITY_FIELD_RESPONSE; payload: { entityId: string; fieldId: string } };
 
 export const createEntityRequest = (payload: { entity: Entity }): EntityAction => ({
   type: EntityActionTypes.CREATE_ENTITY_REQUEST,
@@ -102,32 +102,32 @@ export const deleteEntityResponse = (payload: { entityId: string }): EntityActio
 });
 
 export const createFieldRequest = (payload: { entityId: string, field: EntityField }): EntityAction => ({
-  type: EntityActionTypes.CREATE_FIELD_REQUEST,
+  type: EntityActionTypes.CREATE_ENTITY_FIELD_REQUEST,
   payload,
 });
 
 export const createFieldResponse = (payload: { entityId: string, field: EntityField }): EntityAction => ({
-  type: EntityActionTypes.CREATE_FIELD_RESPONSE,
+  type: EntityActionTypes.CREATE_ENTITY_FIELD_RESPONSE,
   payload,
 });
 
 export const getFieldsRequest = (payload: { entityId: string, fields: EntityField[] }): EntityAction => ({
-  type: EntityActionTypes.GET_FIELDS_REQUEST,
+  type: EntityActionTypes.GET_ENTITY_FIELDS_REQUEST,
   payload,
 });
 
 export const getFieldsResponse = (payload: { entityId: string, fields: EntityField[] }): EntityAction => ({
-  type: EntityActionTypes.GET_FIELDS_RESPONSE,
+  type: EntityActionTypes.GET_ENTITY_FIELDS_RESPONSE,
   payload,
 });
 
 export const updateFieldRequest = (payload: { entityId: string, id: string, field: EntityField }): EntityAction => ({
-  type: EntityActionTypes.UPDATE_FIELD_REQUEST,
+  type: EntityActionTypes.UPDATE_ENTITY_FIELD_REQUEST,
   payload,
 });
 
 export const updateFieldResponse = (payload: { entityId: string, field: EntityField }): EntityAction => ({
-  type: EntityActionTypes.UPDATE_FIELD_RESPONSE,
+  type: EntityActionTypes.UPDATE_ENTITY_FIELD_RESPONSE,
   payload,
 });
 
@@ -136,21 +136,21 @@ export const patchFieldRequest = (payload: {
   id: string,
   field: Partial<EntityField>,
 }): EntityAction => ({
-  type: EntityActionTypes.PATCH_FIELD_REQUEST,
+  type: EntityActionTypes.PATCH_ENTITY_FIELD_REQUEST,
   payload,
 });
 
 export const patchFieldResponse = (payload: { entityId: string, field: EntityField }): EntityAction => ({
-  type: EntityActionTypes.PATCH_FIELD_RESPONSE,
+  type: EntityActionTypes.PATCH_ENTITY_FIELD_RESPONSE,
   payload,
 });
 
 export const deleteFieldRequest = (payload: { entityId: string, fieldId: string }): EntityAction => ({
-  type: EntityActionTypes.DELETE_FIELD_REQUEST,
+  type: EntityActionTypes.DELETE_ENTITY_FIELD_REQUEST,
   payload,
 });
 
 export const deleteFieldResponse = (payload: { entityId: string, fieldId: string }): EntityAction => ({
-  type: EntityActionTypes.DELETE_FIELD_RESPONSE,
+  type: EntityActionTypes.DELETE_ENTITY_FIELD_RESPONSE,
   payload,
 });

@@ -28,9 +28,9 @@ const EntitiesList = ({
 
   return entities && (
     <Table
-      responsive
       bordered
       hover
+      responsive
     >
       <thead>
         <tr>
@@ -44,8 +44,8 @@ const EntitiesList = ({
             .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
             .map(entity => (
               <EntityRow
-                key={entity.id}
                 entity={entity}
+                key={entity.id}
                 onDeleteEntity={() => handleDelete(entity)}
               />
             ))

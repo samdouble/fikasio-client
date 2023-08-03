@@ -36,7 +36,7 @@ const BasePage = ({
       id={paneContent && paneContent.id}
     />;
   */
-  } else if (paneContent && paneContent.type === 'FIELD') {
+  } else if (paneContent && paneContent.type === 'ENTITY_FIELD') {
     pane = <FieldPane
       entityId={paneContent && paneContent.entityId}
       id={paneContent && paneContent.id}
@@ -57,6 +57,11 @@ const BasePage = ({
     />;
   } else if (paneContent && paneContent.type === 'TEMPLATE') {
     pane = <TemplatePane
+      id={paneContent && paneContent.id}
+    />;
+  } else if (paneContent && paneContent.type === 'TEMPLATE_FIELD') {
+    pane = <FieldPane
+      templateId={paneContent && paneContent.templateId}
       id={paneContent && paneContent.id}
     />;
   }

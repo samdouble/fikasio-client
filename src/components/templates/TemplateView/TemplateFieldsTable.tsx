@@ -5,19 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { operations } from 'services';
 import AddFieldButton from './AddFieldButton';
 
-const EntityFieldsTable = ({
-  entity,
+const TemplateFieldsTable = ({
+  template,
 }) => {
   const dispatch = useDispatch();
 
   return (
     <>
       <AddFieldButton
-        onClick={() => operations.pane.setPaneContent({
-          type: 'ENTITY_FIELD',
-          entityId: entity.id,
-          id: 'NEW',
-        })(dispatch)}
+        onClick={
+          () => operations.pane.setPaneContent({
+            type: 'TEMPLATE_FIELD',
+            templateId: template.id,
+            id: 'NEW',
+          })(dispatch)
+        }
         style={{
           float: 'right',
           marginRight: 0,
@@ -49,7 +51,7 @@ const EntityFieldsTable = ({
         </thead>
         <tbody>
           {
-            entity.fields
+            template.fields
               .map(field => (
                 <tr key={field.id}>
                   <td>
@@ -63,7 +65,7 @@ const EntityFieldsTable = ({
                       field.isRequired && <FontAwesomeIcon
                         icon="check"
                         size="1x"
-                        onClick={() => operations.entities.fields.deleteField(entity.id, field.id)}
+                        onClick={() => operations.templates.fields.deleteField(template.id, field.id)}
                         style={{
                           color: 'blue',
                           cursor: 'pointer',
@@ -75,11 +77,13 @@ const EntityFieldsTable = ({
                   <td>
                     <FontAwesomeIcon
                       icon="edit"
-                      onClick={() => operations.pane.setPaneContent({
-                        type: 'ENTITY_FIELD',
-                        entityId: entity.id,
-                        id: field.id,
-                      })(dispatch)}
+                      onClick={
+                        () => operations.pane.setPaneContent({
+                          type: 'TEMPLATE_FIELD',
+                          templateId: template.id,
+                          id: field.id,
+                        })(dispatch)
+                      }
                       size="1x"
                       style={{
                         color: 'blue',
@@ -92,7 +96,7 @@ const EntityFieldsTable = ({
                     <FontAwesomeIcon
                       icon="times"
                       size="1x"
-                      onClick={() => operations.entities.fields.deleteField(entity.id, field.id)(dispatch)}
+                      onClick={() => operations.templates.fields.deleteField(template.id, field.id)(dispatch)}
                       style={{
                         color: '#ce0000',
                         cursor: 'pointer',
@@ -109,4 +113,4 @@ const EntityFieldsTable = ({
   );
 };
 
-export default EntityFieldsTable;
+export default TemplateFieldsTable;
