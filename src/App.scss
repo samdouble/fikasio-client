@@ -150,3 +150,23 @@ label:focus,
   background-color: transparent;
   padding: 0;
 }
+
+// Tabs
+.nav-tabs {
+  border: none;
+}
+
+.nav-tabs .nav-link {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  color: black;
+}
+
+.nav-tabs .nav-link:hover {
+  border-bottom: 3px solid #ac95be;
+}
+
+.nav-tabs .nav-link.active {
+  border-bottom: 3px solid #7E5B9A;
+}

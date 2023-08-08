@@ -6,6 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -49,73 +51,89 @@ const SettingsPage = ({ login, patchUserMe }) => {
         <Row>
           <Col lg={12}>
             <h4>{t('settings')}</h4>
-            <RBForm.Group>
-              <RBForm.Label>Langue</RBForm.Label>
-              <select
-                className="form-control"
-                defaultValue={language}
-                onChange={e => handleChangeLanguage(e)}
-                style={{
-                  width: 400,
-                }}
+            <Tabs
+              className="mb-3"
+              defaultActiveKey="GENERAL"
+            >
+              <Tab
+                eventKey="GENERAL"
+                title="Général"
               >
-                <option value='en'>English</option>
-                <option value='fr'>Français</option>
-              </select>
-            </RBForm.Group>
-            <Form
-              onSubmit={onSubmit}
-              initialValues={user.censoredWords}
-              mutators={{ ...arrayMutators }}
-              render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <RBForm.Group>
-                    <RBForm.Label>Mots censurés</RBForm.Label>
-                    <FieldArray name="censoredWords">
-                      {({ fields }) => (
-                        <div>
-                          {
-                            fields.map((name, index) => (
-                              <table key={name}>
-                                <tbody>
-                                  <tr>
-                                    <td>
-                                      <Field
-                                        name={name}
-                                        component="input"
-                                        className="form-control"
-                                      />
-                                    </td>
-                                    <td width={35}>
-                                      <FontAwesomeIcon
-                                        icon="times"
-                                        size="1x"
-                                        onClick={() => fields.remove(index)}
-                                        style={{
-                                          color: '#ce0000',
-                                          cursor: 'pointer',
-                                          marginLeft: 10,
-                                        }}
-                                      />
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            ))
-                          }
-                          <Button
-                            onClick={() => fields.push('')}
-                          >
-                            Ajouter
-                          </Button>
-                        </div>
-                      )}
-                    </FieldArray>
-                  </RBForm.Group>
-                  <Button type="submit" variant='success'>Sauvegarder</Button>
-                </form>
-              )}
-            />
+                <RBForm.Group>
+                  <RBForm.Label>Langue</RBForm.Label>
+                  <select
+                    className="form-control"
+                    defaultValue={language}
+                    onChange={e => handleChangeLanguage(e)}
+                    style={{
+                      width: 400,
+                    }}
+                  >
+                    <option value='en'>English</option>
+                    <option value='fr'>Français</option>
+                  </select>
+                </RBForm.Group>
+                <Form
+                  onSubmit={onSubmit}
+                  initialValues={user.censoredWords}
+                  mutators={{ ...arrayMutators }}
+                  render={({ handleSubmit }) => (
+                    <form onSubmit={handleSubmit}>
+                      <RBForm.Group>
+                        <RBForm.Label>Mots censurés</RBForm.Label>
+                        <FieldArray name="censoredWords">
+                          {({ fields }) => (
+                            <div>
+                              {
+                                fields.map((name, index) => (
+                                  <table key={name}>
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <Field
+                                            name={name}
+                                            component="input"
+                                            className="form-control"
+                                          />
+                                        </td>
+                                        <td width={35}>
+                                          <FontAwesomeIcon
+                                            icon="times"
+                                            size="1x"
+                                            onClick={() => fields.remove(index)}
+                                            style={{
+                                              color: '#ce0000',
+                                              cursor: 'pointer',
+                                              marginLeft: 10,
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                ))
+                              }
+                              <Button
+                                onClick={() => fields.push('')}
+                              >
+                                Ajouter
+                              </Button>
+                            </div>
+                          )}
+                        </FieldArray>
+                      </RBForm.Group>
+                      <Button type="submit" variant='success'>Sauvegarder</Button>
+                    </form>
+                  )}
+                />
+              </Tab>
+              <Tab
+                eventKey="PAYMENTS"
+                title="Paiements"
+              >
+                
+              </Tab>
+            </Tabs>
           </Col>
         </Row>
       </Container>

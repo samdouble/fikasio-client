@@ -26,10 +26,12 @@ const TasksPage = ({
         </Breadcrumb>
         <h4>Tâches</h4>
         <TasksView
-          onTaskSelect={taskId => setPaneContent({
-            type: 'TASK',
-            id: taskId,
-          })}
+          onTaskSelect={
+            taskId => setPaneContent({
+              type: 'TASK',
+              id: taskId,
+            })
+          }
           showAddButton
           showCompletionFilter
           showDueDateFilter
