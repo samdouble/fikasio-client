@@ -64,7 +64,11 @@ const ItemInformationsForm = ({
                           <Field name={`${name}.fieldId`}>
                             {
                               ({ input }) => (
-                                <input {...input} type="hidden" name={`${name}.fieldId`} />
+                                <input
+                                  {...input}
+                                  name={`${name}.fieldId`}
+                                  type="hidden"
+                                />
                               )
                             }
                           </Field>

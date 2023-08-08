@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -35,6 +35,28 @@ const TaskInformationsForm = ({
     : null,
   );
 
+  const detailsTextarea = useRef(null);
+  const [detailsTextareaHeight, setDetailsTextareaHeight] = useState(1); 
+  
+  const setTextareaHeight = element => {
+    const rowHeight = 25;
+    const maxNbRows = 10;
+    const height = element.scrollHeight;
+    const trows = Math.ceil(height / rowHeight) - 1;
+    setDetailsTextareaHeight(Math.min(maxNbRows, trows));
+  };
+
+  useEffect(() => {
+    if (detailsTextarea && detailsTextarea.current) {
+      const element: HTMLTextAreaElement = detailsTextarea.current;
+      setTextareaHeight(element);
+    }
+  }, [detailsTextarea]);
+
+  const handleDetailsChange = event => {
+    setTextareaHeight(event.target)
+  };
+
   const taskProjects = task
     ? task.projects
     : (projectId && projects?.find(p => p.id === projectId) ? [{ id: projectId }] : []);
@@ -63,18 +85,33 @@ const TaskInformationsForm = ({
           <RBForm.Group>
             <RBForm.Label>Description</RBForm.Label>
             <Field
-              name="description"
-              component="input"
               className="form-control"
+              component="input"
+              name="description"
             />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>Détails</RBForm.Label>
             <Field
-              name="details"
               component="textarea"
-              className="form-control"
-            />
+              name="details"
+            >
+              {
+                ({ input }) => (
+                  <textarea
+                    {...input}
+                    className="form-control"
+                    name="details"
+                    onChange={e => {
+                      input.onChange(e);
+                      handleDetailsChange(e);
+                    }}
+                    ref={detailsTextarea}
+                    rows={detailsTextareaHeight}
+                  />
+                )
+              }
+            </Field>
           </RBForm.Group>
           {
             /*
