@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Dropdown from 'react-bootstrap/Dropdown';
 import ContentEditable from 'react-contenteditable';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +9,7 @@ import useTimeout from 'use-timeout';
 import ProjectTag from 'components/projects/ProjectTag';
 import Checkbox from 'components/UI/Checkbox';
 import Datepicker from 'components/UI/Datepicker';
+import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { RootState } from 'services/store';
 import AssigneeButton from './AssigneeButton';
@@ -228,38 +230,56 @@ const TaskRow = ({
           )
         }
       </td>
-      <td
-        width={35}
-        style={{ cursor: 'pointer' }}
-      >
-        <FontAwesomeIcon
-          icon="copy"
-          size="1x"
-          onClick={() => operations.tasks.createTask(task)(dispatch)}
-        />
-      </td>
-      <td
-        width={35}
-        style={{ cursor: 'pointer' }}
-      >
-        <FontAwesomeIcon
-          icon="archive"
-          size="1x"
-          onClick={() => {
-            const isArchived = task.isArchived || false;
-            operations.tasks.patchTask(task.id, { isArchived: !isArchived })(dispatch);
+      <td width={35}>
+        <Dropdown
+          style={{
+            position: 'static',
           }}
-        />
-      </td>
-      <td
-        width={35}
-        style={{ cursor: 'pointer', color: '#ff0000' }}
-      >
-        <FontAwesomeIcon
-          icon="times"
-          size="1x"
-          onClick={() => operations.tasks.deleteTask(task.id)(dispatch)}
-        />
+        >
+          <Dropdown.Toggle as={DropdownToggle} />
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => operations.tasks.createTask(task)(dispatch)}
+            >
+              <FontAwesomeIcon
+                icon="copy"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Copier
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                const isArchived = task.isArchived || false;
+                operations.tasks.patchTask(task.id, { isArchived: !isArchived })(dispatch);
+              }}
+            >
+              <FontAwesomeIcon
+                icon="archive"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Archiver
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => operations.tasks.deleteTask(task.id)(dispatch)}
+            >
+              <FontAwesomeIcon
+                icon="times"
+                style={{
+                  color: 'red',
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Supprimer
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
     </tr>
   );

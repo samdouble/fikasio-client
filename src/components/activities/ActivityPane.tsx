@@ -11,6 +11,7 @@ import uniqBy from 'lodash.uniqby';
 import { operations } from 'services';
 import { getActivities } from 'services/activities/endpoints';
 import { Activity } from 'services/activities/types';
+import { TemplateField } from 'services/templates/types';
 import { RootState } from 'services/store';
 import { getFormFieldForType, processFormData } from 'utils/forms';
 import SuggestionsList from './SuggestionsList';
@@ -74,10 +75,19 @@ const ActivityPane = ({
     }
   };
 
+  const activityWithInitialValues = {
+    ...activity,
+    values: template?.fields
+      .map((field: TemplateField) => ({
+        fieldId: field.id,
+        value: activity?.values?.find(v => v.fieldId === field.id)?.value,
+      })),
+  };
+
   return (
     <Form
-      onSubmit={onSubmit}
-      initialValues={activity}
+      keepDirtyOnReinitialize
+      initialValues={activityWithInitialValues}
       mutators={{
         ...arrayMutators,
         setComments: (args, state, utils) => {
@@ -85,6 +95,7 @@ const ActivityPane = ({
           utils.changeValue(state, 'comments', () => comments);
         },
       }}
+      onSubmit={onSubmit}
       render={({ form, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <h4>{ activity && activity.name }</h4>
@@ -264,9 +275,9 @@ const ActivityPane = ({
           <RBForm.Group>
             <RBForm.Label>Commentaires</RBForm.Label>
             <Field
-              name="comments"
               component="textarea"
               className="form-control"
+              name="comments"
               onInput={handleChangeComments}
               rows={6}
               value={comments}
@@ -281,15 +292,15 @@ const ActivityPane = ({
           />
           <div
             style={{
-              float: 'right',
               bottom: 10,
+              float: 'right',
               paddingBottom: 15,
               position: 'absolute',
               right: 30,
             }}>
             <Button
-              variant="outline-secondary"
               onClick={() => dispatch(operations.pane.clearPaneContent())}
+              variant="outline-secondary"
             >
               Annuler
             </Button>

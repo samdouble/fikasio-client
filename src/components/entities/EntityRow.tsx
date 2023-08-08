@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import links from 'utils/links';
 
@@ -45,15 +47,28 @@ const EntityRow = ({
       </Link>
     </td>
     <td width={35}>
-      <FontAwesomeIcon
-        icon="times"
-        size="1x"
-        onClick={() => onDeleteEntity(entity)}
+      <Dropdown
         style={{
-          color: '#ce0000',
-          cursor: 'pointer',
+          position: 'static',
         }}
-      />
+      >
+        <Dropdown.Toggle as={DropdownToggle} />
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={() => onDeleteEntity(entity)}
+          >
+            <FontAwesomeIcon
+              icon="times"
+              style={{
+                color: 'red',
+                marginRight: 10,
+                width: 25,
+              }}
+            />
+            Supprimer
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </td>
   </tr>
 );

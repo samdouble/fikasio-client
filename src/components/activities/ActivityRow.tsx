@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Dropdown from 'react-bootstrap/Dropdown';
 import ContentEditable from 'react-contenteditable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import useTimeout from 'use-timeout';
 import Datepicker from 'components/UI/Datepicker';
+import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 
 const ActivityRow = ({
@@ -164,25 +166,40 @@ const ActivityRow = ({
         { activity.duration && Duration.fromMillis(activity.duration * 60 * 1000).toFormat('h:mm') }
       </td>
       <td width={35}>
-        <FontAwesomeIcon
-          icon="copy"
-          size="1x"
-          onClick={() => handleDuplicateActivity(activity)}
+        <Dropdown
           style={{
-            cursor: 'pointer',
+            position: 'static',
           }}
-        />
-      </td>
-      <td width={35}>
-        <FontAwesomeIcon
-          icon="times"
-          size="1x"
-          onClick={() => onDeleteActivity(activity)}
-          style={{
-            color: '#ce0000',
-            cursor: 'pointer',
-          }}
-        />
+        >
+          <Dropdown.Toggle as={DropdownToggle} />
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => handleDuplicateActivity(activity)}
+            >
+              <FontAwesomeIcon
+                icon="copy"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Copier
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => onDeleteActivity(activity)}
+            >
+              <FontAwesomeIcon
+                icon="times"
+                style={{
+                  color: 'red',
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Supprimer
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
     </tr>
   );

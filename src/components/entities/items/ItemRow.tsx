@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
+import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import links from 'utils/links';
 
@@ -55,16 +57,6 @@ const ItemRow = ({
           ))
       }
       <td width={35}>
-        <FontAwesomeIcon
-          icon="copy"
-          size="1x"
-          onClick={() => operations.items.createItem(entity.id, item)(dispatch)}
-          style={{
-            cursor: 'pointer',
-          }}
-        />
-      </td>
-      <td width={35}>
         <Link
           style={{ textDecoration: 'none' }}
           to={links.itemUpsert(entity.id, item.id)}
@@ -76,15 +68,40 @@ const ItemRow = ({
         </Link>
       </td>
       <td width={35}>
-        <FontAwesomeIcon
-          icon="times"
-          size="1x"
-          onClick={() => operations.items.deleteItem(entity.id, item.id)(dispatch)}
+        <Dropdown
           style={{
-            color: '#ce0000',
-            cursor: 'pointer',
+            position: 'static',
           }}
-        />
+        >
+          <Dropdown.Toggle as={DropdownToggle} />
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => operations.items.createItem(entity.id, item)(dispatch)}
+            >
+              <FontAwesomeIcon
+                icon="copy"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Copier
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => operations.items.deleteItem(entity.id, item.id)(dispatch)}
+            >
+              <FontAwesomeIcon
+                icon="times"
+                style={{
+                  color: 'red',
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Supprimer
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
     </tr>
   );
