@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import classNames from 'classnames';
 import Datepicker from 'components/UI/Datepicker';
+import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { isEmpty } from 'utils/isEmpty';
 import { round } from 'utils/maths';
@@ -55,6 +57,7 @@ const ProjectRow = ({
           defaultValue={DateTime.fromISO(project.dueAt).toMillis()}
           isOpen={isDueAtDatepickerOpen}
           name="dueAt"
+          onBlur={() => setIsDueAtDatepickerOpen(false)}
           onChange={dueAt => {
             const timestamp = DateTime.fromJSDate(dueAt)
               .set({ hour: 23, minute: 59, second: 59 })
@@ -86,43 +89,56 @@ const ProjectRow = ({
           )
         }
       </td>
-      <td
-        width={35}
-      >
-        <FontAwesomeIcon
-          icon="copy"
-          size="1x"
-          onClick={() => createProject(project)}
-          style={{
-            cursor: 'pointer',
-          }}
-        />
-      </td>
-      <td
-        width={35}
-      >
-        <FontAwesomeIcon
-          icon="archive"
-          size="1x"
-          onClick={() => {
-            const isArchived = project.isArchived || false;
-            patchProject(project.id, { isArchived: !isArchived });
-          }}
-          style={{
-            cursor: 'pointer',
-          }}
-        />
-      </td>
       <td width={35}>
-        <FontAwesomeIcon
-          icon="times"
-          size="1x"
-          onClick={() => deleteProject(project.id)}
+        <Dropdown
           style={{
-            color: '#ce0000',
-            cursor: 'pointer',
+            position: 'static',
           }}
-        />
+        >
+          <Dropdown.Toggle as={DropdownToggle} />
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => createProject(project)}
+            >
+              <FontAwesomeIcon
+                icon="copy"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Copier
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                const isArchived = project.isArchived || false;
+                patchProject(project.id, { isArchived: !isArchived });
+              }}
+            >
+              <FontAwesomeIcon
+                icon="archive"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Archiver
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => deleteProject(project.id)}
+            >
+              <FontAwesomeIcon
+                icon="times"
+                style={{
+                  color: 'red',
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Supprimer
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
     </tr>
   );

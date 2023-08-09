@@ -6,6 +6,7 @@ import { operations as login } from './login';
 import { operations as metrics } from './metrics';
 import { operations as objectives } from './objectives';
 import { operations as pane } from './pane';
+import { operations as payments } from './payments';
 import { operations as projects } from './projects';
 import { operations as tasks } from './tasks';
 import { operations as templates } from './templates';
@@ -19,6 +20,7 @@ const operations = {
   metrics,
   objectives,
   pane,
+  payments,
   projects,
   tasks,
   templates,

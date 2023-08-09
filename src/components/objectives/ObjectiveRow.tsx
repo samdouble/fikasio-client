@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
 import ProjectTag from 'components/projects/ProjectTag';
+import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import Dot from './Dot';
 import { getEstimatedCompletionDate } from './utils';
@@ -66,10 +68,11 @@ const ObjectiveRow = ({
         width={160}
       >
         <DatePicker
-          customInput={<input type='hidden' />}
+          customInput={<input type="hidden" />}
           dateFormat="yyyy-MM-dd"
           isOpen={isDueAtDatepickerOpen}
           name="dueDate"
+          onBlur={() => setIsDueAtDatepickerOpen(false)}
           onChange={dueAt => {
             const timestamp = DateTime.fromJSDate(dueAt)
               .set({ hour: 23, minute: 59, second: 59 })
@@ -87,40 +90,55 @@ const ObjectiveRow = ({
         { objective.dueDate }
       </td>
       <td width={35}>
-        <FontAwesomeIcon
-          icon="copy"
-          size="1x"
-          onClick={() => createObjective(objective)}
+        <Dropdown
           style={{
-            cursor: 'pointer',
+            position: 'static',
           }}
-        />
-      </td>
-      <td
-        width={35}
-      >
-        <FontAwesomeIcon
-          icon="archive"
-          size="1x"
-          onClick={() => {
-            const isArchived = objective.isArchived || false;
-            patchObjective(objective.id, { isArchived: !isArchived });
-          }}
-          style={{
-            cursor: 'pointer',
-          }}
-        />
-      </td>
-      <td width={35}>
-        <FontAwesomeIcon
-          icon="times"
-          size="1x"
-          onClick={() => deleteObjective(objective.id)}
-          style={{
-            color: '#ce0000',
-            cursor: 'pointer',
-          }}
-        />
+        >
+          <Dropdown.Toggle as={DropdownToggle} />
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => createObjective(objective)}
+            >
+              <FontAwesomeIcon
+                icon="copy"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Copier
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                const isArchived = objective.isArchived || false;
+                patchObjective(objective.id, { isArchived: !isArchived });
+              }}
+            >
+              <FontAwesomeIcon
+                icon="archive"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Archiver
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => deleteObjective(objective.id)}
+            >
+              <FontAwesomeIcon
+                icon="times"
+                style={{
+                  color: 'red',
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Supprimer
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
     </tr>
   );

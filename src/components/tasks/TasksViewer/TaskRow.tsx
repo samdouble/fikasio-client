@@ -203,6 +203,7 @@ const TaskRow = ({
         <Datepicker
           defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toMillis() : null}
           isOpen={isDueAtDatepickerOpen}
+          onBlur={() => setIsDueAtDatepickerOpen(false)}
           onChange={dueAt => {
             const timestamp = DateTime.fromJSDate(dueAt)
               .set({ hour: 23, minute: 59, second: 59 })

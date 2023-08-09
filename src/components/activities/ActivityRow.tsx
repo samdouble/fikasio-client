@@ -122,6 +122,7 @@ const ActivityRow = ({
           defaultValue={DateTime.fromISO(activity.startTime).toMillis()}
           isOpen={isStartDateTimeDatepickerOpen}
           name="startTime"
+          onBlur={() => setIsStartDateTimeDatepickerOpen(false)}
           onChange={date => {
             const timestamp = DateTime.fromJSDate(date)
               .set({ millisecond: 0 })
@@ -147,6 +148,7 @@ const ActivityRow = ({
           defaultValue={DateTime.fromISO(activity.endTime).toMillis()}
           isOpen={isEndDateTimeDatepickerOpen}
           name="endTime"
+          onBlur={() => setIsEndDateTimeDatepickerOpen(false)}
           onChange={date => {
             const timestamp = DateTime.fromJSDate(date)
               .set({ millisecond: 0 })

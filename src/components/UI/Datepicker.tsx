@@ -5,7 +5,9 @@ interface DatepickerProps {
   defaultValue: Date;
   isOpen: boolean;
   name?: string;
+  onBlur?: () => void;
   onChange: (date: Date) => void;
+  shouldCloseOnSelect?: boolean;
   showTimeSelect?: boolean;
   timeCaption?: string;
   timeFormat?: string;
@@ -16,7 +18,9 @@ const Datepicker = ({
   defaultValue,
   isOpen,
   name,
+  onBlur,
   onChange,
+  shouldCloseOnSelect,
   showTimeSelect,
   timeCaption,
   timeFormat,
@@ -34,10 +38,12 @@ const Datepicker = ({
     <DatePicker
       customInput={<input type="hidden" />}
       name={name}
+      onBlur={onBlur}
       onChange={onChange}
       popperPlacement="auto"
       ref={c => _calendar = c}
       selected={defaultValue}
+      shouldCloseOnSelect={shouldCloseOnSelect || false}
       showTimeSelect={showTimeSelect}
       timeCaption={timeCaption}
       timeFormat={timeFormat}

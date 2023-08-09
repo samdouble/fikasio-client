@@ -7,6 +7,7 @@ import login from './login';
 import metrics from './metrics';
 import objectives from './objectives';
 import pane from './pane';
+import payments from './payments';
 import projects from './projects';
 import pendingRequests from './pendingRequests';
 import tasks from './tasks';
@@ -21,6 +22,7 @@ export default combineReducers({
   metrics,
   objectives,
   pane,
+  payments,
   projects,
   pendingRequests,
   tasks,
