@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ContentEditable from 'react-contenteditable';
+import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import useTimeout from 'use-timeout';
@@ -118,24 +119,28 @@ const ActivityRow = ({
           cursor: 'pointer',
         }}
       >
-        <Datepicker
-          defaultValue={DateTime.fromISO(activity.startTime).toMillis()}
-          isOpen={isStartDateTimeDatepickerOpen}
-          name="startTime"
-          onBlur={() => setIsStartDateTimeDatepickerOpen(false)}
-          onChange={date => {
-            const timestamp = DateTime.fromJSDate(date)
-              .set({ millisecond: 0 })
-              .toISO();
-            if (activity.id) {
-              patchActivity(activity.id, { startTime: timestamp });
-            }
-          }}
-          showTimeSelect
-          timeCaption="Heure"
-          timeFormat="HH:mm"
-          timeIntervals={15}
-        />
+        <ClickOutside
+          onClickOutside={() => setIsStartDateTimeDatepickerOpen(false)}
+        >
+          <Datepicker
+            defaultValue={DateTime.fromISO(activity.startTime).toMillis()}
+            isOpen={isStartDateTimeDatepickerOpen}
+            name="startTime"
+            onBlur={() => setIsStartDateTimeDatepickerOpen(false)}
+            onChange={date => {
+              const timestamp = DateTime.fromJSDate(date)
+                .set({ millisecond: 0 })
+                .toISO();
+              if (activity.id) {
+                patchActivity(activity.id, { startTime: timestamp });
+              }
+            }}
+            showTimeSelect
+            timeCaption="Heure"
+            timeFormat="HH:mm"
+            timeIntervals={15}
+          />
+        </ClickOutside>
         { startDateTime && startDateTime.toFormat('yyyy-MM-dd HH:mm') }
       </td>
       <td
@@ -144,24 +149,28 @@ const ActivityRow = ({
           cursor: 'pointer',
         }}
       >
-        <Datepicker
-          defaultValue={DateTime.fromISO(activity.endTime).toMillis()}
-          isOpen={isEndDateTimeDatepickerOpen}
-          name="endTime"
-          onBlur={() => setIsEndDateTimeDatepickerOpen(false)}
-          onChange={date => {
-            const timestamp = DateTime.fromJSDate(date)
-              .set({ millisecond: 0 })
-              .toISO();
-            if (activity.id) {
-              patchActivity(activity.id, { endTime: timestamp });
-            }
-          }}
-          showTimeSelect
-          timeCaption="Heure"
-          timeFormat="HH:mm"
-          timeIntervals={15}
-        />
+        <ClickOutside
+          onClickOutside={() => setIsEndDateTimeDatepickerOpen(false)}
+        >
+          <Datepicker
+            defaultValue={DateTime.fromISO(activity.endTime).toMillis()}
+            isOpen={isEndDateTimeDatepickerOpen}
+            name="endTime"
+            onBlur={() => setIsEndDateTimeDatepickerOpen(false)}
+            onChange={date => {
+              const timestamp = DateTime.fromJSDate(date)
+                .set({ millisecond: 0 })
+                .toISO();
+              if (activity.id) {
+                patchActivity(activity.id, { endTime: timestamp });
+              }
+            }}
+            showTimeSelect
+            timeCaption="Heure"
+            timeFormat="HH:mm"
+            timeIntervals={15}
+          />
+        </ClickOutside>
         { endDateTime && endDateTime.toFormat('yyyy-MM-dd HH:mm') }
       </td>
       <td>

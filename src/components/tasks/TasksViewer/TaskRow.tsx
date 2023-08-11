@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ContentEditable from 'react-contenteditable';
+import ClickOutside from 'react-click-outside';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
@@ -200,17 +201,21 @@ const TaskRow = ({
           ...(hasdueAtPassed && { color: '#ff0000' }),
         }}
       >
-        <Datepicker
-          defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toMillis() : null}
-          isOpen={isDueAtDatepickerOpen}
-          onBlur={() => setIsDueAtDatepickerOpen(false)}
-          onChange={dueAt => {
-            const timestamp = DateTime.fromJSDate(dueAt)
-              .set({ hour: 23, minute: 59, second: 59 })
-              .toISO();
-            operations.tasks.patchTask(task.id, { dueAt: timestamp })(dispatch);
-          }}
-        />
+        <ClickOutside
+          onClickOutside={() => setIsDueAtDatepickerOpen(false)}
+        >
+          <Datepicker
+            defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toMillis() : null}
+            isOpen={isDueAtDatepickerOpen}
+            onBlur={() => setIsDueAtDatepickerOpen(false)}
+            onChange={dueAt => {
+              const timestamp = DateTime.fromJSDate(dueAt)
+                .set({ hour: 23, minute: 59, second: 59 })
+                .toISO();
+              operations.tasks.patchTask(task.id, { dueAt: timestamp })(dispatch);
+            }}
+          />
+        </ClickOutside>
         <FontAwesomeIcon
           icon="calendar-alt"
           size="1x"

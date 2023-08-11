@@ -11,6 +11,7 @@ const itemUpsert = (entityId, itemId) => `/entities/${entityId}/items/${itemId}`
 const metrics = () => '/metrics';
 const notifications = () => '/notifications';
 const objectives = () => '/objectives';
+const organizations = () => '/organizations';
 const projects = () => '/projects';
 const settings = () => '/settings';
 const tasks = () => '/tasks';
@@ -33,6 +34,7 @@ const paths = {
   metrics: metrics(),
   notifications: notifications(),
   objectives: objectives(),
+  organizations: organizations(),
   projects: projects(),
   settings: settings(),
   tasks: tasks(),
@@ -56,6 +58,7 @@ const links = {
   metrics: () => metrics(),
   notifications: () => notifications(),
   objectives: () => objectives(),
+  organizations: () => organizations(),
   projects: () => projects(),
   settings: () => settings(),
   tasks: () => tasks(),

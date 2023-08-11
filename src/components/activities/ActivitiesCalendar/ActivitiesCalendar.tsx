@@ -117,6 +117,7 @@ const ActivitiesCalendar = ({
         toolbar: Toolbar,
       }}
       date={date.toJSDate()}
+      dayLayoutAlgorithm="no-overlap"
       defaultView="day"
       events={events}
       localizer={localizer}

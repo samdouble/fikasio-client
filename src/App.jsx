@@ -19,6 +19,7 @@ import ItemUpsertPage from './pages/ItemUpsertPage';
 import MetricsPage from './pages/MetricsPage';
 import NotificationsPage from './pages/NotificationsPage';
 import ObjectivesPage from './pages/ObjectivesPage';
+import OrganizationsPage from './pages/OrganizationsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import SettingsPage from './pages/SettingsPage';
 import TasksPage from './pages/TasksPage';
@@ -52,6 +53,7 @@ const App = () => {
           <PrivateRoute path={links.paths.metrics} component={MetricsPage} />
           <PrivateRoute path={links.paths.notifications} component={NotificationsPage} />
           <PrivateRoute path={links.paths.objectives} component={ObjectivesPage} />
+          <PrivateRoute path={links.paths.organizations} component={OrganizationsPage} />
           <PrivateRoute path={links.paths.projects} component={ProjectsPage} />
           <PrivateRoute path={links.paths.settings} component={SettingsPage} />
           <PrivateRoute path={links.paths.tasks} component={TasksPage} />

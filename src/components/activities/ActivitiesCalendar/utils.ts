@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 
-const convertActivitiesToCalendarEvents = (activities, censoredWords) => activities
+export const convertActivitiesToCalendarEvents = (activities, censoredWords) => activities
   .map(activity => ({
     id: activity.id,
     title: censoredWords
@@ -10,7 +10,3 @@ const convertActivitiesToCalendarEvents = (activities, censoredWords) => activit
     start: DateTime.fromISO(activity.startTime).toJSDate(),
     end: DateTime.fromISO(activity.endTime).toJSDate(),
   }));
-
-export {
-  convertActivitiesToCalendarEvents,
-};

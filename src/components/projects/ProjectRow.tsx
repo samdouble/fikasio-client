@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropdown from 'react-bootstrap/Dropdown';
+import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import classNames from 'classnames';
@@ -53,18 +54,22 @@ const ProjectRow = ({
           ...(!project.isCompleted && hasdueAtPassed && { color: '#ff0000' }),
         }}
       >
-        <Datepicker
-          defaultValue={DateTime.fromISO(project.dueAt).toMillis()}
-          isOpen={isDueAtDatepickerOpen}
-          name="dueAt"
-          onBlur={() => setIsDueAtDatepickerOpen(false)}
-          onChange={dueAt => {
-            const timestamp = DateTime.fromJSDate(dueAt)
-              .set({ hour: 23, minute: 59, second: 59 })
-              .toISO();
-            patchProject(project.id, { dueAt: timestamp });
-          }}
-        />
+        <ClickOutside
+          onClickOutside={() => setIsDueAtDatepickerOpen(false)}
+        >
+          <Datepicker
+            defaultValue={DateTime.fromISO(project.dueAt).toMillis()}
+            isOpen={isDueAtDatepickerOpen}
+            name="dueAt"
+            onBlur={() => setIsDueAtDatepickerOpen(false)}
+            onChange={dueAt => {
+              const timestamp = DateTime.fromJSDate(dueAt)
+                .set({ hour: 23, minute: 59, second: 59 })
+                .toISO();
+              patchProject(project.id, { dueAt: timestamp });
+            }}
+          />
+        </ClickOutside>
         <FontAwesomeIcon
           icon="calendar-alt"
           size="1x"
