@@ -77,9 +77,10 @@ const TaskInformationsForm = ({
 
   return (
     <Form
-      onSubmit={onSubmit}
       initialValues={task}
+      keepDirtyOnReinitialize
       mutators={{ ...arrayMutators }}
+      onSubmit={onSubmit}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>

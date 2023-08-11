@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { deleteMetric } from 'services/metrics/endpoints';
 
@@ -16,46 +18,65 @@ const MetricRow = ({
       <td>
         { metric.description }
       </td>
-      <td
-        width={35}
-      >
-        <FontAwesomeIcon
-          icon="chart-line"
-          size="1x"
-          onClick={() => onEnterProgress(metric)}
-          style={{ cursor: 'pointer' }}
-        />
-      </td>
-      <td
-        width={35}
-      >
-        <FontAwesomeIcon
-          icon="copy"
-          size="1x"
-          onClick={() => createMetric(metric)}
-          style={{ cursor: 'pointer' }}
-        />
-      </td>
-      <td
-        width={35}
-      >
-        <FontAwesomeIcon
-          icon="edit"
-          size="1x"
-          onClick={() => onEnterEditMetric(metric)}
-          style={{ cursor: 'pointer' }}
-        />
-      </td>
       <td width={35}>
-        <FontAwesomeIcon
-          icon="times"
-          size="1x"
-          onClick={() => deleteMetric(metric.id)}
+        <Dropdown
           style={{
-            color: '#ce0000',
-            cursor: 'pointer'
+            position: 'static',
           }}
-        />
+        >
+          <Dropdown.Toggle as={DropdownToggle} />
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => onEnterProgress(metric)}
+            >
+              <FontAwesomeIcon
+                icon="chart-line"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Entrer un progrès
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => createMetric(metric)}
+            >
+              <FontAwesomeIcon
+                icon="copy"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Copier
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => onEnterEditMetric(metric)}
+            >
+              <FontAwesomeIcon
+                icon="edit"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Modifier
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => deleteMetric(metric.id)}
+            >
+              <FontAwesomeIcon
+                icon="times"
+                style={{
+                  color: 'red',
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              Supprimer
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
     </tr>
   );
