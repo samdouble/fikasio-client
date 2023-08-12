@@ -17,7 +17,6 @@ import { RootState } from 'services/store';
 import { getFormFieldForType, processFormData } from 'utils/forms';
 import SuggestionsList from './SuggestionsList';
 import './ActivityPane.scss';
-import { t } from 'i18next';
 
 export interface ActivityPaneProps {
   activity: Partial<Activity>,

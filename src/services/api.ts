@@ -23,7 +23,7 @@ const checkStatus = (response: Response) => {
   throw new HttpResponseError(response);
 };
 
-const hasDefinedValue = value => typeof value !== 'undefined' && value !== null;
+const hasDefinedValue = value => typeof value !== 'undefined';
 
 const dataAsQueryString = (data: Record<string, string | number>) => {
   const query = new URLSearchParams();

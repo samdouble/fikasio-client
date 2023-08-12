@@ -12,7 +12,6 @@ import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { RootState } from 'services/store';
-import { Activity } from 'services/activities/types';
 
 const ActivityRow = ({
   activity,
@@ -87,7 +86,12 @@ const ActivityRow = ({
   const endDateTime = activity.endTime && DateTime.fromJSDate(new Date(activity.endTime));
   return (
     <tr className="activityRow">
-      <td width={35}>
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
         <Checkbox
           isChecked={isSelected}
           onClick={() => onSelectActivity(activity)}
@@ -186,7 +190,12 @@ const ActivityRow = ({
       <td>
         { activity.duration && Duration.fromMillis(activity.duration * 60 * 1000).toFormat('h:mm') }
       </td>
-      <td width={35}>
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
         <Dropdown
           style={{
             position: 'static',

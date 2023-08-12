@@ -56,10 +56,8 @@
         ]
       }
     ],
-    "import/prefer-default-export": "off",
-    "indent": "off",
     "jsx-a11y/no-autofocus": "off",
-    "jsx-quotes": "off",
+    "jsx-quotes": ["error", "prefer-double"],
     "max-len": [
       "error",
       {
@@ -89,18 +87,12 @@
       }
     ],
     "no-nested-ternary": "off",
-    "no-nonoctal-decimal-escape": "off",
     "no-param-reassign": "off",
     "no-restricted-syntax": [
       "error",
       "LabeledStatement",
       "WithStatement"
     ],
-    "no-return-assign": "off",
-    "no-shadow": "off",
-    "no-unsafe-optional-chaining": "off",
-    "no-unused-vars": "off",
-    "no-use-before-define": "off",
     "react/destructuring-assignment": "off",
     "react/forbid-prop-types": [
       "warn",
@@ -121,11 +113,9 @@
       }
     ],
     "react/jsx-max-props-per-line": "off",
-    "react/jsx-one-expression-per-line": "off",
-    "react/jsx-props-no-spreading": "off",
+    "react/jsx-sort-props": "warn",
     "react/jsx-tag-spacing": "off",
     "react/no-array-index-key": "off",
-    "react/no-unescaped-entities": "off",
     "react/no-unstable-nested-components": "off",
     "react/no-unused-prop-types": "off",
     "react/prefer-stateless-function": "off",

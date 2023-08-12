@@ -80,10 +80,10 @@ const TimesheetPage = () => {
       </Breadcrumb>
       <Link to={links.paths.templates}>
         <Button
-          variant="light"
           style={{
             float: 'right',
           }}
+          variant="light"
         >
           Modèles
         </Button>
@@ -94,8 +94,8 @@ const TimesheetPage = () => {
         headers={CSVHeaders}
       >
         <Button
-          data-tooltip-id="exportToCsv"
           data-tooltip-content={t('exportToCsv')}
+          data-tooltip-id="exportToCsv"
           style={{
             float: 'right',
           }}

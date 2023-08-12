@@ -10,10 +10,10 @@ const TasksCompletionFilter = ({ onChange, style }) => {
         width: 250,
       }}
     >
-      <option value='INCOMPLETE'>Tâches non complétées</option>
-      <option value='COMPLETE'>Tâches complétées</option>
-      <option value='ARCHIVED'>Tâches archivées</option>
-      <option value='ALL'>Toutes les tâches</option>
+      <option value="INCOMPLETE">Tâches non complétées</option>
+      <option value="COMPLETE">Tâches complétées</option>
+      <option value="ARCHIVED">Tâches archivées</option>
+      <option value="ALL">Toutes les tâches</option>
     </select>
   );
 }

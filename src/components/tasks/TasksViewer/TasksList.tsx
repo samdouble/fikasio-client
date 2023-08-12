@@ -30,9 +30,9 @@ const TasksList = ({
 
   return tasks && (
     <Table
-      responsive
       bordered
       hover
+      responsive
     >
       <thead />
       <tbody>
@@ -59,7 +59,7 @@ const TasksList = ({
               if (!t2.dueAt) return 1;
               return t1.dueAt < t2.dueAt ? -1 : 1;
             })
-            .map((task, i) => (
+            .map(task => (
               <TaskRow
                 key={`${task.id}-${task.dueAt}`}
                 task={task}

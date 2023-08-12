@@ -8,7 +8,7 @@ import './style.scss';
 const Footer = () => {
   return (
     <Container
-      className='footer'
+      className="footer"
       fluid
     >
       <Row>

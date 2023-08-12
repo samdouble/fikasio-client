@@ -65,19 +65,19 @@ const SignupPage = () => {
       >
         <Form.Group>
           <Form.Control
-            type="text"
-            name='name'
             autoFocus
-            placeholder='Nom'
+            name="name"
+            placeholder="Nom"
             style={{ marginBottom: 10 }}
+            type="text"
           />
         </Form.Group>
         <Form.Group>
           <Form.Control
-            type="text"
-            name='emailAddress'
-            placeholder='Adresse courriel'
+            name="emailAddress"
+            placeholder="Adresse courriel"
             style={{ marginBottom: 10 }}
+            type="text"
           />
         </Form.Group>
         <Form.Group>
@@ -86,14 +86,14 @@ const SignupPage = () => {
             type="password"
             name="password"
             onKeyPress={handleKeyPress}
-            placeholder='Mot de passe'
+            placeholder="Mot de passe"
           />
         </Form.Group>
       </form>
       <Button
-        variant='primary'
+        variant="primary"
         onClick={handleSignup}
-        type='submit'
+        type="submit"
       >
         Créer un compte
       </Button>

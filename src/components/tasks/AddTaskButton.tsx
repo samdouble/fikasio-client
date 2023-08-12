@@ -17,7 +17,7 @@ const AddTaskButton = ({
     >
       <Button
         onClick={() => onClick('NEW')}
-        variant='primary'
+        variant="primary"
       >
         {t('createATask')}
       </Button>
@@ -30,7 +30,9 @@ const AddTaskButton = ({
           as={ButtonGroup}
           title=""
         >
-          <Dropdown.Item eventKey="1">
+          <Dropdown.Item
+            eventKey="1"
+          >
             {t('createASection')}
           </Dropdown.Item>
         </DropdownButton>

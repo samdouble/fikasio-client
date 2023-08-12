@@ -26,7 +26,12 @@ const OrganizationRow = ({
       >
         { organization.name }
       </td>
-      <td width={35}>
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
         <Dropdown
           style={{
             position: 'static',

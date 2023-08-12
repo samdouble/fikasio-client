@@ -31,9 +31,9 @@ const FieldPane = ({
 
   return (
     <Form
-      onSubmit={onSubmit}
       initialValues={field}
       mutators={{ ...arrayMutators }}
+      onSubmit={onSubmit}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
@@ -107,8 +107,8 @@ const FieldPane = ({
           <div style={{ float: 'right', bottom: 0, paddingBottom: 15 }}>
             {
               field
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

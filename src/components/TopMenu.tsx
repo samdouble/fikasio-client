@@ -41,10 +41,10 @@ const TopMenu = () => {
         <Navbar bg="light" expand="lg">
           <Navbar.Brand href="/">
             <img
-              src={Logo}
               alt="fikas.io"
               className="d-inline-block align-top"
               height="50"
+              src={Logo}
             />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -60,7 +60,7 @@ const TopMenu = () => {
               }
               {
                 login ? (
-                  <NavDropdown title={login.user && login.user.name} align="end">
+                  <NavDropdown align="end" title={login.user && login.user.name}>
                     <NavDropdown.Item href={links.paths.settings}>{t('settings')}</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href={links.paths.documentation}>{t('documentation')}</NavDropdown.Item>

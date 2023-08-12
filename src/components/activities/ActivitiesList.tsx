@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
+import Checkbox from 'components/UI/Checkbox';
 import { operations } from 'services';
 import { Activity } from 'services/activities/types';
 import ActivityRow from './ActivityRow';
@@ -42,11 +43,28 @@ const ActivitiesList = ({
     operations.activities.deleteActivity(activity.id)(dispatch);
   };
 
-  return activities && (
-    <Table responsive bordered hover>
+  const activitiesToShow = activities
+    .filter(a => {
+      const startOfDay = date.startOf('day');
+      const endOfDay = date.endOf('day');
+      return DateTime.fromISO(a.startTime) <= endOfDay && DateTime.fromISO(a.endTime) >= startOfDay;
+    });
+  const allActivitiesAreChecked = activitiesToShow.length === selectedActivities.length;
+
+  return (
+    <Table
+      bordered
+      hover
+      responsive
+    >
       <thead>
         <tr>
-          <th style={{ width: 35 }} />
+          <th style={{ width: 35 }}>
+            <Checkbox
+              isChecked={allActivitiesAreChecked}
+              onClick={() => {}}
+            />
+          </th>
           <th>{t('comment')}</th>
           <th style={{ width: 150 }}>Début</th>
           <th style={{ width: 150 }}>Fin</th>
@@ -56,12 +74,7 @@ const ActivitiesList = ({
       </thead>
       <tbody>
         {
-          activities
-            .filter(a => {
-              const startOfDay = date.startOf('day');
-              const endOfDay = date.endOf('day');
-              return DateTime.fromISO(a.startTime) <= endOfDay && DateTime.fromISO(a.endTime) >= startOfDay;
-            })
+          activitiesToShow
             .sort((a1, a2) => (DateTime.fromISO(a1.startTime) < DateTime.fromISO(a2.startTime) ? -1 : 1))
             .map(activity => (
               <ActivityRow

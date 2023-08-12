@@ -45,14 +45,14 @@ const TasksPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[tasks, metrics, objectives, projects]}
+      getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.tasks.fetchTasks()),
         () => dispatch(operations.metrics.fetchMetrics()),
         () => dispatch(operations.objectives.fetchObjectives()),
         () => dispatch(operations.projects.fetchProjects()),
       ]}
-      getContents={getPage}
+      resources={[tasks, metrics, objectives, projects]}
     />
   );
 };

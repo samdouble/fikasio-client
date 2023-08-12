@@ -10,9 +10,9 @@ const TasksDueDateFilter = ({ onChange, style }) => {
         width: 250,
       }}
     >
-      <option value='ALL'>Toutes les tâches</option>
-      <option value='FOR_TODAY'>Tâches pour aujourd'hui</option>
-      <option value='FOR_THISWEEK'>Tâches pour cette semaine</option>
+      <option value="ALL">Toutes les tâches</option>
+      <option value="FOR_TODAY">Tâches pour aujourd'hui</option>
+      <option value="FOR_THISWEEK">Tâches pour cette semaine</option>
     </select>
   );
 }

@@ -4,7 +4,7 @@ import LineChart from './LineChart';
 const Dashboard = ({ data }) => {
   return (
     <div className="App">
-      <LineChart data={data} width={400} height={300} />
+      <LineChart data={data} height={300} width={400} />
     </div>
   );
 }

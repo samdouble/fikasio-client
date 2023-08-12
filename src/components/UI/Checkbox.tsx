@@ -18,8 +18,9 @@ const Checkbox = ({
             icon="check"
             size="lg"
             style={{
-              color: '#420076',
               border: '1px solid #7E5B9A',
+              color: '#420076',
+              width: 20,
             }}
           />
         ) : (
@@ -28,8 +29,9 @@ const Checkbox = ({
             icon="square"
             size="lg"
             style={{
-              color: '#ffffff',
               border: '1px solid #7E5B9A',
+              color: '#ffffff',
+              width: 20,
             }}
           />
         )

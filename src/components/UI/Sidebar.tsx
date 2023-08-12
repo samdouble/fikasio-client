@@ -77,8 +77,8 @@ const Sidebar = () => {
           <SideNav.Toggle />
           <SideNav.Nav defaultSelected={getDefaultSelectedMenuItem() || menuItems.DASHBOARD}>
             <NavItem
-              data-tooltip-id="dashboard"
               data-tooltip-content={t('dashboard')}
+              data-tooltip-id="dashboard"
               eventKey={menuItems.DASHBOARD}
             >
               <NavIcon>
@@ -93,8 +93,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="projects"
               data-tooltip-content={t('projects')}
+              data-tooltip-id="projects"
               eventKey={menuItems.PROJECTS}
             >
               <NavIcon>
@@ -109,8 +109,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="objectives"
               data-tooltip-content={t('objectives')}
+              data-tooltip-id="objectives"
               eventKey={menuItems.OBJECTIVES}
             >
               <NavIcon>
@@ -125,8 +125,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="tasks"
               data-tooltip-content={t('tasks')}
+              data-tooltip-id="tasks"
               eventKey={menuItems.TASKS}
             >
               <NavIcon>
@@ -141,8 +141,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="entities"
               data-tooltip-content={t('entities')}
+              data-tooltip-id="entities"
               eventKey={menuItems.ENTITIES}
             >
               <NavIcon>
@@ -157,8 +157,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="metrics"
               data-tooltip-content={t('metrics')}
+              data-tooltip-id="metrics"
               eventKey={menuItems.METRICS}
             >
               <NavIcon>
@@ -173,8 +173,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="timesheet"
               data-tooltip-content={t('timesheet')}
+              data-tooltip-id="timesheet"
               eventKey={menuItems.TIMESHEET}
             >
               <NavIcon>
@@ -189,8 +189,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="notifications"
               data-tooltip-content={t('notifications')}
+              data-tooltip-id="notifications"
               eventKey={menuItems.NOTIFICATIONS}
             >
               <NavIcon>
@@ -230,8 +230,8 @@ const Sidebar = () => {
               </NavText>
             </NavItem>
             <NavItem
-              data-tooltip-id="organizations"
               data-tooltip-content={t('organizations')}
+              data-tooltip-id="organizations"
               eventKey={menuItems.ORGANIZATIONS}
             >
               <NavIcon>

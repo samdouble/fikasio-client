@@ -122,8 +122,8 @@ const TaskInformationsForm = ({
               <RBForm.Label>Statut</RBForm.Label>
               <br />
               <Field
-                name='status'
-                component='select'
+                name="status"
+                component="select"
                 className="form-control"
                 style={{ width: 250 }}
               >
@@ -169,18 +169,18 @@ const TaskInformationsForm = ({
                 <tr>
                   <td>
                     <Field
-                      name="number:estimatedCompletionTime"
+                      className="form-control"
                       component="input"
                       defaultValue={task && task.estimatedCompletionTime}
-                      className="form-control"
+                      name="number:estimatedCompletionTime"
                       style={{ width: 100 }}
                     />
                   </td>
                   <td>
                     <Field
-                      name='estimatedCompletionTimeUnits'
-                      component='select'
                       className="form-control"
+                      component="select"
+                      name="estimatedCompletionTimeUnits"
                       style={{ width: 250 }}
                     >
                       <option value="minutes">minutes</option>
@@ -200,112 +200,112 @@ const TaskInformationsForm = ({
             >
               {({ fields }) => {
                 return (
-                <div>
-                  {
-                    fields.map((name, index) => (
-                      <table key={name}>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <Field
-                                component="select"
-                                className="form-control"
-                                name={`${name}.id`}
-                              >
-                                <option />
-                                {
-                                  projects?.filter(p => !p.isArchived)
-                                    .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
-                                    .map(project => (
-                                      <option
-                                        key={project.id}
-                                        value={project.id}
-                                      >
-                                        {project.name}
-                                      </option>
-                                    ))
-                                }
-                              </Field>
-                            </td>
-                            <td width={35}>
-                              <FontAwesomeIcon
-                                icon="times"
-                                size="1x"
-                                onClick={() => fields.remove(index)}
-                                style={{
-                                  color: '#ce0000',
-                                  cursor: 'pointer',
-                                  marginLeft: 10,
-                                }}
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    ))
-                  }
-                  <Button
-                    onClick={() => fields.push({ id: '' })}
-                  >
-                    Ajouter
-                  </Button>
-                </div>
-              );
+                  <div>
+                    {
+                      fields.map((name, index) => (
+                        <table key={name}>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <Field
+                                  className="form-control"
+                                  component="select"
+                                  name={`${name}.id`}
+                                >
+                                  <option />
+                                  {
+                                    projects?.filter(p => !p.isArchived)
+                                      .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
+                                      .map(project => (
+                                        <option
+                                          key={project.id}
+                                          value={project.id}
+                                        >
+                                          {project.name}
+                                        </option>
+                                      ))
+                                  }
+                                </Field>
+                              </td>
+                              <td width={35}>
+                                <FontAwesomeIcon
+                                  icon="times"
+                                  onClick={() => fields.remove(index)}
+                                  size="1x"
+                                  style={{
+                                    color: '#ce0000',
+                                    cursor: 'pointer',
+                                    marginLeft: 10,
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      ))
+                    }
+                    <Button
+                      onClick={() => fields.push({ id: '' })}
+                    >
+                      Ajouter
+                    </Button>
+                  </div>
+                );
               }}
             </FieldArray>
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>Récurrence</RBForm.Label>
             <Switch
-              value={hasRecurrence}
               onChange={setHasRecurrence}
               style={{ marginLeft: 5 }}
+              value={hasRecurrence}
             />
             {
               !!hasRecurrence && (
                 <>
                   <RBForm.Check
-                    type='radio'
-                    id='recurrence'
-                    label='Lundi'
+                    id="recurrence"
+                    label="Lundi"
+                    type="radio"
                   />
                   <RBForm.Check
-                    type='radio'
-                    id='recurrence'
-                    label='Mardi'
+                    id="recurrence"
+                    label="Mardi"
+                    type="radio"
                   />
                   <RBForm.Check
-                    type='radio'
-                    id='recurrence'
-                    label='Mercredi'
+                    id="recurrence"
+                    label="Mercredi"
+                    type="radio"
                   />
                   <RBForm.Check
-                    type='radio'
-                    id='recurrence'
-                    label='Jeudi'
+                    id="recurrence"
+                    label="Jeudi"
+                    type="radio"
                   />
                   <RBForm.Check
-                    type='radio'
-                    id='recurrence'
-                    label='Vendredi'
+                    id="recurrence"
+                    label="Vendredi"
+                    type="radio"
                   />
                   <RBForm.Check
-                    type='radio'
-                    id='recurrence'
-                    label='Samedi'
+                    id="recurrence"
+                    label="Samedi"
+                    type="radio"
                   />
                   <RBForm.Check
-                    type='radio'
-                    id='recurrence'
-                    label='Dimanche'
+                    id="recurrence"
+                    label="Dimanche"
+                    type="radio"
                   />
                 </>)
             }
           </RBForm.Group>
           <div
             style={{
-              float: 'right',
               bottom: 10,
+              float: 'right',
               paddingBottom: 15,
               position: 'absolute',
               right: 30,
@@ -319,8 +319,8 @@ const TaskInformationsForm = ({
             </Button>
             {
               task
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

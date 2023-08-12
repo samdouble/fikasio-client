@@ -91,7 +91,12 @@ const ObjectiveRow = ({
         />
         { objective.dueDate }
       </td>
-      <td width={35}>
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
         <Dropdown
           style={{
             position: 'static',

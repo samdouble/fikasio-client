@@ -43,8 +43,8 @@ export const getFormFieldForType = (name: string, type?: string) => {
     case 'BOOLEAN':
       return (
         <Field
-          component="input"
           className="form-control"
+          component="input"
           name={name}
           type="checkbox"
         >
@@ -65,8 +65,8 @@ export const getFormFieldForType = (name: string, type?: string) => {
     default:
       return (
         <Field
-          component="input"
           className="form-control"
+          component="input"
           name={name}
         />
       );

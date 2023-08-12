@@ -58,8 +58,10 @@ function DragList({ tasks }) {
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div
-          className='tasksBoard_section'
-          style={{ backgroundColor: '#ffffff' }}
+          className="tasksBoard_section"
+          style={{
+            backgroundColor: '#ffffff',
+          }}
         >
           {
             lists.map(listKey => (

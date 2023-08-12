@@ -33,8 +33,8 @@ const AutosaveTextarea = ({
         useContentEditableDiv
           ? (
             <ContentEditable
-              id="text"
               html={value}
+              id="text"
               onChange={e => setValue(e.target.value)}
               onClick={e => e.stopPropagation()}
               style={{
@@ -57,8 +57,8 @@ const AutosaveTextarea = ({
             />
           ) : (
             <textarea
-              id="text"
               defaultValue={value}
+              id="text"
               onChange={e => setValue(e.target.value)}
               onClick={e => e.stopPropagation()}
               style={{

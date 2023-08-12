@@ -111,7 +111,12 @@ const TaskRow = ({
       taskRow: true,
       done: task && task.isCompleted,
     })}>
-      <td width={35}>
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
         <Checkbox
           isChecked={task.isCompleted}
           onClick={() => toggleCheckTaskClick(task)}
@@ -221,7 +226,12 @@ const TaskRow = ({
           )
         }
       </td>
-      <td width={35}>
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
         <Dropdown
           style={{
             position: 'static',
