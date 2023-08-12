@@ -10,10 +10,10 @@ const ObjectivesCompletionFilter = ({ onChange, style }) => {
         width: 250,
       }}
     >
-      <option value='INCOMPLETE'>Objectifs non complétés</option>
-      <option value='COMPLETE'>Objectifs complétés</option>
-      <option value='ARCHIVED'>Objectifs archivés</option>
-      <option value='ALL'>Tous les objectifs</option>
+      <option value="INCOMPLETE">Objectifs non complétés</option>
+      <option value="COMPLETE">Objectifs complétés</option>
+      <option value="ARCHIVED">Objectifs archivés</option>
+      <option value="ALL">Tous les objectifs</option>
     </select>
   );
 }

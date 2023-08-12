@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 const Toolbar = ({
-  localizer: { messages },
+  localizer: {
+    messages,
+  },
   // label,
   // onNavigate,
   onView,
@@ -11,7 +13,7 @@ const Toolbar = ({
 }) => {
   const [view, setView] = useState(viewProp);
 
-  const viewNamesGroup = messages => {
+  const viewNamesGroup = pMessages => {
     const viewNames = views;
 
     if (viewNames.length > 1) {
@@ -29,7 +31,7 @@ const Toolbar = ({
           }}
           type="button"
         >
-          {messages[name]}
+          {pMessages[name]}
         </button>
       ))
     }

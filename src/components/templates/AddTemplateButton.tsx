@@ -10,7 +10,7 @@ const AddTemplateButton = ({ style }) => (
   >
     <Button
       style={style}
-      variant='primary'
+      variant="primary"
     >
       Créer un modèle
     </Button>

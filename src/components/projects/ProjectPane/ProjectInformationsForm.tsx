@@ -29,7 +29,7 @@ const ProjectInformationsForm = ({
 
   const onSubmit = async values => {
     const formData = values;
-    if (project.id) {
+    if (project) {
       operations.projects.updateProject(project.id, formData)(dispatch)
         .then(() => dispatch(operations.pane.clearPaneContent()));
     } else {
@@ -40,25 +40,25 @@ const ProjectInformationsForm = ({
 
   return (
     <Form
-      onSubmit={onSubmit}
       initialValues={project}
       mutators={{ ...arrayMutators }}
+      onSubmit={onSubmit}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
             <RBForm.Label>Nom</RBForm.Label>
             <Field
-              name="name"
-              component="input"
               className="form-control"
+              component="input"
+              name="name"
             />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>Description</RBForm.Label>
             <Field
-              name="description"
-              component="textarea"
               className="form-control"
+              component="textarea"
+              name="description"
             />
           </RBForm.Group>
           <RBForm.Group>
@@ -71,8 +71,8 @@ const ProjectInformationsForm = ({
                 ({ input }) => (
                   <>
                     <input
-                      type="hidden"
                       name="color"
+                      type="hidden"
                       value={color}
                     />
                     <Button
@@ -113,7 +113,6 @@ const ProjectInformationsForm = ({
             <RBForm.Label>Échéance</RBForm.Label>
             <br />
             <Field
-              name="dueAt"
               component={
                 ({ input }) => (
                   <DatePicker
@@ -133,6 +132,7 @@ const ProjectInformationsForm = ({
                 )
               }
               defaultValue={dueDate}
+              name="dueAt"
             />
           </RBForm.Group>
           <br />
@@ -157,8 +157,8 @@ const ProjectInformationsForm = ({
                             <td width={35}>
                               <FontAwesomeIcon
                                 icon="times"
-                                size="1x"
                                 onClick={() => fields.remove(index)}
+                                size="1x"
                                 style={{
                                   color: '#ce0000',
                                   cursor: 'pointer',
@@ -191,8 +191,8 @@ const ProjectInformationsForm = ({
           >
             {
               project
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

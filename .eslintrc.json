@@ -25,7 +25,7 @@
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -44,9 +44,6 @@
       "error",
       "always"
     ],
-    "function-paren-newline": "off",
-    "import/extensions": "off",
-    "import/no-anonymous-default-export": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/no-unresolved": [
       2,
@@ -86,14 +83,11 @@
         "max": 1
       }
     ],
-    "no-nested-ternary": "off",
-    "no-param-reassign": "off",
     "no-restricted-syntax": [
       "error",
       "LabeledStatement",
       "WithStatement"
     ],
-    "react/destructuring-assignment": "off",
     "react/forbid-prop-types": [
       "warn",
       {
@@ -103,26 +97,14 @@
         ]
       }
     ],
-    "react/function-component-definition": "off",
-    "react/jsx-closing-bracket-location": "off",
-    "react/jsx-curly-spacing": "off",
     "react/jsx-filename-extension": [
       2,
       {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     ],
-    "react/jsx-max-props-per-line": "off",
-    "react/jsx-sort-props": "warn",
-    "react/jsx-tag-spacing": "off",
-    "react/no-array-index-key": "off",
-    "react/no-unstable-nested-components": "off",
-    "react/no-unused-prop-types": "off",
-    "react/prefer-stateless-function": "off",
-    "react/prop-types": "off",
-    "react/require-default-props": "off",
-    "react/self-closing-comp": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react/jsx-max-props-per-line": ["error", { "maximum": 2 }],
+    "react/jsx-sort-props": "warn"
   },
   "settings": {
     "import/resolver": {

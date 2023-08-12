@@ -4,12 +4,16 @@ import ObjectiveRow from './ObjectiveRow';
 
 const ObjectivesList = ({
   objectives,
+  showArchivedObjectives,
   showCompleteObjectives,
   showIncompleteObjectives,
-  showArchivedObjectives,
 }) => {
   return objectives && (
-    <Table responsive bordered hover>
+    <Table
+      bordered
+      hover
+      responsive
+    >
       <thead>
         <tr>
           <th>Description</th>

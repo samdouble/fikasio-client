@@ -28,7 +28,7 @@ const menuItems = {
 const Sidebar = () => {
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation();
@@ -56,18 +56,18 @@ const Sidebar = () => {
     return (
       <ClickOutside
         onClickOutside={() => {
-          setExpanded(false);
+          setIsExpanded(false);
         }}
       >
         <SideNav
-          expanded={expanded}
+          expanded={isExpanded}
           onSelect={selected => {
             const to = `/${selected}`;
             if (location.pathname !== to) {
               history.push(to);
             }
           }}
-          onToggle={expanded => setExpanded(expanded)}
+          onToggle={expanded => setIsExpanded(expanded)}
           style={{
             position: 'fixed',
             top: 60,
@@ -200,7 +200,7 @@ const Sidebar = () => {
                   size="lg"
                 />
                 {
-                  !expanded && !!notificationsCount && (
+                  !isExpanded && !!notificationsCount && (
                     <>
                       &nbsp;
                       <NotificationsCounter
@@ -218,7 +218,7 @@ const Sidebar = () => {
               <NavText>
                 {t('notifications')}
                 {
-                  expanded && !!notificationsCount && (
+                  isExpanded && !!notificationsCount && (
                     <>
                       &nbsp;
                       <NotificationsCounter
@@ -253,12 +253,12 @@ const Sidebar = () => {
 
   return (
     <ResourcesHandler
-      resources={[tasks, projects]}
+      getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.tasks.fetchTasks()),
         () => dispatch(operations.projects.fetchProjects()),
       ]}
-      getContents={getPage}
+      resources={[tasks, projects]}
     />
   );
 };

@@ -58,8 +58,8 @@ const ActivityPane = ({
     }
   };
 
-  const handleChangeTemplate = templateId => {
-    setTemplateId(templateId);
+  const handleChangeTemplate = tId => {
+    setTemplateId(tId);
   };
 
   const onSubmit = async values => {
@@ -93,8 +93,8 @@ const ActivityPane = ({
       mutators={{
         ...arrayMutators,
         setComments: (args, state, utils) => {
-          const [comments] = args;
-          utils.changeValue(state, 'comments', () => comments);
+          const [newComment] = args;
+          utils.changeValue(state, 'comments', () => newComment);
         },
       }}
       onSubmit={onSubmit}
@@ -218,12 +218,12 @@ const ActivityPane = ({
                       <option />
                       {
                         templates?.sort((t1, t2) => (t1.name < t2.name ? -1 : 1))
-                          .map(t => (
+                          .map(t1 => (
                             <option
-                              key={t.id}
-                              value={t.id}
+                              key={t1.id}
+                              value={t1.id}
                             >
-                              { t.name }
+                              { t1.name }
                             </option>
                           ))
                       }

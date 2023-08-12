@@ -8,7 +8,7 @@ const AddProjectButton = ({
   <Button
     onClick={() => onClick('NEW')}
     style={style}
-    variant='primary'
+    variant="primary"
   >
     Créer un projet
   </Button>

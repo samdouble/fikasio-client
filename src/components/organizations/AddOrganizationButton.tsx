@@ -8,7 +8,7 @@ const AddOrganizationButton = ({
   <Button
     onClick={() => onClick('NEW')}
     style={style}
-    variant='primary'
+    variant="primary"
   >
     Créer une organisation
   </Button>

@@ -69,14 +69,14 @@ const SettingsPage = ({ login, patchUserMe }) => {
                       width: 400,
                     }}
                   >
-                    <option value='en'>English</option>
-                    <option value='fr'>Français</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
                   </select>
                 </RBForm.Group>
                 <Form
-                  onSubmit={onSubmit}
                   initialValues={user.censoredWords}
                   mutators={{ ...arrayMutators }}
+                  onSubmit={onSubmit}
                   render={({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
                       <RBForm.Group>
@@ -91,16 +91,16 @@ const SettingsPage = ({ login, patchUserMe }) => {
                                       <tr>
                                         <td>
                                           <Field
-                                            name={name}
-                                            component="input"
                                             className="form-control"
+                                            component="input"
+                                            name={name}
                                           />
                                         </td>
                                         <td width={35}>
                                           <FontAwesomeIcon
                                             icon="times"
-                                            size="1x"
                                             onClick={() => fields.remove(index)}
+                                            size="1x"
                                             style={{
                                               color: '#ce0000',
                                               cursor: 'pointer',
@@ -122,7 +122,7 @@ const SettingsPage = ({ login, patchUserMe }) => {
                           )}
                         </FieldArray>
                       </RBForm.Group>
-                      <Button type="submit" variant='success'>Sauvegarder</Button>
+                      <Button type="submit" variant="success">Sauvegarder</Button>
                     </form>
                   )}
                 />

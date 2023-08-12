@@ -97,15 +97,15 @@ const ItemInformationsForm = ({
             }}
           >
             <Button
-              variant="outline-secondary"
               onClick={() => dispatch(operations.pane.clearPaneContent())}
+              variant="outline-secondary"
             >
               {t('cancel')}
             </Button>
             {
               item
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

@@ -19,7 +19,7 @@ const Stats = ({
   projects,
   tasks,
 }) => {
-  const project = (projects || []).find(p => p.id === projectId) || {};
+  const project = (projects || []).find(p => p.id === projectId);
   const projectTasks = tasks
     .filter(task => task.projects.some(tp => tp.id === project.id));
   const projectTasksIncomplete = projectTasks

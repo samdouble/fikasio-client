@@ -32,9 +32,3 @@ export const isSameWeek = (ts1, ts2) => {
   const dateTs2 = DateTime.fromMillis(ts2);
   return dateTs1.year === dateTs2.year && dateTs1.weekNumber === dateTs2.weekNumber;
 };
-
-export default {
-  convertMinutesToHumanHM,
-  isSameDay,
-  isSameWeek,
-};

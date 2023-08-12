@@ -21,8 +21,8 @@ const SearchBar = ({ style }) => {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const projects = useSelector((state: RootState) => state.projects);
 
-  const getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
+  const getSuggestions = text => {
+    const inputValue = text.trim().toLowerCase();
     const inputLength = inputValue.length;
 
     return inputLength === 0 ? [] : projects?.filter(lang => (
@@ -34,8 +34,8 @@ const SearchBar = ({ style }) => {
     setValue(newValue);
   };
 
-  const onSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value) || []);
+  const onSuggestionsFetchRequested = ({ value: text }) => {
+    setSuggestions(getSuggestions(text) || []);
   };
 
   const onSuggestionsClearRequested = () => {
@@ -73,8 +73,8 @@ const SearchBar = ({ style }) => {
           onChange,
           value,
         }}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
         onSuggestionsClearRequested={onSuggestionsClearRequested}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
         renderSuggestion={renderSuggestion}
         suggestions={suggestions}
       />

@@ -19,7 +19,7 @@ const TemplatePane = ({
   updateTemplate,
 }) => {
   const { t } = useTranslation();
-  const template = (templates || []).find(t => t.id === id) || {};
+  const template = (templates || []).find(temp => temp.id === id);
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);
@@ -149,8 +149,8 @@ const TemplatePane = ({
             </Button>
             {
               template
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

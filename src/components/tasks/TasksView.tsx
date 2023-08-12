@@ -99,6 +99,7 @@ const TasksView = ({
         showAddButton && (
           <AddTaskButton
             onClick={onTaskSelect}
+            showCreateSectionButton={!!projectId}
             style={{
               float: 'right',
               marginRight: -5,

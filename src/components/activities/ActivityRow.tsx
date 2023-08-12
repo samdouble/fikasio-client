@@ -52,8 +52,8 @@ const ActivityRow = ({
     setIComments(val);
   };
 
-  const handleDuplicateActivity = activity => {
-    operations.activities.createActivity(activity)(dispatch);
+  const handleDuplicateActivity = originalActivity => {
+    operations.activities.createActivity(originalActivity)(dispatch);
   };
 
   const handleKeyDown = e => {

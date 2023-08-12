@@ -43,11 +43,11 @@ const TasksViewer = ({
       // onAddTask={task => addTask(task)}
       // onOpenProgressModal={task => handleOpenProgressModal(task)}
       // onTaskSelect={onTaskSelect}
+      showArchivedTasks={showArchivedTasks}
       showCompleteTasks={showCompleteTasks}
       showIncompleteTasks={showIncompleteTasks}
-      showArchivedTasks={showArchivedTasks}
-      showOnlyDueToday={showOnlyDueToday}
       showOnlyDueThisWeek={showOnlyDueThisWeek}
+      showOnlyDueToday={showOnlyDueToday}
       tasks={tasks}
     />
   } else if (viewMode === 'LIST') {
@@ -55,12 +55,12 @@ const TasksViewer = ({
       onAddTask={task => addTask(task)}
       onOpenProgressModal={task => handleOpenProgressModal(task)}
       onTaskSelect={onTaskSelect}
+      projectId={projectId}
+      showArchivedTasks={showArchivedTasks}
       showCompleteTasks={showCompleteTasks}
       showIncompleteTasks={showIncompleteTasks}
-      showArchivedTasks={showArchivedTasks}
-      showOnlyDueToday={showOnlyDueToday}
       showOnlyDueThisWeek={showOnlyDueThisWeek}
-      projectId={projectId}
+      showOnlyDueToday={showOnlyDueToday}
       tasks={tasks}
     />
   } else {
@@ -78,16 +78,16 @@ const TasksViewer = ({
       }
       <div style={{ textAlign: 'left' }}>
         <Button
-          variant="outline-secondary"
           active={viewMode === 'LIST'}
           onClick={() => setViewMode('LIST')}
+          variant="outline-secondary"
         >
           <FontAwesomeIcon icon="list" size="1x" />
         </Button>
         <Button
           active={viewMode === 'BOARD'}
-          variant="outline-secondary"
           onClick={() => setViewMode('BOARD')}
+          variant="outline-secondary"
         >
           <FontAwesomeIcon icon="th" size="1x" />
         </Button>

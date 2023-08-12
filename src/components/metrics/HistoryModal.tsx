@@ -56,10 +56,10 @@ const HistoryModal = ({
               <tbody>
                 <tr>
                   <td
-                    width='60%'
                     style={{
                       verticalAlign: 'top',
                     }}
+                    width="60%"
                   >
                     <div>
                       <b>Dernière mise à jour</b>

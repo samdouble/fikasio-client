@@ -85,13 +85,13 @@ const ProjectRow = ({
         {
           project && project.dueAt && (
             <FontAwesomeIcon
-              className='projectRow_dueAt_remove'
+              className="projectRow_dueAt_remove"
               icon="times"
-              size="1x"
               onClick={e => {
                 e.stopPropagation();
                 patchProject(project.id, { dueAt: null });
               }}
+              size="1x"
             />
           )
         }

@@ -42,9 +42,9 @@ const TemplateInformationsForm = ({
           <RBForm.Group>
             <RBForm.Label>Nom</RBForm.Label>
             <Field
-              name="name"
-              component="input"
               className="form-control"
+              component="input"
+              name="name"
             />
           </RBForm.Group>
           <div
@@ -57,8 +57,8 @@ const TemplateInformationsForm = ({
             }}
           >
             <Button
-              variant="outline-secondary"
               onClick={() => dispatch(operations.pane.clearPaneContent())}
+              variant="outline-secondary"
             >
               {t('cancel')}
             </Button>

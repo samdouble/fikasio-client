@@ -42,53 +42,52 @@ const ObjectiveInformations = ({
 
   return (
     <Form
-      onSubmit={onSubmit}
       initialValues={objective}
       mutators={{ ...arrayMutators }}
+      onSubmit={onSubmit}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
             <RBForm.Label>Nom</RBForm.Label>
             <Field
-              name="name"
-              component="input"
               className="form-control"
+              component="input"
+              name="name"
             />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>Description</RBForm.Label>
-            <Field
-              name="description"
-              component="textarea"
+            <FieldArray
               className="form-control"
+              component="textarea"
+              name="description"
             />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>Objectif</RBForm.Label>
             <Field
-              name="goal"
-              component="input"
               className="form-control"
+              component="input"
+              name="goal"
               style={{ width: 228 }}
             />
             <Field
-              name="goalFrequency"
-              component="select"
-              className="form-control"
-              style={{ width: 228 }}
               allowNull
+              className="form-control"
+              component="select"
+              name="goalFrequency"
               parse={value => (value === '' ? null : value)}
+              style={{ width: 228 }}
             >
               <option />
-              <option value='DAILY'>Quotidiennement</option>
-              <option value='WEEKLY'>Hebdomadairement</option>
+              <option value="DAILY">Quotidiennement</option>
+              <option value="WEEKLY">Hebdomadairement</option>
             </Field>
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>Échéance</RBForm.Label>
             <br />
             <Field
-              name="dueDate"
               component={
                 ({ input }) => (
                   <DatePicker
@@ -107,6 +106,7 @@ const ObjectiveInformations = ({
                 )
               }
               defaultValue={DateTime.fromJSDate(dueDate || dateDueDate).toFormat('yyyy-MM-dd')}
+              name="dueDate"
             />
           </RBForm.Group>
           <br />
@@ -114,18 +114,18 @@ const ObjectiveInformations = ({
           <RBForm.Group>
             <RBForm.Label>Progrès initial</RBForm.Label>
             <Field
-              name="initialProgress"
-              component="input"
               className="form-control"
+              component="input"
+              name="initialProgress"
               style={{ width: 228 }}
             />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>Projets</RBForm.Label>
             <FieldArray
-              name="projects"
-              defaultValue={objectiveProjects}
               className="form-control"
+              defaultValue={objectiveProjects}
+              name="projects"
             >
               {({ fields }) => (
                 <div>
@@ -136,9 +136,9 @@ const ObjectiveInformations = ({
                           <tr>
                             <td>
                               <Field
-                                name={`${name}.id`}
-                                component="select"
                                 className="form-control"
+                                component="select"
+                                name={`${name}.id`}
                               >
                                 <option />
                                 {
@@ -158,8 +158,8 @@ const ObjectiveInformations = ({
                             <td rowSpan={2} width={35}>
                               <FontAwesomeIcon
                                 icon="times"
-                                size="1x"
                                 onClick={() => fields.remove(index)}
+                                size="1x"
                                 style={{
                                   color: '#ce0000',
                                   cursor: 'pointer',
@@ -192,8 +192,8 @@ const ObjectiveInformations = ({
           >
             {
               objective
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

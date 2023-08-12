@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const AddTaskButton = ({
   onClick,
+  showCreateSectionButton,
   style,
 }) => {
   const { t } = useTranslation();
@@ -21,22 +22,26 @@ const AddTaskButton = ({
       >
         {t('createATask')}
       </Button>
-      <ButtonGroup
-        style={{
-          marginLeft: -10,
-        }}
-      >
-        <DropdownButton
-          as={ButtonGroup}
-          title=""
-        >
-          <Dropdown.Item
-            eventKey="1"
+      {
+        showCreateSectionButton && (
+          <ButtonGroup
+            style={{
+              marginLeft: -10,
+            }}
           >
-            {t('createASection')}
-          </Dropdown.Item>
-        </DropdownButton>
-      </ButtonGroup>
+            <DropdownButton
+              as={ButtonGroup}
+              title=""
+            >
+              <Dropdown.Item
+                eventKey="1"
+              >
+                {t('createASection')}
+              </Dropdown.Item>
+            </DropdownButton>
+          </ButtonGroup>
+        )
+      }
     </div>
   );
 };

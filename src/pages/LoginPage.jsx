@@ -73,27 +73,27 @@ class LoginPage extends Component {
         >
           <Form.Group>
             <Form.Control
-              type="text"
-              name="emailAddress"
               autoFocus
+              name="emailAddress"
               placeholder="Adresse courriel"
               style={{ marginBottom: 10 }}
+              type="text"
             />
           </Form.Group>
           <Form.Group>
             <Form.Control
               id="password"
-              type="password"
               name="password"
               onKeyPress={this.handleKeyPress}
               placeholder="Mot de passe"
+              type="password"
             />
           </Form.Group>
         </form>
         <Button
-          variant="primary"
           onClick={this.handleLogin}
           type="submit"
+          variant="primary"
         >
           Connexion
         </Button>

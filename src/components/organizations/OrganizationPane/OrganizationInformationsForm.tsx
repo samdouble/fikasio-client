@@ -33,17 +33,17 @@ const OrganizationInformationsForm = ({
 
   return (
     <Form
-      onSubmit={onSubmit}
       initialValues={organization}
       mutators={{ ...arrayMutators }}
+      onSubmit={onSubmit}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
             <RBForm.Label>Nom</RBForm.Label>
             <Field
-              name="name"
-              component="input"
               className="form-control"
+              component="input"
+              name="name"
             />
           </RBForm.Group>
           <RBForm.Group>
@@ -66,8 +66,8 @@ const OrganizationInformationsForm = ({
                             <td width={35}>
                               <FontAwesomeIcon
                                 icon="times"
-                                size="1x"
                                 onClick={() => fields.remove(index)}
+                                size="1x"
                                 style={{
                                   color: '#ce0000',
                                   cursor: 'pointer',
@@ -100,8 +100,8 @@ const OrganizationInformationsForm = ({
           >
             {
               organization
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

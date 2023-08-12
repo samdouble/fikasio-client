@@ -59,7 +59,11 @@ const NotificationsPage = () => {
               <div>
                 Vous avez <b>{tasksDueAfterProjectDueCount} tâche{tasksDueAfterProjectDueCount > 1 && 's'} qui sont dûes pour une date postérieure à la fin d'un projet dont elles font partie</b>.
               </div>
-              <Table responsive bordered hover>
+              <Table
+                bordered
+                hover
+                responsive
+              >
                 <tbody>
                   {
                     tasksDueAfterProjectDue

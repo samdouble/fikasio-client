@@ -38,13 +38,13 @@ const ProjectsPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[projects, objectives, tasks]}
+      getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.projects.fetchProjects()),
         () => dispatch(operations.objectives.fetchObjectives()),
         () => dispatch(operations.tasks.fetchTasks()),
       ]}
-      getContents={getPage}
+      resources={[projects, objectives, tasks]}
     />
   );
 };

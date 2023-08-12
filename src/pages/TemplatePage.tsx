@@ -15,7 +15,7 @@ const TemplatePage = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
   const templates = useSelector((state: RootState) => state.templates);
-  const template = templates && templates.find(template => template.id === id);
+  const template = templates && templates.find(temp => temp.id === id);
   const dispatch = useDispatch();
 
   const getPage = () => (

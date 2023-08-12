@@ -1,8 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import { operations } from 'services';
 import { RootState } from 'services/store';
 import ObjectiveInformations from './ObjectiveInformations';
 import ObjectiveProgress from './ObjectiveProgress';

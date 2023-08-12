@@ -86,15 +86,15 @@ const TaskRow = ({
     }
   };
 
-  const toggleCheckTaskClick = async task => {
-    const taskIfExists = tasks?.find(t => t.id === task.id && t.dueAt === task.dueAt);
-    if (task.id) {
-      operations.tasks.patchTask(task.id, {
+  const toggleCheckTaskClick = async clickedTask => {
+    const taskIfExists = tasks?.find(t1 => t1.id === clickedTask.id && t1.dueAt === clickedTask.dueAt);
+    if (clickedTask.id) {
+      operations.tasks.patchTask(clickedTask.id, {
         isCompleted: !taskIfExists?.isCompleted,
       })(dispatch);
     } else {
       operations.tasks.createTask({
-        ...task,
+        ...clickedTask,
         type: 'Instance',
         isCompleted: true,
       })(dispatch);
@@ -215,7 +215,7 @@ const TaskRow = ({
         {
           task && task.dueAt && (
             <FontAwesomeIcon
-              className='taskRow_dueAt_remove'
+              className="taskRow_dueAt_remove"
               icon="times"
               size="1x"
               onClick={e => {

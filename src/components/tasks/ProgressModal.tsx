@@ -39,8 +39,8 @@ const ProgressModal = ({
         title={ task && task.description }
       >
         <form
-          id="TaskProgress_form"
           className="formulaire"
+          id="TaskProgress_form"
         >
           <Form.Group>
             <Form.Label>Progrès</Form.Label>
@@ -55,11 +55,29 @@ const ProgressModal = ({
               right: 30,
             }}
           >
-            <Button variant="outline-secondary" onClick={() => onClose()}>{t('cancel')}</Button>
+            <Button
+              onClick={() => onClose()}
+              variant="outline-secondary"
+            >
+              {t('cancel')}
+            </Button>
             {
               task
-              ? <Button variant="success" onClick={() => handleUpdateTask()}>Sauvegarder</Button>
-              : <Button variant="success" onClick={() => handleCreateTask()}>Créer</Button>
+              ? (
+                <Button
+                  onClick={() => handleUpdateTask()}
+                  variant="success"
+                >
+                  Sauvegarder
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => handleCreateTask()}
+                  variant="success"
+                >
+                  Créer
+                </Button>
+              )
             }
           </div>
         </form>

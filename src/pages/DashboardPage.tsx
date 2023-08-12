@@ -22,7 +22,7 @@ const DashboardPage = () => {
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState<Task[]>([]);
   const nbTotal = tasks.length;
-  const nbDone = tasks.filter(t => t.isCompleted).length;
+  const nbDone = tasks.filter(task => task.isCompleted).length;
 
   useEffect(() => {
     getTasks({})
@@ -67,11 +67,11 @@ const DashboardPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[objectives]}
+      getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.objectives.fetchObjectives()),
       ]}
-      getContents={getPage}
+      resources={[objectives]}
     />
   );
 };

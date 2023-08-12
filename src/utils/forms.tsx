@@ -72,8 +72,3 @@ export const getFormFieldForType = (name: string, type?: string) => {
       );
   }
 }
-
-export default {
-  getFormData,
-  processFormData,
-};

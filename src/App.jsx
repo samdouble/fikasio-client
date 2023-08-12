@@ -36,30 +36,34 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <div id="App" className="App">
+    <div className="App" id="App">
       <div className="siteContent">
         <TopMenu />
         <Switch>
-          <Route path={links.paths.login} component={LoginPage} />
-          <Route path={links.paths.signup} component={SignupPage} />
-          <Route path={links.paths.documentation} component={DocumentationPage} />
-          <PrivateRoute path="/" exact component={HomePage} />
-          <PrivateRoute path={links.paths.home} component={HomePage} />
-          <PrivateRoute path={links.paths.dashboard} component={DashboardPage} />
-          <PrivateRoute path={links.paths.entityUpsert} component={EntityUpsertPage} />
-          <PrivateRoute path={links.paths.itemUpsert} component={ItemUpsertPage} />
-          <PrivateRoute path={links.paths.entity} component={EntityPage} />
-          <PrivateRoute path={links.paths.entities} component={EntitiesPage} />
-          <PrivateRoute path={links.paths.metrics} component={MetricsPage} />
-          <PrivateRoute path={links.paths.notifications} component={NotificationsPage} />
-          <PrivateRoute path={links.paths.objectives} component={ObjectivesPage} />
-          <PrivateRoute path={links.paths.organizations} component={OrganizationsPage} />
-          <PrivateRoute path={links.paths.projects} component={ProjectsPage} />
-          <PrivateRoute path={links.paths.settings} component={SettingsPage} />
-          <PrivateRoute path={links.paths.tasks} component={TasksPage} />
-          <PrivateRoute path={links.paths.template} component={TemplatePage} />
-          <PrivateRoute path={links.paths.templates} component={TemplatesPage} />
-          <PrivateRoute path={links.paths.timesheet} component={TimesheetPage} />
+          <Route component={LoginPage} path={links.paths.login} />
+          <Route component={SignupPage} path={links.paths.signup} />
+          <Route component={DocumentationPage} path={links.paths.documentation} />
+          <PrivateRoute
+            component={HomePage}
+            exact
+            path="/"
+          />
+          <PrivateRoute component={HomePage} path={links.paths.home} />
+          <PrivateRoute component={DashboardPage} path={links.paths.dashboard} />
+          <PrivateRoute component={EntityUpsertPage} path={links.paths.entityUpsert} />
+          <PrivateRoute component={ItemUpsertPage} path={links.paths.itemUpsert} />
+          <PrivateRoute component={EntityPage} path={links.paths.entity} />
+          <PrivateRoute component={EntitiesPage} path={links.paths.entities} />
+          <PrivateRoute component={MetricsPage} path={links.paths.metrics} />
+          <PrivateRoute component={NotificationsPage} path={links.paths.notifications} />
+          <PrivateRoute component={ObjectivesPage} path={links.paths.objectives} />
+          <PrivateRoute component={OrganizationsPage} path={links.paths.organizations} />
+          <PrivateRoute component={ProjectsPage} path={links.paths.projects} />
+          <PrivateRoute component={SettingsPage} path={links.paths.settings} />
+          <PrivateRoute component={TasksPage} path={links.paths.tasks} />
+          <PrivateRoute component={TemplatePage} path={links.paths.template} />
+          <PrivateRoute component={TemplatesPage} path={links.paths.templates} />
+          <PrivateRoute component={TimesheetPage} path={links.paths.timesheet} />
           <Route component={Page404} />
         </Switch>
         {

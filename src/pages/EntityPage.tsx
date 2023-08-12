@@ -16,7 +16,7 @@ const EntityPage = () => {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
   const entities = useSelector((state: RootState) => state.entities);
-  const entity = entities && entities.find(entity => entity.id === id);
+  const entity = entities && entities.find(e => e.id === id);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,11 +53,11 @@ const EntityPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[entities]}
+      getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.entities.fetchEntities()),
       ]}
-      getContents={getPage}
+      resources={[entities]}
     />
   );
 };
