@@ -26,7 +26,7 @@ const ProjectsList = ({
           <th style={{ width: 150 }}>Temps restant</th>
           <th style={{ width: 150 }}>Complétion</th>
           <th style={{ width: 150 }}>Échéance</th>
-          <th style={{ width: 150 }} colSpan={3} />
+          <th />
         </tr>
       </thead>
       <tbody>

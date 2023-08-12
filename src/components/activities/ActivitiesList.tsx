@@ -12,8 +12,10 @@ import './ActivitiesList.scss';
 const ActivitiesList = ({
   activities,
   date,
-  onActivitySelect,
   onAddActivity,
+  onEditActivity,
+  onSelectActivity,
+  selectedActivities,
 }) => {
   const dispatch = useDispatch();
   const [delay, setDelay] = useState<number | null>(null);
@@ -36,7 +38,7 @@ const ActivitiesList = ({
     }
   }, delay);
 
-  const handleDelete = activity => {
+  const handleDeleteActivity = activity => {
     operations.activities.deleteActivity(activity.id)(dispatch);
   };
 
@@ -44,11 +46,12 @@ const ActivitiesList = ({
     <Table responsive bordered hover>
       <thead>
         <tr>
+          <th style={{ width: 35 }} />
           <th>{t('comment')}</th>
           <th style={{ width: 150 }}>Début</th>
           <th style={{ width: 150 }}>Fin</th>
           <th style={{ width: 90 }}>Durée</th>
-          <th colSpan={2} />
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -64,9 +67,11 @@ const ActivitiesList = ({
               <ActivityRow
                 key={activity.id}
                 activity={activity}
+                isSelected={selectedActivities.find(a => activity.id === a.id)}
                 onAddActivity={addActivity}
-                onDeleteActivity={() => handleDelete(activity)}
-                onSelect={onActivitySelect}
+                onDeleteActivity={handleDeleteActivity}
+                onEditActivity={onEditActivity}
+                onSelectActivity={onSelectActivity}
               />
             ))
         }

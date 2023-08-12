@@ -164,7 +164,7 @@ const TimesheetPage = () => {
       <ActivitiesView
         activities={activities}
         date={date}
-        onActivitySelect={activity => dispatch(
+        onEditActivity={activity => dispatch(
           operations.pane.setPaneContent({
             type: 'ACTIVITY',
             activity,

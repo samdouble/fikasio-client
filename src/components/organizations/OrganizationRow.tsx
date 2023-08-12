@@ -1,54 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
-import links from 'utils/links';
+import './style.scss';
 
-const EntityRow = ({
-  entity,
-  onDeleteEntity,
+const OrganizationRow = ({
+  deleteOrganization,
+  onClick,
+  organization,
 }) => {
   const { t } = useTranslation();
 
   return (
-    <tr className="entityRow">
+    <tr
+      className={classNames({ done: organization.isCompleted && !organization.isArchived })}
+    >
       <td
-        className="entityRow_comments"
+        onClick={() => onClick(organization.id)}
         style={{ cursor: 'pointer' }}
       >
-        <Link
-          style={{ textDecoration: 'none' }}
-          to={links.entity(entity.id)}
-        >
-          <div
-            style={{
-              color: '#000',
-              height: '100%',
-              width: '100%',
-            }}
-          >
-            {entity.name}
-          </div>
-        </Link>
-      </td>
-      <td width={35}>
-        <Link
-          style={{ textDecoration: 'none' }}
-          to={links.itemUpsert(entity.id, 'NEW')}
-        >
-          <FontAwesomeIcon
-            icon="plus"
-            size="1x"
-            style={{
-              cursor: 'pointer',
-            }}
-          />
-        </Link>
+        { organization.name }
       </td>
       <td width={35}>
         <Dropdown
@@ -59,7 +35,7 @@ const EntityRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => onDeleteEntity(entity)}
+              onClick={() => deleteOrganization(organization.id)}
             >
               <FontAwesomeIcon
                 icon="times"
@@ -80,16 +56,16 @@ const EntityRow = ({
 
 function mapStateToProps(state) {
   return {
-    entities: state.entities,
+    organizations: state.organizations,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    createEntity: operations.entities.createEntity,
-    patchEntity: operations.entities.patchEntity,
-    deleteEntity: operations.entities.deleteEntity,
+    createOrganization: operations.organizations.createOrganization,
+    deleteOrganization: operations.organizations.deleteOrganization,
+    patchOrganization: operations.organizations.patchOrganization,
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EntityRow);
+export default connect(mapStateToProps, mapDispatchToProps)(OrganizationRow);

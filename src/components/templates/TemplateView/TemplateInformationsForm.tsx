@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
@@ -14,6 +15,7 @@ const TemplateInformationsForm = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);
@@ -54,13 +56,16 @@ const TemplateInformationsForm = ({
               right: 30,
             }}
           >
-            <Button variant="outline-secondary" onClick={() => dispatch(operations.pane.clearPaneContent())}>
-              Annuler
+            <Button
+              variant="outline-secondary"
+              onClick={() => dispatch(operations.pane.clearPaneContent())}
+            >
+              {t('cancel')}
             </Button>
             {
               template
-                ? <Button type="submit" variant='success'>Sauvegarder</Button>
-                : <Button type="submit" variant='success'>Créer</Button>
+                ? <Button type="submit" variant="success">Sauvegarder</Button>
+                : <Button type="submit" variant="success">Créer</Button>
             }
           </div>
         </form>

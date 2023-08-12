@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
@@ -18,6 +19,7 @@ const ObjectiveRow = ({
   patchObjective,
   setPaneContent,
 }) => {
+  const { t } = useTranslation();
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
   const today = DateTime.fromJSDate(new Date());
   const currentProgress = objective.progress || 0;
@@ -107,7 +109,7 @@ const ObjectiveRow = ({
                   width: 25,
                 }}
               />
-              Copier
+              {t('copy')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
@@ -122,7 +124,7 @@ const ObjectiveRow = ({
                   width: 25,
                 }}
               />
-              Archiver
+              {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => deleteObjective(objective.id)}
@@ -135,7 +137,7 @@ const ObjectiveRow = ({
                   width: 25,
                 }}
               />
-              Supprimer
+              {t('delete')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

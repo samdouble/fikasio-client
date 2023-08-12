@@ -16,7 +16,7 @@ const ObjectivesList = ({
           <th>Projets</th>
           <th>Progression</th>
           <th>Échéance</th>
-          <th colSpan={3} />
+          <th />
         </tr>
       </thead>
       <tbody>

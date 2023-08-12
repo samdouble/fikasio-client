@@ -2,9 +2,15 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './style.scss';
 
-const LoadingGif = ({ isChecked }) => {
+const Checkbox = ({
+  isChecked,
+  onClick,
+}) => {
   return (
-    <div>
+    <div
+      onClick={onClick}
+      role="button"
+    >
       {
         isChecked ? (
           <FontAwesomeIcon
@@ -32,4 +38,4 @@ const LoadingGif = ({ isChecked }) => {
   );
 }
 
-export default LoadingGif;
+export default Checkbox;

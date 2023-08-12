@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import Modal from 'components/UI/Modal';
 import { operations } from 'services';
 import { getFormData } from 'utils/forms';
@@ -12,6 +13,8 @@ const ProgressModal = ({
   metric,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const handleUpdateProgress = async () => {
     const formData: any = getFormData('MetricProgress_form');
     operations.metrics.patchMetric(metric.id, formData)(dispatch)
@@ -36,7 +39,7 @@ const ProgressModal = ({
             <Form.Control type="text" name="number:progress" />
           </Form.Group>
           <div style={{ position: 'absolute', right: 15, bottom: 15 }}>
-            <Button variant="outline-secondary" onClick={() => onClose()}>Annuler</Button>
+            <Button variant="outline-secondary" onClick={() => onClose()}>{t('cancel')}</Button>
             <Button variant='success' onClick={() => handleUpdateProgress()}>Sauvegarder</Button>
           </div>
         </form>

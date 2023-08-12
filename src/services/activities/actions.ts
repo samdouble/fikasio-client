@@ -14,7 +14,7 @@ export enum ActivityActionTypes {
 }
 
 export type ActivityAction =
-  | { type: ActivityActionTypes.CREATE_ACTIVITY_REQUEST; payload: { activity: Activity } }
+  | { type: ActivityActionTypes.CREATE_ACTIVITY_REQUEST; payload: { activity: Partial<Activity> } }
   | { type: ActivityActionTypes.CREATE_ACTIVITY_RESPONSE; payload: { activity: Activity } }
   | { type: ActivityActionTypes.GET_ACTIVITIES_REQUEST; payload: { activities: Activity[] } }
   | { type: ActivityActionTypes.GET_ACTIVITIES_RESPONSE; payload: { activities: Activity[] } }
@@ -25,7 +25,7 @@ export type ActivityAction =
   | { type: ActivityActionTypes.DELETE_ACTIVITY_REQUEST; payload: { activityId: string } }
   | { type: ActivityActionTypes.DELETE_ACTIVITY_RESPONSE; payload: { activityId: string } };
 
-export const createActivityRequest = (payload: { activity: Activity }): ActivityAction => ({
+export const createActivityRequest = (payload: { activity: Partial<Activity> }): ActivityAction => ({
   type: ActivityActionTypes.CREATE_ACTIVITY_REQUEST,
   payload,
 });

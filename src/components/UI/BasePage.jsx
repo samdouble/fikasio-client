@@ -10,6 +10,7 @@ import ActivityPane from 'components/activities/ActivityPane';
 import FieldPane from 'components/entities/fields/FieldPane';
 // import ItemPane from 'components/entities/items/ItemPane';
 import ObjectivePane from 'components/objectives/ObjectivePane';
+import OrganizationPane from 'components/organizations/OrganizationPane';
 import ProjectPane from 'components/projects/ProjectPane';
 import TaskPane from 'components/tasks/TaskPane';
 import TemplatePane from 'components/templates/TemplatePane';
@@ -43,6 +44,11 @@ const BasePage = ({
     />;
   } else if (paneContent && paneContent.type === 'OBJECTIVE') {
     pane = <ObjectivePane
+      defaultTab={paneContent && paneContent.id === 'NEW' && 'infos'}
+      id={paneContent && paneContent.id}
+    />;
+  } else if (paneContent && paneContent.type === 'ORGANIZATION') {
+    pane = <OrganizationPane
       defaultTab={paneContent && paneContent.id === 'NEW' && 'infos'}
       id={paneContent && paneContent.id}
     />;

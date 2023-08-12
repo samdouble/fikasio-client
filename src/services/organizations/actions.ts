@@ -20,7 +20,10 @@ export type OrganizationAction =
   | { type: OrganizationActionTypes.GET_ORGANIZATIONS_RESPONSE; payload: { organizations: Organization[] } }
   | { type: OrganizationActionTypes.UPDATE_ORGANIZATION_REQUEST; payload: { id: string; organization: Organization } }
   | { type: OrganizationActionTypes.UPDATE_ORGANIZATION_RESPONSE; payload: { organization: Organization } }
-  | { type: OrganizationActionTypes.PATCH_ORGANIZATION_REQUEST; payload: { id: string; organization: Partial<Organization> } }
+  | {
+    type: OrganizationActionTypes.PATCH_ORGANIZATION_REQUEST;
+    payload: { id: string; organization: Partial<Organization>;
+  } }
   | { type: OrganizationActionTypes.PATCH_ORGANIZATION_RESPONSE; payload: { organization: Organization } }
   | { type: OrganizationActionTypes.DELETE_ORGANIZATION_REQUEST; payload: { organizationId: string } }
   | { type: OrganizationActionTypes.DELETE_ORGANIZATION_RESPONSE; payload: { organizationId: string } };
@@ -55,7 +58,10 @@ export const updateOrganizationResponse = (payload: { organization: Organization
   payload,
 });
 
-export const patchOrganizationRequest = (payload: { id: string, organization: Partial<Organization> }): OrganizationAction => ({
+export const patchOrganizationRequest = (payload: {
+  id: string,
+  organization: Partial<Organization>,
+}): OrganizationAction => ({
   type: OrganizationActionTypes.PATCH_ORGANIZATION_REQUEST,
   payload,
 });

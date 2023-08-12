@@ -1,7 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,14 +11,14 @@ import MetricsList from 'components/metrics/MetricsList';
 import AddMetricButton from 'components/metrics/AddMetricButton';
 import Sidebar from 'components/UI/Sidebar';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
-const MetricsPage = ({
-  metrics,
-  fetchMetrics,
-}) => {
+const MetricsPage = () => {
   const { t } = useTranslation();
+  const metrics = useSelector((state: RootState) => state.metrics);
+  const dispatch = useDispatch();
 
   const getPage = () => {
     return (
@@ -50,22 +49,12 @@ const MetricsPage = ({
   return (
     <ResourcesHandler
       resources={[metrics]}
-      resourceFetchers={[fetchMetrics]}
+      resourceFetchers={[
+        () => dispatch(operations.metrics.fetchMetrics()),
+      ]}
       getContents={getPage}
     />
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    metrics: state.metrics,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchMetrics: operations.metrics.fetchMetrics,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MetricsPage);
+export default MetricsPage;

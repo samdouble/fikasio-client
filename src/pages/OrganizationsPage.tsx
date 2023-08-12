@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
-import ProjectsView from 'components/projects/ProjectsView';
+import OrganizationsView from 'components/organizations/OrganizationsView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
 import { RootState } from 'services/store';
@@ -13,23 +13,21 @@ import './style.scss';
 
 const OrganizationsPage = () => {
   const { t } = useTranslation();
-  const objectives = useSelector((state: RootState) => state.objectives);
-  const projects = useSelector((state: RootState) => state.projects);
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const organizations = useSelector((state: RootState) => state.organizations);
   const dispatch = useDispatch();
 
   const getPage = () => (
     <BasePage>
       <Breadcrumb>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>Projets</Breadcrumb.Item>
+        <Breadcrumb.Item active>{t('organizations')}</Breadcrumb.Item>
       </Breadcrumb>
-      <h4>Organisations</h4>
-      <ProjectsView
-        onProjectSelect={
-          projectId => operations.pane.setPaneContent({
-            type: 'PROJECT',
-            id: projectId,
+      <h4>{t('organizations')}</h4>
+      <OrganizationsView
+        onOrganizationSelect={
+          organizationId => operations.pane.setPaneContent({
+            type: 'ORGANIZATION',
+            id: organizationId,
           })(dispatch)
         }
       />
@@ -38,11 +36,9 @@ const OrganizationsPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[projects, objectives, tasks]}
+      resources={[organizations]}
       resourceFetchers={[
-        () => dispatch(operations.projects.fetchProjects()),
-        () => dispatch(operations.objectives.fetchObjectives()),
-        () => dispatch(operations.tasks.fetchTasks()),
+        () => dispatch(operations.organizations.fetchOrganizations()),
       ]}
       getContents={getPage}
     />

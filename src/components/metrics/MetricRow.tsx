@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
@@ -13,6 +14,8 @@ const MetricRow = ({
   onEnterProgress,
   onEnterEditMetric,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <tr>
       <td>
@@ -48,7 +51,7 @@ const MetricRow = ({
                   width: 25,
                 }}
               />
-              Copier
+              {t('copy')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => onEnterEditMetric(metric)}
@@ -73,7 +76,7 @@ const MetricRow = ({
                   width: 25,
                 }}
               />
-              Supprimer
+              {t('delete')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

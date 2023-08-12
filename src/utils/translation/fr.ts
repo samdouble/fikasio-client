@@ -1,9 +1,14 @@
 const fr = {
+  archive: 'Archiver',
+  cancel: 'Annuler',
   comment: 'Commentaire',
+  comments: 'Commentaires',
+  copy: 'Copier',
   createASection: 'Créer une section',
   createATask: 'Créer une tâche',
   dashboard: 'Tableau de bord',
   day: 'Jour',
+  delete: 'Supprimer',
   documentation: 'Documentation',
   entities: 'Entités',
   exportToCsv: 'Exporter en CSV',
@@ -20,6 +25,7 @@ const fr = {
   settings: 'Paramètres',
   tasks: 'Tâches',
   timesheet: 'Feuille de temps',
+  xSelectedActivities: '{{count}} activités sélectionnées',
   week: 'Semaine',
 };
 

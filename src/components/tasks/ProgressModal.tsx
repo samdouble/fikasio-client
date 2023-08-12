@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import Modal from '../UI/Modal';
 import { operations } from '../../services';
 import { getFormData } from '../../utils/forms';
@@ -12,6 +13,7 @@ const ProgressModal = ({
   task,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleCreateTask = async () => {
     const formData: any = getFormData('TaskProgress_form');
@@ -53,7 +55,7 @@ const ProgressModal = ({
               right: 30,
             }}
           >
-            <Button variant="outline-secondary" onClick={() => onClose()}>Annuler</Button>
+            <Button variant="outline-secondary" onClick={() => onClose()}>{t('cancel')}</Button>
             {
               task
               ? <Button variant="success" onClick={() => handleUpdateTask()}>Sauvegarder</Button>

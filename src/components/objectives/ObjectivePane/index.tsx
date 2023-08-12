@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import ObjectiveInformations from './ObjectiveInformations';
 import ObjectiveProgress from './ObjectiveProgress';
 import ObjectiveStats from './ObjectiveStats';
@@ -11,19 +11,19 @@ import ObjectiveStats from './ObjectiveStats';
 const ProjectPane = ({
   defaultTab,
   id,
-  objectives,
 }) => {
-  const objective = (objectives || []).find(o => o.id === id) || {};
+  const objectives = useSelector((state: RootState) => state.objectives);
+  const objective = (objectives || []).find(o => o.id === id);
 
   return (
     <>
-      <h4>{ objective && objective.name }</h4>
+      <h4>{ objective?.name }</h4>
       <Tabs
         className="mb-3"
         defaultActiveKey={defaultTab}
       >
         {
-          objective.id && (
+          objective?.id && (
             <Tab
               eventKey="stats"
               title="Statistiques"
@@ -35,7 +35,7 @@ const ProjectPane = ({
           )
         }
         {
-          objective.id && (
+          objective?.id && (
             <Tab
               eventKey="progress"
               title="Progrès"
@@ -59,18 +59,4 @@ const ProjectPane = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    objectives: state.objectives,
-    projects: state.projects,
-    tasks: state.tasks,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    setPaneContent: operations.pane.setPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectPane);
+export default ProjectPane;

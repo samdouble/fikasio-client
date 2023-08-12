@@ -1,9 +1,14 @@
 const en = {
+  archive: 'Archive',
+  cancel: 'Cancel',
   comment: 'Comment',
+  comments: 'Comments',
+  copy: 'Copy',
   createASection: 'Create a section',
   createATask: 'Create a task',
   dashboard: 'Dashboard',
   day: 'Day',
+  delete: 'Delete',
   documentation: 'Documentation',
   entities: 'Entities',
   exportToCsv: 'Export to CSV',
@@ -20,6 +25,7 @@ const en = {
   settings: 'Settings',
   tasks: 'Tasks',
   timesheet: 'Timesheet',
+  xSelectedActivities: '{{count}} selected activities',
   week: 'Week',
 };
 

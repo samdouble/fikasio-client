@@ -54,7 +54,7 @@ function fetchActivities(filter) {
   );
 }
 
-function createActivity(activity: Activity) {
+function createActivity(activity: Partial<Activity>) {
   return (dispatch: ActivityDispatch) => {
     dispatch(createActivityRequest({ activity }));
     return APIcreateActivity(activity)

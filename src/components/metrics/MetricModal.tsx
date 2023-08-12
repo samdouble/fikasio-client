@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
@@ -15,6 +16,7 @@ const MetricModal = ({
   onClose,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const onSubmit = async values => {
     const formData = values;
@@ -42,15 +44,24 @@ const MetricModal = ({
               <RBForm.Group>
                 <RBForm.Label>Description</RBForm.Label>
                 <Field
-                  name="description"
+                  className="form-control"
                   component="input"
                   defaultValue={metric && metric.description}
-                  className="form-control"
+                  name="description"
                 />
               </RBForm.Group>
-              <div style={{ float: 'right', bottom: 0, paddingBottom: 15 }}>
-                <Button variant="outline-secondary" onClick={() => dispatch(operations.pane.clearPaneContent())}>
-                  Annuler
+              <div
+                style={{
+                  bottom: 0,
+                  float: 'right',
+                  paddingBottom: 15,
+                }}
+              >
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => dispatch(operations.pane.clearPaneContent())}
+                >
+                  {t('cancel')}
                 </Button>
                 {
                   metric

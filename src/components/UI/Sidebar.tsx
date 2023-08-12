@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import NotificationsCounter from '../notifications/NotificationsCounter';
 import ResourcesHandler from '../ResourcesHandler';
 import { calculateNotifications } from '../notifications/utils';
@@ -25,14 +25,14 @@ const menuItems = {
   TIMESHEET: 'timesheet',
 };
 
-const Sidebar = ({
-  tasks, fetchTasks,
-  projects, fetchProjects,
-}) => {
+const Sidebar = () => {
+  const projects = useSelector((state: RootState) => state.projects);
+  const tasks = useSelector((state: RootState) => state.tasks);
   const [expanded, setExpanded] = useState(false);
   const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const notifications = tasks && projects && calculateNotifications(tasks, projects);
   const lateTasks = notifications && notifications.lateTasks;
@@ -254,24 +254,13 @@ const Sidebar = ({
   return (
     <ResourcesHandler
       resources={[tasks, projects]}
-      resourceFetchers={[fetchTasks, fetchProjects]}
+      resourceFetchers={[
+        () => dispatch(operations.tasks.fetchTasks()),
+        () => dispatch(operations.projects.fetchProjects()),
+      ]}
       getContents={getPage}
     />
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    tasks: state.tasks,
-    projects: state.projects,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchTasks: operations.tasks.fetchTasks,
-    fetchProjects: operations.projects.fetchProjects,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default Sidebar;

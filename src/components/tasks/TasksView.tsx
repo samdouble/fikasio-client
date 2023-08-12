@@ -8,9 +8,9 @@ import TasksDueDateFilter from './TasksDueDateFilter';
 interface TasksViewProps {
   onTaskSelect: (taskId: string) => void;
   projectId?: string;
-  showAddButton: boolean;
-  showCompletionFilter: boolean;
-  showDueDateFilter: boolean;
+  showAddButton?: boolean;
+  showCompletionFilter?: boolean;
+  showDueDateFilter?: boolean;
   tasks?: Task[] | null;
 }
 

@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useTranslation } from 'react-i18next';
 import ContentEditable from 'react-contenteditable';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import useTimeout from 'use-timeout';
+import Checkbox from 'components/UI/Checkbox';
 import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
+import { RootState } from 'services/store';
+import { Activity } from 'services/activities/types';
 
 const ActivityRow = ({
   activity,
-  createActivity,
-  deleteActivity,
-  login,
+  isSelected,
   onAddActivity,
   onDeleteActivity,
-  onSelect,
-  patchActivity,
+  onEditActivity,
+  onSelectActivity,
 }) => {
+  const login = useSelector((state: RootState) => state.login);
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
   const me = login.user;
   const [comments, setIComments] = useState((activity && activity.comments) || '');
   const [delay, setDelay] = useState<number | null>(null);
@@ -30,7 +34,7 @@ const ActivityRow = ({
 
   const saveComments = () => {
     if (activity && comments !== '' && comments !== activity.comments) {
-      patchActivity(activity.id, { comments })
+      operations.activities.patchActivity(activity.id, { comments })(dispatch)
         .then(() => setSaved(true));
     }
 	};
@@ -50,7 +54,7 @@ const ActivityRow = ({
   };
 
   const handleDuplicateActivity = activity => {
-    createActivity(activity);
+    operations.activities.createActivity(activity)(dispatch);
   };
 
   const handleKeyDown = e => {
@@ -70,12 +74,12 @@ const ActivityRow = ({
   const handleKeyUp = (e, updatedActivity) => {
     if (updatedActivity) {
       if (e.key === 'Backspace' && e.target.textContent === '') {
-        deleteActivity(updatedActivity.id);
+        operations.activities.deleteActivity(updatedActivity.id)(dispatch);
       }
     } else if (e.target.textContent !== '') {
-      createActivity({
+      operations.activities.createActivity({
         comments: e.target.textContent,
-      });
+      })(dispatch);
     }
   };
 
@@ -83,9 +87,15 @@ const ActivityRow = ({
   const endDateTime = activity.endTime && DateTime.fromJSDate(new Date(activity.endTime));
   return (
     <tr className="activityRow">
+      <td width={35}>
+        <Checkbox
+          isChecked={isSelected}
+          onClick={() => onSelectActivity(activity)}
+        />
+      </td>
       <td
         className="activityRow_comments"
-        onClick={() => onSelect && onSelect({ id: activity.id })}
+        onClick={() => onEditActivity && onEditActivity({ id: activity.id })}
         style={{ cursor: 'pointer' }}
       >
         {
@@ -132,7 +142,7 @@ const ActivityRow = ({
                 .set({ millisecond: 0 })
                 .toISO();
               if (activity.id) {
-                patchActivity(activity.id, { startTime: timestamp });
+                operations.activities.patchActivity(activity.id, { startTime: timestamp })(dispatch);
               }
             }}
             showTimeSelect
@@ -162,7 +172,7 @@ const ActivityRow = ({
                 .set({ millisecond: 0 })
                 .toISO();
               if (activity.id) {
-                patchActivity(activity.id, { endTime: timestamp });
+                operations.activities.patchActivity(activity.id, { endTime: timestamp })(dispatch);
               }
             }}
             showTimeSelect
@@ -194,7 +204,7 @@ const ActivityRow = ({
                   width: 25,
                 }}
               />
-              Copier
+              {t('copy')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => onDeleteActivity(activity)}
@@ -207,7 +217,7 @@ const ActivityRow = ({
                   width: 25,
                 }}
               />
-              Supprimer
+              {t('delete')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -216,19 +226,4 @@ const ActivityRow = ({
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    activities: state.activities,
-    login: state.login,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createActivity: operations.activities.createActivity,
-    patchActivity: operations.activities.patchActivity,
-    deleteActivity: operations.activities.deleteActivity,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ActivityRow);
+export default ActivityRow;

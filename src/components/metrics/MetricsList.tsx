@@ -32,7 +32,7 @@ const MetricsList = () => {
     setEditedMetric(null);
   }
 
-  return metrics && (
+  return (
     <>
       {
         showProgressModal && <ProgressModal
@@ -56,13 +56,12 @@ const MetricsList = () => {
         <thead>
           <tr>
             <th>Description</th>
-            <th colSpan={4} />
+            <th />
           </tr>
         </thead>
         <tbody>
           {
-            metrics
-              .sort((m1, m2) => (m1.dueDate < m2.dueDate ? -1 : 1))
+            metrics?.sort((m1, m2) => (m1.dueDate < m2.dueDate ? -1 : 1))
               .map(metric => (
                 <MetricRow
                   key={metric.id}

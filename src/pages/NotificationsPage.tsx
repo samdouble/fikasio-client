@@ -1,7 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
@@ -11,15 +10,15 @@ import TasksView from 'components/tasks/TasksView';
 import { calculateNotifications } from 'components/notifications/utils';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
-const NotificationsPage = ({
-  tasks, fetchTasks,
-  projects, fetchProjects,
-  setPaneContent,
-}) => {
+const NotificationsPage = () => {
   const { t } = useTranslation();
+  const projects = useSelector((state: RootState) => state.projects);
+  const tasks = useSelector((state: RootState) => state.tasks);
+  const dispatch = useDispatch();
 
   const getPage = () => {
     const notifications = tasks && projects && calculateNotifications(tasks, projects);
@@ -41,10 +40,10 @@ const NotificationsPage = ({
                 Vous avez <b>{lateTasksCount} tâche{lateTasksCount > 1 && 's'} en retard</b>.
               </div>
               <TasksView
-                onTaskSelect={taskId => setPaneContent({
+                onTaskSelect={taskId => operations.pane.setPaneContent({
                   type: 'TASK',
                   id: taskId,
-                })}
+                })(dispatch)}
                 tasks={lateTasks}
               />
             </>
@@ -87,25 +86,13 @@ const NotificationsPage = ({
   return (
     <ResourcesHandler
       resources={[tasks, projects]}
-      resourceFetchers={[fetchTasks, fetchProjects]}
+      resourceFetchers={[
+        () => dispatch(operations.tasks.fetchTasks()),
+        () => dispatch(operations.projects.fetchProjects()),
+      ]}
       getContents={getPage}
     />
   );
-}
+};
 
-function mapStateToProps(state) {
-  return {
-    tasks: state.tasks,
-    projects: state.projects,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchTasks: operations.tasks.fetchTasks,
-    fetchProjects: operations.projects.fetchProjects,
-    setPaneContent: operations.pane.setPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NotificationsPage);
+export default NotificationsPage;

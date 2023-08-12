@@ -26,7 +26,7 @@ const ItemsList = ({
               </th>
             ))
         }
-        <th colSpan={3} />
+        <th colSpan={2} />
       </tr>
     </thead>
     <tbody>

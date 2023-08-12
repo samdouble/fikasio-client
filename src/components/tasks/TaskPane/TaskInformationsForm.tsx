@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Switch from 'react-input-switch';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -27,6 +28,7 @@ const TaskInformationsForm = ({
   task,
 }: TaskInformationsFormProps) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const projects = useSelector((state: RootState) => state.projects);
   const [hasRecurrence, setHasRecurrence] = useState(false);
   const [dueDate, setDueDate] = useState(
@@ -313,7 +315,7 @@ const TaskInformationsForm = ({
               onClick={() => onClose && onClose()}
               variant="outline-secondary"
             >
-              Annuler
+              {t('cancel')}
             </Button>
             {
               task

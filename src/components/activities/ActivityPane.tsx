@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -16,6 +17,7 @@ import { RootState } from 'services/store';
 import { getFormFieldForType, processFormData } from 'utils/forms';
 import SuggestionsList from './SuggestionsList';
 import './ActivityPane.scss';
+import { t } from 'i18next';
 
 export interface ActivityPaneProps {
   activity: Partial<Activity>,
@@ -42,6 +44,7 @@ const ActivityPane = ({
   const [templateId, setTemplateId] = useState(activity?.templateId);
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
   const template = templates?.find(t => t.id === templateId);
+  const { t } = useTranslation();
 
   const handleChangeComments = e => {
     const text = e.target.value;
@@ -273,7 +276,7 @@ const ActivityPane = ({
             )
           }
           <RBForm.Group>
-            <RBForm.Label>Commentaires</RBForm.Label>
+            <RBForm.Label>{t('comments')}</RBForm.Label>
             <Field
               component="textarea"
               className="form-control"
@@ -302,7 +305,7 @@ const ActivityPane = ({
               onClick={() => dispatch(operations.pane.clearPaneContent())}
               variant="outline-secondary"
             >
-              Annuler
+              {t('cancel')}
             </Button>
             {
               activity

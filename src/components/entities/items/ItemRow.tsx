@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
 import DropdownToggle from 'components/UI/DropdownToggle';
@@ -25,6 +26,7 @@ const ItemRow = ({
   no,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <tr className="itemRow">
@@ -85,7 +87,7 @@ const ItemRow = ({
                   width: 25,
                 }}
               />
-              Copier
+              {t('copy')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => operations.items.deleteItem(entity.id, item.id)(dispatch)}
@@ -98,7 +100,7 @@ const ItemRow = ({
                   width: 25,
                 }}
               />
-              Supprimer
+              {t('delete')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
@@ -22,6 +23,7 @@ const ItemInformationsForm = ({
   const entities = useSelector((state: RootState) => state.entities);
   const items = useSelector((state: RootState) => state.items);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const entity = (entities || []).find(e => e.id === entityId);
   const item = (items || []).find(i => i.id === id);
 
@@ -98,7 +100,7 @@ const ItemInformationsForm = ({
               variant="outline-secondary"
               onClick={() => dispatch(operations.pane.clearPaneContent())}
             >
-              Annuler
+              {t('cancel')}
             </Button>
             {
               item

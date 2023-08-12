@@ -5,6 +5,7 @@ import { operations as items } from './items';
 import { operations as login } from './login';
 import { operations as metrics } from './metrics';
 import { operations as objectives } from './objectives';
+import { operations as organizations } from './organizations';
 import { operations as pane } from './pane';
 import { operations as payments } from './payments';
 import { operations as projects } from './projects';
@@ -19,6 +20,7 @@ const operations = {
   login,
   metrics,
   objectives,
+  organizations,
   pane,
   payments,
   projects,

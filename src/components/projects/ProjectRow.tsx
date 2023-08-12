@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useTranslation } from 'react-i18next';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
@@ -20,6 +21,7 @@ const ProjectRow = ({
   patchProject,
   project,
 }) => {
+  const { t } = useTranslation();
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
   const hasdueAtPassed = project && project.dueAt && DateTime.fromISO(project.dueAt) < DateTime.now();
 
@@ -112,7 +114,7 @@ const ProjectRow = ({
                   width: 25,
                 }}
               />
-              Copier
+              {t('copy')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
@@ -127,7 +129,7 @@ const ProjectRow = ({
                   width: 25,
                 }}
               />
-              Archiver
+              {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => deleteProject(project.id)}
@@ -140,7 +142,7 @@ const ProjectRow = ({
                   width: 25,
                 }}
               />
-              Supprimer
+              {t('delete')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

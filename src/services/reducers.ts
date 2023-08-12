@@ -6,6 +6,7 @@ import items from './items';
 import login from './login';
 import metrics from './metrics';
 import objectives from './objectives';
+import organizations from './organizations';
 import pane from './pane';
 import payments from './payments';
 import projects from './projects';
@@ -21,6 +22,7 @@ export default combineReducers({
   login,
   metrics,
   objectives,
+  organizations,
   pane,
   payments,
   projects,

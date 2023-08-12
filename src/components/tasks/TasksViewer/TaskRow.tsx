@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useTranslation } from 'react-i18next';
 import ContentEditable from 'react-contenteditable';
 import ClickOutside from 'react-click-outside';
 import classNames from 'classnames';
@@ -16,7 +17,6 @@ import { RootState } from 'services/store';
 import AssigneeButton from './AssigneeButton';
 
 const TaskRow = ({
-  index,
   onAddTask,
   onEnterProgress,
   onSelect,
@@ -25,6 +25,7 @@ const TaskRow = ({
 }) => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [description, setIDescription] = useState((task && task.description) || '');
   const [delay, setDelay] = useState<number | null>(null);
   const [, setSaved] = useState(false);
@@ -100,12 +101,6 @@ const TaskRow = ({
     }
   };
 
-  const toggleCheckTaskKey = async (e, task) => {
-    if (e.key === 'Enter') {
-      toggleCheckTaskClick(task);
-    }
-  };
-
   const hasdueAtPassed = task
     && !task.isCompleted
     && task.dueAt
@@ -117,20 +112,10 @@ const TaskRow = ({
       done: task && task.isCompleted,
     })}>
       <td width={35}>
-        <div
+        <Checkbox
+          isChecked={task.isCompleted}
           onClick={() => toggleCheckTaskClick(task)}
-          onKeyUp={e => toggleCheckTaskKey(e, task)}
-          role="button"
-          tabIndex={2 * index}
-        >
-          {
-            task && (
-              <Checkbox
-                isChecked={task.isCompleted}
-              />
-            )
-          }
-        </div>
+        />
       </td>
       <td
         className="taskRow_description"
@@ -254,7 +239,7 @@ const TaskRow = ({
                   width: 25,
                 }}
               />
-              Copier
+              {t('copy')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
@@ -269,7 +254,7 @@ const TaskRow = ({
                   width: 25,
                 }}
               />
-              Archiver
+              {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => operations.tasks.deleteTask(task.id)(dispatch)}
@@ -282,7 +267,7 @@ const TaskRow = ({
                   width: 25,
                 }}
               />
-              Supprimer
+              {t('delete')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

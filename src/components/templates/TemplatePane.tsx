@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -17,6 +18,7 @@ const TemplatePane = ({
   templates,
   updateTemplate,
 }) => {
+  const { t } = useTranslation();
   const template = (templates || []).find(t => t.id === id) || {};
 
   const onSubmit = async values => {
@@ -143,7 +145,7 @@ const TemplatePane = ({
               onClick={() => onClose()}
               variant="outline-secondary"
             >
-              Annuler
+              {t('cancel')}
             </Button>
             {
               template

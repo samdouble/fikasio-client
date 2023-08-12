@@ -62,7 +62,6 @@ const TasksList = ({
             .map((task, i) => (
               <TaskRow
                 key={`${task.id}-${task.dueAt}`}
-                index={i}
                 task={task}
                 onAddTask={addTask}
                 onEnterProgress={onOpenProgressModal}
