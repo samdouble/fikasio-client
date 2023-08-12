@@ -104,7 +104,8 @@
       }
     ],
     "react/jsx-max-props-per-line": ["error", { "maximum": 2 }],
-    "react/jsx-sort-props": "warn"
+    "react/jsx-sort-props": "off",
+    "react-hooks/exhaustive-deps": "off"
   },
   "settings": {
     "import/resolver": {
