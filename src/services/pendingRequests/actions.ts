@@ -16,8 +16,3 @@ export const fetchResponse = (fetchType, res = null) => ({
   type: PendingRequestActionTypes.FETCH_RESPONSE,
   payload: { type: fetchType, res },
 });
-
-export default {
-  fetchRequest,
-  fetchResponse,
-};

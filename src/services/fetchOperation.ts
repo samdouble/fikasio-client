@@ -40,8 +40,3 @@ export function fetchOnceOperation(requestAction, responseAction, endpoint, getR
     }
   };
 }
-
-export default {
-  fetchOperation,
-  fetchOnceOperation,
-};

@@ -32,8 +32,3 @@ export function createPayment(payment: Payment) {
       .then(res => dispatch(createPaymentResponse({ ...res })));
   };
 }
-
-export default {
-  fetchPayments,
-  createPayment,
-};
