@@ -1,9 +1,7 @@
 import { PaymentAction, PaymentActionTypes } from './actions';
 import { Payment } from './types';
 
-export type PaymentReducerState = Payment[] | null;
-
-export default function reducer(state: PaymentReducerState = null, action: PaymentAction) {
+export default function reducer(state: Payment[] | null = null, action: PaymentAction) {
   switch (action.type) {
     case PaymentActionTypes.GET_PAYMENTS_RESPONSE:
       const newPayments = action.payload.payments;

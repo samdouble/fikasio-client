@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 import TemplateView from 'components/templates/TemplateView';
 import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
@@ -11,6 +12,7 @@ import links from 'utils/links';
 import './style.scss';
 
 const TemplatePage = () => {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
   const templates = useSelector((state: RootState) => state.templates);
   const template = templates && templates.find(template => template.id === id);
@@ -19,7 +21,7 @@ const TemplatePage = () => {
   const getPage = () => (
     <BasePage>
       <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
         <Breadcrumb.Item active>{ template?.name }</Breadcrumb.Item>
       </Breadcrumb>

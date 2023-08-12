@@ -1,8 +1,6 @@
 import { PendingRequestAction, PendingRequestActionTypes } from './actions';
 
-export type PendingRequestReducerState = any[];
-
-function pendingRequests(state: PendingRequestReducerState = [], action: PendingRequestAction) {
+function pendingRequests(state: any[] = [], action: PendingRequestAction) {
   switch (action.type) {
     case PendingRequestActionTypes.FETCH_REQUEST:
       return [...state, action.payload.type];

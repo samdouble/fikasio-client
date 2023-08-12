@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import ObjectivesView from 'components/objectives/ObjectivesView';
 import TasksView from 'components/tasks/TasksView';
 import { operations } from 'services';
@@ -18,6 +19,7 @@ const ProjectPane = ({
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const project = (projects || []).find(p => p.id === id);
   const projectTasks = tasks?.filter(task => task.projects.some(tp => tp.id === project?.id));
@@ -31,7 +33,7 @@ const ProjectPane = ({
         className="mb-3"
         defaultActiveKey={defaultTab || 'tasks'}
       >
-        <Tab eventKey="tasks" title={`Tâches (${projectTasksIncomplete?.length})`}>
+        <Tab eventKey="tasks" title={`${t('tasks')} (${projectTasksIncomplete?.length})`}>
           <TasksView
             onTaskSelect={
               taskId => operations.pane.setPaneContent({

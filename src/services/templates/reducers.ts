@@ -2,9 +2,7 @@ import uniqBy from 'lodash.uniqby';
 import { TemplateAction, TemplateActionTypes } from './actions';
 import { Template } from './types';
 
-export type TemplateReducerState = Template[] | null;
-
-export default function reducer (state: TemplateReducerState = null, action: TemplateAction) {
+export default function reducer (state: Template[] | null = null, action: TemplateAction) {
   switch (action.type) {
     case TemplateActionTypes.GET_TEMPLATES_RESPONSE:
       const newTemplates = action.payload.templates;

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import ResourcesHandler from 'components/ResourcesHandler';
 import TasksView from 'components/tasks/TasksView';
@@ -18,6 +19,8 @@ const NotificationsPage = ({
   projects, fetchProjects,
   setPaneContent,
 }) => {
+  const { t } = useTranslation();
+
   const getPage = () => {
     const notifications = tasks && projects && calculateNotifications(tasks, projects);
     const lateTasks = notifications && notifications.lateTasks;
@@ -27,7 +30,7 @@ const NotificationsPage = ({
     return (
       <BasePage>
         <Breadcrumb>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
           <Breadcrumb.Item active>Notifications</Breadcrumb.Item>
         </Breadcrumb>
         <h4>Notifications</h4>

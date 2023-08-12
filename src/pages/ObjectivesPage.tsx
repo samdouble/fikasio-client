@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import ObjectivesView from 'components/objectives/ObjectivesView';
 import BasePage from 'components/UI/BasePage';
@@ -15,10 +16,12 @@ const ObjectivesPage = ({
   metrics, fetchMetrics,
   projects, fetchProjects,
 }) => {
+  const { t } = useTranslation();
+
   const getPage = () => (
     <BasePage>
       <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
         <Breadcrumb.Item active>Objectifs</Breadcrumb.Item>
       </Breadcrumb>
       <h4>Objectifs</h4>

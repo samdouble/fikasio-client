@@ -1,12 +1,17 @@
 const fr = {
   comment: 'Commentaire',
+  createASection: 'Créer une section',
+  createATask: 'Créer une tâche',
   dashboard: 'Tableau de bord',
+  day: 'Jour',
   documentation: 'Documentation',
   entities: 'Entités',
   exportToCsv: 'Exporter en CSV',
+  home: 'Accueil',
   login: 'Connexion',
   logout: 'Déconnexion',
   metrics: 'Mesures',
+  month: 'Mois',
   notifications: 'Notifications',
   objectives: 'Objectifs',
   organizations: 'Organisations',
@@ -15,6 +20,7 @@ const fr = {
   settings: 'Paramètres',
   tasks: 'Tâches',
   timesheet: 'Feuille de temps',
+  week: 'Semaine',
 };
 
 export default fr;

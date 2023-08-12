@@ -1,9 +1,7 @@
 import { ObjectiveAction, ObjectiveActionTypes } from './actions';
 import { Objective } from './types';
 
-export type ObjectiveReducerState = Objective[] | null;
-
-export default function reducer (state: ObjectiveReducerState = null, action: ObjectiveAction) {
+export default function reducer (state: Objective[] | null = null, action: ObjectiveAction) {
   switch (action.type) {
     case ObjectiveActionTypes.GET_OBJECTIVES_RESPONSE:
       return action.payload.objectives;

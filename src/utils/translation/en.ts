@@ -1,12 +1,17 @@
 const en = {
   comment: 'Comment',
+  createASection: 'Create a section',
+  createATask: 'Create a task',
   dashboard: 'Dashboard',
+  day: 'Day',
   documentation: 'Documentation',
   entities: 'Entities',
   exportToCsv: 'Export to CSV',
+  home: 'Home',
   login: 'Login',
   logout: 'Logout',
   metrics: 'Metrics',
+  month: 'Month',
   notifications: 'Notifications',
   objectives: 'Objectives',
   organizations: 'Organizations',
@@ -15,6 +20,7 @@ const en = {
   settings: 'Settings',
   tasks: 'Tasks',
   timesheet: 'Timesheet',
+  week: 'Week',
 };
 
 export default en;

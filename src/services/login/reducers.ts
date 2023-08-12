@@ -1,9 +1,7 @@
 import { LoginAction, LoginActionTypes } from './actions';
 import { Login } from './types';
 
-export type LoginReducerState = Login | null;
-
-export default function reducer(state: LoginReducerState = null, action: LoginAction) {
+export default function reducer(state: Login | null = null, action: LoginAction) {
   switch (action.type) {
     case LoginActionTypes.LOGIN_RESPONSE:
       return action.payload;

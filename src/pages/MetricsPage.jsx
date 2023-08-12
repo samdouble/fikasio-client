@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import MetricsList from 'components/metrics/MetricsList';
 import AddMetricButton from 'components/metrics/AddMetricButton';
@@ -18,6 +19,8 @@ const MetricsPage = ({
   metrics,
   fetchMetrics,
 }) => {
+  const { t } = useTranslation();
+
   const getPage = () => {
     return (
       <>
@@ -29,7 +32,7 @@ const MetricsPage = ({
           <Row>
             <Col lg={12}>
               <Breadcrumb>
-                <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
+                <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
                 <Breadcrumb.Item active>Mesures</Breadcrumb.Item>
               </Breadcrumb>
               <h4>Mesures</h4>

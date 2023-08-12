@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 import EntityView from 'components/entities/EntityView';
 import AddItemButton from 'components/entities/items/AddItemButton';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -12,6 +13,7 @@ import links from 'utils/links';
 import './style.scss';
 
 const EntityPage = () => {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
   const entities = useSelector((state: RootState) => state.entities);
   const entity = entities && entities.find(entity => entity.id === id);
@@ -24,8 +26,8 @@ const EntityPage = () => {
   const getPage = () => (
     <BasePage>
       <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>Entités</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{ entity?.name }</Breadcrumb.Item>
       </Breadcrumb>
       <Link to={links.itemUpsert(entity?.id, 'NEW')}>

@@ -1,9 +1,7 @@
 import { ProjectAction, ProjectActionTypes } from './actions';
 import { Project } from './types';
 
-export type ProjectReducerState = Project[] | null;
-
-export default function reducer (state: ProjectReducerState = null, action: ProjectAction) {
+export default function reducer (state: Project[] | null = null, action: ProjectAction) {
   switch (action.type) {
     case ProjectActionTypes.GET_PROJECTS_RESPONSE:
       return action.payload.projects;

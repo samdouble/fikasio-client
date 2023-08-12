@@ -2,9 +2,7 @@ import uniqBy from 'lodash.uniqby';
 import { ItemAction, ItemActionTypes } from './actions';
 import { Item } from './types';
 
-export type ItemReducerState = Item[] | null;
-
-export default function reducer(state: ItemReducerState = null, action: ItemAction) {
+export default function reducer(state: Item[] | null = null, action: ItemAction) {
   switch (action.type) {
     case ItemActionTypes.GET_ITEMS_RESPONSE:
       const newItems = action.payload.items;

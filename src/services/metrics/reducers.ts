@@ -1,9 +1,7 @@
 import { MetricAction, MetricActionTypes } from './actions';
 import { Metric } from './types';
 
-export type MetricReducerState = Metric[] | null;
-
-export default function reducer(state: MetricReducerState = null, action: MetricAction) {
+export default function reducer(state: Metric[] | null = null, action: MetricAction) {
   switch (action.type) {
     case MetricActionTypes.GET_METRICS_RESPONSE:
       return action.payload.metrics;

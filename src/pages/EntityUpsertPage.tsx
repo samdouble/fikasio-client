@@ -1,20 +1,21 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 import EntityInformationsForm from 'components/entities/EntityView/EntityInformationsForm';
 import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
-const EntityUpsertPage = ({
-  fetchEntities,
-  entities,
-}) => {
+const EntityUpsertPage = () => {
+  const { t } = useTranslation();
   const { entityId } = useParams<{ entityId: string; }>();
+  const entities = useSelector((state: RootState) => state.entities);
+  const dispatch = useDispatch();
 
   const getPage = () => {
     const entity = entities && entities.find(e => e.id === entityId);
@@ -22,8 +23,8 @@ const EntityUpsertPage = ({
     return (
       <BasePage>
         <Breadcrumb>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>Entités</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
           <Breadcrumb.Item linkAs={Link} active>Créer une entité</Breadcrumb.Item>
         </Breadcrumb>
         <h4>Créer une entité</h4>
@@ -37,22 +38,12 @@ const EntityUpsertPage = ({
   return (
     <ResourcesHandler
       resources={[entities]}
-      resourceFetchers={[fetchEntities]}
+      resourceFetchers={[
+        () => dispatch(operations.entities.fetchEntities()),
+      ]}
       getContents={getPage}
     />
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    entities: state.entities,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchEntities: operations.entities.fetchEntities,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EntityUpsertPage);
+export default EntityUpsertPage;

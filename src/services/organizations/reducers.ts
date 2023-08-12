@@ -1,9 +1,7 @@
 import { OrganizationAction, OrganizationActionTypes } from './actions';
 import { Organization } from './types';
 
-export type OrganizationReducerState = Organization[] | null;
-
-export default function reducer (state: OrganizationReducerState = null, action: OrganizationAction) {
+export default function reducer (state: Organization[] | null = null, action: OrganizationAction) {
   switch (action.type) {
     case OrganizationActionTypes.GET_ORGANIZATIONS_RESPONSE:
       return action.payload.organizations;

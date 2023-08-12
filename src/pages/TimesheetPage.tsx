@@ -74,7 +74,7 @@ const TimesheetPage = () => {
           linkAs={Link}
           linkProps={{ to: links.paths.home }}
         >
-          Accueil
+          {t('home')}
         </Breadcrumb.Item>
         <Breadcrumb.Item active>Feuille de temps</Breadcrumb.Item>
       </Breadcrumb>

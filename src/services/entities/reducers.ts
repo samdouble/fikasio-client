@@ -2,9 +2,7 @@ import uniqBy from 'lodash.uniqby';
 import { EntityAction, EntityActionTypes } from './actions';
 import { Entity } from './types';
 
-export type EntityReducerState = Entity[] | null;
-
-export default function reducer(state: EntityReducerState = null, action: EntityAction) {
+export default function reducer(state: Entity[] | null = null, action: EntityAction) {
   switch (action.type) {
     case EntityActionTypes.GET_ENTITIES_RESPONSE:
       const newEntities = action.payload.entities;

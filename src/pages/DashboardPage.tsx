@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import Card from 'components/dashboards/Card';
 import Sidebar from 'components/UI/Sidebar';
@@ -16,6 +17,7 @@ import links from 'utils/links';
 import './style.scss';
 
 const DashboardPage = () => {
+  const { t } = useTranslation();
   const objectives = useSelector((state: RootState) => state.objectives);
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -40,7 +42,7 @@ const DashboardPage = () => {
         <Row>
           <Col lg={12}>
             <Breadcrumb>
-              <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
+              <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
               <Breadcrumb.Item active>Tableau de bord</Breadcrumb.Item>
             </Breadcrumb>
             <h4>Tableau de bord</h4>

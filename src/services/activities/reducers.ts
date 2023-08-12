@@ -2,9 +2,7 @@ import uniqBy from 'lodash.uniqby';
 import { ActivityAction, ActivityActionTypes } from './actions';
 import { Activity } from './types';
 
-export type ActivityReducerState = Activity[] | null;
-
-export default function reducer(state: ActivityReducerState = null, action: ActivityAction) {
+export default function reducer(state: Activity[] | null = null, action: ActivityAction) {
   switch (action.type) {
     case ActivityActionTypes.GET_ACTIVITIES_RESPONSE:
       const newActivities = action.payload.activities;

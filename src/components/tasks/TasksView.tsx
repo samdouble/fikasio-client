@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
+import { Task } from 'services/tasks/types';
 import TasksViewer from './TasksViewer/TasksViewer';
 import AddTaskButton from './AddTaskButton';
 import TasksCompletionFilter from './TasksCompletionFilter';
 import TasksDueDateFilter from './TasksDueDateFilter';
+
+interface TasksViewProps {
+  onTaskSelect: (taskId: string) => void;
+  projectId?: string;
+  showAddButton: boolean;
+  showCompletionFilter: boolean;
+  showDueDateFilter: boolean;
+  tasks?: Task[] | null;
+}
 
 const TasksView = ({
   onTaskSelect,
@@ -11,7 +21,7 @@ const TasksView = ({
   showCompletionFilter,
   showDueDateFilter,
   tasks,
-}) => {
+}: TasksViewProps) => {
   const [showCompleteTasks, setShowCompleteTasks] = useState(false);
   const [showIncompleteTasks, setShowIncompleteTasks] = useState(true);
   const [showArchivedTasks, setShowArchivedTasks] = useState(false);
@@ -91,7 +101,7 @@ const TasksView = ({
             onClick={onTaskSelect}
             style={{
               float: 'right',
-              marginRight: 0,
+              marginRight: -5,
             }}
           />
         )

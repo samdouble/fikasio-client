@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, luxonLocalizer, Event } from 'react-big-calendar';
 import withDragAndDrop, { withDragAndDropProps } from 'react-big-calendar/lib/addons/dragAndDrop';
+import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
 import { operations } from 'services';
@@ -26,6 +27,7 @@ const ActivitiesCalendar = ({
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
   const [events, setEvents] = useState<Event[]>(convertActivitiesToCalendarEvents(activities, me.censoredWords));
+  const { t } = useTranslation();
 
   useEffect(() => {
     setEvents(
@@ -122,9 +124,9 @@ const ActivitiesCalendar = ({
       events={events}
       localizer={localizer}
       messages={{
-        month: 'Mois',
-        week: 'Semaine',
-        day: 'Jour'
+        month: t('month'),
+        week: t('week'),
+        day: t('day'),
       }}
       onEventDrop={onEventDrop}
       onEventResize={onEventResize}

@@ -1,26 +1,28 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 import EntitiesView from 'components/entities/EntitiesView';
 import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
-const EntitiesPage = ({
-  entities,
-  fetchEntities,
-}) => {
+const EntitiesPage = () => {
+  const { t } = useTranslation();
+  const entities = useSelector((state: RootState) => state.entities);
+  const dispatch = useDispatch();
+
   const getPage = () => (
     <BasePage>
       <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>Accueil</Breadcrumb.Item>
-        <Breadcrumb.Item active>Entités</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+        <Breadcrumb.Item active>{t('entities')}</Breadcrumb.Item>
       </Breadcrumb>
-      <h4>Entités</h4>
+      <h4>{t('entities')}</h4>
       <EntitiesView
         entities={entities}
       />
@@ -30,22 +32,12 @@ const EntitiesPage = ({
   return (
     <ResourcesHandler
       resources={[entities]}
-      resourceFetchers={[fetchEntities]}
+      resourceFetchers={[
+        () => dispatch(operations.entities.fetchEntities()),
+      ]}
       getContents={getPage}
     />
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    entities: state.entities,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchEntities: operations.entities.fetchEntities,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EntitiesPage);
+export default EntitiesPage;

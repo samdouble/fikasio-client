@@ -1,9 +1,7 @@
 import { TaskAction, TaskActionTypes } from './actions';
 import { Task } from './types';
 
-export type TaskReducerState = Task[] | null;
-
-export default function reducer(state: TaskReducerState = null, action: TaskAction) {
+export default function reducer(state: Task[] | null = null, action: TaskAction) {
   switch (action.type) {
     case TaskActionTypes.GET_TASKS_RESPONSE:
       return action.payload.tasks;

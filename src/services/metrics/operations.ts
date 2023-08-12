@@ -24,7 +24,7 @@ import { Metric } from './types';
 
 type MetricDispatch = Dispatch<MetricAction>;
 
-function fetchMetrics(filter) {
+function fetchMetrics(filter = {}) {
   return fetchOnceOperation(
     getMetricsRequest,
     getMetricsResponse,
