@@ -1,32 +1,39 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import SlidingPane from 'react-sliding-pane';
 import ActivityPane from 'components/activities/ActivityPane';
 // import EntityPane from 'components/entities/EntityPane';
-import FieldPane from 'components/entities/fields/FieldPane';
+import EntityFieldPane from 'components/entities/fields/FieldPane';
 // import ItemPane from 'components/entities/items/ItemPane';
 import ObjectivePane from 'components/objectives/ObjectivePane';
 import OrganizationPane from 'components/organizations/OrganizationPane';
 import ProjectPane from 'components/projects/ProjectPane';
 import TaskPane from 'components/tasks/TaskPane';
 import TemplatePane from 'components/templates/TemplatePane';
+import TemplateFieldPane from 'components/templates/fields/FieldPane';
 import Sidebar from 'components/UI/Sidebar';
 import { operations } from 'services';
+import {
+  IActivityPane,
+  IEntityFieldPane,
+  ITemplateFieldPane,
+} from 'services/pane/types';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import './style.scss';
+import { RootState } from 'services/store';
 
 const BasePage = ({
   children,
-  clearPaneContent,
-  paneContent,
 }) => {
+  const dispatch = useDispatch();
+  const paneContent = useSelector((state: RootState) => state.pane);
   let pane = <div />;
   if (paneContent && paneContent.type === 'ACTIVITY') {
-    const { activity } = paneContent;
+    const activityPaneContent = paneContent as IActivityPane;
+    const { activity } = activityPaneContent;
     pane = <ActivityPane
       activity={activity}
     />;
@@ -38,9 +45,10 @@ const BasePage = ({
     />;
   */
   } else if (paneContent && paneContent.type === 'ENTITY_FIELD') {
-    pane = <FieldPane
-      entityId={paneContent && paneContent.entityId}
-      id={paneContent && paneContent.id}
+    const entityFieldPaneContent = paneContent as IEntityFieldPane;
+    pane = <EntityFieldPane
+      entityId={entityFieldPaneContent && entityFieldPaneContent.entityId}
+      id={entityFieldPaneContent && entityFieldPaneContent.id}
     />;
   } else if (paneContent && paneContent.type === 'OBJECTIVE') {
     pane = <ObjectivePane
@@ -66,9 +74,10 @@ const BasePage = ({
       id={paneContent && paneContent.id}
     />;
   } else if (paneContent && paneContent.type === 'TEMPLATE_FIELD') {
-    pane = <FieldPane
-      templateId={paneContent && paneContent.templateId}
-      id={paneContent && paneContent.id}
+    const templateFieldPaneContent = paneContent as ITemplateFieldPane;
+    pane = <TemplateFieldPane
+      templateId={templateFieldPaneContent && templateFieldPaneContent.templateId}
+      id={templateFieldPaneContent && templateFieldPaneContent.id}
     />;
   }
 
@@ -77,7 +86,7 @@ const BasePage = ({
       <Sidebar />
       <SlidingPane
         isOpen={!!paneContent}
-        onRequestClose={() => clearPaneContent()}
+        onRequestClose={() => operations.pane.clearPaneContent()(dispatch)}
         overlayClassName="sliding-pane-overlay"
       >
         { pane }
@@ -96,16 +105,4 @@ const BasePage = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    paneContent: state.pane,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    clearPaneContent: operations.pane.clearPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BasePage);
+export default BasePage;

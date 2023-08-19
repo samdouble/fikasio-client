@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import ClickOutside from 'react-click-outside';
@@ -15,12 +14,10 @@ import { round } from 'utils/maths';
 import './style.scss';
 
 const ProjectRow = ({
-  createProject,
-  deleteProject,
   onClick,
-  patchProject,
   project,
 }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
   const hasdueAtPassed = project && project.dueAt && DateTime.fromISO(project.dueAt) < DateTime.now();
@@ -68,7 +65,7 @@ const ProjectRow = ({
               const timestamp = DateTime.fromJSDate(dueAt)
                 .set({ hour: 23, minute: 59, second: 59 })
                 .toISO();
-              patchProject(project.id, { dueAt: timestamp });
+              operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
             }}
           />
         </ClickOutside>
@@ -89,7 +86,7 @@ const ProjectRow = ({
               icon="times"
               onClick={e => {
                 e.stopPropagation();
-                patchProject(project.id, { dueAt: null });
+                operations.projects.patchProject(project.id, { dueAt: null })(dispatch);
               }}
               size="1x"
             />
@@ -110,7 +107,7 @@ const ProjectRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => createProject(project)}
+              onClick={() => operations.projects.createProject(project)(dispatch)}
             >
               <FontAwesomeIcon
                 icon="copy"
@@ -124,7 +121,7 @@ const ProjectRow = ({
             <Dropdown.Item
               onClick={() => {
                 const isArchived = project.isArchived || false;
-                patchProject(project.id, { isArchived: !isArchived });
+                operations.projects.patchProject(project.id, { isArchived: !isArchived })(dispatch);
               }}
             >
               <FontAwesomeIcon
@@ -137,7 +134,7 @@ const ProjectRow = ({
               {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => deleteProject(project.id)}
+              onClick={() => operations.projects.deleteProject(project.id)(dispatch)}
             >
               <FontAwesomeIcon
                 icon="times"
@@ -156,18 +153,4 @@ const ProjectRow = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    projects: state.projects,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createProject: operations.projects.createProject,
-    deleteProject: operations.projects.deleteProject,
-    patchProject: operations.projects.patchProject,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectRow);
+export default ProjectRow;

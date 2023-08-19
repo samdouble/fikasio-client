@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,11 +8,11 @@ import { operations } from 'services';
 import { deleteMetric } from 'services/metrics/endpoints';
 
 const MetricRow = ({
-  createMetric,
   metric,
   onEnterProgress,
   onEnterEditMetric,
 }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   return (
@@ -47,7 +46,7 @@ const MetricRow = ({
               Entrer un progrès
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => createMetric(metric)}
+              onClick={() => operations.metrics.createMetric(metric)(dispatch)}
             >
               <FontAwesomeIcon
                 icon="copy"
@@ -90,18 +89,4 @@ const MetricRow = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    metrics: state.metrics,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createMetric: operations.metrics.createMetric,
-    patchMetric: operations.metrics.patchMetric,
-    deleteMetric: operations.metrics.deleteMetric,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MetricRow);
+export default MetricRow;

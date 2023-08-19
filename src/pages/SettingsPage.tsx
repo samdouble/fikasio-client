@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -15,27 +14,32 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useTranslation } from 'react-i18next';
 import Sidebar from 'components/UI/Sidebar';
 import { operations } from 'services';
+import { PatchUserMeAction } from 'services/login/actions';
 import { setLanguage } from 'utils/translation';
 import './style.scss';
+import { RootState } from 'services/store';
 
-const SettingsPage = ({ login, patchUserMe }) => {
+const SettingsPage = () => {
+  const dispatch = useDispatch();
+  const login = useSelector((state: RootState) => state.login);
   const { user } = login;
   const { language } = user;
   const { t } = useTranslation();
 
   const handleChangeLanguage = e => {
-    patchUserMe({
+    operations.login.patchUserMe({
       language: e.target.value,
-    })
+    })(dispatch)
     .then(res => {
-      setLanguage(res.payload.user.language);
+      const patchUserMeResponse = res as PatchUserMeAction;
+      setLanguage(patchUserMeResponse.payload.user.language);
     });
   };
 
   const onSubmit = async values => {
-    patchUserMe({
+    operations.login.patchUserMe({
       ...values,
-    });
+    })(dispatch);
   };
 
   return (
@@ -141,16 +145,4 @@ const SettingsPage = ({ login, patchUserMe }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    login: state.login,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    patchUserMe: operations.login.patchUserMe,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
+export default SettingsPage;

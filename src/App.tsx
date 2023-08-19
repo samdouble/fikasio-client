@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { IconPack, library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,7 +30,10 @@ import Page404 from './pages/Page404';
 import links from './utils/links';
 import './App.scss';
 
-library.add(fab, fas);
+library.add(
+  fab as IconPack,
+  fas as IconPack,
+);
 
 const App = () => {
   const location = useLocation();

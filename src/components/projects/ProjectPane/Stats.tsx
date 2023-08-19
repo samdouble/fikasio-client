@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 import {
@@ -9,23 +8,20 @@ import {
   calculateCompletionPercentage,
   getFurthestDueDate,
 } from 'components/tasks/utils';
-import { operations } from 'services';
 import { formatYYYYMMDD } from 'utils/date';
 import { round } from 'utils/maths';
 import { convertMinutesToHumanHM } from 'utils/time';
+import { RootState } from 'services/store';
 
 const Stats = ({
   projectId,
-  projects,
-  tasks,
 }) => {
+  const projects = useSelector((state: RootState) => state.projects);
+  const tasks = useSelector((state: RootState) => state.tasks);
   const project = (projects || []).find(p => p.id === projectId);
-  const projectTasks = tasks
-    .filter(task => task.projects.some(tp => tp.id === project.id));
-  const projectTasksIncomplete = projectTasks
-    .filter(task => !task.isCompleted);
-  const hasUnspecifiedTasks = projectTasksIncomplete
-    .some(task => !task.dueAt || !task.estimatedCompletionTime);
+  const projectTasks = tasks?.filter(task => task.projects.some(tp => tp.id === project?.id));
+  const projectTasksIncomplete = projectTasks?.filter(task => !task.isCompleted);
+  const hasUnspecifiedTasks = projectTasksIncomplete?.some(task => !task.dueAt || !task.estimatedCompletionTime);
   const completeTime = calculateCompleteTime(projectTasks);
   const incompleteTime = calculateIncompleteTime(projectTasks);
   const completionRatio = calculateCompletionPercentage(projectTasks);
@@ -81,17 +77,4 @@ const Stats = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    projects: state.projects,
-    tasks: state.tasks,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    setPaneContent: operations.pane.setPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Stats);
+export default Stats;

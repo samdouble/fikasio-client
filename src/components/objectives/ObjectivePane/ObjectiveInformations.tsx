@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,16 +9,15 @@ import { FieldArray } from 'react-final-form-arrays';
 import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'components/UI/Form.scss';
 
 const ObjectiveInformations = ({
-  createObjective,
-  updateObjective,
-  patchObjective,
   objective,
-  projects,
 }) => {
+  const dispatch = useDispatch();
+  const projects = useSelector((state: RootState) => state.projects);
   const splitDueDate = objective && objective.dueDate && objective.dueDate.split('-');
   const dateDueDate = splitDueDate
     ? new Date(
@@ -34,9 +32,9 @@ const ObjectiveInformations = ({
   const onSubmit = async values => {
     const formData = values;
     if (objective.id) {
-      updateObjective(objective.id, formData);
+      operations.objectives.updateObjective(objective.id, formData)(dispatch);
     } else {
-      createObjective(formData);
+      operations.objectives.createObjective(formData)(dispatch);
     }
   };
 
@@ -96,7 +94,7 @@ const ObjectiveInformations = ({
                     onChange={date => {
                       const d = DateTime.fromJSDate(date).toFormat('yyyy-MM-dd');
                       if (objective) {
-                        patchObjective(objective.id, { dueDate: d });
+                        operations.objectives.patchObjective(objective.id, { dueDate: d })(dispatch);
                       }
                       setDueDate(date);
                       input.onChange(d);
@@ -142,8 +140,9 @@ const ObjectiveInformations = ({
                               >
                                 <option />
                                 {
-                                  projects
-                                    .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
+                                  projects?.sort(
+                                    (p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase()))
+                                  )
                                     .map(project => (
                                       <option
                                         key={project.id}
@@ -202,18 +201,4 @@ const ObjectiveInformations = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    projects: state.projects,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createObjective: operations.objectives.createObjective,
-    updateObjective: operations.objectives.updateObjective,
-    patchObjective: operations.objectives.patchObjective,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ObjectiveInformations);
+export default ObjectiveInformations;

@@ -1,12 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
 import links from 'utils/links';
 
 const EntityRow = ({
@@ -83,18 +80,4 @@ const EntityRow = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    entities: state.entities,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createEntity: operations.entities.createEntity,
-    patchEntity: operations.entities.patchEntity,
-    deleteEntity: operations.entities.deleteEntity,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EntityRow);
+export default EntityRow;

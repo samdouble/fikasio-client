@@ -48,7 +48,7 @@ const signup = (user: User) => {
   };
 };
 
-const patchUserMe = (user: User) => {
+const patchUserMe = (user: Partial<User>) => {
   return (dispatch: LoginDispatch) => {
     dispatch(patchUserMeRequest({ user }));
     return APIpatchUserMe({ user })

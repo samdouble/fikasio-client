@@ -1,6 +1,6 @@
 export interface Project {
   color?: string;
-  dueAt: Date;
+  dueAt: Date | null;
   id: string;
   isArchived: boolean;
   name: string;

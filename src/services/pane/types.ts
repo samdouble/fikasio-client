@@ -1,17 +1,17 @@
 import { Activity } from 'services/activities/types';
 
-interface ActivityPane {
+export interface IActivityPane {
   type: 'ACTIVITY';
   activity: Partial<Activity>;
 }
 
-interface EntityFieldPane {
+export interface IEntityFieldPane {
   type: 'ENTITY_FIELD';
   entityId: string;
   id: string;
 }
 
-interface TemplateFieldPane {
+export interface ITemplateFieldPane {
   type: 'TEMPLATE_FIELD';
   templateId: string;
   id: string;
@@ -20,6 +20,6 @@ interface TemplateFieldPane {
 export type Pane = {
   type: string;
   id: string;
-} | ActivityPane | EntityFieldPane | TemplateFieldPane;
+} | IActivityPane | IEntityFieldPane | ITemplateFieldPane;
 
 export default Pane;

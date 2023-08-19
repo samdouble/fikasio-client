@@ -2,10 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { FieldArray } from 'react-final-form-arrays';
 import { operations } from 'services';
 import { Organization } from 'services/organizations/types';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -45,49 +43,6 @@ const OrganizationInformationsForm = ({
               component="input"
               name="name"
             />
-          </RBForm.Group>
-          <RBForm.Group>
-            <RBForm.Label>Membres</RBForm.Label>
-            <FieldArray name="members">
-              {({ fields }) => (
-                <div>
-                  {
-                    fields.map((name, index) => (
-                      <table key={name}>
-                        <tbody>
-                          <tr>
-                            <td>
-                              <Field
-                                className="form-control"
-                                component="input"
-                                name={`${name}.emailAddress`}
-                              />
-                            </td>
-                            <td width={35}>
-                              <FontAwesomeIcon
-                                icon="times"
-                                onClick={() => fields.remove(index)}
-                                size="1x"
-                                style={{
-                                  color: '#ce0000',
-                                  cursor: 'pointer',
-                                  marginLeft: 10,
-                                }}
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    ))
-                  }
-                  <Button
-                    onClick={() => fields.push({ description: '' })}
-                  >
-                    Ajouter
-                  </Button>
-                </div>
-              )}
-            </FieldArray>
           </RBForm.Group>
           <div
             style={{

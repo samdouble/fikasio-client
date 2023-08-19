@@ -19,7 +19,7 @@ const SignupPage = () => {
   useEffect(() => {
     operations.login.login()(dispatch)
       .then(res => {
-        if (res && res.payload) {
+        if (res) {
           initializeSocket();
           history.push(location.state ? location.state.from : links.paths.home);
         }
@@ -28,7 +28,7 @@ const SignupPage = () => {
   }, []);
 
   const handleSignup = () => {
-    const formData = getFormData('Signup_form');
+    const formData: any = getFormData('Signup_form');
     operations.login.signup(formData)(dispatch)
       .then(res => {
         if (res && res.user) {
@@ -40,11 +40,12 @@ const SignupPage = () => {
       });
 
     if (document.getElementById('password')) {
-      document.getElementById('password').value = '';
+      const passwordInput = document.getElementById('password') as HTMLInputElement;
+      passwordInput.value = '';
     }
   };
 
-  const handleKeyPress = e => {
+  const handleKeyUp = e => {
     if (e.key === 'Enter') {
       handleSignup();
     }
@@ -85,7 +86,7 @@ const SignupPage = () => {
             id="password"
             type="password"
             name="password"
-            onKeyPress={handleKeyPress}
+            onKeyUp={handleKeyUp}
             placeholder="Mot de passe"
           />
         </Form.Group>

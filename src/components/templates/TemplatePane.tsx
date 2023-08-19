@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
@@ -9,16 +8,21 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import { processFormData } from 'utils/forms';
 
+interface TemplatePaneProps {
+  id: string;
+  onClose?: () => void;
+}
+
 const TemplatePane = ({
-  createTemplate,
   id,
   onClose,
-  templates,
-  updateTemplate,
-}) => {
+}: TemplatePaneProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const templates = useSelector((state: RootState) => state.templates);
   const template = (templates || []).find(temp => temp.id === id);
 
   const onSubmit = async values => {
@@ -27,13 +31,13 @@ const TemplatePane = ({
       formData.duration *= 60;
     }
     delete formData.durationUnits;
-    if (template.id) {
-      updateTemplate(template.id, formData)
+    if (template) {
+      operations.templates.updateTemplate(template.id, formData)(dispatch)
         .then(() => {
           onClose && onClose();
         });
     } else {
-      createTemplate(formData)
+      operations.templates.createTemplate(formData)(dispatch)
         .then(() => {
           onClose && onClose();
         });
@@ -142,7 +146,7 @@ const TemplatePane = ({
             }}
           >
             <Button
-              onClick={() => onClose()}
+              onClick={() => { onClose && onClose(); }}
               variant="outline-secondary"
             >
               {t('cancel')}
@@ -159,18 +163,4 @@ const TemplatePane = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    templates: state.templates,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createTemplate: operations.templates.createTemplate,
-    updateTemplate: operations.templates.updateTemplate,
-    patchTemplate: operations.templates.patchTemplate,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TemplatePane);
+export default TemplatePane;

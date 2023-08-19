@@ -10,26 +10,26 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'components/UI/Form.scss';
 
 interface FieldPaneProps {
-  entityId: string;
   id: string;
+  templateId: string;
 }
 
 const FieldPane = ({
-  entityId,
   id,
+  templateId,
 }: FieldPaneProps) => {
-  const entities = useSelector((state: RootState) => state.entities);
+  const templates = useSelector((state: RootState) => state.templates);
   const dispatch = useDispatch();
-  const entity = (entities || []).find(e => e.id === entityId);
-  const field = entity?.fields.find(f => f.id === id);
+  const template = (templates || []).find(e => e.id === templateId);
+  const field = template?.fields.find(f => f.id === id);
 
   const onSubmit = async values => {
     const formData = values;
     if (id !== 'NEW') {
-      operations.entities.fields.updateField(entityId, id, formData)(dispatch)
+      operations.templates.fields.updateField(templateId, id, formData)(dispatch)
         .then(() => dispatch(operations.pane.clearPaneContent()));
     } else {
-      operations.entities.fields.createField(entityId, formData)(dispatch)
+      operations.templates.fields.createField(templateId, formData)(dispatch)
         .then(() => dispatch(operations.pane.clearPaneContent()));
     }
   };

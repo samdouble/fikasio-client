@@ -11,6 +11,11 @@ export enum LoginActionTypes {
   PATCH_USERME_RESPONSE = 'PATCH_USERME_RESPONSE',
 }
 
+export interface PatchUserMeAction {
+  payload: { user: User };
+  type: LoginActionTypes.PATCH_USERME_RESPONSE;
+}
+
 export type LoginAction =
   | { type: LoginActionTypes.LOGIN_REQUEST; payload: { emailAddress: string | null, password: string | null } }
   | { type: LoginActionTypes.LOGIN_RESPONSE; payload: any }
@@ -18,8 +23,8 @@ export type LoginAction =
   | { type: LoginActionTypes.LOGOUT_RESPONSE; }
   | { type: LoginActionTypes.SIGNUP_REQUEST; payload: any }
   | { type: LoginActionTypes.SIGNUP_RESPONSE; payload: any }
-  | { type: LoginActionTypes.PATCH_USERME_REQUEST; payload: { user: User } }
-  | { type: LoginActionTypes.PATCH_USERME_RESPONSE; payload: { user: User } };
+  | { type: LoginActionTypes.PATCH_USERME_REQUEST; payload: { user: Partial<User> } }
+  | PatchUserMeAction;
 
 export const loginRequest = (payload: { emailAddress: string | null, password: string | null }): LoginAction => ({
   type: LoginActionTypes.LOGIN_REQUEST,
@@ -49,7 +54,7 @@ export const signupResponse = (payload): LoginAction => ({
   payload,
 });
 
-export const patchUserMeRequest = (payload: { user: User }): LoginAction => ({
+export const patchUserMeRequest = (payload: { user: Partial<User> }): LoginAction => ({
   type: LoginActionTypes.PATCH_USERME_REQUEST,
   payload,
 });

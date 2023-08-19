@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,12 +12,9 @@ import Dot from './Dot';
 import { getEstimatedCompletionDate } from './utils';
 
 const ObjectiveRow = ({
-  createObjective,
-  deleteObjective,
   objective,
-  patchObjective,
-  setPaneContent,
 }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
   const today = DateTime.fromJSDate(new Date());
@@ -32,10 +28,10 @@ const ObjectiveRow = ({
   return (
     <tr>
       <td
-        onClick={() => setPaneContent({
+        onClick={() => operations.pane.setPaneContent({
           type: 'OBJECTIVE',
           id: objective.id,
-        })}
+        })(dispatch)}
         style={{
           cursor: 'pointer',
         }}
@@ -79,7 +75,7 @@ const ObjectiveRow = ({
             const timestamp = DateTime.fromJSDate(dueAt)
               .set({ hour: 23, minute: 59, second: 59 })
               .toFormat('yyyy-MM-dd');
-            patchObjective(objective.id, { dueDate: timestamp });
+            operations.objectives.patchObjective(objective.id, { dueDate: timestamp.toString() })(dispatch);
           }}
           popperPlacement="auto"
           selected={dueDate.toMillis() || Date.now()}
@@ -105,7 +101,7 @@ const ObjectiveRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => createObjective(objective)}
+              onClick={() => operations.objectives.createObjective(objective)(dispatch)}
             >
               <FontAwesomeIcon
                 icon="copy"
@@ -119,7 +115,7 @@ const ObjectiveRow = ({
             <Dropdown.Item
               onClick={() => {
                 const isArchived = objective.isArchived || false;
-                patchObjective(objective.id, { isArchived: !isArchived });
+                operations.objectives.patchObjective(objective.id, { isArchived: !isArchived })(dispatch);
               }}
             >
               <FontAwesomeIcon
@@ -132,7 +128,7 @@ const ObjectiveRow = ({
               {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => deleteObjective(objective.id)}
+              onClick={() => operations.objectives.deleteObjective(objective.id)(dispatch)}
             >
               <FontAwesomeIcon
                 icon="times"
@@ -151,20 +147,4 @@ const ObjectiveRow = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    objectives: state.objectives,
-    projects: state.projects,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createObjective: operations.objectives.createObjective,
-    deleteObjective: operations.objectives.deleteObjective,
-    patchObjective: operations.objectives.patchObjective,
-    setPaneContent: operations.pane.setPaneContent,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ObjectiveRow);
+export default ObjectiveRow;

@@ -5,10 +5,15 @@ import Tab from 'react-bootstrap/Tab';
 import { RootState } from 'services/store';
 import TaskInformationsForm from './TaskInformationsForm';
 
+interface TaskPaneProps {
+  defaultTab?: string;
+  id: string;
+}
+
 const TaskPane = ({
   defaultTab,
   id,
-}) => {
+}: TaskPaneProps) => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const task = (tasks || []).find(t => t.id === id);
 

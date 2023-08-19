@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,10 +9,10 @@ import { operations } from 'services';
 import './style.scss';
 
 const OrganizationRow = ({
-  deleteOrganization,
   onClick,
   organization,
 }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   return (
@@ -40,7 +39,7 @@ const OrganizationRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => deleteOrganization(organization.id)}
+              onClick={() => operations.organizations.deleteOrganization(organization.id)(dispatch)}
             >
               <FontAwesomeIcon
                 icon="times"
@@ -59,18 +58,4 @@ const OrganizationRow = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    organizations: state.organizations,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    createOrganization: operations.organizations.createOrganization,
-    deleteOrganization: operations.organizations.deleteOrganization,
-    patchOrganization: operations.organizations.patchOrganization,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrganizationRow);
+export default OrganizationRow;
