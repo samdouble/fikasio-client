@@ -40,7 +40,7 @@ const NotificationsPage = () => {
                 Vous avez <b>{lateTasksCount} tâche{lateTasksCount > 1 && 's'} en retard</b>.
               </div>
               <TasksView
-                onTaskSelect={taskId => operations.pane.setPaneContent({
+                onTaskClick={taskId => operations.pane.setPaneContent({
                   type: 'TASK',
                   id: taskId,
                 })(dispatch)}

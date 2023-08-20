@@ -12,7 +12,7 @@ import AddActivityButton from './AddActivityButton';
 const ActivitiesView = ({
   activities,
   date,
-  onEditActivity,
+  onActivityClick,
 }) => {
   const dispatch = useDispatch();
   const [viewMode, setViewMode] = useState('LIST');
@@ -41,9 +41,9 @@ const ActivitiesView = ({
       <ActivitiesList
         activities={activities}
         date={date}
+        onActivityClick={onActivityClick}
+        onActivitySelect={handleSelectActivity}
         onAddActivity={addActivity}
-        onEditActivity={onEditActivity}
-        onSelectActivity={handleSelectActivity}
         selectedActivities={selectedActivities}
       />
     );
@@ -52,12 +52,12 @@ const ActivitiesView = ({
       <ActivitiesCalendar
         activities={activities}
         date={date}
-        onEditActivity={onEditActivity}
+        onActivityClick={onActivityClick}
       />
     );
   }
 
-  return activities && (
+  return (
     <>
       <div
         style={{
@@ -65,7 +65,7 @@ const ActivitiesView = ({
         }}
       >
         <AddActivityButton
-          onClick={onEditActivity}
+          onClick={onActivityClick}
           style={{
             float: 'right',
             marginRight: 0,

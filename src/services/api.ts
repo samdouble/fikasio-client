@@ -1,4 +1,3 @@
-import isEmpty from 'lodash.isempty';
 import Route from 'route-parser';
 
 export class HttpResponseError extends Error {
@@ -48,7 +47,7 @@ const dataAsBodyPayload = data => {
     }
   });
 
-  if (isEmpty(payload)) {
+  if (Object.keys(payload).length === 0) {
     return JSON.stringify(payload);
   }
   return JSON.stringify(data);

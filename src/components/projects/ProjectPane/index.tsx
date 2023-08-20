@@ -35,7 +35,7 @@ const ProjectPane = ({
       >
         <Tab eventKey="tasks" title={`${t('tasks')} (${projectTasksIncomplete?.length})`}>
           <TasksView
-            onTaskSelect={
+            onTaskClick={
               taskId => operations.pane.setPaneContent({
                 type: 'TASK',
                 id: taskId,

@@ -92,7 +92,7 @@ const ItemRow = ({
                   width: 25,
                 }}
               />
-              {t('copy')}
+              {t('duplicate')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => operations.items.deleteItem(entity.id, item.id)(dispatch)}

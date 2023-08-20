@@ -55,7 +55,7 @@ const MetricRow = ({
                   width: 25,
                 }}
               />
-              {t('copy')}
+              {t('duplicate')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => onEnterEditMetric(metric)}

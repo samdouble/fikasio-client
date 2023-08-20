@@ -14,8 +14,8 @@ const ActivitiesList = ({
   activities,
   date,
   onAddActivity,
-  onEditActivity,
-  onSelectActivity,
+  onActivityClick,
+  onActivitySelect,
   selectedActivities,
 }) => {
   const dispatch = useDispatch();
@@ -43,13 +43,12 @@ const ActivitiesList = ({
     operations.activities.deleteActivity(activity.id)(dispatch);
   };
 
-  const activitiesToShow = activities
-    .filter(a => {
-      const startOfDay = date.startOf('day');
-      const endOfDay = date.endOf('day');
-      return DateTime.fromISO(a.startTime) <= endOfDay && DateTime.fromISO(a.endTime) >= startOfDay;
-    });
-  const allActivitiesAreChecked = activitiesToShow.length === selectedActivities.length;
+  const activitiesToShow = activities?.filter(a => {
+    const startOfDay = date.startOf('day');
+    const endOfDay = date.endOf('day');
+    return DateTime.fromISO(a.startTime) <= endOfDay && DateTime.fromISO(a.endTime) >= startOfDay;
+  });
+  const allActivitiesAreChecked = activitiesToShow?.length === selectedActivities.length;
 
   return (
     <Table
@@ -60,10 +59,16 @@ const ActivitiesList = ({
       <thead>
         <tr>
           <th style={{ width: 35 }}>
-            <Checkbox
-              isChecked={allActivitiesAreChecked}
-              onClick={() => {}}
-            />
+            {
+              selectedActivities.length
+                ? (
+                  <Checkbox
+                    isChecked={allActivitiesAreChecked}
+                    onClick={() => {}}
+                  />
+                )
+                : <div />
+            }
           </th>
           <th>{t('comment')}</th>
           <th style={{ width: 150 }}>Début</th>
@@ -74,17 +79,18 @@ const ActivitiesList = ({
       </thead>
       <tbody>
         {
-          activitiesToShow
-            .sort((a1, a2) => (DateTime.fromISO(a1.startTime) < DateTime.fromISO(a2.startTime) ? -1 : 1))
+          activitiesToShow?.sort((a1, a2) => (
+            DateTime.fromISO(a1.startTime) < DateTime.fromISO(a2.startTime) ? -1 : 1
+          ))
             .map(activity => (
               <ActivityRow
                 key={activity.id}
                 activity={activity}
                 isSelected={selectedActivities.find(a => activity.id === a.id)}
                 onAddActivity={addActivity}
-                onDeleteActivity={handleDeleteActivity}
-                onEditActivity={onEditActivity}
-                onSelectActivity={onSelectActivity}
+                onClick={onActivityClick}
+                onDelete={handleDeleteActivity}
+                onSelect={onActivitySelect}
               />
             ))
         }

@@ -17,9 +17,9 @@ const ActivityRow = ({
   activity,
   isSelected,
   onAddActivity,
-  onDeleteActivity,
-  onEditActivity,
-  onSelectActivity,
+  onClick,
+  onDelete,
+  onSelect,
 }) => {
   const login = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch();
@@ -94,12 +94,12 @@ const ActivityRow = ({
       >
         <Checkbox
           isChecked={isSelected}
-          onClick={() => onSelectActivity(activity)}
+          onClick={() => onSelect(activity)}
         />
       </td>
       <td
         className="activityRow_comments"
-        onClick={() => onEditActivity && onEditActivity({ id: activity.id })}
+        onClick={() => onClick && onClick({ id: activity.id })}
         style={{ cursor: 'pointer' }}
       >
         {
@@ -213,10 +213,10 @@ const ActivityRow = ({
                   width: 25,
                 }}
               />
-              {t('copy')}
+              {t('duplicate')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => onDeleteActivity(activity)}
+              onClick={() => onDelete(activity)}
             >
               <FontAwesomeIcon
                 icon="times"

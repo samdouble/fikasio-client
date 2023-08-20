@@ -6,6 +6,7 @@ export interface Task {
   isArchived: boolean;
   isCompleted: boolean;
   projects: { id: string }[];
+  status: 'Doing' | 'Blocked' | 'Completed';
   taskId: string;
   type: string;
 }

@@ -9,8 +9,10 @@ import ProgressModal from '../ProgressModal';
 import './style.scss';
 
 const TasksViewer = ({
+  onTaskClick,
   onTaskSelect,
   projectId,
+  selectedTasks,
   showCompleteTasks,
   showIncompleteTasks,
   showArchivedTasks,
@@ -42,7 +44,9 @@ const TasksViewer = ({
     taskView = <TasksBoard
       // onAddTask={task => addTask(task)}
       // onOpenProgressModal={task => handleOpenProgressModal(task)}
+      // onTaskClick={onTaskClick}
       // onTaskSelect={onTaskSelect}
+      // selectedTasks={selectedTasks}
       showArchivedTasks={showArchivedTasks}
       showCompleteTasks={showCompleteTasks}
       showIncompleteTasks={showIncompleteTasks}
@@ -54,8 +58,10 @@ const TasksViewer = ({
     taskView = <TasksList
       onAddTask={task => addTask(task)}
       onOpenProgressModal={task => handleOpenProgressModal(task)}
+      onTaskClick={onTaskClick}
       onTaskSelect={onTaskSelect}
       projectId={projectId}
+      selectedTasks={selectedTasks}
       showArchivedTasks={showArchivedTasks}
       showCompleteTasks={showCompleteTasks}
       showIncompleteTasks={showIncompleteTasks}

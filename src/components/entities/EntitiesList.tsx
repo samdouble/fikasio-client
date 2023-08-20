@@ -35,7 +35,7 @@ const EntitiesList = ({
       <thead>
         <tr>
           <th>Nom</th>
-          <th />
+          <th colSpan={2} />
         </tr>
       </thead>
       <tbody>

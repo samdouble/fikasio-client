@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Task } from 'services/tasks/types';
 import TasksViewer from './TasksViewer/TasksViewer';
 import AddTaskButton from './AddTaskButton';
@@ -6,7 +7,7 @@ import TasksCompletionFilter from './TasksCompletionFilter';
 import TasksDueDateFilter from './TasksDueDateFilter';
 
 interface TasksViewProps {
-  onTaskSelect: (taskId: string) => void;
+  onTaskClick: (taskId: string) => void;
   projectId?: string;
   showAddButton?: boolean;
   showCompletionFilter?: boolean;
@@ -15,7 +16,7 @@ interface TasksViewProps {
 }
 
 const TasksView = ({
-  onTaskSelect,
+  onTaskClick,
   projectId,
   showAddButton,
   showCompletionFilter,
@@ -27,6 +28,8 @@ const TasksView = ({
   const [showArchivedTasks, setShowArchivedTasks] = useState(false);
   const [showOnlyDueToday, setShowOnlyDueToday] = useState(false);
   const [showOnlyDueThisWeek, setShowOnlyDueThisWeek] = useState(false);
+  const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
+  const { t } = useTranslation();
 
   const handleChangeCompletionFilter = val => {
     if (val === 'ALL') {
@@ -61,44 +64,26 @@ const TasksView = ({
     }
   };
 
+  const handleSelectTask = task => {
+    const isTaskAlreadySelected = selectedTasks.find(a => a.id === task.id);
+    if (isTaskAlreadySelected) {
+      setSelectedTasks([
+        ...selectedTasks.filter(a => a.id !== task.id),
+      ]);
+    } else {
+      setSelectedTasks([
+        ...selectedTasks,
+        task,
+      ]);
+    }
+  };
+
   return (
     <>
       {
-        /*
-        <div
-          style={{
-            position: 'relative',
-          }}
-        >
-          <Button
-            onClick={() => undefined}
-            style={{
-              float: 'right',
-            }}
-            variant="primary"
-          >
-            <FontAwesomeIcon
-              icon="caret-down"
-              size="1x"
-            />
-          </Button>
-          <AddTaskButton
-            onClick={onTaskSelect}
-            style={{
-              float: 'right',
-              marginRight: 5,
-              position: 'absolute',
-              right: 0,
-              top: 38,
-            }}
-          />
-        </div>
-        */
-      }
-      {
         showAddButton && (
           <AddTaskButton
-            onClick={onTaskSelect}
+            onClick={onTaskClick}
             showCreateSectionButton={!!projectId}
             style={{
               float: 'right',
@@ -130,8 +115,10 @@ const TasksView = ({
         )
       }
       <TasksViewer
-        onTaskSelect={onTaskSelect}
+        onTaskClick={onTaskClick}
+        onTaskSelect={handleSelectTask}
         projectId={projectId}
+        selectedTasks={selectedTasks}
         showCompleteTasks={showCompleteTasks}
         showIncompleteTasks={showIncompleteTasks}
         showArchivedTasks={showArchivedTasks}
@@ -139,6 +126,29 @@ const TasksView = ({
         showOnlyDueThisWeek={showOnlyDueThisWeek}
         tasks={tasks}
       />
+      {
+        selectedTasks.length > 0 && (
+          <div
+            style={{
+              backgroundColor: '#7E5B9A',
+              bottom: 50,
+              color: 'white',
+              height: 100,
+              left: '22%',
+              margin: 'auto',
+              padding: 10,
+              position: 'fixed',
+              width: '60%',
+            }}
+          >
+            <div>
+              <b>
+                {t('xSelectedTasks', { count: selectedTasks.length })}
+              </b>
+            </div>
+          </div>
+        )
+      }
     </>
   );
 }

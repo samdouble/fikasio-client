@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import ContentEditable from 'react-contenteditable';
@@ -13,17 +13,17 @@ import Checkbox from 'components/UI/Checkbox';
 import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
-import { RootState } from 'services/store';
 import AssigneeButton from './AssigneeButton';
 
 const TaskRow = ({
+  isSelected,
   onAddTask,
   onEnterProgress,
+  onClick,
   onSelect,
   projectId,
   task,
 }) => {
-  const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [description, setIDescription] = useState((task && task.description) || '');
@@ -86,17 +86,16 @@ const TaskRow = ({
     }
   };
 
-  const toggleCheckTaskClick = async clickedTask => {
-    const taskIfExists = tasks?.find(t1 => t1.id === clickedTask.id && t1.dueAt === clickedTask.dueAt);
-    if (clickedTask.id) {
-      operations.tasks.patchTask(clickedTask.id, {
-        isCompleted: !taskIfExists?.isCompleted,
+  const handleTaskStatusChange = async (updatedTask, status) => {
+    if (updatedTask.id) {
+      operations.tasks.patchTask(updatedTask.id, {
+        status,
       })(dispatch);
     } else {
       operations.tasks.createTask({
-        ...clickedTask,
+        ...updatedTask,
         type: 'Instance',
-        isCompleted: true,
+        status,
       })(dispatch);
     }
   };
@@ -118,13 +117,13 @@ const TaskRow = ({
         width={35}
       >
         <Checkbox
-          isChecked={task.isCompleted}
-          onClick={() => toggleCheckTaskClick(task)}
+          isChecked={isSelected}
+          onClick={() => onSelect(task)}
         />
       </td>
       <td
         className="taskRow_description"
-        onClick={() => onSelect && onSelect(task.id)}
+        onClick={() => onClick && onClick(task.id)}
         style={{ cursor: 'pointer' }}
       >
         <ContentEditable
@@ -159,6 +158,28 @@ const TaskRow = ({
                 projectId={p.id}
               />
             ))
+        }
+      </td>
+      <td width={140}>
+        {
+          <select
+            className="form-control"
+            onChange={e => handleTaskStatusChange(task, e.target.value)}
+            style={{
+              appearance: 'none',
+              backgroundColor: 'transparent',
+              backgroundImage: 'linear-gradient(to top, #f9f9f9, #fff 33%)',
+              border: 'none',
+              cursor: 'pointer',
+              lineHeight: 1.1,
+              outline: 'none',
+              padding: 3,
+            }}
+          >
+            <option value="Doing">En cours</option>
+            <option value="Blocked">Bloqué</option>
+            <option value="Completed">Complété</option>
+          </select>
         }
       </td>
       <td width={140}>
@@ -249,7 +270,7 @@ const TaskRow = ({
                   width: 25,
                 }}
               />
-              {t('copy')}
+              {t('duplicate')}
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {

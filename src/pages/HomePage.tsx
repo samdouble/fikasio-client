@@ -20,7 +20,7 @@ const HomePage = () => {
     <BasePage>
       <h4>{t('tasks')}</h4>
       <TasksView
-        onTaskSelect={taskId => operations.pane.setPaneContent({
+        onTaskClick={taskId => operations.pane.setPaneContent({
           type: 'TASK',
           id: taskId,
         })(dispatch)}

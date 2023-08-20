@@ -28,7 +28,7 @@ const TasksPage = () => {
         </Breadcrumb>
         <h4>{t('tasks')}</h4>
         <TasksView
-          onTaskSelect={
+          onTaskClick={
             taskId => operations.pane.setPaneContent({
               type: 'TASK',
               id: taskId,

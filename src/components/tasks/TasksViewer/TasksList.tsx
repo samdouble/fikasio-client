@@ -8,8 +8,10 @@ import './style.scss';
 const TasksList = ({
   onAddTask,
   onOpenProgressModal,
+  onTaskClick,
   onTaskSelect,
   projectId,
+  selectedTasks,
   showCompleteTasks,
   showIncompleteTasks,
   showArchivedTasks,
@@ -62,11 +64,13 @@ const TasksList = ({
             .map(task => (
               <TaskRow
                 key={`${task.id}-${task.dueAt}`}
-                task={task}
+                isSelected={selectedTasks.find(t => task.id === t.id)}
                 onAddTask={addTask}
+                onClick={onTaskClick}
                 onEnterProgress={onOpenProgressModal}
                 onSelect={onTaskSelect}
                 projectId={projectId}
+                task={task}
               />
             ))
         }

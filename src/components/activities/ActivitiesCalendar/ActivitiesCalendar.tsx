@@ -19,7 +19,7 @@ const localizer = luxonLocalizer(DateTime, { firstDayOfWeek: 1 });
 const ActivitiesCalendar = ({
   activities,
   date,
-  onEditActivity,
+  onActivityClick,
 }) => {
   const dispatch = useDispatch();
   const loginState = useSelector((state: RootState) => state.login);
@@ -46,7 +46,7 @@ const ActivitiesCalendar = ({
   const handleSelectSlots = ({ start, end }) => {
     const startTime = DateTime.fromJSDate(start)
     const endTime = DateTime.fromJSDate(end);
-    onEditActivity({
+    onActivityClick({
       startTime: startTime.toISO(),
       endTime: endTime.toISO(),
       duration: endTime.diff(startTime, 'minutes').minutes,
@@ -131,7 +131,7 @@ const ActivitiesCalendar = ({
       onEventDrop={onEventDrop}
       onEventResize={onEventResize}
       onNavigate={() => undefined}
-      onSelectEvent={event => onEditActivity({ id: event.id })}
+      onSelectEvent={event => onActivityClick({ id: event.id })}
       onSelectSlot={handleSelectSlots}
       onView={handleViewChange}
       resizable
