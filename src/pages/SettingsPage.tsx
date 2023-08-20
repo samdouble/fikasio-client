@@ -120,7 +120,7 @@ const SettingsPage = () => {
                               <Button
                                 onClick={() => fields.push('')}
                               >
-                                Ajouter
+                                {t('add')}
                               </Button>
                             </div>
                           )}

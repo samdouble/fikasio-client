@@ -176,7 +176,7 @@ const ProjectInformationsForm = ({
                   <Button
                     onClick={() => fields.push({ description: '' })}
                   >
-                    Ajouter
+                    {t('add')}
                   </Button>
                 </div>
               )}

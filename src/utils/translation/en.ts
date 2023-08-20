@@ -1,4 +1,5 @@
 const en = {
+  add: 'Add',
   archive: 'Archive',
   cancel: 'Cancel',
   comment: 'Comment',

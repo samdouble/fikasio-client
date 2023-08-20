@@ -247,7 +247,7 @@ const TaskInformationsForm = ({
                     <Button
                       onClick={() => fields.push({ id: '' })}
                     >
-                      Ajouter
+                      {t('add')}
                     </Button>
                   </div>
                 );

@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
-import ContentEditable from 'react-contenteditable';
 import ClickOutside from 'react-click-outside';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
-import useTimeout from 'use-timeout';
 import ProjectTag from 'components/projects/ProjectTag';
+import AutosaveTextarea from 'components/UI/AutosaveTextarea';
 import Checkbox from 'components/UI/Checkbox';
 import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
@@ -27,33 +26,14 @@ const TaskRow = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [description, setIDescription] = useState((task && task.description) || '');
-  const [delay, setDelay] = useState<number | null>(null);
-  const [, setSaved] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
-
-  useTimeout(() => {
-    saveDescription();
-    setDelay(null);
-  }, delay);
 
   useEffect(() => {
     if (!hasFocus) {
       setIDescription(task.description);
     }
   }, [task]);
-
-  const setDescription = val => {
-    setDelay(400);
-    setIDescription(val);
-  };
-
-  const saveDescription = () => {
-    if (task && description !== '' && description !== task.description) {
-      operations.tasks.patchTask(task.id, { description })(dispatch) // TODO date: updatedTask.date
-        .then(() => setSaved(true));
-    }
-	};
 
   const handleBlur = () => {
     setHasFocus(false);
@@ -126,27 +106,34 @@ const TaskRow = ({
         onClick={() => onClick && onClick(task.id)}
         style={{ cursor: 'pointer' }}
       >
-        <ContentEditable
-          id={task.id}
+        <AutosaveTextarea
           className={classNames({
             taskRow_description_editable: true,
             [task.id]: true,
           })}
-          html={description}
+          defaultValue={description}
           onBlur={() => handleBlur()}
-          onChange={e => setDescription(e.target.value)}
-          onClick={e => e.stopPropagation()}
           onFocus={() => handleFocus()}
           onKeyDown={e => handleKeyDownDescription(e)}
           onKeyUp={e => handleKeyUpDescription(e, task)}
+          onSave={async value => {
+            operations.tasks.patchTask(task.id, {
+              description: value,
+            })(dispatch);
+          }}
           style={{
+            border: 'none',
+            cursor: 'auto',
             float: 'left',
+            height: 25,
+            minWidth: 'auto',
             outline: 'none',
+            overflowY: 'hidden',
             paddingLeft: 5,
             paddingRight: 50,
-            minWidth: 'auto',
-            cursor: 'auto',
+            paddingTop: 0,
           }}
+          useContentEditableDiv
         />
       </td>
       <td width={140}>

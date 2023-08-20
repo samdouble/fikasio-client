@@ -49,7 +49,7 @@ function fetchEntities() {
   );
 }
 
-function createEntity(entity: Entity) {
+function createEntity(entity: Partial<Entity>) {
   return (dispatch: EntityDispatch) => {
     dispatch(createEntityRequest({ entity }));
     return APIcreateEntity(entity)

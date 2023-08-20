@@ -25,7 +25,7 @@ export enum EntityActionTypes {
 }
 
 export type EntityAction =
-  | { type: EntityActionTypes.CREATE_ENTITY_REQUEST; payload: { entity: Entity } }
+  | { type: EntityActionTypes.CREATE_ENTITY_REQUEST; payload: { entity: Partial<Entity> } }
   | { type: EntityActionTypes.CREATE_ENTITY_RESPONSE; payload: { entity: Entity } }
   | { type: EntityActionTypes.GET_ENTITIES_REQUEST; payload: { entities: Entity[] } }
   | { type: EntityActionTypes.GET_ENTITIES_RESPONSE; payload: { entities: Entity[] } }
@@ -55,7 +55,7 @@ export type EntityAction =
   | { type: EntityActionTypes.DELETE_ENTITY_FIELD_REQUEST; payload: { entityId: string; fieldId: string } }
   | { type: EntityActionTypes.DELETE_ENTITY_FIELD_RESPONSE; payload: { entityId: string; fieldId: string } };
 
-export const createEntityRequest = (payload: { entity: Entity }): EntityAction => ({
+export const createEntityRequest = (payload: { entity: Partial<Entity> }): EntityAction => ({
   type: EntityActionTypes.CREATE_ENTITY_REQUEST,
   payload,
 });

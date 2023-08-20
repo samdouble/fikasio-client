@@ -2,14 +2,29 @@ import React, { useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import useTimeout from 'use-timeout';
 
+interface AutosaveTextareaProps {
+  className?: string;
+  defaultValue: string;
+  onBlur?: any;
+  onFocus?: any;
+  onKeyDown: any;
+  onKeyUp: any;
+  onSave: (value: string) => void;
+  style: React.CSSProperties;
+  useContentEditableDiv?: boolean;
+}
+
 const AutosaveTextarea = ({
+  className,
   defaultValue,
+  onBlur,
+  onFocus,
   onKeyDown,
   onKeyUp,
   onSave,
   useContentEditableDiv,
   style,
-}) => {
+}: AutosaveTextareaProps) => {
   const [value, setIValue] = useState(defaultValue ? defaultValue.toString() : '');
   const [delay, setDelay] = useState<number | null>(null);
 
@@ -35,10 +50,12 @@ const AutosaveTextarea = ({
         useContentEditableDiv
           ? (
             <ContentEditable
+              className={className}
               html={value}
-              id="text"
+              onBlur={e => onBlur && onBlur(e)}
               onChange={e => setValue(e.target.value)}
               onClick={e => e.stopPropagation()}
+              onFocus={e => onFocus && onFocus(e)}
               onKeyDown={e => onKeyDown(e)}
               onKeyUp={e => onKeyUp(e)}
               style={{
@@ -61,10 +78,12 @@ const AutosaveTextarea = ({
             />
           ) : (
             <textarea
+              className={className}
               defaultValue={value}
-              id="text"
+              onBlur={e => onBlur(e)}
               onChange={e => setValue(e.target.value)}
               onClick={e => e.stopPropagation()}
+              onFocus={e => onFocus(e)}
               onKeyDown={e => onKeyDown(e)}
               onKeyUp={e => onKeyUp(e)}
               style={{

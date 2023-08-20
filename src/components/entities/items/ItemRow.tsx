@@ -85,7 +85,7 @@ const ItemRow = ({
                 style={{
                   border: 'none',
                   height: 'auto',
-                  overflowY: 'none',
+                  overflowY: 'hidden',
                   padding: 0,
                 }}
                 useContentEditableDiv

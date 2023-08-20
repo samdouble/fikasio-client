@@ -1,4 +1,5 @@
 const fr = {
+  add: 'Ajouter',
   archive: 'Archiver',
   cancel: 'Annuler',
   comment: 'Commentaire',

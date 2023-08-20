@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
-import ContentEditable from 'react-contenteditable';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
-import useTimeout from 'use-timeout';
 import Checkbox from 'components/UI/Checkbox';
 import Datepicker from 'components/UI/Datepicker';
+import AutosaveTextarea from 'components/UI/AutosaveTextarea';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { RootState } from 'services/store';
@@ -26,31 +25,12 @@ const ActivityRow = ({
   const { t } = useTranslation();
   const me = login.user;
   const [comments, setIComments] = useState((activity && activity.comments) || '');
-  const [delay, setDelay] = useState<number | null>(null);
-  const [, setSaved] = useState(false);
   const [isStartDateTimeDatepickerOpen, setIsStartDateTimeDatepickerOpen] = useState(false);
   const [isEndDateTimeDatepickerOpen, setIsEndDateTimeDatepickerOpen] = useState(false);
-
-  const saveComments = () => {
-    if (activity && comments !== '' && comments !== activity.comments) {
-      operations.activities.patchActivity(activity.id, { comments })(dispatch)
-        .then(() => setSaved(true));
-    }
-	};
-
-  useTimeout(() => {
-    saveComments();
-    setDelay(null);
-  }, delay);
 
   useEffect(() => {
     setIComments(activity.comments || '');
   }, [activity]);
-
-  const setComments = val => {
-    setDelay(400);
-    setIComments(val);
-  };
 
   const handleDuplicateActivity = originalActivity => {
     operations.activities.createActivity(originalActivity)(dispatch);
@@ -107,22 +87,30 @@ const ActivityRow = ({
             .some(censoredWord => comments.toLowerCase().includes(censoredWord.toLowerCase()))
             ? <div>*****</div>
             : (
-                <ContentEditable
-                  id={activity.id}
+                <AutosaveTextarea
                   className="activityRow_comments_editable"
-                  html={comments}
-                  onKeyUp={e => handleKeyUpComments(e, activity)}
+                  defaultValue={comments}
                   onKeyDown={e => handleKeyDownComments(e)}
-                  onChange={e => setComments(e.target.value)}
-                  onClick={e => e.stopPropagation()}
+                  onKeyUp={e => handleKeyUpComments(e, activity)}
+                  // onSave={value => setComments(value)}
+                  onSave={async value => {
+                    operations.activities.patchActivity(activity.id, {
+                      comments: value,
+                    })(dispatch);
+                  }}
                   style={{
+                    border: 'none',
+                    cursor: 'auto',
                     float: 'left',
+                    height: 25,
+                    minWidth: 'auto',
                     outline: 'none',
+                    overflowY: 'hidden',
                     paddingLeft: 5,
                     paddingRight: 50,
-                    minWidth: 'auto',
-                    cursor: 'auto',
+                    paddingTop: 0,
                   }}
+                  useContentEditableDiv
                 />
               )
         }
