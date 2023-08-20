@@ -16,6 +16,7 @@ const ActivitiesList = ({
   onAddActivity,
   onActivityClick,
   onActivitySelect,
+  onSelectAllActivities,
   selectedActivities,
 }) => {
   const dispatch = useDispatch();
@@ -60,11 +61,17 @@ const ActivitiesList = ({
         <tr>
           <th style={{ width: 35 }}>
             {
-              selectedActivities.length
+              activitiesToShow.length
                 ? (
                   <Checkbox
                     isChecked={allActivitiesAreChecked}
-                    onClick={() => {}}
+                    onClick={() => {
+                      if (allActivitiesAreChecked) {
+                        onSelectAllActivities([]);
+                      } else {
+                        onSelectAllActivities(activitiesToShow);
+                      }
+                    }}
                   />
                 )
                 : <div />

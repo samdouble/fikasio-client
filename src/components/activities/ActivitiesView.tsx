@@ -44,6 +44,7 @@ const ActivitiesView = ({
         onActivityClick={onActivityClick}
         onActivitySelect={handleSelectActivity}
         onAddActivity={addActivity}
+        onSelectAllActivities={activitiesArray => setSelectedActivities(activitiesArray)}
         selectedActivities={selectedActivities}
       />
     );

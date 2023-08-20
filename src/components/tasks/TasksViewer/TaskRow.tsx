@@ -102,7 +102,6 @@ const TaskRow = ({
         />
       </td>
       <td
-        className="taskRow_description"
         onClick={() => onClick && onClick(task.id)}
         style={{ cursor: 'pointer' }}
       >
