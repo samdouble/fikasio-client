@@ -1,10 +1,11 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
+import Checkbox from 'components/UI/Checkbox';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import links from 'utils/links';
@@ -22,14 +23,46 @@ const getValueForType = (value: any, type?: string) => {
 
 const ItemRow = ({
   entity,
+  isSelected,
   item,
   no,
+  onAddItem,
+  onSelect,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
+      onAddItem({});
+      e.preventDefault();
+    }
+  };
+
+  const handleKeyUp = (e, updatedItem) => {
+    if (updatedItem) {
+      if (e.key === 'Backspace' && e.target.textContent === '') {
+        operations.items.deleteItem(entity.id, updatedItem.id)(dispatch);
+      }
+    } else if (e.target.textContent !== '') {
+      operations.items.createItem(entity.id, {})(dispatch);
+    }
+  };
 
   return (
     <tr className="itemRow">
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
+        <Checkbox
+          isChecked={isSelected}
+          onClick={() => onSelect(item)}
+        />
+      </td>
       <td>{no}</td>
       {
         entity.fields
@@ -42,6 +75,8 @@ const ItemRow = ({
                     field.type,
                   )
                 }
+                onKeyDown={e => handleKeyDown(e)}
+                onKeyUp={e => handleKeyUp(e, item)}
                 onSave={async value => {
                   operations.items.updateFieldValueForItem(entity.id, item.id, field.id, {
                     value,
@@ -58,17 +93,6 @@ const ItemRow = ({
             </td>
           ))
       }
-      <td width={35}>
-        <Link
-          style={{ textDecoration: 'none' }}
-          to={links.itemUpsert(entity.id, item.id)}
-        >
-          <FontAwesomeIcon
-            icon="edit"
-            size="1x"
-          />
-        </Link>
-      </td>
       <td
         style={{
           textAlign: 'center',
@@ -82,6 +106,18 @@ const ItemRow = ({
         >
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={() => history.push(links.itemUpsert(entity.id, item.id))}
+            >
+              <FontAwesomeIcon
+                icon="edit"
+                style={{
+                  marginRight: 10,
+                  width: 25,
+                }}
+              />
+              {t('edit')}
+            </Dropdown.Item>
             <Dropdown.Item
               onClick={() => operations.items.createItem(entity.id, item)(dispatch)}
             >

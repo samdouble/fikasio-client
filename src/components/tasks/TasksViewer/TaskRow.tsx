@@ -63,7 +63,7 @@ const TaskRow = ({
     setHasFocus(true);
   };
 
-  const handleKeyDown = e => {
+  const handleKeyDownDescription = e => {
     if (e.key === 'Enter') {
       onAddTask({
         type: 'Template',
@@ -74,7 +74,7 @@ const TaskRow = ({
     }
   };
 
-  const handleKeyUp = (e, updatedTask) => {
+  const handleKeyUpDescription = (e, updatedTask) => {
     if (updatedTask) {
       if (e.key === 'Backspace' && e.target.textContent === '') {
         operations.tasks.deleteTask(updatedTask.id)(dispatch);
@@ -134,11 +134,11 @@ const TaskRow = ({
           })}
           html={description}
           onBlur={() => handleBlur()}
-          onFocus={() => handleFocus()}
-          onKeyUp={e => handleKeyUp(e, task)}
-          onKeyDown={e => handleKeyDown(e)}
           onChange={e => setDescription(e.target.value)}
           onClick={e => e.stopPropagation()}
+          onFocus={() => handleFocus()}
+          onKeyDown={e => handleKeyDownDescription(e)}
+          onKeyUp={e => handleKeyUpDescription(e, task)}
           style={{
             float: 'left',
             outline: 'none',

@@ -63,8 +63,8 @@ const TasksList = ({
             })
             .map(task => (
               <TaskRow
-                key={`${task.id}-${task.dueAt}`}
                 isSelected={selectedTasks.find(t => task.id === t.id)}
+                key={`${task.id}-${task.dueAt}`}
                 onAddTask={addTask}
                 onClick={onTaskClick}
                 onEnterProgress={onOpenProgressModal}

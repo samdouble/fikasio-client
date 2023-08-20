@@ -126,7 +126,7 @@ const SettingsPage = () => {
                           )}
                         </FieldArray>
                       </RBForm.Group>
-                      <Button type="submit" variant="success">Sauvegarder</Button>
+                      <Button type="submit" variant="success">{t('save')}</Button>
                     </form>
                   )}
                 />

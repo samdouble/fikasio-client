@@ -68,14 +68,14 @@ const ProgressModal = ({
                   onClick={() => handleUpdateTask()}
                   variant="success"
                 >
-                  Sauvegarder
+                  {t('save')}
                 </Button>
               ) : (
                 <Button
                   onClick={() => handleCreateTask()}
                   variant="success"
                 >
-                  Créer
+                  {t('create')}
                 </Button>
               )
             }

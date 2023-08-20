@@ -53,7 +53,7 @@ function fetchItems(entityId: string) {
   );
 }
 
-function createItem(entityId: string, item: Item) {
+function createItem(entityId: string, item: Partial<Item>) {
   return (dispatch: ItemDispatch) => {
     dispatch(createItemRequest({ entityId, item }));
     return APIcreateItem(entityId, item)

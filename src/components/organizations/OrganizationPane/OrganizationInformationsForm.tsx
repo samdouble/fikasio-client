@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
@@ -17,6 +18,7 @@ const OrganizationInformationsForm = ({
   organization,
 }: OrganizationInformationsFormProps) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const onSubmit = async values => {
     const formData = values;
@@ -55,8 +57,8 @@ const OrganizationInformationsForm = ({
           >
             {
               organization
-                ? <Button type="submit" variant="success">Sauvegarder</Button>
-                : <Button type="submit" variant="success">Créer</Button>
+                ? <Button type="submit" variant="success">{t('save')}</Button>
+                : <Button type="submit" variant="success">{t('create')}</Button>
             }
           </div>
         </form>

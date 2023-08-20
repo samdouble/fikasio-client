@@ -16,7 +16,7 @@ export enum ItemActionTypes {
 }
 
 export type ItemAction =
-  | { type: ItemActionTypes.CREATE_ITEM_REQUEST; payload: { entityId: string, item: Item } }
+  | { type: ItemActionTypes.CREATE_ITEM_REQUEST; payload: { entityId: string, item: Partial<Item> } }
   | { type: ItemActionTypes.CREATE_ITEM_RESPONSE; payload: { item: Item } }
   | { type: ItemActionTypes.GET_ITEMS_REQUEST; payload: { entityId: string, items: Item[] } }
   | { type: ItemActionTypes.GET_ITEMS_RESPONSE; payload: { items: Item[] } }
@@ -32,7 +32,7 @@ export type ItemAction =
   | { type: ItemActionTypes.DELETE_ITEM_REQUEST; payload: { entityId: string, itemId: string } }
   | { type: ItemActionTypes.DELETE_ITEM_RESPONSE; payload: { itemId: string } };
 
-export const createItemRequest = (payload: { entityId: string, item: Item }): ItemAction => ({
+export const createItemRequest = (payload: { entityId: string, item: Partial<Item> }): ItemAction => ({
   type: ItemActionTypes.CREATE_ITEM_REQUEST,
   payload,
 });

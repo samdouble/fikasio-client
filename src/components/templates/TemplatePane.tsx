@@ -153,8 +153,8 @@ const TemplatePane = ({
             </Button>
             {
               template
-                ? <Button type="submit" variant="success">Sauvegarder</Button>
-                : <Button type="submit" variant="success">Créer</Button>
+                ? <Button type="submit" variant="success">{t('save')}</Button>
+                : <Button type="submit" variant="success">{t('create')}</Button>
             }
           </div>
         </form>

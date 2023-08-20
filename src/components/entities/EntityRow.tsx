@@ -1,19 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Checkbox from 'components/UI/Checkbox';
 import DropdownToggle from 'components/UI/DropdownToggle';
+import { operations } from 'services';
 import links from 'utils/links';
 
 const EntityRow = ({
   entity,
-  onDeleteEntity,
+  isSelected,
+  onAddEntity,
+  onDelete,
+  onSelect,
 }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
+      onAddEntity({
+        comments: '',
+      });
+      e.preventDefault();
+    }
+  };
+
+  const handleKeyUpComments = (e, updatedActivity) => {
+    if (updatedActivity) {
+      if (e.key === 'Backspace' && e.target.textContent === '') {
+        operations.activities.deleteActivity(updatedActivity.id)(dispatch);
+      }
+    } else if (e.target.textContent !== '') {
+      operations.activities.createActivity({
+        comments: e.target.textContent,
+      })(dispatch);
+    }
+  };
 
   return (
     <tr className="entityRow">
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
+        <Checkbox
+          isChecked={isSelected}
+          onClick={() => onSelect(entity)}
+        />
+      </td>
       <td
         className="entityRow_comments"
         style={{ cursor: 'pointer' }}
@@ -61,7 +100,7 @@ const EntityRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => onDeleteEntity(entity)}
+              onClick={() => onDelete(entity)}
             >
               <FontAwesomeIcon
                 icon="times"

@@ -9,10 +9,21 @@ import './style.scss';
 
 const EntitiesList = ({
   entities,
+  onAddEntity,
+  onEntitySelect,
+  selectedEntities,
 }) => {
   const dispatch = useDispatch();
-  const [delay, setDelay] = useState(null);
+  const [delay, setDelay] = useState<number | null>(null);
   const [newEntity, setNewEntity] = useState<Entity | null>(null);
+
+  const addEntity = async entity => {
+    onAddEntity(entity)
+      .then(resultEntity => {
+        setNewEntity(resultEntity);
+        setDelay(50);
+      });
+  };
 
   useTimeout(() => {
     if (newEntity) {
@@ -34,6 +45,7 @@ const EntitiesList = ({
     >
       <thead>
         <tr>
+          <th />
           <th>Nom</th>
           <th colSpan={2} />
         </tr>
@@ -45,8 +57,11 @@ const EntitiesList = ({
             .map(entity => (
               <EntityRow
                 entity={entity}
+                isSelected={selectedEntities.find(e => entity.id === e.id)}
                 key={entity.id}
-                onDeleteEntity={() => handleDelete(entity)}
+                onAddEntity={addEntity}
+                onDelete={() => handleDelete(entity)}
+                onSelect={onEntitySelect}
               />
             ))
         }

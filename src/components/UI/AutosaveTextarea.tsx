@@ -4,6 +4,8 @@ import useTimeout from 'use-timeout';
 
 const AutosaveTextarea = ({
   defaultValue,
+  onKeyDown,
+  onKeyUp,
   onSave,
   useContentEditableDiv,
   style,
@@ -37,6 +39,8 @@ const AutosaveTextarea = ({
               id="text"
               onChange={e => setValue(e.target.value)}
               onClick={e => e.stopPropagation()}
+              onKeyDown={e => onKeyDown(e)}
+              onKeyUp={e => onKeyUp(e)}
               style={{
                 border: '1px solid #d0d0d0',
                 borderRadius: 3,
@@ -61,6 +65,8 @@ const AutosaveTextarea = ({
               id="text"
               onChange={e => setValue(e.target.value)}
               onClick={e => e.stopPropagation()}
+              onKeyDown={e => onKeyDown(e)}
+              onKeyUp={e => onKeyUp(e)}
               style={{
                 border: '1px solid #d0d0d0',
                 borderRadius: 3,

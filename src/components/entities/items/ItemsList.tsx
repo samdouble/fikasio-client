@@ -5,43 +5,63 @@ import ItemRow from './ItemRow';
 const ItemsList = ({
   entity,
   items,
-}) => (
-  <Table
-    responsive
-    bordered
-    hover
-  >
-    <thead>
-      <tr>
-        <th
-          style={{
-            width: 30,
-          }}
-        />
-        {
-          entity.fields
-            .map(field => (
-              <th key={field.name}>
-                {field.name}
-              </th>
-            ))
+  onAddItem,
+  onItemSelect,
+  selectedItems,
+}) => {
+  const addItem = async item => {
+    onAddItem(item)
+      .then(resultItem => {
+        if (resultItem) {
+          const elementsWithClassname = document.getElementsByClassName(resultItem.id!);
+          const nbElementsWithClassname = elementsWithClassname.length;
+          (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();
         }
-        <th colSpan={2} />
-      </tr>
-    </thead>
-    <tbody>
-      {
-        items?.map((item, i) => (
-          <ItemRow
-            entity={entity}
-            key={item.id}
-            item={item}
-            no={i + 1}
+      });
+  };
+
+  return (
+    <Table
+      responsive
+      bordered
+      hover
+    >
+      <thead>
+        <tr>
+          <th />
+          <th
+            style={{
+              width: 30,
+            }}
           />
-        ))
-      }
-    </tbody>
-  </Table>
-);
+          {
+            entity.fields
+              .map(field => (
+                <th key={field.name}>
+                  {field.name}
+                </th>
+              ))
+          }
+          <th colSpan={2} />
+        </tr>
+      </thead>
+      <tbody>
+        {
+          items?.map((item, i) => (
+            <ItemRow
+              entity={entity}
+              isSelected={selectedItems.find(selectedItem => item.id === selectedItem.id)}
+              item={item}
+              key={item.id}
+              no={i + 1}
+              onAddItem={addItem}
+              onSelect={onItemSelect}
+            />
+          ))
+        }
+      </tbody>
+    </Table>
+  );
+};
 
 export default ItemsList;

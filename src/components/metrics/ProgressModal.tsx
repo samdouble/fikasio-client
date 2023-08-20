@@ -40,7 +40,7 @@ const ProgressModal = ({
           </Form.Group>
           <div style={{ position: 'absolute', right: 15, bottom: 15 }}>
             <Button onClick={() => onClose()} variant="outline-secondary">{t('cancel')}</Button>
-            <Button onClick={() => handleUpdateProgress()} variant="success">Sauvegarder</Button>
+            <Button onClick={() => handleUpdateProgress()} variant="success">{t('save')}</Button>
           </div>
         </form>
       </Modal>

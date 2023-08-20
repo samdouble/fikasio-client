@@ -41,34 +41,38 @@ const TasksViewer = ({
 
   let taskView;
   if (viewMode === 'BOARD') {
-    taskView = <TasksBoard
-      // onAddTask={task => addTask(task)}
-      // onOpenProgressModal={task => handleOpenProgressModal(task)}
-      // onTaskClick={onTaskClick}
-      // onTaskSelect={onTaskSelect}
-      // selectedTasks={selectedTasks}
-      showArchivedTasks={showArchivedTasks}
-      showCompleteTasks={showCompleteTasks}
-      showIncompleteTasks={showIncompleteTasks}
-      showOnlyDueThisWeek={showOnlyDueThisWeek}
-      showOnlyDueToday={showOnlyDueToday}
-      tasks={tasks}
-    />
+    taskView = (
+      <TasksBoard
+        // onAddTask={task => addTask(task)}
+        // onOpenProgressModal={task => handleOpenProgressModal(task)}
+        // onTaskClick={onTaskClick}
+        // onTaskSelect={onTaskSelect}
+        // selectedTasks={selectedTasks}
+        showArchivedTasks={showArchivedTasks}
+        showCompleteTasks={showCompleteTasks}
+        showIncompleteTasks={showIncompleteTasks}
+        showOnlyDueThisWeek={showOnlyDueThisWeek}
+        showOnlyDueToday={showOnlyDueToday}
+        tasks={tasks}
+      />
+    );
   } else if (viewMode === 'LIST') {
-    taskView = <TasksList
-      onAddTask={task => addTask(task)}
-      onOpenProgressModal={task => handleOpenProgressModal(task)}
-      onTaskClick={onTaskClick}
-      onTaskSelect={onTaskSelect}
-      projectId={projectId}
-      selectedTasks={selectedTasks}
-      showArchivedTasks={showArchivedTasks}
-      showCompleteTasks={showCompleteTasks}
-      showIncompleteTasks={showIncompleteTasks}
-      showOnlyDueThisWeek={showOnlyDueThisWeek}
-      showOnlyDueToday={showOnlyDueToday}
-      tasks={tasks}
-    />
+    taskView = (
+      <TasksList
+        onAddTask={task => addTask(task)}
+        onOpenProgressModal={task => handleOpenProgressModal(task)}
+        onTaskClick={onTaskClick}
+        onTaskSelect={onTaskSelect}
+        projectId={projectId}
+        selectedTasks={selectedTasks}
+        showArchivedTasks={showArchivedTasks}
+        showCompleteTasks={showCompleteTasks}
+        showIncompleteTasks={showIncompleteTasks}
+        showOnlyDueThisWeek={showOnlyDueThisWeek}
+        showOnlyDueToday={showOnlyDueToday}
+        tasks={tasks}
+      />
+    );
   } else {
     taskView = null;
   }

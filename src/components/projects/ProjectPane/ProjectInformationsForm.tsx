@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -19,6 +20,7 @@ const ProjectInformationsForm = ({
   project,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [dueDate, setDueDate] = useState(
     project && project.dueAt
     ? DateTime.fromISO(project.dueAt).toJSDate()
@@ -191,8 +193,8 @@ const ProjectInformationsForm = ({
           >
             {
               project
-                ? <Button type="submit" variant="success">Sauvegarder</Button>
-                : <Button type="submit" variant="success">Créer</Button>
+                ? <Button type="submit" variant="success">{t('save')}</Button>
+                : <Button type="submit" variant="success">{t('create')}</Button>
             }
           </div>
         </form>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
@@ -20,6 +21,7 @@ const FieldPane = ({
 }: FieldPaneProps) => {
   const templates = useSelector((state: RootState) => state.templates);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const template = (templates || []).find(e => e.id === templateId);
   const field = template?.fields.find(f => f.id === id);
 
@@ -112,8 +114,8 @@ const FieldPane = ({
           <div style={{ float: 'right', bottom: 0, paddingBottom: 15 }}>
             {
               field
-                ? <Button type="submit" variant="success">Sauvegarder</Button>
-                : <Button type="submit" variant="success">Créer</Button>
+                ? <Button type="submit" variant="success">{t('save')}</Button>
+                : <Button type="submit" variant="success">{t('create')}</Button>
             }
           </div>
         </form>

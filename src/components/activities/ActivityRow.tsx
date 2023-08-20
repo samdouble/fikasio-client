@@ -56,7 +56,7 @@ const ActivityRow = ({
     operations.activities.createActivity(originalActivity)(dispatch);
   };
 
-  const handleKeyDown = e => {
+  const handleKeyDownComments = e => {
     if (e.key === 'Enter') {
       const startDateTime = DateTime.now().set({ minute: 0, second: 0, millisecond: 0 });
       const endDateTime = startDateTime.plus({ hour: 1 });
@@ -70,7 +70,7 @@ const ActivityRow = ({
     }
   };
 
-  const handleKeyUp = (e, updatedActivity) => {
+  const handleKeyUpComments = (e, updatedActivity) => {
     if (updatedActivity) {
       if (e.key === 'Backspace' && e.target.textContent === '') {
         operations.activities.deleteActivity(updatedActivity.id)(dispatch);
@@ -111,8 +111,8 @@ const ActivityRow = ({
                   id={activity.id}
                   className="activityRow_comments_editable"
                   html={comments}
-                  onKeyUp={e => handleKeyUp(e, activity)}
-                  onKeyDown={e => handleKeyDown(e)}
+                  onKeyUp={e => handleKeyUpComments(e, activity)}
+                  onKeyDown={e => handleKeyDownComments(e)}
                   onChange={e => setComments(e.target.value)}
                   onClick={e => e.stopPropagation()}
                   style={{
