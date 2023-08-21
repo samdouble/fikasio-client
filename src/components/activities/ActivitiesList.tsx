@@ -61,7 +61,7 @@ const ActivitiesList = ({
         <tr>
           <th style={{ width: 35 }}>
             {
-              activitiesToShow.length
+              activitiesToShow?.length
                 ? (
                   <Checkbox
                     isChecked={allActivitiesAreChecked}
