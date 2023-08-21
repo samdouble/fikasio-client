@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Task } from 'services/tasks/types';
-import TasksViewer from './TasksViewer/TasksViewer';
 import AddTaskButton from './AddTaskButton';
-import TasksCompletionFilter from './TasksCompletionFilter';
-import TasksDueDateFilter from './TasksDueDateFilter';
+import TasksFilters from './TasksFilters/TasksFilters';
+import TasksViewer from './TasksViewer/TasksViewer';
 
 interface TasksViewProps {
   onTaskClick: (taskId: string) => void;
@@ -92,28 +91,12 @@ const TasksView = ({
           />
         )
       }
-      {
-        showCompletionFilter && (
-          <TasksCompletionFilter
-            onChange={handleChangeCompletionFilter}
-            style={{
-              float: 'right',
-              ...(showAddButton && { margin: 5 }),
-            }}
-          />
-        )
-      }
-      {
-        showDueDateFilter && (
-          <TasksDueDateFilter
-            onChange={handleChangeDueDateFilter}
-            style={{
-              float: 'right',
-              ...(showAddButton && { margin: 5, marginRight: 0 }),
-            }}
-          />
-        )
-      }
+      <TasksFilters
+        onChangeCompletionFilter={handleChangeCompletionFilter}
+        onChangeDueDateFilter={handleChangeDueDateFilter}
+        showCompletionFilter={showCompletionFilter}
+        showDueDateFilter={showDueDateFilter}
+      />
       <TasksViewer
         onTaskClick={onTaskClick}
         onTaskSelect={handleSelectTask}
@@ -141,11 +124,9 @@ const TasksView = ({
               width: '60%',
             }}
           >
-            <div>
-              <b>
-                {t('xSelectedTasks', { count: selectedTasks.length })}
-              </b>
-            </div>
+            <b>
+              {t('xSelectedTasks', { count: selectedTasks.length })}
+            </b>
           </div>
         )
       }

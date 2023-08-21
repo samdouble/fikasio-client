@@ -1,45 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AutosaveTextarea from 'components/UI/AutosaveTextarea';
 import Checkbox from 'components/UI/Checkbox';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
 import links from 'utils/links';
 
 const EntityRow = ({
   entity,
   isSelected,
-  onAddEntity,
   onDelete,
   onSelect,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const handleKeyDownName = e => {
-    if (e.key === 'Enter') {
-      onAddEntity({
-        name: '',
-      });
-      e.preventDefault();
-    }
-  };
-
-  const handleKeyUpName = (e, updatedEntity) => {
-    if (updatedEntity) {
-      if (e.key === 'Backspace' && e.target.textContent === '') {
-        operations.entities.deleteEntity(updatedEntity.id)(dispatch);
-      }
-    } else if (e.target.textContent !== '') {
-      operations.entities.createEntity({
-        name: e.target.textContent,
-      })(dispatch);
-    }
-  };
 
   return (
     <tr className="entityRow">
@@ -62,29 +36,15 @@ const EntityRow = ({
           style={{ textDecoration: 'none' }}
           to={links.entity(entity.id)}
         >
-          <AutosaveTextarea
-            defaultValue={entity.name}
-            onKeyDown={e => handleKeyDownName(e)}
-            onKeyUp={e => handleKeyUpName(e, entity)}
-            onSave={async value => {
-              operations.entities.patchEntity(entity.id, {
-                name: value,
-              })(dispatch);
-            }}
+          <div
             style={{
-              border: 'none',
-              cursor: 'auto',
-              float: 'left',
-              height: 25,
-              minWidth: 'auto',
-              outline: 'none',
-              overflowY: 'hidden',
-              paddingLeft: 5,
-              paddingRight: 50,
-              paddingTop: 0,
+              color: '#000',
+              height: '100%',
+              width: '100%',
             }}
-            useContentEditableDiv
-          />
+          >
+            {entity.name}
+          </div>
         </Link>
       </td>
       <td width={35}>

@@ -1,6 +1,14 @@
 import React from 'react';
 
-const TasksCompletionFilter = ({ onChange, style }) => {
+interface TasksCompletionFilterProps {
+  onChange: (value: string) => void;
+  style?: React.CSSProperties;
+}
+
+const TasksCompletionFilter = ({
+  onChange,
+  style,
+}: TasksCompletionFilterProps) => {
   return (
     <select
       className="form-control"
@@ -16,6 +24,6 @@ const TasksCompletionFilter = ({ onChange, style }) => {
       <option value="ALL">Toutes les tâches</option>
     </select>
   );
-}
+};
 
 export default TasksCompletionFilter;

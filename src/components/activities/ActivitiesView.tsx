@@ -103,11 +103,9 @@ const ActivitiesView = ({
               width: '60%',
             }}
           >
-            <div>
-              <b>
-                {t('xSelectedActivities', { count: selectedActivities.length })}
-              </b>
-            </div>
+            <b>
+              {t('xSelectedActivities', { count: selectedActivities.length })}
+            </b>
           </div>
         )
       }

@@ -1,6 +1,14 @@
 import React from 'react';
 
-const TasksDueDateFilter = ({ onChange, style }) => {
+interface TasksDueDateFilterProps {
+  onChange: (value: string) => void;
+  style?: React.CSSProperties;
+}
+
+const TasksDueDateFilter = ({
+  onChange,
+  style,
+}: TasksDueDateFilterProps) => {
   return (
     <select
       className="form-control"
@@ -15,6 +23,6 @@ const TasksDueDateFilter = ({ onChange, style }) => {
       <option value="FOR_THISWEEK">Tâches pour cette semaine</option>
     </select>
   );
-}
+};
 
 export default TasksDueDateFilter;
