@@ -40,7 +40,7 @@ const TemplateInformationsForm = ({
           onSubmit={handleSubmit}
         >
           <RBForm.Group>
-            <RBForm.Label>Nom</RBForm.Label>
+            <RBForm.Label>{t('name')}</RBForm.Label>
             <Field
               className="form-control"
               component="input"

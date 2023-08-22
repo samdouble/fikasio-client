@@ -90,17 +90,14 @@ label:focus,
 }
 
 .table tr td {
-  text-align: left;
   padding: 0.3rem;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .table tr th {
   text-align: left;
   padding: 0.5rem;
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, .035);
 }
 
 .menu-item {

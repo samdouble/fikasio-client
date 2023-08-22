@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { operations } from 'services';
 import AddFieldButton from './AddFieldButton';
@@ -9,6 +10,7 @@ const EntityFieldsTable = ({
   entity,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -26,7 +28,7 @@ const EntityFieldsTable = ({
       <Table>
         <thead>
           <tr>
-            <th>Nom</th>
+            <th>{t('name')}</th>
             <th>Type</th>
             <th
               style={{

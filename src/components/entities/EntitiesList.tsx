@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import useTimeout from 'use-timeout';
 import { operations } from 'services';
 import { Entity } from 'services/entities/types';
@@ -13,6 +14,7 @@ const EntitiesList = ({
   selectedEntities,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [delay, setDelay] = useState<number | null>(null);
   const [newEntity, setNewEntity] = useState<Entity | null>(null);
 
@@ -37,7 +39,7 @@ const EntitiesList = ({
       <thead>
         <tr>
           <th />
-          <th>Nom</th>
+          <th>{t('name')}</th>
           <th colSpan={2} />
         </tr>
       </thead>

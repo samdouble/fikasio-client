@@ -33,7 +33,7 @@ const TasksFilters = ({
         isMobile && (
           <>
             <Button
-              data-tooltip-content="filters"
+              data-tooltip-content="Filters"
               data-tooltip-id="filters"
               style={{
                 float: 'right',

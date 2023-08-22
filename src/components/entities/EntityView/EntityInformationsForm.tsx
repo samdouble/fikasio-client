@@ -40,7 +40,7 @@ const EntityInformationsForm = ({
           onSubmit={handleSubmit}
         >
           <RBForm.Group>
-            <RBForm.Label>Nom</RBForm.Label>
+            <RBForm.Label>{t('name')}</RBForm.Label>
             <Field
               name="name"
               component="input"

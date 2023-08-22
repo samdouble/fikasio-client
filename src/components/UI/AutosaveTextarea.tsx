@@ -45,7 +45,7 @@ const AutosaveTextarea = ({
   };
 
   return (
-    <div>
+    <>
       {
         useContentEditableDiv
           ? (
@@ -59,7 +59,6 @@ const AutosaveTextarea = ({
               onKeyDown={e => onKeyDown(e)}
               onKeyUp={e => onKeyUp(e)}
               style={{
-                border: '1px solid #d0d0d0',
                 borderRadius: 3,
                 cursor: 'auto',
                 display: 'inline-block',
@@ -71,6 +70,7 @@ const AutosaveTextarea = ({
                 paddingRight: 50,
                 paddingTop: 10,
                 textAlign: 'left',
+                verticalAlign: 'middle',
                 whiteSpace: 'pre',
                 width: '100%',
                 ...style,
@@ -87,7 +87,6 @@ const AutosaveTextarea = ({
               onKeyDown={e => onKeyDown(e)}
               onKeyUp={e => onKeyUp(e)}
               style={{
-                border: '1px solid #d0d0d0',
                 borderRadius: 3,
                 cursor: 'auto',
                 display: 'inline-block',
@@ -99,13 +98,14 @@ const AutosaveTextarea = ({
                 paddingRight: 50,
                 paddingTop: 10,
                 textAlign: 'left',
+                verticalAlign: 'middle',
                 width: '100%',
                 ...style,
               }}
             />
           )
       }
-    </div>
+    </>
   );
 };
 

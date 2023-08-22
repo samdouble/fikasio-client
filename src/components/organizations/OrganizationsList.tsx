@@ -1,12 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import { RootState } from 'services/store';
 import OrganizationRow from './OrganizationRow';
 
 const OrganizationsList = ({
   onOrganizationSelect,
 }) => {
+  const { t } = useTranslation();
   const organizations = useSelector((state: RootState) => state.organizations);
 
   return organizations ? (
@@ -17,7 +19,7 @@ const OrganizationsList = ({
     >
       <thead>
         <tr>
-          <th>Nom</th>
+          <th>{t('name')}</th>
           <th style={{ width: 35 }} />
         </tr>
       </thead>

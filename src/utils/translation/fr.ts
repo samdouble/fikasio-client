@@ -20,6 +20,7 @@ const fr = {
   logout: 'Déconnexion',
   metrics: 'Mesures',
   month: 'Mois',
+  name: 'Nom',
   notifications: 'Notifications',
   objectives: 'Objectifs',
   organizations: 'Organisations',

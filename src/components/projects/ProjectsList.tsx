@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import { RootState } from 'services/store';
 import ProjectRow from './ProjectRow';
 import { calculateIncompleteTime, calculateCompletionPercentage } from '../tasks/utils';
@@ -11,6 +12,7 @@ const ProjectsList = ({
   showIncompleteProjects,
   showArchivedProjects,
 }) => {
+  const { t } = useTranslation();
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
 
@@ -22,7 +24,7 @@ const ProjectsList = ({
     >
       <thead>
         <tr>
-          <th>Nom</th>
+          <th>{t('name')}</th>
           <th style={{ width: 150 }}>Temps restant</th>
           <th style={{ width: 150 }}>Complétion</th>
           <th style={{ width: 150 }}>Échéance</th>
@@ -33,7 +35,7 @@ const ProjectsList = ({
         {
           projects
             .map(project => {
-              const projectTasks = tasks?.filter(t => t.projects.some(p => p.id === project.id));
+              const projectTasks = tasks?.filter(task => task.projects.some(p => p.id === project.id));
               const completionRatio = calculateCompletionPercentage(projectTasks);
               const incompleteTime = calculateIncompleteTime(projectTasks);
               return {

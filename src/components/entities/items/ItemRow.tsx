@@ -67,8 +67,12 @@ const ItemRow = ({
       {
         entity.fields
           .map(field => (
-            <td key={field.id}>
+            <td
+              className="itemRow_field"
+              key={field.id}
+            >
               <AutosaveTextarea
+                className="itemRow_field_editable"
                 defaultValue={
                   getValueForType(
                     item.values.find(val => val.fieldId === field.id)?.value,
@@ -84,9 +88,12 @@ const ItemRow = ({
                 }}
                 style={{
                   border: 'none',
-                  height: 'auto',
+                  height: 25,
                   overflowY: 'hidden',
-                  padding: 0,
+                  paddingLeft: 5,
+                  paddingRight: 50,
+                  paddingTop: 0,
+                  width: 'auto',
                 }}
                 useContentEditableDiv
               />

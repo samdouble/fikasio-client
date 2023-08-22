@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useTranslation } from 'react-i18next';
 import { operations } from 'services';
 import links from 'utils/links';
 import { getFormData } from 'utils/forms';
@@ -12,6 +13,7 @@ import './style.scss';
 
 const SignupPage = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [showSignupError, setShowSignupError] = useState(false);
   const history = useHistory();
   const location = useLocation();
@@ -68,7 +70,7 @@ const SignupPage = () => {
           <Form.Control
             autoFocus
             name="name"
-            placeholder="Nom"
+            placeholder={t('name')}
             style={{ marginBottom: 10 }}
             type="text"
           />

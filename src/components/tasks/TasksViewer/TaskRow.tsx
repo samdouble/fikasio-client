@@ -102,6 +102,7 @@ const TaskRow = ({
         />
       </td>
       <td
+        className="taskRow_description"
         onClick={() => onClick && onClick(task.id)}
         style={{ cursor: 'pointer' }}
       >
@@ -121,16 +122,13 @@ const TaskRow = ({
             })(dispatch);
           }}
           style={{
-            border: 'none',
-            cursor: 'auto',
             float: 'left',
             height: 25,
-            minWidth: 'auto',
-            outline: 'none',
             overflowY: 'hidden',
             paddingLeft: 5,
             paddingRight: 50,
             paddingTop: 0,
+            width: 'auto',
           }}
           useContentEditableDiv
         />

@@ -1,6 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
 import ItemRow from './ItemRow';
+import './ItemsList.scss';
 
 const ItemsList = ({
   entity,

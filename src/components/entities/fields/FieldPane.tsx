@@ -44,7 +44,7 @@ const FieldPane = ({
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
-            <RBForm.Label>Nom</RBForm.Label>
+            <RBForm.Label>{t('name')}</RBForm.Label>
             <Field
               component="input"
               className="form-control"

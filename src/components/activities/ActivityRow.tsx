@@ -99,16 +99,13 @@ const ActivityRow = ({
                     })(dispatch);
                   }}
                   style={{
-                    border: 'none',
-                    cursor: 'auto',
                     float: 'left',
                     height: 25,
-                    minWidth: 'auto',
-                    outline: 'none',
                     overflowY: 'hidden',
                     paddingLeft: 5,
                     paddingRight: 50,
                     paddingTop: 0,
+                    width: 'auto',
                   }}
                   useContentEditableDiv
                 />

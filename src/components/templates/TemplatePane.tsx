@@ -53,7 +53,7 @@ const TemplatePane = ({
         <form onSubmit={handleSubmit}>
           <h4>{ template && template.name }</h4>
           <RBForm.Group>
-            <RBForm.Label>Nom</RBForm.Label>
+            <RBForm.Label>{t('name')}</RBForm.Label>
             <Field
               component="input"
               className="form-control"

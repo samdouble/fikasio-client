@@ -20,6 +20,7 @@ const en = {
   logout: 'Logout',
   metrics: 'Metrics',
   month: 'Month',
+  name: 'Name',
   notifications: 'Notifications',
   objectives: 'Objectives',
   organizations: 'Organizations',

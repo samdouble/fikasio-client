@@ -48,7 +48,7 @@ const ProjectInformationsForm = ({
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
-            <RBForm.Label>Nom</RBForm.Label>
+            <RBForm.Label>{t('name')}</RBForm.Label>
             <Field
               className="form-control"
               component="input"
