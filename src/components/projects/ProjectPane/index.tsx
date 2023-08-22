@@ -23,7 +23,7 @@ const ProjectPane = ({
 
   const project = (projects || []).find(p => p.id === id);
   const projectTasks = tasks?.filter(task => task.projects.some(tp => tp.id === project?.id));
-  const projectTasksIncomplete = projectTasks?.filter(task => !task.isCompleted);
+  const projectTasksIncomplete = projectTasks?.filter(task => task.status !== 'Completed');
   const projectObjectives = objectives?.filter(objective => objective.projects.some(op => op.id === project?.id));
 
   return (

@@ -21,8 +21,8 @@ const TasksBoard = ({
       const isDueThisWeek = task.dueAt && isSameWeek(Date.now(), DateTime.fromISO(task.dueAt).toMillis());
       return (
         (
-          (showCompleteTasks && task.isCompleted && !task.isArchived)
-          || (showIncompleteTasks && !task.isCompleted && !task.isArchived)
+          (showCompleteTasks && task.status === 'Completed' && !task.isArchived)
+          || (showIncompleteTasks && task.status !== 'Completed' && !task.isArchived)
           || (showArchivedTasks && task.isArchived)
         )
         && (

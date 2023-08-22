@@ -10,14 +10,14 @@ const calculateAverageCompletionTime = tasks => {
 };
 
 const calculateCompleteTime = tasks => {
-  const complete = tasks.filter(task => task.isCompleted);
+  const complete = tasks.filter(task => task.status === 'Completed');
   const averageEstimatedCompletionTime = calculateAverageCompletionTime(tasks);
   return complete
     .reduce((acc, task) => (acc + (task.estimatedCompletionTime || averageEstimatedCompletionTime)), 0);
 };
 
 const calculateIncompleteTime = tasks => {
-  const incomplete = tasks?.filter(task => !task.isCompleted);
+  const incomplete = tasks?.filter(task => task.status !== 'Completed');
   const averageEstimatedCompletionTime = calculateAverageCompletionTime(tasks);
   return incomplete?.reduce((acc, task) => (acc + (task.estimatedCompletionTime || averageEstimatedCompletionTime)), 0);
 };
@@ -26,8 +26,8 @@ const calculateCompletionPercentage = tasks => {
   if (!tasks || tasks.length === 0) {
     return null;
   }
-  const complete = tasks.filter(task => task.isCompleted);
-  const incomplete = tasks.filter(task => !task.isCompleted);
+  const complete = tasks.filter(task => task.status === 'Completed');
+  const incomplete = tasks.filter(task => task.status !== 'Completed');
   const tasksWithNonNullEstimatedCompletionTime = tasks.filter(task => task.estimatedCompletionTime);
   if (tasksWithNonNullEstimatedCompletionTime.length === 0) {
     return complete.length / (complete.length + incomplete.length);
@@ -45,7 +45,7 @@ const getFurthestDueDate = tasks => {
 const getLateTasks = tasks => {
   return tasks
     .filter(task => !task.isArchived)
-    .filter(task => !task.isCompleted && task.dueAt && DateTime.fromISO(task.dueAt) < DateTime.now());
+    .filter(task => task.status !== 'Completed' && task.dueAt && DateTime.fromISO(task.dueAt) < DateTime.now());
 };
 
 const calculateLatenessRatio = tasks => {
@@ -55,12 +55,12 @@ const calculateLatenessRatio = tasks => {
 
   // TODO
   /*
-  const hasdueAtPassed = task && !task.isCompleted && task.dueAt && DateTime.fromISO(task.dueAt) < DateTime.now();
+  const hasdueAtPassed = task && task.status !== 'Completed' && task.dueAt && DateTime.fromISO(task.dueAt) < DateTime.now();
 
   const tasksWithNonNullDueAt = tasks.filter(task => task.dueAt);
 
-  const complete = tasks.filter(task => task.isCompleted);
-  const incomplete = tasks.filter(task => !task.isCompleted);
+  const complete = tasks.filter(task => task.status === 'Completed');
+  const incomplete = tasks.filter(task => task.status !== 'Completed');
   if (tasksWithNonNullEstimatedCompletionTime.length === 0) {
     return complete.length / (complete.length + incomplete.length);
   }

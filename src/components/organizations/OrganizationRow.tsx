@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import './style.scss';
@@ -16,9 +15,7 @@ const OrganizationRow = ({
   const { t } = useTranslation();
 
   return (
-    <tr
-      className={classNames({ done: organization.isCompleted && !organization.isArchived })}
-    >
+    <tr>
       <td
         onClick={() => onClick(organization.id)}
         style={{ cursor: 'pointer' }}

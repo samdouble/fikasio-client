@@ -81,14 +81,14 @@ const TaskRow = ({
   };
 
   const hasdueAtPassed = task
-    && !task.isCompleted
+    && task.status !== 'Completed'
     && task.dueAt
     && DateTime.fromISO(task.dueAt) < DateTime.now();
 
   return (
     <tr className={classNames({
       taskRow: true,
-      done: task && task.isCompleted,
+      done: task && task.status === 'Completed',
     })}>
       <td
         style={{

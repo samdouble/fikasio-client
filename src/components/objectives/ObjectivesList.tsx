@@ -29,8 +29,8 @@ const ObjectivesList = ({
             .filter(objective => {
               return (
                 (
-                  (showCompleteObjectives && objective.isCompleted && !objective.isArchived)
-                  || (showIncompleteObjectives && !objective.isCompleted && !objective.isArchived)
+                  (showCompleteObjectives && objective.status === 'Completed' && !objective.isArchived)
+                  || (showIncompleteObjectives && objective.status !== 'Completed' && !objective.isArchived)
                   || (showArchivedObjectives && objective.isArchived)
                 )
               );

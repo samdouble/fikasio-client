@@ -22,7 +22,7 @@ const DashboardPage = () => {
   const dispatch = useDispatch();
   const [tasks, setTasks] = useState<Task[]>([]);
   const nbTotal = tasks.length;
-  const nbDone = tasks.filter(task => task.isCompleted).length;
+  const nbDone = tasks.filter(task => task.status === 'Completed').length;
 
   useEffect(() => {
     getTasks({})
