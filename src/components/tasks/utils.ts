@@ -55,7 +55,9 @@ const calculateLatenessRatio = tasks => {
 
   // TODO
   /*
-  const hasdueAtPassed = task && task.status !== 'Completed' && task.dueAt && DateTime.fromISO(task.dueAt) < DateTime.now();
+  const hasdueAtPassed = task
+    && task.status !== 'Completed'
+    && task.dueAt && DateTime.fromISO(task.dueAt) < DateTime.now();
 
   const tasksWithNonNullDueAt = tasks.filter(task => task.dueAt);
 
