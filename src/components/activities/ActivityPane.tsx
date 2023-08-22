@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -28,7 +28,9 @@ const ActivityPane = ({
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
   const templates = useSelector((state: RootState) => state.templates);
-  const activity = activityProp.id ? (activities || []).find(a => a.id === activityProp.id) : activityProp;
+  const activity = activityProp.id
+    ? (activities || []).find(a => a.id === activityProp.id)
+    : activityProp;
   const [startTime, setStartTime] = useState(
     activity && activity.startTime
       ? DateTime.fromISO(activity.startTime).toJSDate()
@@ -96,6 +98,10 @@ const ActivityPane = ({
           const [newComment] = args;
           utils.changeValue(state, 'comments', () => newComment);
         },
+        setDuration: (args, state, utils) => {
+          const [newDuration] = args;
+          utils.changeValue(state, 'number:duration', () => newDuration);
+        },
       }}
       onSubmit={onSubmit}
       render={({ form, handleSubmit }) => (
@@ -122,6 +128,8 @@ const ActivityPane = ({
                       }
                       setStartTime(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
+                      const end = DateTime.fromJSDate(endTime);
+                      form.mutators.setDuration(end.diff(timestamp, 'minutes').minutes);
                     }}
                     selected={startTime}
                     showTimeSelect
@@ -150,6 +158,8 @@ const ActivityPane = ({
                       }
                       setEndTime(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
+                      const start = DateTime.fromJSDate(startTime);
+                      form.mutators.setDuration(timestamp.diff(start, 'minutes').minutes);
                     }}
                     selected={endTime}
                     showTimeSelect
