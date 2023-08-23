@@ -4,6 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { RootState } from 'services/store';
 import TaskInformationsForm from './TaskInformationsForm';
+import TaskDiscussion from './TaskDiscussion';
 
 interface TaskPaneProps {
   defaultTab?: string;
@@ -34,6 +35,13 @@ const TaskPane = ({
         eventKey="DISCUSSION"
         title="Discussion"
       >
+        {
+          task && (
+            <TaskDiscussion
+              task={task}
+            />
+          )
+        }
       </Tab>
     </Tabs>
   );

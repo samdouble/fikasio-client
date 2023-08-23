@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
@@ -6,7 +6,10 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
+import ClickOutside from 'react-click-outside';
+import { CompactPicker } from 'react-color';
 import { operations } from 'services';
+import { invertColor } from 'utils/colors';
 import { processFormData } from 'utils/forms';
 import links from 'utils/links';
 
@@ -16,6 +19,8 @@ const TemplateInformationsForm = ({
   const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation();
+  const [color, setColor] = useState(template?.color);
+  const [isColorpickerOpen, setIsColorpickerOpen] = useState(false);
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);
@@ -46,6 +51,52 @@ const TemplateInformationsForm = ({
               component="input"
               name="name"
             />
+          </RBForm.Group>
+          <RBForm.Group>
+            <RBForm.Label>Couleur</RBForm.Label>
+            <br />
+            <Field
+              name="color"
+            >
+              {
+                ({ input }) => (
+                  <>
+                    <input
+                      name="color"
+                      type="hidden"
+                      value={color}
+                    />
+                    <Button
+                      onClick={() => setIsColorpickerOpen(true)}
+                      style={{
+                        backgroundColor: color,
+                        borderColor: color,
+                        color: color && invertColor(color),
+                      }}
+                      variant={!color ? 'link' : ''}
+                    >
+                      Sélectionner
+                    </Button>
+                    {
+                      isColorpickerOpen && (
+                        <ClickOutside
+                          onClickOutside={() => setIsColorpickerOpen(false)}
+                        >
+                          <CompactPicker
+                            color={color}
+                            onChangeComplete={c => {
+                              setColor(c.hex);
+                              input.onChange(c.hex);
+                              setIsColorpickerOpen(false);
+                            }}
+                          />
+                        </ClickOutside>
+                      )
+                    }
+                  </>
+                )
+              }
+            </Field>
           </RBForm.Group>
           <div
             style={{

@@ -14,6 +14,10 @@ const getTasks = filter => {
   return get(`/tasks`, {}, { filter });
 };
 
+const getTaskComments = id => {
+  return get(`/tasks/:id/comments`, { id }, {});
+};
+
 const createTask = task => {
   return post(`/tasks`, {}, task);
 };
@@ -33,6 +37,7 @@ const deleteTask = id => {
 export {
   getTasks,
   getTask,
+  getTaskComments,
   createTask,
   updateTask,
   patchTask,

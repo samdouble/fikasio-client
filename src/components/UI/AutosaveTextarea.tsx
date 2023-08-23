@@ -4,7 +4,7 @@ import useTimeout from 'use-timeout';
 
 interface AutosaveTextareaProps {
   className?: string;
-  defaultValue: string;
+  defaultValue?: string;
   onBlur?: any;
   onFocus?: any;
   onKeyDown: any;

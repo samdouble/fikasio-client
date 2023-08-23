@@ -128,8 +128,10 @@ const ActivityPane = ({
                       }
                       setStartTime(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
-                      const end = DateTime.fromJSDate(endTime);
-                      form.mutators.setDuration(end.diff(timestamp, 'minutes').minutes);
+                      if (endTime && timestamp) {
+                        const end = DateTime.fromJSDate(endTime);
+                        form.mutators.setDuration(end.diff(timestamp, 'minutes').minutes);
+                      }
                     }}
                     selected={startTime}
                     showTimeSelect
@@ -158,8 +160,10 @@ const ActivityPane = ({
                       }
                       setEndTime(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
-                      const start = DateTime.fromJSDate(startTime);
-                      form.mutators.setDuration(timestamp.diff(start, 'minutes').minutes);
+                      if (startTime && timestamp) {
+                        const start = DateTime.fromJSDate(startTime);
+                        form.mutators.setDuration(timestamp.diff(start, 'minutes').minutes);
+                      }
                     }}
                     selected={endTime}
                     showTimeSelect

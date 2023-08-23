@@ -92,7 +92,6 @@ const ActivityRow = ({
                   defaultValue={comments}
                   onKeyDown={e => handleKeyDownComments(e)}
                   onKeyUp={e => handleKeyUpComments(e, activity)}
-                  // onSave={value => setComments(value)}
                   onSave={async value => {
                     operations.activities.patchActivity(activity.id, {
                       comments: value,

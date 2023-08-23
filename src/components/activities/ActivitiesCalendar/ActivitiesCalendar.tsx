@@ -23,6 +23,7 @@ const ActivitiesCalendar = ({
 }) => {
   const dispatch = useDispatch();
   const loginState = useSelector((state: RootState) => state.login);
+  const templates = useSelector((state: RootState) => state.templates);
   const me = loginState.user;
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
@@ -121,6 +122,14 @@ const ActivitiesCalendar = ({
       date={date.toJSDate()}
       dayLayoutAlgorithm="no-overlap"
       defaultView="day"
+      eventPropGetter={event => {
+        const template = event.templateId && templates?.find(temp => temp.id === event.templateId);
+        return {
+          style: {
+            ...(template && { backgroundColor: template.color }),
+          },
+        };
+      }}
       events={events}
       localizer={localizer}
       messages={{
