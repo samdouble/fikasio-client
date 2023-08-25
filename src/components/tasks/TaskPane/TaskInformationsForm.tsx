@@ -31,7 +31,12 @@ const TaskInformationsForm = ({
   const { t } = useTranslation();
   const projects = useSelector((state: RootState) => state.projects);
   const [hasRecurrence, setHasRecurrence] = useState(false);
-  const [dueDate, setDueDate] = useState(
+  const [startAt, setStartAt] = useState(
+    task && task.startAt
+    ? DateTime.fromISO(task.startAt).toJSDate()
+    : null,
+  );
+  const [dueAt, setDueAt] = useState(
     task && task.dueAt
     ? DateTime.fromISO(task.dueAt).toJSDate()
     : null,
@@ -135,6 +140,34 @@ const TaskInformationsForm = ({
             */
           }
           <RBForm.Group>
+            <RBForm.Label>Date de début</RBForm.Label>
+            <br />
+            <Field
+              component={
+                ({ input }) => (
+                  <DatePicker
+                    className="form-control"
+                    dateFormat="yyyy-MM-dd"
+                    onChange={value => {
+                      const timestamp = DateTime.fromJSDate(value)
+                        .set({ hour: 0, minute: 0, second: 0 });
+                      if (task && task.id) {
+                        operations.tasks.patchTask(task.id, { startAt: timestamp.toISO() })(dispatch);
+                      }
+                      setStartAt(timestamp.toJSDate());
+                      input.onChange(timestamp.toJSDate());
+                    }}
+                    selected={startAt}
+                  />
+                )
+              }
+              defaultValue={startAt}
+              name="startAt"
+            />
+          </RBForm.Group>
+          <br />
+          <br />
+          <RBForm.Group>
             <RBForm.Label>Échéance</RBForm.Label>
             <br />
             <Field
@@ -143,20 +176,20 @@ const TaskInformationsForm = ({
                   <DatePicker
                     className="form-control"
                     dateFormat="yyyy-MM-dd"
-                    onChange={dueAt => {
-                      const timestamp = DateTime.fromJSDate(dueAt)
+                    onChange={value => {
+                      const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 23, minute: 59, second: 59 });
                       if (task && task.id) {
                         operations.tasks.patchTask(task.id, { dueAt: timestamp.toISO() })(dispatch);
                       }
-                      setDueDate(timestamp.toJSDate());
+                      setDueAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
                     }}
-                    selected={dueDate}
+                    selected={dueAt}
                   />
                 )
               }
-              defaultValue={dueDate}
+              defaultValue={dueAt}
               name="dueAt"
             />
           </RBForm.Group>

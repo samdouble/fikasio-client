@@ -95,7 +95,7 @@ const ActivityRow = ({
         {
           me.censoredWords
             .some(censoredWord => comments.toLowerCase().includes(censoredWord.toLowerCase()))
-            ? <div>*****</div>
+            ? <div style={{ paddingLeft: 5 }}>*****</div>
             : (
                 <AutosaveTextarea
                   className="activityRow_comments_editable"
