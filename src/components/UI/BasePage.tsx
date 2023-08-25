@@ -21,9 +21,9 @@ import {
   IEntityFieldPane,
   ITemplateFieldPane,
 } from 'services/pane/types';
+import { RootState } from 'services/store';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import './style.scss';
-import { RootState } from 'services/store';
 
 const BasePage = ({
   children,
@@ -91,10 +91,13 @@ const BasePage = ({
       >
         { pane }
       </SlidingPane>
-      <Container fluid style={{
-        paddingLeft: 100,
-        paddingTop: 90,
-      }}>
+      <Container
+        fluid
+        style={{
+          paddingLeft: 100,
+          paddingTop: 90,
+        }}
+      >
         <Row>
           <Col lg={12}>
             { children }

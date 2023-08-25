@@ -125,13 +125,12 @@ const ActivitiesCalendar = ({
       defaultView="day"
       eventPropGetter={(event, start, end, isSelected) => {
         const defaultEventColor = '#7e5b9a';
-        const defaultSelectedEventColor = '#6a4887';
         const template = event.templateId && templates?.find(temp => temp.id === event.templateId);
         return {
           style: {
             backgroundColor: (template && template.color)
               ? (isSelected ? Color(template.color).darken(0.2) : template.color)
-              : (isSelected ? defaultSelectedEventColor : defaultEventColor),
+              : (isSelected ? Color(defaultEventColor).darken(0.2) : defaultEventColor),
           },
         };
       }}

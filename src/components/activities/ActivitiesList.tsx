@@ -77,7 +77,7 @@ const ActivitiesList = ({
                 : <div />
             }
           </th>
-          <th>{t('comment')}</th>
+          <th colSpan={2}>{t('comment')}</th>
           <th style={{ width: 150 }}>Début</th>
           <th style={{ width: 150 }}>Fin</th>
           <th style={{ width: 90 }}>Durée</th>
