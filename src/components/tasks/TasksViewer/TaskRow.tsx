@@ -189,7 +189,7 @@ const TaskRow = ({
       </td>
       <td
         className="taskRow_dueAt"
-        width={140}
+        width={160}
         onClick={() => setIsDueAtDatepickerOpen(true)}
         style={{
           cursor: 'pointer',
