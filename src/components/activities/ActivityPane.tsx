@@ -28,6 +28,8 @@ const ActivityPane = ({
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
   const templates = useSelector((state: RootState) => state.templates);
+  const login = useSelector((state: RootState) => state.login);
+  const me = login.user;
   const activity = activityProp.id
     ? (activities || []).find(a => a.id === activityProp.id)
     : activityProp;
@@ -52,7 +54,11 @@ const ActivityPane = ({
     if (text.length >= 3) {
       getActivities(null, text)
         .then((res: { activities: Activity[] }) => {
-          const suggestedActivities = uniqBy(res.activities, el => el.comments);
+          const suggestedActivities = uniqBy(res.activities, el => el.comments)
+            .filter(suggestedActivity => (
+              !me.censoredWords
+                .some(censoredWord => suggestedActivity.comments.toLowerCase().includes(censoredWord.toLowerCase()))
+            ));
           setCommentsSuggestions(suggestedActivities);
         });
     } else {

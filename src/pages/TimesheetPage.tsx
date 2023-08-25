@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Button from 'react-bootstrap/Button';
 import { Tooltip } from 'react-tooltip';
@@ -23,7 +23,14 @@ const TimesheetPage = () => {
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
   const templates = useSelector((state: RootState) => state.templates);
-  const [date, setDate] = useState(DateTime.now());
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const dateParam = searchParams.get('date');
+  const [date, setDate] = useState(
+    dateParam
+    ? DateTime.fromFormat(dateParam, 'yyyy-MM-dd')
+    : DateTime.now(),
+  );
   const { t } = useTranslation();
 
   const startTs = date.set({

@@ -5,6 +5,7 @@ import withDragAndDrop, { withDragAndDropProps } from 'react-big-calendar/lib/ad
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
+import Color from 'color';
 import { operations } from 'services';
 import { Activity } from 'services/activities/types';
 import { RootState } from 'services/store';
@@ -122,11 +123,15 @@ const ActivitiesCalendar = ({
       date={date.toJSDate()}
       dayLayoutAlgorithm="no-overlap"
       defaultView="day"
-      eventPropGetter={event => {
+      eventPropGetter={(event, start, end, isSelected) => {
+        const defaultEventColor = '#7e5b9a';
+        const defaultSelectedEventColor = '#6a4887';
         const template = event.templateId && templates?.find(temp => temp.id === event.templateId);
         return {
           style: {
-            ...(template && { backgroundColor: template.color }),
+            backgroundColor: (template && template.color)
+              ? (isSelected ? Color(template.color).darken(0.2) : template.color)
+              : (isSelected ? defaultSelectedEventColor : defaultEventColor),
           },
         };
       }}

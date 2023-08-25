@@ -66,7 +66,7 @@ const App = () => {
           <PrivateRoute component={TasksPage} path={links.paths.tasks} />
           <PrivateRoute component={TemplatePage} path={links.paths.template} />
           <PrivateRoute component={TemplatesPage} path={links.paths.templates} />
-          <PrivateRoute component={TimesheetPage} path={links.paths.timesheet} />
+          <PrivateRoute component={TimesheetPage} path={links.timesheet()} />
           <Route component={Page404} />
         </Switch>
         {

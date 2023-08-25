@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import ReactGA from 'react-ga4';
 import store from 'services/store';
 import App from './App';
@@ -12,7 +12,9 @@ import './index.scss';
 ReactGA.initialize('G-SVDHZ0XXWX');
 initializeTranslation();
 
-ReactDOM.render(
+const domNode = document.getElementById('root');
+const root = createRoot(domNode!);
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
@@ -20,7 +22,6 @@ ReactDOM.render(
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change
