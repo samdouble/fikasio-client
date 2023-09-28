@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
+import links from 'utils/links';
 import './style.scss';
 
 const OrganizationRow = ({
-  onClick,
   organization,
 }) => {
   const dispatch = useDispatch();
@@ -17,10 +18,22 @@ const OrganizationRow = ({
   return (
     <tr>
       <td
-        onClick={() => onClick(organization.id)}
         style={{ cursor: 'pointer' }}
       >
-        { organization.name }
+        <Link
+          style={{ textDecoration: 'none' }}
+          to={links.organization(organization.id)}
+        >
+          <div
+            style={{
+              color: '#000',
+              height: '100%',
+              width: '100%',
+            }}
+          >
+            { organization.name }
+          </div>
+        </Link>
       </td>
       <td
         style={{

@@ -1,15 +1,18 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-const AddMemberButton = ({ onClick, style }) => (
+const AddMemberButton = ({
+  onClick,
+  style,
+}) => (
   <Button
-    onClick={() => onClick({})}
+    onClick={() => onClick('NEW')}
     style={{
       ...style,
     }}
     variant="primary"
   >
-    Inviter un membre
+    Ajouter un membre
   </Button>
 );
 

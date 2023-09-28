@@ -11,6 +11,12 @@ export interface IEntityFieldPane {
   id: string;
 }
 
+export interface IOrganizationMemberPane {
+  type: 'ORGANIZATION_MEMBER';
+  organizationId: string;
+  id: string;
+}
+
 export interface ITemplateFieldPane {
   type: 'TEMPLATE_FIELD';
   templateId: string;
@@ -20,6 +26,6 @@ export interface ITemplateFieldPane {
 export type Pane = {
   type: string;
   id: string;
-} | IActivityPane | IEntityFieldPane | ITemplateFieldPane;
+} | IActivityPane | IEntityFieldPane | IOrganizationMemberPane | ITemplateFieldPane;
 
 export default Pane;

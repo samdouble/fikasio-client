@@ -9,16 +9,16 @@ import ActivityPane from 'components/activities/ActivityPane';
 import EntityFieldPane from 'components/entities/fields/FieldPane';
 // import ItemPane from 'components/entities/items/ItemPane';
 import ObjectivePane from 'components/objectives/ObjectivePane';
-import OrganizationPane from 'components/organizations/OrganizationPane';
+import OrganizationMemberPane from 'components/organizations/members/MemberPane';
 import ProjectPane from 'components/projects/ProjectPane';
 import TaskPane from 'components/tasks/TaskPane';
-import TemplatePane from 'components/templates/TemplatePane';
 import TemplateFieldPane from 'components/templates/fields/FieldPane';
 import Sidebar from 'components/UI/Sidebar';
 import { operations } from 'services';
 import {
   IActivityPane,
   IEntityFieldPane,
+  IOrganizationMemberPane,
   ITemplateFieldPane,
 } from 'services/pane/types';
 import { RootState } from 'services/store';
@@ -55,10 +55,11 @@ const BasePage = ({
       defaultTab={paneContent && paneContent.id === 'NEW' && 'infos'}
       id={paneContent && paneContent.id}
     />;
-  } else if (paneContent && paneContent.type === 'ORGANIZATION') {
-    pane = <OrganizationPane
-      defaultTab={paneContent && paneContent.id === 'NEW' && 'infos'}
-      id={paneContent && paneContent.id}
+  } else if (paneContent && paneContent.type === 'ORGANIZATION_MEMBER') {
+    const organizationMemberPaneContent = paneContent as IOrganizationMemberPane;
+    pane = <OrganizationMemberPane
+      organizationId={organizationMemberPaneContent && organizationMemberPaneContent.organizationId}
+      id={organizationMemberPaneContent && organizationMemberPaneContent.id}
     />;
   } else if (paneContent && paneContent.type === 'PROJECT') {
     pane = <ProjectPane
@@ -67,10 +68,6 @@ const BasePage = ({
     />;
   } else if (paneContent && paneContent.type === 'TASK') {
     pane = <TaskPane
-      id={paneContent && paneContent.id}
-    />;
-  } else if (paneContent && paneContent.type === 'TEMPLATE') {
-    pane = <TemplatePane
       id={paneContent && paneContent.id}
     />;
   } else if (paneContent && paneContent.type === 'TEMPLATE_FIELD') {

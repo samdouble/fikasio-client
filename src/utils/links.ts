@@ -12,6 +12,7 @@ const metrics = () => '/metrics';
 const notifications = () => '/notifications';
 const objectives = () => '/objectives';
 const organizations = () => '/organizations';
+const organization = id => `/organizations/${id}`;
 const projects = () => '/projects';
 const settings = () => '/settings';
 const tasks = () => '/tasks';
@@ -35,6 +36,7 @@ const paths = {
   notifications: notifications(),
   objectives: objectives(),
   organizations: organizations(),
+  organization: organization(':id'),
   projects: projects(),
   settings: settings(),
   tasks: tasks(),
@@ -59,6 +61,7 @@ const links = {
   notifications: () => notifications(),
   objectives: () => objectives(),
   organizations: () => organizations(),
+  organization: id => organization(id),
   projects: () => projects(),
   settings: () => settings(),
   tasks: () => tasks(),

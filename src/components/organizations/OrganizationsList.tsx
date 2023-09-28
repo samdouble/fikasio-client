@@ -5,9 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { RootState } from 'services/store';
 import OrganizationRow from './OrganizationRow';
 
-const OrganizationsList = ({
-  onOrganizationSelect,
-}) => {
+const OrganizationsList = () => {
   const { t } = useTranslation();
   const organizations = useSelector((state: RootState) => state.organizations);
 
@@ -34,7 +32,6 @@ const OrganizationsList = ({
             .map(organization => (
               <OrganizationRow
                 key={organization.id}
-                onClick={onOrganizationSelect}
                 organization={organization}
               />
             ))

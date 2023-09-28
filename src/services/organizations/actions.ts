@@ -1,4 +1,4 @@
-import { Organization } from './types';
+import { Organization, OrganizationMember } from './types';
 
 export enum OrganizationActionTypes {
   CREATE_ORGANIZATION_REQUEST = 'CREATE_ORGANIZATION_REQUEST',
@@ -11,6 +11,17 @@ export enum OrganizationActionTypes {
   PATCH_ORGANIZATION_RESPONSE = 'PATCH_ORGANIZATION_RESPONSE',
   DELETE_ORGANIZATION_REQUEST = 'DELETE_ORGANIZATION_REQUEST',
   DELETE_ORGANIZATION_RESPONSE = 'DELETE_ORGANIZATION_RESPONSE',
+
+  CREATE_ORGANIZATION_MEMBER_REQUEST = 'CREATE_ORGANIZATION_MEMBER_REQUEST',
+  CREATE_ORGANIZATION_MEMBER_RESPONSE = 'CREATE_ORGANIZATION_MEMBER_RESPONSE',
+  GET_ORGANIZATION_MEMBERS_REQUEST = 'GET_ORGANIZATION_MEMBERS_REQUEST',
+  GET_ORGANIZATION_MEMBERS_RESPONSE = 'GET_ORGANIZATION_MEMBERS_RESPONSE',
+  UPDATE_ORGANIZATION_MEMBER_REQUEST = 'UPDATE_ORGANIZATION_MEMBER_REQUEST',
+  UPDATE_ORGANIZATION_MEMBER_RESPONSE = 'UPDATE_ORGANIZATION_MEMBER_RESPONSE',
+  PATCH_ORGANIZATION_MEMBER_REQUEST = 'PATCH_ORGANIZATION_MEMBER_REQUEST',
+  PATCH_ORGANIZATION_MEMBER_RESPONSE = 'PATCH_ORGANIZATION_MEMBER_RESPONSE',
+  DELETE_ORGANIZATION_MEMBER_REQUEST = 'DELETE_ORGANIZATION_MEMBER_REQUEST',
+  DELETE_ORGANIZATION_MEMBER_RESPONSE = 'DELETE_ORGANIZATION_MEMBER_RESPONSE',
 }
 
 export type OrganizationAction =
@@ -26,7 +37,56 @@ export type OrganizationAction =
   } }
   | { type: OrganizationActionTypes.PATCH_ORGANIZATION_RESPONSE; payload: { organization: Organization } }
   | { type: OrganizationActionTypes.DELETE_ORGANIZATION_REQUEST; payload: { organizationId: string } }
-  | { type: OrganizationActionTypes.DELETE_ORGANIZATION_RESPONSE; payload: { organizationId: string } };
+  | { type: OrganizationActionTypes.DELETE_ORGANIZATION_RESPONSE; payload: { organizationId: string } }
+
+  | {
+    type: OrganizationActionTypes.CREATE_ORGANIZATION_MEMBER_REQUEST;
+    payload: { organizationId: string; member: OrganizationMember };
+  }
+  | {
+    type: OrganizationActionTypes.CREATE_ORGANIZATION_MEMBER_RESPONSE;
+    payload: { organizationId: string; member: OrganizationMember };
+  }
+  | {
+    type: OrganizationActionTypes.GET_ORGANIZATION_MEMBERS_REQUEST;
+    payload: { organizationId: string; members: OrganizationMember[]; };
+  }
+  | {
+    type: OrganizationActionTypes.GET_ORGANIZATION_MEMBERS_RESPONSE;
+    payload: { organizationId: string; members: OrganizationMember[] };
+  }
+  | {
+    type: OrganizationActionTypes.UPDATE_ORGANIZATION_MEMBER_REQUEST;
+    payload: {
+      organizationId: string;
+      id: string;
+      member: OrganizationMember;
+    };
+  }
+  | {
+    type: OrganizationActionTypes.UPDATE_ORGANIZATION_MEMBER_RESPONSE;
+    payload: { organizationId: string; member: OrganizationMember };
+  }
+  | {
+    type: OrganizationActionTypes.PATCH_ORGANIZATION_MEMBER_REQUEST;
+    payload: {
+      organizationId: string;
+      id: string;
+      member: Partial<OrganizationMember>;
+    };
+  }
+  | {
+    type: OrganizationActionTypes.PATCH_ORGANIZATION_MEMBER_RESPONSE;
+    payload: { organizationId: string; member: OrganizationMember };
+  }
+  | {
+    type: OrganizationActionTypes.DELETE_ORGANIZATION_MEMBER_REQUEST;
+    payload: { organizationId: string; memberId: string };
+  }
+  | {
+    type: OrganizationActionTypes.DELETE_ORGANIZATION_MEMBER_RESPONSE;
+    payload: { organizationId: string; memberId: string };
+  };
 
 export const createOrganizationRequest = (payload: { organization: Organization }): OrganizationAction => ({
   type: OrganizationActionTypes.CREATE_ORGANIZATION_REQUEST,
@@ -80,3 +140,74 @@ export const deleteOrganizationResponse = (payload: { organizationId: string }):
   type: OrganizationActionTypes.DELETE_ORGANIZATION_RESPONSE,
   payload,
 });
+
+export const createMemberRequest = (
+  payload: { organizationId: string, member: OrganizationMember },
+): OrganizationAction => ({
+  type: OrganizationActionTypes.CREATE_ORGANIZATION_MEMBER_REQUEST,
+  payload,
+});
+
+export const createMemberResponse = (
+  payload: { organizationId: string, member: OrganizationMember },
+): OrganizationAction => ({
+  type: OrganizationActionTypes.CREATE_ORGANIZATION_MEMBER_RESPONSE,
+  payload,
+});
+
+export const getMembersRequest = (
+  payload: { organizationId: string, members: OrganizationMember[] },
+): OrganizationAction => ({
+  type: OrganizationActionTypes.GET_ORGANIZATION_MEMBERS_REQUEST,
+  payload,
+});
+
+export const getMembersResponse = (
+  payload: { organizationId: string, members: OrganizationMember[] },
+): OrganizationAction => ({
+  type: OrganizationActionTypes.GET_ORGANIZATION_MEMBERS_RESPONSE,
+  payload,
+});
+
+export const updateMemberRequest = (payload: {
+  organizationId: string,
+  id: string,
+  member: OrganizationMember,
+}): OrganizationAction => ({
+  type: OrganizationActionTypes.UPDATE_ORGANIZATION_MEMBER_REQUEST,
+  payload,
+});
+
+export const updateMemberResponse = (
+  payload: { organizationId: string, member: OrganizationMember },
+): OrganizationAction => ({
+  type: OrganizationActionTypes.UPDATE_ORGANIZATION_MEMBER_RESPONSE,
+  payload,
+});
+
+export const patchMemberRequest = (payload: {
+  organizationId: string,
+  id: string,
+  member: Partial<OrganizationMember>,
+}): OrganizationAction => ({
+  type: OrganizationActionTypes.PATCH_ORGANIZATION_MEMBER_REQUEST,
+  payload,
+});
+
+export const patchMemberResponse = (
+  payload: { organizationId: string, member: OrganizationMember },
+): OrganizationAction => ({
+  type: OrganizationActionTypes.PATCH_ORGANIZATION_MEMBER_RESPONSE,
+  payload,
+});
+
+export const deleteMemberRequest = (payload: { organizationId: string, memberId: string }): OrganizationAction => ({
+  type: OrganizationActionTypes.DELETE_ORGANIZATION_MEMBER_REQUEST,
+  payload,
+});
+
+export const deleteMemberResponse = (payload: { organizationId: string, memberId: string }): OrganizationAction => ({
+  type: OrganizationActionTypes.DELETE_ORGANIZATION_MEMBER_RESPONSE,
+  payload,
+});
+

@@ -17,6 +17,48 @@ export default function reducer (state: Organization[] | null = null, action: Or
       });
     case OrganizationActionTypes.DELETE_ORGANIZATION_RESPONSE:
       return state?.filter(organization => organization.id !== action.payload.organizationId);
+
+    case OrganizationActionTypes.CREATE_ORGANIZATION_MEMBER_RESPONSE:
+      return state?.map(organization => {
+        if (organization.id === action.payload.organizationId) {
+          return {
+            ...organization,
+            members: [
+              ...organization.members,
+              action.payload.member,
+            ],
+          };
+        }
+        return organization;
+      });
+    case OrganizationActionTypes.UPDATE_ORGANIZATION_MEMBER_RESPONSE:
+    case OrganizationActionTypes.PATCH_ORGANIZATION_MEMBER_RESPONSE:
+      return state?.map(organization => {
+        if (organization.id === action.payload.organizationId) {
+          return {
+            ...organization,
+            members: organization.members?.map(member => {
+              if (member.id === action.payload.member.id) {
+                return action.payload.member;
+              }
+              return member;
+            }),
+          };
+        }
+        return organization;
+      });
+    case OrganizationActionTypes.DELETE_ORGANIZATION_MEMBER_RESPONSE:
+      return state?.map(organization => {
+        if (organization.id === action.payload.organizationId) {
+          return {
+            ...organization,
+            members: organization.members?.filter(member => (
+              member.id !== action.payload.memberId
+            )),
+          };
+        }
+        return organization;
+      });
     default:
       return state;
   }

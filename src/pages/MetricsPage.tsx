@@ -34,9 +34,8 @@ const MetricsPage = () => {
                 <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
                 <Breadcrumb.Item active>Mesures</Breadcrumb.Item>
               </Breadcrumb>
-              <h4>Mesures</h4>
               <AddMetricButton />
-              <br />
+              <h4>Mesures</h4>
               <br />
               <MetricsList />
             </Col>

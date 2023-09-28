@@ -5,6 +5,11 @@ import {
   updateOrganization as APIupdateOrganization,
   patchOrganization as APIpatchOrganization,
   deleteOrganization as APIdeleteOrganization,
+  getMembers as APIgetMembers,
+  createMember as APIcreateMember,
+  updateMember as APIupdateMember,
+  patchMember as APIpatchMember,
+  deleteMember as APIdeleteMember,
 } from './endpoints';
 import { fetchOnceOperation } from '../fetchOperation';
 import {
@@ -18,9 +23,19 @@ import {
   patchOrganizationResponse,
   deleteOrganizationRequest,
   deleteOrganizationResponse,
+  createMemberRequest,
+  createMemberResponse,
+  getMembersRequest,
+  getMembersResponse,
+  updateMemberRequest,
+  updateMemberResponse,
+  patchMemberRequest,
+  patchMemberResponse,
+  deleteMemberRequest,
+  deleteMemberResponse,
   OrganizationAction,
 } from './actions';
-import { Organization } from './types';
+import { Organization, OrganizationMember } from './types';
 
 type OrganizationDispatch = Dispatch<OrganizationAction>;
 
@@ -66,12 +81,61 @@ function deleteOrganization(organizationId: string) {
   };
 }
 
+function fetchMembers(filter) {
+  return fetchOnceOperation(
+    getMembersRequest,
+    getMembersResponse,
+    APIgetMembers,
+    state => state.members,
+    [filter],
+  );
+}
+
+function createMember(organizationId: string, member: OrganizationMember) {
+  return (dispatch: OrganizationDispatch) => {
+    dispatch(createMemberRequest({ organizationId, member }));
+    return APIcreateMember(organizationId, member)
+      .then(res => dispatch(createMemberResponse({ organizationId, ...res })));
+  };
+}
+
+function updateMember(organizationId: string, id: string, member: OrganizationMember) {
+  return (dispatch: OrganizationDispatch) => {
+    dispatch(updateMemberRequest({ organizationId, id, member }));
+    return APIupdateMember(organizationId, id, member)
+      .then(res => dispatch(updateMemberResponse({ organizationId, ...res })));
+  };
+}
+
+function patchMember(organizationId: string, id, member: Partial<OrganizationMember>) {
+  return (dispatch: OrganizationDispatch) => {
+    dispatch(patchMemberRequest({ organizationId, id, member }));
+    return APIpatchMember(organizationId, id, member)
+      .then(res => dispatch(patchMemberResponse({ organizationId, ...res })));
+  };
+}
+
+function deleteMember(organizationId: string, memberId: string) {
+  return (dispatch: OrganizationDispatch) => {
+    dispatch(deleteMemberRequest({ organizationId, memberId }));
+    return APIdeleteMember(organizationId, memberId)
+      .then(res => dispatch(deleteMemberResponse({ organizationId, ...res })));
+  };
+}
+
 const operations = {
   fetchOrganizations,
   createOrganization,
   updateOrganization,
   patchOrganization,
   deleteOrganization,
+  members: {
+    fetchMembers,
+    createMember,
+    updateMember,
+    patchMember,
+    deleteMember,
+  },
 };
 
 export default operations;

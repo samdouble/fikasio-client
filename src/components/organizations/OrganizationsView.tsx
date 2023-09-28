@@ -16,9 +16,7 @@ const OrganizationsView = ({
       />
       <br />
       <br />
-      <OrganizationsList
-        onOrganizationSelect={onOrganizationSelect}
-      />
+      <OrganizationsList />
     </>
   );
 };

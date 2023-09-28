@@ -21,6 +21,7 @@ import ItemUpsertPage from './pages/ItemUpsertPage';
 import MetricsPage from './pages/MetricsPage';
 import NotificationsPage from './pages/NotificationsPage';
 import ObjectivesPage from './pages/ObjectivesPage';
+import OrganizationPage from './pages/OrganizationPage';
 import OrganizationsPage from './pages/OrganizationsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import SettingsPage from './pages/SettingsPage';
@@ -64,6 +65,7 @@ const App = () => {
           <PrivateRoute component={MetricsPage} path={links.paths.metrics} />
           <PrivateRoute component={NotificationsPage} path={links.paths.notifications} />
           <PrivateRoute component={ObjectivesPage} path={links.paths.objectives} />
+          <PrivateRoute component={OrganizationPage} path={links.paths.organization} />
           <PrivateRoute component={OrganizationsPage} path={links.paths.organizations} />
           <PrivateRoute component={ProjectsPage} path={links.paths.projects} />
           <PrivateRoute component={SettingsPage} path={links.paths.settings} />
