@@ -5,11 +5,16 @@ import links from 'utils/links';
 
 const AddTemplateButton = ({ style }) => (
   <Link
-    style={{ textDecoration: 'none' }}
+    style={{
+      textDecoration: 'none',
+      ...style,
+    }}
     to={links.paths.templateUpsert}
   >
     <Button
-      style={style}
+      style={{
+        margin: 0,
+      }}
       variant="primary"
     >
       Créer un modèle

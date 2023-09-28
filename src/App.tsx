@@ -1,11 +1,13 @@
 import React from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { IconPack, library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TopMenu from 'components/TopMenu';
 import Footer from 'components/UI/Footer';
+import { RootState } from 'services/store';
 import PrivateRoute from './PrivateRoute';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -38,6 +40,7 @@ library.add(
 
 const App = () => {
   const location = useLocation();
+  const loginState = useSelector((state: RootState) => state.login);
 
   return (
     <div className="App" id="App">
@@ -73,8 +76,8 @@ const App = () => {
         </Switch>
         {
           (
-            location.pathname === '/'
-            || location.pathname === links.paths.home
+            (location.pathname === '/' && !loginState)
+            || (location.pathname === links.paths.home && !loginState)
             || location.pathname === links.paths.login
             || location.pathname === links.paths.signup
           ) && <Footer />

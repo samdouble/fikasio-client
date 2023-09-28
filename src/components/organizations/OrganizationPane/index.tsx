@@ -4,6 +4,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { RootState } from 'services/store';
 import OrganizationInformationsForm from './OrganizationInformationsForm';
+import OrganizationMembersList from './OrganizationMembersList';
+import AddMemberButton from './AddMemberButton';
 
 const OrganizationPane = ({
   defaultTab,
@@ -23,7 +25,16 @@ const OrganizationPane = ({
           eventKey="members"
           title="Members"
         >
-          <OrganizationInformationsForm
+          <AddMemberButton
+            onClick={() => undefined}
+            style={{
+              float: 'right',
+              margin: 0,
+            }}
+          />
+          <br />
+          <br />
+          <OrganizationMembersList
             organization={organization}
           />
         </Tab>

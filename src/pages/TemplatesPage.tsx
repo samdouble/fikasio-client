@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { useTranslation } from 'react-i18next';
+import AddTemplateButton from 'components/templates/AddTemplateButton';
 import TemplatesView from 'components/templates/TemplatesView';
 import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
@@ -23,7 +24,13 @@ const TemplatesPage = () => {
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
         <Breadcrumb.Item active>Modèles</Breadcrumb.Item>
       </Breadcrumb>
+      <AddTemplateButton
+        style={{
+          float: 'right',
+        }}
+      />
       <h4>Modèles</h4>
+      <br />
       <TemplatesView
         templates={templates}
       />

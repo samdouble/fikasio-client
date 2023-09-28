@@ -20,14 +20,33 @@ const SearchBar = ({ style }) => {
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const projects = useSelector((state: RootState) => state.projects);
+  const tasks = useSelector((state: RootState) => state.tasks);
 
   const getSuggestions = text => {
     const inputValue = text.trim().toLowerCase();
     const inputLength = inputValue.length;
 
-    return inputLength === 0 ? [] : projects?.filter(lang => (
-      lang.name.toLowerCase().slice(0, inputLength) === inputValue
-    ));
+    if (inputLength === 0) {
+      return [];
+    }
+    return [
+      ...(projects || [])
+        .filter(p => (
+          p.name.toLowerCase().slice(0, inputLength) === inputValue
+        ))
+        .map(p => ({
+          name: p.name,
+          type: 'PROJECT',
+        })),
+      ...(tasks || [])
+        .filter(t => (
+          t.description.toLowerCase().slice(0, inputLength) === inputValue
+        ))
+        .map(t => ({
+          name: t.description,
+          type: 'TASK',
+        })),
+    ];
   };
 
   const onChange = (event, { newValue }) => {

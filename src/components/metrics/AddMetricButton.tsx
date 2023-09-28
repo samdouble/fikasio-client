@@ -27,6 +27,7 @@ const AddMetricButton = () => {
         variant="primary"
         style={{
           float: 'right',
+          margin: 0,
         }}
         onClick={() => handleOpenModal(null)}
       >

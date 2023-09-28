@@ -19,7 +19,6 @@ const menuItems = {
   METRICS: 'metrics',
   NOTIFICATIONS: 'notifications',
   OBJECTIVES: 'objectives',
-  ORGANIZATIONS: 'organizations',
   PROJECTS: 'projects',
   TASKS: 'tasks',
   TIMESHEET: 'timesheet',
@@ -43,7 +42,6 @@ const Sidebar = () => {
   const getDefaultSelectedMenuItem = () => {
     if (location.pathname === '/dashboard') return menuItems.DASHBOARD;
     if (location.pathname === '/objectives') return menuItems.OBJECTIVES;
-    if (location.pathname === '/organizations') return menuItems.ORGANIZATIONS;
     if (location.pathname === '/metrics') return menuItems.METRICS;
     if (location.pathname === '/tasks') return menuItems.TASKS;
     if (location.pathname === '/projects') return menuItems.PROJECTS;
@@ -227,22 +225,6 @@ const Sidebar = () => {
                     </>
                   )
                 }
-              </NavText>
-            </NavItem>
-            <NavItem
-              data-tooltip-content={t('organizations')}
-              data-tooltip-id="organizations"
-              eventKey={menuItems.ORGANIZATIONS}
-            >
-              <NavIcon>
-                <Tooltip id="organizations" />
-                <FontAwesomeIcon
-                  icon="sitemap"
-                  size="lg"
-                />
-              </NavIcon>
-              <NavText>
-                {t('organizations')}
               </NavText>
             </NavItem>
           </SideNav.Nav>

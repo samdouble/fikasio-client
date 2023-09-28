@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchBar from 'components/UI/SearchBar';
 import links from 'utils/links';
 import Logo from 'images/logo.png';
@@ -61,11 +62,52 @@ const TopMenu = () => {
               {
                 login ? (
                   <NavDropdown align="end" title={login.user && login.user.name}>
-                    <NavDropdown.Item href={links.paths.settings}>{t('settings')}</NavDropdown.Item>
+                    <NavDropdown.Item href={links.paths.organizations}>
+                      <FontAwesomeIcon
+                        icon="sitemap"
+                        size="lg"
+                        style={{
+                          fontSize: 16,
+                          marginRight: 10,
+                        }}
+                      />
+                      {t('organizations')}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href={links.paths.settings}>
+                      <FontAwesomeIcon
+                        icon="cog"
+                        size="lg"
+                        style={{
+                          fontSize: 16,
+                          marginRight: 10,
+                        }}
+                      />
+                      {t('settings')}
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href={links.paths.documentation}>{t('documentation')}</NavDropdown.Item>
+                    <NavDropdown.Item href={links.paths.documentation}>
+                      <FontAwesomeIcon
+                        icon="book"
+                        size="lg"
+                        style={{
+                          fontSize: 16,
+                          marginRight: 10,
+                        }}
+                      />
+                      {t('documentation')}
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item onClick={() => handleLogout()}>{t('logout')}</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => handleLogout()}>
+                      <FontAwesomeIcon
+                        icon="power-off"
+                        size="lg"
+                        style={{
+                          fontSize: 16,
+                          marginRight: 10,
+                        }}
+                      />
+                      {t('logout')}
+                    </NavDropdown.Item>
                   </NavDropdown>
                 ) : (
                   <Nav.Link href={links.paths.login}>{t('login')}</Nav.Link>

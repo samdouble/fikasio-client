@@ -46,7 +46,6 @@ const ObjectivesView = ({
             })(dispatch)}
             style={{
               float: 'right',
-              marginRight: 0,
             }}
           />
         )
