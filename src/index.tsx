@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import { initializeTranslation } from './utils/translation';
 import './index.scss';
 
-ReactGA.initialize('G-SVDHZ0XXWX');
+ReactGA.initialize('G-TVCKXLCYYP');
 initializeTranslation();
 
 ReactDOM.render(
