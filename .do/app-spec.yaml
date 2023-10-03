@@ -2,7 +2,7 @@ alerts:
 - rule: DEPLOYMENT_FAILED
 - rule: DOMAIN_FAILED
 domains:
-- domain: fikas.io
+- domain: app.fikas.io
   type: PRIMARY
   zone: fikas.io
 envs:
