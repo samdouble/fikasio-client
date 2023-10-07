@@ -29,7 +29,9 @@ const ItemsList = ({
     >
       <thead>
         <tr>
-          <th />
+          <th
+            className="itemStaticColumn-left"
+          />
           <th
             style={{
               width: 30,
@@ -43,7 +45,9 @@ const ItemsList = ({
                 </th>
               ))
           }
-          <th colSpan={2} />
+          <th
+            className="itemStaticColumn-right"
+          />
         </tr>
       </thead>
       <tbody>

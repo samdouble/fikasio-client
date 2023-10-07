@@ -53,6 +53,7 @@ const ItemRow = ({
   return (
     <tr className="itemRow">
       <td
+        className="itemStaticColumn-left"
         style={{
           textAlign: 'center',
         }}
@@ -63,7 +64,9 @@ const ItemRow = ({
           onClick={() => onSelect(item)}
         />
       </td>
-      <td>{no}</td>
+      <td>
+        {no}
+      </td>
       {
         entity.fields
           .map(field => (
@@ -101,6 +104,7 @@ const ItemRow = ({
           ))
       }
       <td
+        className="itemStaticColumn-right"
         style={{
           textAlign: 'center',
         }}
