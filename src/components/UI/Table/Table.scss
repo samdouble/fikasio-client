@@ -1,0 +1,15 @@
+.table thead tr {
+  background-color: #eeeeee;
+}
+
+.table tr td {
+  background-clip: padding-box;
+  background-color: white !important;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table tr th {
+  text-align: left;
+  padding: 0.5rem;
+}
