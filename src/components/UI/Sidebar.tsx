@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import { Link } from 'react-router-dom';
+import { Sidebar as ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
@@ -9,29 +9,17 @@ import { Tooltip } from 'react-tooltip';
 import UserImage from 'images/user.png';
 import { operations } from 'services';
 import { RootState } from 'services/store';
+import links from 'utils/links';
 import NotificationsCounter from '../notifications/NotificationsCounter';
 import ResourcesHandler from '../ResourcesHandler';
 import { calculateNotifications } from '../notifications/utils';
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-
-const menuItems = {
-  DASHBOARD: 'dashboard',
-  ENTITIES: 'entities',
-  METRICS: 'metrics',
-  NOTIFICATIONS: 'notifications',
-  OBJECTIVES: 'objectives',
-  ORGANIZATION: 'organization',
-  PROJECTS: 'projects',
-  TASKS: 'tasks',
-  TIMESHEET: 'timesheet',
-};
+import './Sidebar.scss';
 
 const Sidebar = () => {
+  const organizations = useSelector((state: RootState) => state.organizations);
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const [isExpanded, setIsExpanded] = useState(false);
-  const history = useHistory();
-  const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -41,17 +29,6 @@ const Sidebar = () => {
   const notificationsCount = (lateTasks && lateTasks.length)
     + (tasksDueAfterProjectDue && tasksDueAfterProjectDue.length);
 
-  const getDefaultSelectedMenuItem = () => {
-    if (location.pathname === '/dashboard') return menuItems.DASHBOARD;
-    if (location.pathname === '/objectives') return menuItems.OBJECTIVES;
-    if (location.pathname === '/metrics') return menuItems.METRICS;
-    if (location.pathname === '/tasks') return menuItems.TASKS;
-    if (location.pathname === '/projects') return menuItems.PROJECTS;
-    if (location.pathname === '/timesheet') return menuItems.TIMESHEET;
-    if (location.pathname === '/notifications') return menuItems.NOTIFICATIONS;
-    return null;
-  };
-
   const getPage = () => {
     return (
       <ClickOutside
@@ -59,195 +36,223 @@ const Sidebar = () => {
           setIsExpanded(false);
         }}
       >
-        <SideNav
-          expanded={isExpanded}
-          onSelect={selected => {
-            const to = `/${selected}`;
-            if (location.pathname !== to) {
-              history.push(to);
-            }
-          }}
-          onToggle={expanded => setIsExpanded(expanded)}
-          style={{
+        <ProSidebar
+          backgroundColor="#7E5B9A"
+          collapsed={!isExpanded}
+          collapsedWidth="60px"
+          rootStyles={{
+            color: 'white',
+            height: '100%',
             position: 'fixed',
             top: 60,
-            backgroundColor: '#7E5B9A',
+            zIndex: 100,
           }}
         >
-          <SideNav.Toggle />
-          <SideNav.Nav defaultSelected={getDefaultSelectedMenuItem() || menuItems.DASHBOARD}>
-            <NavItem
-              data-tooltip-content={t('organization')}
-              data-tooltip-id="organization"
-              eventKey={menuItems.ORGANIZATION}
-            >
-              <NavIcon>
-                <Tooltip id="organization" />
+          <Menu
+            renderExpandIcon={() => undefined}
+          >
+            <MenuItem>
+              <FontAwesomeIcon
+                icon={isExpanded ? 'times' : 'bars'}
+                onClick={() => setIsExpanded(!isExpanded)}
+                size="lg"
+              />
+            </MenuItem>
+            <SubMenu
+              label={
                 <img
                   alt="User profile"
                   src={UserImage}
                   width={20}
                 />
-              </NavIcon>
-              <NavText>
-                {t('organization')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              }
+            >
+              <MenuItem> 
+                Pie charts
+              </MenuItem>
+              <MenuItem>
+                Line charts
+              </MenuItem>
+            </SubMenu>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.dashboard}
+                />
+              )}
               data-tooltip-content={t('dashboard')}
               data-tooltip-id="dashboard"
-              eventKey={menuItems.DASHBOARD}
             >
-              <NavIcon>
-                <Tooltip id="dashboard" />
-                <FontAwesomeIcon
-                  icon="chart-bar"
-                  size="lg"
+              <Tooltip id="dashboard" />
+              <FontAwesomeIcon
+                icon="chart-bar"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('dashboard')}
+            </MenuItem>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.projects}
                 />
-              </NavIcon>
-              <NavText>
-                {t('dashboard')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              )}
               data-tooltip-content={t('projects')}
               data-tooltip-id="projects"
-              eventKey={menuItems.PROJECTS}
             >
-              <NavIcon>
-                <Tooltip id="projects" />
-                <FontAwesomeIcon
-                  icon="project-diagram"
-                  size="lg"
+              <Tooltip id="projects" />
+              <FontAwesomeIcon
+                icon="project-diagram"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('projects')}
+            </MenuItem>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.objectives}
                 />
-              </NavIcon>
-              <NavText>
-                {t('projects')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              )}
               data-tooltip-content={t('objectives')}
               data-tooltip-id="objectives"
-              eventKey={menuItems.OBJECTIVES}
             >
-              <NavIcon>
-                <Tooltip id="objectives" />
-                <FontAwesomeIcon
-                  icon="bullseye"
-                  size="lg"
+              <Tooltip id="objectives" />
+              <FontAwesomeIcon
+                icon="bullseye"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('objectives')}
+            </MenuItem>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.tasks}
                 />
-              </NavIcon>
-              <NavText>
-                {t('objectives')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              )}
               data-tooltip-content={t('tasks')}
               data-tooltip-id="tasks"
-              eventKey={menuItems.TASKS}
             >
-              <NavIcon>
-                <Tooltip id="tasks" />
-                <FontAwesomeIcon
-                  icon="check-square"
-                  size="lg"
+              <Tooltip id="tasks" />
+              <FontAwesomeIcon
+                icon="check-square"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('tasks')}
+            </MenuItem>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.entities}
                 />
-              </NavIcon>
-              <NavText>
-                {t('tasks')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              )}
               data-tooltip-content={t('entities')}
               data-tooltip-id="entities"
-              eventKey={menuItems.ENTITIES}
             >
-              <NavIcon>
-                <Tooltip id="entities" />
-                <FontAwesomeIcon
-                  icon="shapes"
-                  size="lg"
+              <Tooltip id="entities" />
+              <FontAwesomeIcon
+                icon="shapes"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('entities')}
+            </MenuItem>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.metrics}
                 />
-              </NavIcon>
-              <NavText>
-                {t('entities')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              )}
               data-tooltip-content={t('metrics')}
               data-tooltip-id="metrics"
-              eventKey={menuItems.METRICS}
             >
-              <NavIcon>
-                <Tooltip id="metrics" />
-                <FontAwesomeIcon
-                  icon="ruler"
-                  size="lg"
+              <Tooltip id="metrics" />
+              <FontAwesomeIcon
+                icon="ruler"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('metrics')}
+            </MenuItem>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.timesheet}
                 />
-              </NavIcon>
-              <NavText>
-                {t('metrics')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              )}
               data-tooltip-content={t('timesheet')}
               data-tooltip-id="timesheet"
-              eventKey={menuItems.TIMESHEET}
             >
-              <NavIcon>
-                <Tooltip id="timesheet" />
-                <FontAwesomeIcon
-                  icon="clock"
-                  size="lg"
+              <Tooltip id="timesheet" />
+              <FontAwesomeIcon
+                icon="clock"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('timesheet')}
+            </MenuItem>
+            <MenuItem
+              component={(
+                <Link
+                  to={links.paths.notifications}
                 />
-              </NavIcon>
-              <NavText>
-                {t('timesheet')}
-              </NavText>
-            </NavItem>
-            <NavItem
+              )}
               data-tooltip-content={t('notifications')}
               data-tooltip-id="notifications"
-              eventKey={menuItems.NOTIFICATIONS}
             >
-              <NavIcon>
-                <Tooltip id="notifications" />
-                <FontAwesomeIcon
-                  icon="bell"
-                  size="lg"
-                />
-                {
-                  !isExpanded && !!notificationsCount && (
-                    <>
-                      &nbsp;
-                      <NotificationsCounter
-                        count={notificationsCount}
-                        style={{
-                          position: 'absolute',
-                          left: 30,
-                          lineHeight: 1,
-                        }}
-                      />
-                    </>
-                  )
-                }
-              </NavIcon>
-              <NavText>
-                {t('notifications')}
-                {
-                  isExpanded && !!notificationsCount && (
-                    <>
-                      &nbsp;
-                      <NotificationsCounter
-                        count={notificationsCount}
-                      />
-                    </>
-                  )
-                }
-              </NavText>
-            </NavItem>
-          </SideNav.Nav>
-        </SideNav>
+              <Tooltip id="notifications" />
+              <FontAwesomeIcon
+                icon="bell"
+                size="sm"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              {t('notifications')}
+              {
+                !isExpanded && !!notificationsCount && (
+                  <>
+                    &nbsp;
+                    <NotificationsCounter
+                      count={notificationsCount}
+                      style={{
+                        position: 'absolute',
+                        left: 30,
+                        lineHeight: 1,
+                      }}
+                    />
+                  </>
+                )
+              }
+              {
+                isExpanded && !!notificationsCount && (
+                  <>
+                    &nbsp;
+                    <NotificationsCounter
+                      count={notificationsCount}
+                    />
+                  </>
+                )
+              }
+            </MenuItem>
+          </Menu>
+        </ProSidebar>
       </ClickOutside>
     );
   }
@@ -256,10 +261,11 @@ const Sidebar = () => {
     <ResourcesHandler
       getContents={getPage}
       resourceFetchers={[
+        () => dispatch(operations.organizations.fetchOrganizations()),
         () => dispatch(operations.tasks.fetchTasks()),
         () => dispatch(operations.projects.fetchProjects()),
       ]}
-      resources={[tasks, projects]}
+      resources={[organizations, tasks, projects]}
     />
   );
 };
