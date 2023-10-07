@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import RBTable from 'react-bootstrap/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import Checkbox from 'components/UI/Checkbox';
 import './Table.scss';
 
@@ -24,19 +26,28 @@ const Table = ({
                 if (column.type === 'cell') {
                   return (
                     <th
+                      className={classNames({
+                        'sortable-column': column.sortable,
+                      })}
                       key={column.name}
                       onClick={() => setOrderedBy(column)}
-                      style={{
-                        ...column.sortable && ({ cursor: 'pointer' }),
-                      }}
                     >
                       {column.name}
+                      <span
+                        className="sortable-column-buttons"
+                      >
+                        <FontAwesomeIcon
+                          icon="caret-up"
+                          size="1x"
+                        />
+                      </span>
                     </th>
                   );
                 } else if (column.type === 'checkbox') {
                   return (
                     <th
                       className="itemStaticColumn-left"
+                      key={column.name}
                       style={{
                         textAlign: 'center',
                         width: 35,
@@ -46,6 +57,7 @@ const Table = ({
                 } else if (column.type === 'numbering') {
                   return (
                     <th
+                      key={column.name}
                       style={{
                         width: 30,
                       }}
@@ -55,6 +67,7 @@ const Table = ({
                   return (
                     <th
                       className="itemStaticColumn-right"
+                      key={column.name}
                       style={{
                         textAlign: 'center',
                         width: 35,
@@ -78,6 +91,7 @@ const Table = ({
                         return (
                           <td
                             className="itemRow_field"
+                            key={column.name}
                           >
                             {
                               column.render
@@ -90,6 +104,7 @@ const Table = ({
                         return (
                           <td
                             className="itemStaticColumn-left"
+                            key={column.name}
                           >
                             <Checkbox
                               isChecked={column.isChecked(row)}
@@ -99,7 +114,9 @@ const Table = ({
                         );
                       } else if (column.type === 'numbering') {
                         return (
-                          <td>
+                          <td
+                            key={column.name}
+                          >
                             {index + 1}
                           </td>
                         );
@@ -107,6 +124,7 @@ const Table = ({
                         return (
                           <td
                             className="itemStaticColumn-right"
+                            key={column.name}
                           >
                             {options(row)}
                           </td>

@@ -14,7 +14,10 @@ const DropdownToggle = React.forwardRef(({ onClick }: { onClick: (e: SyntheticEv
       textDecoration: 'none',
     }}
   >
-    <FontAwesomeIcon icon="ellipsis" size="1x" />
+    <FontAwesomeIcon
+      icon="ellipsis"
+      size="1x"
+    />
   </div>
 ));
 

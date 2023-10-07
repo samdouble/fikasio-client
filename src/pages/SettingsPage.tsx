@@ -78,14 +78,18 @@ const SettingsPage = () => {
                   </select>
                 </RBForm.Group>
                 <Form
-                  initialValues={user.censoredWords}
+                  initialValues={user}
                   mutators={{ ...arrayMutators }}
                   onSubmit={onSubmit}
                   render={({ handleSubmit }) => (
                     <form onSubmit={handleSubmit}>
                       <RBForm.Group>
-                        <RBForm.Label>Mots censurés</RBForm.Label>
-                        <FieldArray name="censoredWords">
+                        <RBForm.Label>
+                          {t('censoredWords')}
+                        </RBForm.Label>
+                        <FieldArray
+                          name="censoredWords"
+                        >
                           {({ fields }) => (
                             <div>
                               {

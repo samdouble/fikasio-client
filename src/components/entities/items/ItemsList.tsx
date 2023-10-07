@@ -33,20 +33,16 @@ const ItemsList = ({
   const history = useHistory();
   const { t } = useTranslation();
 
-  const addItem = async item => {
-    onAddItem(item)
-      .then(resultItem => {
-        if (resultItem) {
-          const elementsWithClassname = document.getElementsByClassName(resultItem.id!);
-          const nbElementsWithClassname = elementsWithClassname.length;
-          (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();
-        }
-      });
-  };
-
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
-      onAddItem({});
+      onAddItem({})
+        .then(resultItem => {
+          if (resultItem) {
+            const elementsWithClassname = document.getElementsByClassName(resultItem.id!);
+            const nbElementsWithClassname = elementsWithClassname.length;
+            (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();
+          }
+        });
       e.preventDefault();
     }
   };

@@ -22,7 +22,7 @@ const OrganizationPage = () => {
     <BasePage>
       <Breadcrumb>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.organizations }}>{t('organizations')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{ organization?.name }</Breadcrumb.Item>
       </Breadcrumb>
       <h4>{ organization?.name }</h4>

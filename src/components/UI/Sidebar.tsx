@@ -6,6 +6,7 @@ import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
+import UserImage from 'images/user.png';
 import { operations } from 'services';
 import { RootState } from 'services/store';
 import NotificationsCounter from '../notifications/NotificationsCounter';
@@ -19,6 +20,7 @@ const menuItems = {
   METRICS: 'metrics',
   NOTIFICATIONS: 'notifications',
   OBJECTIVES: 'objectives',
+  ORGANIZATION: 'organization',
   PROJECTS: 'projects',
   TASKS: 'tasks',
   TIMESHEET: 'timesheet',
@@ -74,6 +76,23 @@ const Sidebar = () => {
         >
           <SideNav.Toggle />
           <SideNav.Nav defaultSelected={getDefaultSelectedMenuItem() || menuItems.DASHBOARD}>
+            <NavItem
+              data-tooltip-content={t('organization')}
+              data-tooltip-id="organization"
+              eventKey={menuItems.ORGANIZATION}
+            >
+              <NavIcon>
+                <Tooltip id="organization" />
+                <img
+                  alt="User profile"
+                  src={UserImage}
+                  width={20}
+                />
+              </NavIcon>
+              <NavText>
+                {t('organization')}
+              </NavText>
+            </NavItem>
             <NavItem
               data-tooltip-content={t('dashboard')}
               data-tooltip-id="dashboard"

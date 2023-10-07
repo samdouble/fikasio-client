@@ -31,14 +31,7 @@ const OrganizationMembersTable = ({
         <thead>
           <tr>
             <th>{t('name')}</th>
-            <th>Type</th>
-            <th
-              style={{
-                width: 60,
-              }}
-            >
-              Requis
-            </th>
+            <th>{t('type')}</th>
             <th
               style={{
                 width: 35,
@@ -63,20 +56,6 @@ const OrganizationMembersTable = ({
                     {member.type}
                   </td>
                   <td>
-                    {
-                      member.isRequired && <FontAwesomeIcon
-                        icon="check"
-                        size="1x"
-                        onClick={() => operations.organizations.members.deleteMember(organization.id, member.id)}
-                        style={{
-                          color: 'blue',
-                          cursor: 'pointer',
-                          marginLeft: 10,
-                        }}
-                      />
-                    }
-                  </td>
-                  <td>
                     <FontAwesomeIcon
                       icon="edit"
                       onClick={
@@ -98,7 +77,9 @@ const OrganizationMembersTable = ({
                     <FontAwesomeIcon
                       icon="times"
                       size="1x"
-                      onClick={() => operations.organizations.members.deleteMember(organization.id, member.id)(dispatch)}
+                      onClick={() => {
+                        operations.organizations.members.deleteMember(organization.id, member.id)(dispatch);
+                      }}
                       style={{
                         color: '#ce0000',
                         cursor: 'pointer',
