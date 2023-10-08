@@ -36,6 +36,54 @@ const Sidebar = () => {
           setIsExpanded(false);
         }}
       >
+        <Tooltip
+          id="dashboard"
+          style={{
+            zIndex: 1000,
+          }}
+        />
+        <Tooltip
+          id="projects"
+          style={{
+            zIndex: 1000,
+          }}
+        />
+        <Tooltip
+          id="objectives"
+          style={{
+            zIndex: 1000,
+          }}
+        />
+        <Tooltip
+          id="tasks"
+          style={{
+            zIndex: 1000,
+          }}
+        />
+        <Tooltip
+          id="entities"
+          style={{
+            zIndex: 1000,
+          }}
+        />
+        <Tooltip
+          id="metrics"
+          style={{
+            zIndex: 1000,
+          }}
+        />
+        <Tooltip
+          id="timesheet"
+          style={{
+            zIndex: 1000,
+          }}
+        />
+        <Tooltip
+          id="notifications"
+          style={{
+            zIndex: 1000,
+          }}
+        />
         <ProSidebar
           backgroundColor="#7E5B9A"
           collapsed={!isExpanded}
@@ -49,30 +97,52 @@ const Sidebar = () => {
           }}
         >
           <Menu
+            menuItemStyles={{
+              root: {
+                backgroundColor: '#7E5B9A',
+              },
+            }}
             renderExpandIcon={() => undefined}
           >
-            <MenuItem>
+            <MenuItem
+              component={(
+                <div
+                  onClick={() => setIsExpanded(!isExpanded)}
+                />
+              )}
+            >
               <FontAwesomeIcon
                 icon={isExpanded ? 'times' : 'bars'}
-                onClick={() => setIsExpanded(!isExpanded)}
                 size="lg"
               />
             </MenuItem>
             <SubMenu
               label={
-                <img
-                  alt="User profile"
-                  src={UserImage}
-                  width={20}
-                />
+                <>
+                  <img
+                    alt="User profile"
+                    src={UserImage}
+                    style={{
+                      marginRight: 10,
+                    }}
+                    width={20}
+                  />
+                  <b>{t('myOrganization')}</b>
+                </>
               }
             >
-              <MenuItem> 
-                Pie charts
-              </MenuItem>
-              <MenuItem>
-                Line charts
-              </MenuItem>
+              {
+                organizations?.map(organization => (
+                  <MenuItem
+                    key={organization.id}
+                    rootStyles={{
+                      backgroundColor: '#977BAE',
+                    }}
+                  > 
+                    {organization.name}
+                  </MenuItem>
+                ))
+              }
             </SubMenu>
             <MenuItem
               component={(
@@ -83,7 +153,6 @@ const Sidebar = () => {
               data-tooltip-content={t('dashboard')}
               data-tooltip-id="dashboard"
             >
-              <Tooltip id="dashboard" />
               <FontAwesomeIcon
                 icon="chart-bar"
                 size="sm"
@@ -102,7 +171,6 @@ const Sidebar = () => {
               data-tooltip-content={t('projects')}
               data-tooltip-id="projects"
             >
-              <Tooltip id="projects" />
               <FontAwesomeIcon
                 icon="project-diagram"
                 size="sm"
@@ -121,7 +189,6 @@ const Sidebar = () => {
               data-tooltip-content={t('objectives')}
               data-tooltip-id="objectives"
             >
-              <Tooltip id="objectives" />
               <FontAwesomeIcon
                 icon="bullseye"
                 size="sm"
@@ -140,7 +207,6 @@ const Sidebar = () => {
               data-tooltip-content={t('tasks')}
               data-tooltip-id="tasks"
             >
-              <Tooltip id="tasks" />
               <FontAwesomeIcon
                 icon="check-square"
                 size="sm"
@@ -159,7 +225,6 @@ const Sidebar = () => {
               data-tooltip-content={t('entities')}
               data-tooltip-id="entities"
             >
-              <Tooltip id="entities" />
               <FontAwesomeIcon
                 icon="shapes"
                 size="sm"
@@ -178,7 +243,6 @@ const Sidebar = () => {
               data-tooltip-content={t('metrics')}
               data-tooltip-id="metrics"
             >
-              <Tooltip id="metrics" />
               <FontAwesomeIcon
                 icon="ruler"
                 size="sm"
@@ -191,13 +255,12 @@ const Sidebar = () => {
             <MenuItem
               component={(
                 <Link
-                  to={links.paths.timesheet}
+                  to={links.timesheet()}
                 />
               )}
               data-tooltip-content={t('timesheet')}
               data-tooltip-id="timesheet"
             >
-              <Tooltip id="timesheet" />
               <FontAwesomeIcon
                 icon="clock"
                 size="sm"
@@ -216,7 +279,6 @@ const Sidebar = () => {
               data-tooltip-content={t('notifications')}
               data-tooltip-id="notifications"
             >
-              <Tooltip id="notifications" />
               <FontAwesomeIcon
                 icon="bell"
                 size="sm"

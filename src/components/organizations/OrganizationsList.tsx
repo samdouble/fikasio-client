@@ -38,6 +38,7 @@ const OrganizationsList = () => {
             </Link>
           ),
           type: 'cell',
+          value: row => row.name,
         }, {
           type: 'options',
         }

@@ -23,7 +23,9 @@ const fr = {
   logout: 'Déconnexion',
   metrics: 'Mesures',
   month: 'Mois',
+  myOrganization: 'Mon organisation',
   name: 'Nom',
+  no: 'Non',
   notifications: 'Notifications',
   objectives: 'Objectifs',
   organizations: 'Organisations',
@@ -37,6 +39,7 @@ const fr = {
   xSelectedActivities: '{{count}} activités sélectionnées',
   xSelectedTasks: '{{count}} tâches sélectionnées',
   week: 'Semaine',
+  yes: 'Oui',
 };
 
 export default fr;

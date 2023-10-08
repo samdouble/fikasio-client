@@ -61,6 +61,7 @@ const MetricsList = () => {
             name: 'Description',
             property: 'description',
             type: 'cell',
+            value: row => row.description,
           }, {
             type: 'options',
           }

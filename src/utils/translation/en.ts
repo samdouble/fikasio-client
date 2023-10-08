@@ -23,7 +23,9 @@ const en = {
   logout: 'Logout',
   metrics: 'Metrics',
   month: 'Month',
+  myOrganization: 'My organization',
   name: 'Name',
+  no: 'No',
   notifications: 'Notifications',
   objectives: 'Objectives',
   organizations: 'Organizations',
@@ -37,6 +39,7 @@ const en = {
   xSelectedActivities: '{{count}} selected activities',
   xSelectedTasks: '{{count}} selected tasks',
   week: 'Week',
+  yes: 'Yes',
 };
 
 export default en;

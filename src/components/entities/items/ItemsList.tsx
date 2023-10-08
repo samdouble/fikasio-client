@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
+import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
@@ -14,7 +15,7 @@ import './ItemsList.scss';
 const getValueForType = (value: any, type?: string) => {
   switch (type) {
     case 'BOOLEAN':
-      return value ? 'OUI' : 'NON';
+      return value ? i18n.t('yes') : i18n.t('no');
     case 'NUMBER':
     case 'STRING':
     default:
@@ -69,39 +70,42 @@ const ItemsList = ({
           type: 'numbering',
         },
         ...entity.fields
-          .map(field => ({
-            name: field.name,
-            render: row => (
-              <AutosaveTextarea
-                className="itemRow_field_editable"
-                defaultValue={
-                  getValueForType(
-                    row.values.find(val => val.fieldId === field.id)?.value,
-                    field.type,
-                  )
-                }
-                onKeyDown={e => handleKeyDown(e)}
-                onKeyUp={e => handleKeyUp(e, row)}
-                onSave={async value => {
-                  operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
-                    value,
-                  })(dispatch);
-                }}
-                style={{
-                  border: 'none',
-                  height: 25,
-                  overflowY: 'hidden',
-                  paddingLeft: 5,
-                  paddingRight: 50,
-                  paddingTop: 0,
-                  width: 'auto',
-                }}
-                useContentEditableDiv
-              />
-            ),
-            sortable: true,
-            type: 'cell',
-          })),
+          .map(field => {
+            return {
+              name: field.name,
+              render: row => (
+                <AutosaveTextarea
+                  className="itemRow_field_editable"
+                  defaultValue={
+                    getValueForType(
+                      row.values.find(val => val.fieldId === field.id)?.value,
+                      field.type,
+                    )
+                  }
+                  onKeyDown={e => handleKeyDown(e)}
+                  onKeyUp={e => handleKeyUp(e, row)}
+                  onSave={async value => {
+                    operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
+                      value,
+                    })(dispatch);
+                  }}
+                  style={{
+                    border: 'none',
+                    height: 25,
+                    overflowY: 'hidden',
+                    paddingLeft: 5,
+                    paddingRight: 50,
+                    paddingTop: 0,
+                    width: 'auto',
+                  }}
+                  useContentEditableDiv
+                />
+              ),
+              sortable: true,
+              type: 'cell',
+              value: row => row.values.find(val => val.fieldId === field.id)?.value,
+            };
+          }),
         {
           type: 'options',
         },
