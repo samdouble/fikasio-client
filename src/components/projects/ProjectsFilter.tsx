@@ -13,7 +13,7 @@ const ProjectsFilter = ({ onChange, style }) => {
       <option value="INCOMPLETE">Projets non complétés</option>
       <option value="COMPLETE">Projets complétés</option>
       <option value="ARCHIVED">Projets archivés</option>
-      <option value="ALL">Toutes les projets</option>
+      <option value="ALL">Tous les projets</option>
     </select>
   );
 }
