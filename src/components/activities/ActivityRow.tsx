@@ -44,12 +44,12 @@ const ActivityRow = ({
 
   const handleKeyDownComments = e => {
     if (e.key === 'Enter') {
-      const startDateTime = DateTime.now().set({ minute: 0, second: 0, millisecond: 0 });
-      const endDateTime = startDateTime.plus({ hour: 1 });
+      const start = DateTime.now().set({ minute: 0, second: 0, millisecond: 0 });
+      const end = start.plus({ hour: 1 });
       onAddActivity({
         comments: '',
-        startTime: startDateTime.toISO(),
-        endTime: endDateTime.toISO(),
+        startTime: start.toISO(),
+        endTime: end.toISO(),
         duration: 60,
       });
       e.preventDefault();
