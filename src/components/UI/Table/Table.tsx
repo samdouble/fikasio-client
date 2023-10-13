@@ -138,6 +138,7 @@ const Table = ({
                     />
                   );
                 }
+                return null;
               })
           }
         </tr>
@@ -202,6 +203,7 @@ const Table = ({
                             </td>
                           );
                         }
+                        return null;
                       })
                   }
                 </tr>

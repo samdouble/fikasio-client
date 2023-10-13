@@ -160,9 +160,10 @@ const TaskRow = ({
               padding: 3,
             }}
           >
-            <option value="Doing">En cours</option>
-            <option value="Blocked">Bloqué</option>
-            <option value="Completed">Complété</option>
+            <option value="Doing">{t('doing')}</option>
+            <option value="Blocked">{t('blocked')}</option>
+            <option value="Completed">{t('completed')}</option>
+            <option value="Deleted">{t('deleted')}</option>
           </select>
         }
       </td>

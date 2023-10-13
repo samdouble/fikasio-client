@@ -29,6 +29,11 @@ const ActivityRow = ({
   const [isStartDateTimeDatepickerOpen, setIsStartDateTimeDatepickerOpen] = useState(false);
   const [isEndDateTimeDatepickerOpen, setIsEndDateTimeDatepickerOpen] = useState(false);
 
+  const startDateTime = activity.startTime && DateTime.fromJSDate(new Date(activity.startTime));
+  const endDateTime = activity.endTime && DateTime.fromJSDate(new Date(activity.endTime));
+
+  const template = activity.templateId && templates?.find(temp => temp.id === activity.templateId);
+
   useEffect(() => {
     setIComments(activity.comments || '');
   }, [activity]);
@@ -62,11 +67,6 @@ const ActivityRow = ({
       })(dispatch);
     }
   };
-
-  const startDateTime = activity.startTime && DateTime.fromJSDate(new Date(activity.startTime));
-  const endDateTime = activity.endTime && DateTime.fromJSDate(new Date(activity.endTime));
-
-  const template = activity.templateId && templates?.find(temp => temp.id === activity.templateId);
 
   return (
     <tr className="activityRow">
@@ -137,10 +137,13 @@ const ActivityRow = ({
             onBlur={() => setIsStartDateTimeDatepickerOpen(false)}
             onChange={date => {
               const timestamp = DateTime.fromJSDate(date)
-                .set({ millisecond: 0 })
-                .toISO();
+                .set({ millisecond: 0 });
               if (activity.id) {
-                operations.activities.patchActivity(activity.id, { startTime: timestamp })(dispatch);
+                const duration = endDateTime.diff(timestamp, 'minutes').minutes;
+                operations.activities.patchActivity(activity.id, {
+                  duration,
+                  startTime: timestamp.toISO(),
+                })(dispatch);
               }
             }}
             showTimeSelect
@@ -167,10 +170,13 @@ const ActivityRow = ({
             onBlur={() => setIsEndDateTimeDatepickerOpen(false)}
             onChange={date => {
               const timestamp = DateTime.fromJSDate(date)
-                .set({ millisecond: 0 })
-                .toISO();
+                .set({ millisecond: 0 });
               if (activity.id) {
-                operations.activities.patchActivity(activity.id, { endTime: timestamp })(dispatch);
+                const duration = timestamp.diff(startDateTime, 'minutes').minutes;
+                operations.activities.patchActivity(activity.id, {
+                  duration,
+                  endTime: timestamp.toISO(),
+                })(dispatch);
               }
             }}
             showTimeSelect
