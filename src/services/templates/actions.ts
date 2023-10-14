@@ -45,12 +45,21 @@ export type TemplateAction =
     id: string;
     field: TemplateField;
   } }
-  | { type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; field: TemplateField } }
-  | { type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_REQUEST; payload: {
-    templateId: string;
-    id: string;
-    field: Partial<TemplateField>;
-  } }
+  | {
+    type: TemplateActionTypes.UPDATE_TEMPLATE_FIELD_RESPONSE;
+    payload: {
+      templateId: string;
+      field: TemplateField;
+    };
+  }
+  | {
+    type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_REQUEST;
+    payload: {
+      templateId: string;
+      id: string;
+      field: Partial<TemplateField>;
+    };
+  }
   | { type: TemplateActionTypes.PATCH_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; field: TemplateField } }
   | { type: TemplateActionTypes.DELETE_TEMPLATE_FIELD_REQUEST; payload: { templateId: string; fieldId: string } }
   | { type: TemplateActionTypes.DELETE_TEMPLATE_FIELD_RESPONSE; payload: { templateId: string; fieldId: string } };

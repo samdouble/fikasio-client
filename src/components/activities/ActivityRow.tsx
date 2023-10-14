@@ -189,13 +189,6 @@ const ActivityRow = ({
         { endDateTime && endDateTime.toFormat('yyyy-MM-dd HH:mm') }
       </td>
       <td>
-        <Cleave
-          className="form-field"
-          options={{
-            time: true,
-            timePattern: ['h', 'm'],
-          }}
-        />
         { activity.duration && Duration.fromMillis(activity.duration * 60 * 1000).toFormat('h:mm') }
       </td>
       <td
