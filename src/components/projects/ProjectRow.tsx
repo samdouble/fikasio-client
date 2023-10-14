@@ -25,12 +25,6 @@ const ProjectRow = ({
   return (
     <tr className={classNames({ done: project.isCompleted && !project.isArchived })}>
       <td
-        style={{
-          backgroundColor: project.color,
-          width: 10,
-        }}
-      />
-      <td
         onClick={() => onClick(project.id)}
         style={{ cursor: 'pointer' }}
       >

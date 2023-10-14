@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Checkbox from 'components/UI/Checkbox';
+import { Checkbox } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import links from 'utils/links';
 
@@ -24,7 +24,7 @@ const EntityRow = ({
         width={35}
       >
         <Checkbox
-          isChecked={isSelected}
+          defaultIsChecked={isSelected}
           onClick={() => onSelect(entity)}
         />
       </td>

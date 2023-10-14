@@ -6,9 +6,9 @@ import ClickOutside from 'react-click-outside';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
+import { Checkbox } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
-import Checkbox from 'components/UI/Checkbox';
 import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
@@ -97,7 +97,7 @@ const TaskRow = ({
         width={35}
       >
         <Checkbox
-          isChecked={isSelected}
+          defaultIsChecked={isSelected}
           onClick={() => onSelect(task)}
         />
       </td>

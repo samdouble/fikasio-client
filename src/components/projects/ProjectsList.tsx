@@ -24,7 +24,6 @@ const ProjectsList = ({
     >
       <thead>
         <tr>
-          <th />
           <th>{t('name')}</th>
           <th style={{ width: 150 }}>Temps restant</th>
           <th style={{ width: 150 }}>Complétion</th>

@@ -3,7 +3,7 @@ import RBTable from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import usePrevious from 'use-previous';
 import classNames from 'classnames';
-import Checkbox from 'components/UI/Checkbox';
+import { Checkbox } from '@fikasio/react-ui-components';
 import './Table.scss';
 
 interface Column {
@@ -113,7 +113,6 @@ const Table = ({
                       key={column.name}
                       style={{
                         textAlign: 'center',
-                        width: 35,
                       }}
                     />
                   );
@@ -176,7 +175,7 @@ const Table = ({
                               key={column.name}
                             >
                               <Checkbox
-                                isChecked={column.isChecked(row)}
+                                defaultIsChecked={column.isChecked(row)}
                                 onClick={() => {
                                   if (column.onClick) {
                                     column.onClick(row);

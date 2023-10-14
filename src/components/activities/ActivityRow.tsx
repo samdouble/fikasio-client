@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
-import Checkbox from 'components/UI/Checkbox';
+import Cleave from "cleave.js/react";
+import { Checkbox } from '@fikasio/react-ui-components';
 import Datepicker from 'components/UI/Datepicker';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
 import DropdownToggle from 'components/UI/DropdownToggle';
@@ -77,7 +78,7 @@ const ActivityRow = ({
         width={35}
       >
         <Checkbox
-          isChecked={isSelected}
+          defaultIsChecked={isSelected}
           onClick={() => onSelect(activity)}
         />
       </td>
@@ -188,6 +189,13 @@ const ActivityRow = ({
         { endDateTime && endDateTime.toFormat('yyyy-MM-dd HH:mm') }
       </td>
       <td>
+        <Cleave
+          className="form-field"
+          options={{
+            time: true,
+            timePattern: ['h', 'm'],
+          }}
+        />
         { activity.duration && Duration.fromMillis(activity.duration * 60 * 1000).toFormat('h:mm') }
       </td>
       <td

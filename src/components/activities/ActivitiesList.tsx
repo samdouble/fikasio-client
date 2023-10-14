@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
-import Checkbox from 'components/UI/Checkbox';
+import { Checkbox } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { Activity } from 'services/activities/types';
 import ActivityRow from './ActivityRow';
@@ -64,7 +64,7 @@ const ActivitiesList = ({
               activitiesToShow?.length
                 ? (
                   <Checkbox
-                    isChecked={allActivitiesAreChecked}
+                    defaultIsChecked={allActivitiesAreChecked}
                     onClick={() => {
                       if (allActivitiesAreChecked) {
                         onSelectAllActivities([]);

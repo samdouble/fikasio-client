@@ -2,26 +2,15 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
-import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Checkbox } from '@fikasio/react-ui-components';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import Table from 'components/UI/Table/Table';
 import { operations } from 'services';
 import links from 'utils/links';
 import './ItemsList.scss';
-
-const getValueForType = (value: any, type?: string) => {
-  switch (type) {
-    case 'BOOLEAN':
-      return value ? i18n.t('yes') : i18n.t('no');
-    case 'NUMBER':
-    case 'STRING':
-    default:
-      return value;
-  }
-}
 
 const ItemsList = ({
   entity,
@@ -73,34 +62,45 @@ const ItemsList = ({
           .map(field => {
             return {
               name: field.name,
-              render: row => (
-                <AutosaveTextarea
-                  className="itemRow_field_editable"
-                  defaultValue={
-                    getValueForType(
-                      row.values.find(val => val.fieldId === field.id)?.value,
-                      field.type,
-                    )
-                  }
-                  onKeyDown={e => handleKeyDown(e)}
-                  onKeyUp={e => handleKeyUp(e, row)}
-                  onSave={async value => {
-                    operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
-                      value,
-                    })(dispatch);
-                  }}
-                  style={{
-                    border: 'none',
-                    height: 25,
-                    overflowY: 'hidden',
-                    paddingLeft: 5,
-                    paddingRight: 50,
-                    paddingTop: 0,
-                    width: 'auto',
-                  }}
-                  useContentEditableDiv
-                />
-              ),
+              render: row => {
+                const defaultValue = row.values.find(val => val.fieldId === field.id)?.value;
+                if (['STRING', 'NUMBER'].includes(field.type)) {
+                  return (
+                    <AutosaveTextarea
+                      className="itemRow_field_editable"
+                      defaultValue={defaultValue}
+                      onKeyDown={e => handleKeyDown(e)}
+                      onKeyUp={e => handleKeyUp(e, row)}
+                      onSave={async value => {
+                        operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
+                          value,
+                        })(dispatch);
+                      }}
+                      style={{
+                        border: 'none',
+                        height: 25,
+                        overflowY: 'hidden',
+                        paddingLeft: 5,
+                        paddingRight: 50,
+                        paddingTop: 0,
+                        width: 'auto',
+                      }}
+                      useContentEditableDiv
+                    />
+                  );
+                } else if (field.type === 'BOOLEAN') {
+                  return (
+                    <Checkbox
+                      defaultIsChecked={defaultValue}
+                      onClick={async value => {
+                        operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
+                          value,
+                        })(dispatch);
+                      }}
+                    />
+                  );
+                }
+              },
               sortable: true,
               type: 'cell',
               value: row => row.values.find(val => val.fieldId === field.id)?.value,
