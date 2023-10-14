@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
-import Cleave from "cleave.js/react";
 import { Checkbox } from '@fikasio/react-ui-components';
 import Datepicker from 'components/UI/Datepicker';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
