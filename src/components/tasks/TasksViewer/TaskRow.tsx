@@ -114,8 +114,6 @@ const TaskRow = ({
           defaultValue={description}
           onBlur={() => handleBlur()}
           onFocus={() => handleFocus()}
-          onKeyDown={e => handleKeyDownDescription(e)}
-          onKeyUp={e => handleKeyUpDescription(e, task)}
           onSave={async value => {
             operations.tasks.patchTask(task.id, {
               description: value,
@@ -182,11 +180,35 @@ const TaskRow = ({
           size="1x"
           style={{ marginRight: 10 }}
         />
-        {
-          task
-            && task.estimatedCompletionTime
-            && Duration.fromMillis(task.estimatedCompletionTime * 60 * 1000).toFormat('h:mm')
-        }
+        <AutosaveTextarea
+          className={classNames({
+            taskRow_description_editable: true,
+            [task.id]: true,
+          })}
+          defaultValue={
+            task
+              && task.estimatedCompletionTime
+              && task.estimatedCompletionTime / 60
+          }
+          onBlur={() => handleBlur()}
+          onFocus={() => handleFocus()}
+          onKeyDown={e => handleKeyDownDescription(e)}
+          onKeyUp={e => handleKeyUpDescription(e, task)}
+          onSave={async value => {
+            operations.tasks.patchTask(task.id, {
+              estimatedCompletionTime: parseFloat(value) * 60,
+            })(dispatch);
+          }}
+          style={{
+            display: 'inline-block',
+            height: 25,
+            minWidth: 25,
+            overflowY: 'hidden',
+            padding: 0,
+            width: 'auto',
+          }}
+          useContentEditableDiv
+        />
       </td>
       <td
         className="taskRow_dueAt"

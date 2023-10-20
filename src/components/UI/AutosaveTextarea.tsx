@@ -7,10 +7,10 @@ interface AutosaveTextareaProps {
   defaultValue?: string;
   onBlur?: any;
   onFocus?: any;
-  onKeyDown: any;
-  onKeyUp: any;
+  onKeyDown?: any;
+  onKeyUp?: any;
   onSave: (value: string) => void;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
   useContentEditableDiv?: boolean;
 }
 
