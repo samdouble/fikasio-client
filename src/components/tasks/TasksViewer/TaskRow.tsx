@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ClickOutside from 'react-click-outside';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 import { Checkbox } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import AutosaveTextarea from 'components/UI/AutosaveTextarea';
