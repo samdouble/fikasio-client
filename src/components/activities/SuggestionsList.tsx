@@ -24,7 +24,7 @@ const SuggestionsList = ({
         <div>
           {
             suggestions
-              .slice(0, 10)
+              .slice(0, maxLength)
               .map(suggestion => (
                 <div
                   className="suggestions_suggestion"
