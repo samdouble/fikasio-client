@@ -52,7 +52,7 @@ const ActivityPane = ({
   const handleChangeComments = e => {
     const text = e.target.value;
     if (text.length >= 3) {
-      getActivities(null, text)
+      getActivities(null, { endTime: -1 }, text)
         .then((res: { activities: Activity[] }) => {
           const suggestedActivities = uniqBy(res.activities, el => el.comments)
             .filter(suggestedActivity => (
@@ -306,6 +306,7 @@ const ActivityPane = ({
             />
           </RBForm.Group>
           <SuggestionsList
+            maxLength={10}
             onSelectSuggestion={suggestion => {
               setComments(suggestion.comments);
               form.mutators.setComments(suggestion.comments);

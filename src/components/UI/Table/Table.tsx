@@ -94,6 +94,9 @@ const Table = ({
                       })}
                       key={column.name}
                       onClick={() => setOrderedBy(column)}
+                      style={{
+                        whiteSpace: 'nowrap',
+                      }}
                     >
                       {column.name}
                       <span

@@ -32,7 +32,7 @@ interface ActivityFilter {
 
 const fetchedActivitiesFilters: ActivityFilter[] = [];
 
-function fetchActivities(filter) {
+function fetchActivities(filter, sort = {}) {
   const alreadyFetched = fetchedActivitiesFilters
     .some(f => isEqual(f, filter));
   if (!alreadyFetched) {
@@ -42,7 +42,7 @@ function fetchActivities(filter) {
       getActivitiesResponse,
       APIgetActivities,
       state => state.activities,
-      [filter],
+      [filter, sort],
     );
   }
   return fetchOnceOperation(

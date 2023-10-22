@@ -4,6 +4,7 @@ import Collapse from '@kunukn/react-collapse';
 import './SuggestionsList.scss';
 
 const SuggestionsList = ({
+  maxLength,
   onSelectSuggestion,
   suggestions,
 }) => {
@@ -23,6 +24,7 @@ const SuggestionsList = ({
         <div>
           {
             suggestions
+              .slice(0, 10)
               .map(suggestion => (
                 <div
                   className="suggestions_suggestion"

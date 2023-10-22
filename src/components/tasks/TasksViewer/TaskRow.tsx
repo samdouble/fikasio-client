@@ -6,9 +6,8 @@ import ClickOutside from 'react-click-outside';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon';
-import { Checkbox } from '@fikasio/react-ui-components';
+import { AutosaveTextarea, Checkbox } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
-import AutosaveTextarea from 'components/UI/AutosaveTextarea';
 import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
@@ -114,6 +113,8 @@ const TaskRow = ({
           defaultValue={description}
           onBlur={() => handleBlur()}
           onFocus={() => handleFocus()}
+          onKeyDown={e => handleKeyDownDescription(e)}
+          onKeyUp={e => handleKeyUpDescription(e, task)}
           onSave={async value => {
             operations.tasks.patchTask(task.id, {
               description: value,
@@ -181,10 +182,6 @@ const TaskRow = ({
           style={{ marginRight: 10 }}
         />
         <AutosaveTextarea
-          className={classNames({
-            taskRow_description_editable: true,
-            [task.id]: true,
-          })}
           defaultValue={
             task
               && task.estimatedCompletionTime
@@ -192,8 +189,6 @@ const TaskRow = ({
           }
           onBlur={() => handleBlur()}
           onFocus={() => handleFocus()}
-          onKeyDown={e => handleKeyDownDescription(e)}
-          onKeyUp={e => handleKeyUpDescription(e, task)}
           onSave={async value => {
             operations.tasks.patchTask(task.id, {
               estimatedCompletionTime: parseFloat(value) * 60,

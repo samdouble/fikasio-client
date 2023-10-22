@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AutosaveTextarea from 'components/UI/AutosaveTextarea';
+import { AutosaveTextarea } from '@fikasio/react-ui-components';
 import { getTaskComments } from 'services/tasks/endpoints';
 import { Task } from 'services/tasks/types';
 
@@ -21,8 +21,6 @@ const TaskDiscussion = ({
     <>
       <AutosaveTextarea
         className="form-control"
-        onKeyDown={() => undefined}
-        onKeyUp={() => undefined}
         onSave={async () => {
           /*operations.activities.patchActivity(activity.id, {
             comments: value,

@@ -91,14 +91,6 @@ const TaskInformationsForm = ({
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
-            <RBForm.Label>Description</RBForm.Label>
-            <Field
-              className="form-control"
-              component="input"
-              name="description"
-            />
-          </RBForm.Group>
-          <RBForm.Group>
             <RBForm.Label>Détails</RBForm.Label>
             <Field
               component="textarea"

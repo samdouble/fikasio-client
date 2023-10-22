@@ -6,9 +6,10 @@ import {
   del,
 } from '../api';
 
-export const getActivities = (filter, q) => {
+export const getActivities = (filter, sort, q) => {
   return get('/activities', {}, {
     ...(filter && { filter }),
+    ...(sort && { sort }),
     ...(q && { q }),
   });
 };
