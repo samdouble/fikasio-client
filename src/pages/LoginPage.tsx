@@ -6,6 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { operations } from 'services';
+import { googleSignIn } from 'services/login/endpoints';
 import { RootState } from 'services/store';
 import links from 'utils/links';
 import { getFormData } from 'utils/forms';
@@ -57,6 +58,8 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogleSignIn = () => googleSignIn();
+
   return (
     <div className="Login">
       {
@@ -95,6 +98,14 @@ const LoginPage = () => {
         variant="primary"
       >
         Connexion
+      </Button>
+      <Button
+        onClick={handleGoogleSignIn}
+        type="button"
+        variant="danger"
+      >
+        <span className="fa fa-google" />
+        SignIn with Google
       </Button>
       &nbsp;
       ou
