@@ -13,6 +13,9 @@ const Footer = () => {
     >
       <Row>
         <Col md={12}>
+          <div className="text-left">
+            <a href={links.privacy()}>Privacy</a>
+          </div>
           <div className="text-center">
             &copy; {new Date().getFullYear()} <a href={links.tos()}>fikas.io</a>
           </div>

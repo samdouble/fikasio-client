@@ -2,6 +2,7 @@ const home = () => '/home';
 const login = () => '/login';
 const signup = () => '/signup';
 const documentation = () => '/docs';
+const privacy = () => '/privacy';
 const tos = () => '/tos';
 const dashboard = () => '/dashboard';
 const entities = () => '/entities';
@@ -26,6 +27,7 @@ const paths = {
   login: login(),
   signup: signup(),
   documentation: documentation(),
+  privacy: privacy(),
   tos: tos(),
   dashboard: dashboard(),
   entities: entities(),
@@ -51,6 +53,7 @@ const links = {
   login: () => login(),
   signup: () => signup(),
   documentation: () => documentation(),
+  privacy: () => privacy(),
   tos: () => tos(),
   dashboard: () => dashboard(),
   entities: () => entities(),
