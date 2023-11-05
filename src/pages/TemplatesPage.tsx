@@ -22,14 +22,14 @@ const TemplatesPage = () => {
       <Breadcrumb>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
-        <Breadcrumb.Item active>Modèles</Breadcrumb.Item>
+        <Breadcrumb.Item active>{t('templates')}</Breadcrumb.Item>
       </Breadcrumb>
       <AddTemplateButton
         style={{
           float: 'right',
         }}
       />
-      <h4>Modèles</h4>
+      <h4>{t('templates')}</h4>
       <br />
       <TemplatesView
         templates={templates}

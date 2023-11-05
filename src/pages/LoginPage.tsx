@@ -105,7 +105,7 @@ const LoginPage = () => {
         variant="danger"
       >
         <span className="fa fa-google" />
-        SignIn with Google
+        Sign in with Google
       </Button>
       &nbsp;
       ou

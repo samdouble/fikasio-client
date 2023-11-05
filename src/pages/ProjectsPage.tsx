@@ -24,7 +24,7 @@ const ProjectsPage = () => {
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
         <Breadcrumb.Item active>Projets</Breadcrumb.Item>
       </Breadcrumb>
-      <h4>Projets</h4>
+      <h4>{t('projects')}</h4>
       <ProjectsView
         onProjectSelect={
           projectId => operations.pane.setPaneContent({

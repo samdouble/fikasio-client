@@ -42,7 +42,7 @@ const MetricModal = ({
             <form onSubmit={handleSubmit}>
               <h4>{ metric && metric.name }</h4>
               <RBForm.Group>
-                <RBForm.Label>Description</RBForm.Label>
+                <RBForm.Label>{t('description')}</RBForm.Label>
                 <Field
                   className="form-control"
                   component="input"

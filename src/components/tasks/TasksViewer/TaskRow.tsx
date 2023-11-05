@@ -172,9 +172,11 @@ const TaskRow = ({
         />
       </td>
       <td
-        width={90}
         onClick={() => onEnterProgress(task)}
-        style={{ cursor: 'pointer' }}
+        style={{
+          cursor: 'pointer',
+          width: 90,
+        }}
       >
         <FontAwesomeIcon
           icon="stopwatch"
@@ -185,7 +187,7 @@ const TaskRow = ({
           defaultValue={
             task
               && task.estimatedCompletionTime
-              && task.estimatedCompletionTime / 60
+              && (task.estimatedCompletionTime / 60).toString()
           }
           onBlur={() => handleBlur()}
           onFocus={() => handleFocus()}
@@ -207,11 +209,11 @@ const TaskRow = ({
       </td>
       <td
         className="taskRow_dueAt"
-        width={160}
         onClick={() => setIsDueAtDatepickerOpen(true)}
         style={{
           cursor: 'pointer',
           ...(hasdueAtPassed && { color: '#ff0000' }),
+          width: 150,
         }}
       >
         <ClickOutside
@@ -240,11 +242,11 @@ const TaskRow = ({
             <FontAwesomeIcon
               className="taskRow_dueAt_remove"
               icon="times"
-              size="1x"
               onClick={e => {
                 e.stopPropagation();
                 operations.tasks.patchTask(task.id, { dueAt: null })(dispatch);
               }}
+              size="1x"
             />
           )
         }

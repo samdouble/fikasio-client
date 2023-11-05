@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'react-i18next';
 import { getEvents } from 'services/events/endpoints';
 import LineChart from '../dashboards/LineChart';
 import Modal from '../UI/Modal';
@@ -16,6 +17,7 @@ const HistoryModal = ({
   onClose,
   metric,
 }) => {
+  const { t } = useTranslation();
   const [events, setEvents] = useState<MetricProgressEvent[]>([]);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const HistoryModal = ({
             eventKey="HISTORY"
             title="Historique"
           >
-            <h5>Historique</h5>
+            <h5>{t('history')}</h5>
             <table>
               <tbody>
                 <tr>
@@ -62,7 +64,7 @@ const HistoryModal = ({
                     width="60%"
                   >
                     <div>
-                      <b>Dernière mise à jour</b>
+                      <b>{t('lastUpdate')}</b>
                       <br />
                       Il y a { timeSinceLastProgressEvent ? Math.round(timeSinceLastProgressEvent) : '-' } jours
                     </div>
@@ -82,7 +84,7 @@ const HistoryModal = ({
             eventKey="LOGS"
             title="Logs"
           >
-            <h5>Activités</h5>
+            <h5>{t('activities')}</h5>
           </Tab>
         </Tabs>
       </Modal>

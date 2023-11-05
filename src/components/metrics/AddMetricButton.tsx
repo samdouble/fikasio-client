@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import MetricModal from './MetricModal';
 
 const AddMetricButton = () => {
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [editedMetric, setEditedMetric] = useState(null);
 
@@ -31,7 +33,7 @@ const AddMetricButton = () => {
         }}
         onClick={() => handleOpenModal(null)}
       >
-        Créer une mesure
+        {t('createAMetric')}
       </Button>
     </>
   );

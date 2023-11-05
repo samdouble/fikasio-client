@@ -83,7 +83,7 @@ const TimesheetPage = () => {
         >
           {t('home')}
         </Breadcrumb.Item>
-        <Breadcrumb.Item active>Feuille de temps</Breadcrumb.Item>
+        <Breadcrumb.Item active>{t('timesheet')}</Breadcrumb.Item>
       </Breadcrumb>
       <Link to={links.paths.templates}>
         <Button
@@ -92,7 +92,7 @@ const TimesheetPage = () => {
           }}
           variant="light"
         >
-          Modèles
+          {t('templates')}
         </Button>
       </Link>
       <CSVLink
@@ -116,7 +116,7 @@ const TimesheetPage = () => {
         <Tooltip id="exportToCsv" />
       </CSVLink>
       <h4>
-        Feuille de temps
+        {t('timesheet')}
         &nbsp;
         <span
           onClick={() => { setDate(date.minus({ days: 1 })); }}

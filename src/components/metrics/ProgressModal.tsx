@@ -35,7 +35,7 @@ const ProgressModal = ({
           className="formulaire"
         >
           <Form.Group>
-            <Form.Label>Progrès</Form.Label>
+            <Form.Label>{t('progress')}</Form.Label>
             <Form.Control type="text" name="number:progress" />
           </Form.Group>
           <div style={{ position: 'absolute', right: 15, bottom: 15 }}>

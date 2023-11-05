@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import ObjectiveRow from './ObjectiveRow';
 
 const ObjectivesList = ({
@@ -8,6 +9,8 @@ const ObjectivesList = ({
   showCompleteObjectives,
   showIncompleteObjectives,
 }) => {
+  const { t } = useTranslation();
+
   return objectives && (
     <Table
       bordered
@@ -16,10 +19,10 @@ const ObjectivesList = ({
     >
       <thead>
         <tr>
-          <th>Description</th>
-          <th>Projets</th>
-          <th>Progression</th>
-          <th>Échéance</th>
+          <th>{t('description')}</th>
+          <th>{t('projects')}</th>
+          <th>{t('progression')}</th>
+          <th>{t('deadline')}</th>
           <th />
         </tr>
       </thead>

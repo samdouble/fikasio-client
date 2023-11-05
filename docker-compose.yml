@@ -24,6 +24,8 @@ services:
         container_name: fikasio-server
         restart: always
         environment:
+            - GOOGLE_CLIENT_ID=
+            - GOOGLE_CLIENT_SECRET=
             - JWT_SECRET=9e274c25f744410b80cb83005dff7a52
             - MONGO_URL=mongodb://mongo0:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
             - NODE_ENV=development

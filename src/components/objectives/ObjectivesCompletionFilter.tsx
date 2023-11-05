@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ObjectivesCompletionFilter = ({ onChange, style }) => {
+  const { t } = useTranslation();
+
   return (
     <select
       className="form-control"
@@ -10,10 +13,10 @@ const ObjectivesCompletionFilter = ({ onChange, style }) => {
         width: 250,
       }}
     >
-      <option value="INCOMPLETE">Objectifs non complétés</option>
-      <option value="COMPLETE">Objectifs complétés</option>
-      <option value="ARCHIVED">Objectifs archivés</option>
-      <option value="ALL">Tous les objectifs</option>
+      <option value="INCOMPLETE">{t('ongoingObjectives')}</option>
+      <option value="COMPLETE">{t('completedObjectives')}</option>
+      <option value="ARCHIVED">{t('archivedObjectives')}</option>
+      <option value="ALL">{t('allObjectives')}</option>
     </select>
   );
 }

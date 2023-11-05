@@ -84,7 +84,7 @@ const MetricsList = () => {
                     width: 25,
                   }}
                 />
-                Entrer un progrès
+                {t('enterProgress')}
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => operations.metrics.createMetric(row)(dispatch)}
@@ -108,7 +108,7 @@ const MetricsList = () => {
                     width: 25,
                   }}
                 />
-                Modifier
+                {t('edit')}
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={() => deleteMetric(row.id)}
