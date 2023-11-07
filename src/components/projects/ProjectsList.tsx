@@ -25,10 +25,10 @@ const ProjectsList = ({
       <thead>
         <tr>
           <th>{t('name')}</th>
-          <th style={{ width: 150 }}>Temps restant</th>
-          <th style={{ width: 150 }}>Complétion</th>
-          <th style={{ width: 150 }}>Échéance</th>
-          <th />
+          <th style={{ width: 150 }}>{t('timeleft')}</th>
+          <th style={{ width: 150 }}>{t('completion')}</th>
+          <th style={{ width: 120 }}>{t('deadline')}</th>
+          <th style={{ width: 35 }} />
         </tr>
       </thead>
       <tbody>
