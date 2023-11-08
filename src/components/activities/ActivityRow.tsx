@@ -22,7 +22,6 @@ const ActivityRow = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const login = useSelector((state: RootState) => state.login);
-  const templates = useSelector((state: RootState) => state.templates);
   const me = login.user;
   const [comments, setIComments] = useState((activity && activity.comments) || '');
   const [isStartDateTimeDatepickerOpen, setIsStartDateTimeDatepickerOpen] = useState(false);
@@ -30,8 +29,6 @@ const ActivityRow = ({
 
   const startDateTime = activity.startTime && DateTime.fromJSDate(new Date(activity.startTime));
   const endDateTime = activity.endTime && DateTime.fromJSDate(new Date(activity.endTime));
-
-  const template = activity.templateId && templates?.find(temp => temp.id === activity.templateId);
 
   useEffect(() => {
     setIComments(activity.comments || '');
