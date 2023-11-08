@@ -81,12 +81,6 @@ const ActivityRow = ({
         />
       </td>
       <td
-        style={{
-          backgroundColor: (template && template.color) ? template.color : undefined,
-          width: 10,
-        }}
-      />
-      <td
         className="activityRow_comments"
         onClick={() => onClick && onClick({ id: activity.id })}
         style={{ cursor: 'pointer' }}
