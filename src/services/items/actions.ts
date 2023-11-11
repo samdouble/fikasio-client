@@ -15,9 +15,11 @@ export enum ItemActionTypes {
   DELETE_ITEM_RESPONSE = 'DELETE_ITEM_RESPONSE',
 }
 
+export type CreateItemResponseAction = { type: ItemActionTypes.CREATE_ITEM_RESPONSE; payload: { item: Item } };
+
 export type ItemAction =
   | { type: ItemActionTypes.CREATE_ITEM_REQUEST; payload: { entityId: string, item: Partial<Item> } }
-  | { type: ItemActionTypes.CREATE_ITEM_RESPONSE; payload: { item: Item } }
+  | CreateItemResponseAction
   | { type: ItemActionTypes.GET_ITEMS_REQUEST; payload: { entityId: string, items: Item[] } }
   | { type: ItemActionTypes.GET_ITEMS_RESPONSE; payload: { items: Item[] } }
   | { type: ItemActionTypes.UPDATE_ITEM_REQUEST; payload: { entityId: string, id: string; item: Item } }
@@ -37,7 +39,7 @@ export const createItemRequest = (payload: { entityId: string, item: Partial<Ite
   payload,
 });
 
-export const createItemResponse = (payload: { item: Item }): ItemAction => ({
+export const createItemResponse = (payload: { item: Item }): CreateItemResponseAction => ({
   type: ItemActionTypes.CREATE_ITEM_RESPONSE,
   payload,
 });

@@ -9,6 +9,17 @@
   transform: translate(-50%, -50%);
 }
 
+.LoginPage_table tbody tr td {
+  border: none;
+  padding: 50px 50px 0 50px;
+  vertical-align: top;
+}
+
+.LoginPage_table tbody tr td:first-child {
+  border-right: solid 1px #400080;
+  padding-left: 0;
+}
+
 .home_logo {
   border: 3px solid #000000;
   margin-bottom: 10px;

@@ -32,7 +32,6 @@ const ProgressModal = ({
       >
         <form
           id="MetricProgress_form"
-          className="formulaire"
         >
           <Form.Group>
             <Form.Label>{t('progress')}</Form.Label>

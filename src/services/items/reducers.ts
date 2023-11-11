@@ -8,7 +8,7 @@ export default function reducer(state: Item[] | null = null, action: ItemAction)
       const newItems = action.payload.items;
       return uniqBy((state || []).concat(newItems), 'id');
     case ItemActionTypes.CREATE_ITEM_RESPONSE:
-      return (state || []).concat(action.payload.item);
+      return (state ? [...state] : []).concat(action.payload.item);
     case ItemActionTypes.UPDATE_ITEM_RESPONSE:
     case ItemActionTypes.PATCH_ITEM_RESPONSE:
       return state?.map(item => {

@@ -27,9 +27,9 @@ const ItemsList = ({
       onAddItem({})
         .then(resultItem => {
           if (resultItem) {
-            const elementsWithClassname = document.getElementsByClassName(resultItem.id!);
-            const nbElementsWithClassname = elementsWithClassname.length;
-            (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();
+            // const elementWithId = document.getElementById(resultItem.id!);
+            // TODO Make this work with refs
+            // (elementWithId as HTMLElement).focus();
           }
         });
       e.preventDefault();
@@ -37,11 +37,7 @@ const ItemsList = ({
   };
 
   const handleKeyUp = (e, updatedItem) => {
-    if (updatedItem) {
-      if (e.key === 'Backspace' && e.target.textContent === '') {
-        operations.items.deleteItem(entity.id, updatedItem.id)(dispatch);
-      }
-    } else if (e.target.textContent !== '') {
+    if ( !updatedItem && e.target.textContent !== '') {
       operations.items.createItem(entity.id, {})(dispatch);
     }
   };

@@ -25,9 +25,9 @@ const EntityUpsertPage = () => {
         <Breadcrumb>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} active>Créer une entité</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} active>{t('createAnEntity')}</Breadcrumb.Item>
         </Breadcrumb>
-        <h4>Créer une entité</h4>
+        <h4>{t('createAnEntity')}</h4>
         <EntityInformationsForm
           entity={entity}
         />

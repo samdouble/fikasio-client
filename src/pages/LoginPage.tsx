@@ -5,6 +5,8 @@ import usePrevious from 'use-previous';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Table from 'react-bootstrap/Table';
+import { useTranslation } from 'react-i18next';
 import { operations } from 'services';
 import { googleSignIn } from 'services/login/endpoints';
 import { RootState } from 'services/store';
@@ -15,6 +17,7 @@ import './style.scss';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const loginState = useSelector((state: RootState) => state.login);
   const history = useHistory();
   const location = useLocation();
@@ -62,57 +65,70 @@ const LoginPage = () => {
 
   return (
     <div className="Login">
-      {
-        showLoginError && (
-          <Alert variant="danger" >
-            <strong>Connexion invalide</strong>
-          </Alert>
-        )
-      }
-      <form
-        id="Login_form"
-        className="formulaire"
+      <h4>{t('login')}</h4>
+      <Table
+        className="LoginPage_table"
       >
-        <Form.Group>
-          <Form.Control
-            autoFocus
-            name="emailAddress"
-            placeholder="Adresse courriel"
-            style={{ marginBottom: 10 }}
-            type="text"
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            id="password"
-            name="password"
-            onKeyUp={handleKeyUp}
-            placeholder="Mot de passe"
-            type="password"
-          />
-        </Form.Group>
-      </form>
-      <Button
-        onClick={handleLogin}
-        type="submit"
-        variant="primary"
-      >
-        Connexion
-      </Button>
-      <Button
-        onClick={handleGoogleSignIn}
-        type="button"
-        variant="danger"
-      >
-        <span className="fa fa-google" />
-        Sign in with Google
-      </Button>
-      &nbsp;
-      ou
-      &nbsp;
-      <a href={links.paths.signup}>
-        Créer un compte
-      </a>
+        <tbody>
+          <tr>
+            <td>
+              {
+                showLoginError && (
+                  <Alert variant="danger" >
+                    <strong>{t('invalidConnection')}</strong>
+                  </Alert>
+                )
+              }
+              <form
+                id="Login_form"
+              >
+                <Form.Group>
+                  <Form.Control
+                    autoFocus
+                    name="emailAddress"
+                    placeholder={t('emailAddress')}
+                    style={{ marginBottom: 10 }}
+                    type="text"
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control
+                    id="password"
+                    name="password"
+                    onKeyUp={handleKeyUp}
+                    placeholder={t('password')}
+                    type="password"
+                  />
+                </Form.Group>
+              </form>
+              <Button
+                onClick={handleLogin}
+                type="submit"
+                variant="primary"
+              >
+                {t('login')}
+              </Button>
+              &nbsp;
+              {t('or')}
+              &nbsp;
+              <a href={links.paths.signup}>
+                {t('createAnAccount')}
+              </a>
+            </td>
+            <td>
+              <Button
+                onClick={handleGoogleSignIn}
+                type="button"
+                variant="danger"
+              >
+                <span className="fa fa-google" />
+                &nbsp;
+                {t('loginWithGoogle')}
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
     </div>
   );
 }

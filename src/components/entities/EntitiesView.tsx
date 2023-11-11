@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { Entity } from 'services/entities/types';
 import EntitiesList from './EntitiesList';
 import AddEntityButton from './AddEntityButton';
@@ -8,6 +9,7 @@ import AddEntityButton from './AddEntityButton';
 const EntitiesView = ({
   entities,
 }) => {
+  const { t } = useTranslation();
   const [viewMode, setViewMode] = useState('LIST');
   const [selectedEntities, setSelectedEntities] = useState<Entity[]>([]);
 
@@ -63,6 +65,27 @@ const EntitiesView = ({
         </Button>
       </div>
       { entityView }
+      {
+        selectedEntities.length > 0 && (
+          <div
+            style={{
+              backgroundColor: '#7E5B9A',
+              bottom: 50,
+              color: 'white',
+              height: 100,
+              left: '22%',
+              margin: 'auto',
+              padding: 10,
+              position: 'fixed',
+              width: '60%',
+            }}
+          >
+            <b>
+              {t('xSelectedEntities', { count: selectedEntities.length })}
+            </b>
+          </div>
+        )
+      }
     </>
   );
 };

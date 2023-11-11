@@ -58,13 +58,12 @@ const SignupPage = () => {
       {
         showSignupError && (
           <Alert variant="danger" >
-            <strong>Soumission invalide</strong>
+            <strong>{t('invalidSubmission')}</strong>
           </Alert>
         )
       }
       <form
         id="Signup_form"
-        className="formulaire"
       >
         <Form.Group>
           <Form.Control
@@ -78,7 +77,7 @@ const SignupPage = () => {
         <Form.Group>
           <Form.Control
             name="emailAddress"
-            placeholder="Adresse courriel"
+            placeholder={t('emailAddress')}
             style={{ marginBottom: 10 }}
             type="text"
           />
@@ -86,10 +85,10 @@ const SignupPage = () => {
         <Form.Group>
           <Form.Control
             id="password"
-            type="password"
             name="password"
             onKeyUp={handleKeyUp}
-            placeholder="Mot de passe"
+            placeholder={t('password')}
+            type="password"
           />
         </Form.Group>
       </form>
@@ -98,13 +97,13 @@ const SignupPage = () => {
         onClick={handleSignup}
         type="submit"
       >
-        Créer un compte
+        {t('createAnAccount')}
       </Button>
       &nbsp;
-      ou
+      {t('or')}
       &nbsp;
       <a href={links.paths.login}>
-        Connexion
+        {t('login')}
       </a>
     </div>
   );

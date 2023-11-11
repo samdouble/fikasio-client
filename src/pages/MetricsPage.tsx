@@ -32,10 +32,10 @@ const MetricsPage = () => {
             <Col lg={12}>
               <Breadcrumb>
                 <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-                <Breadcrumb.Item active>Mesures</Breadcrumb.Item>
+                <Breadcrumb.Item active>{t('metrics')}</Breadcrumb.Item>
               </Breadcrumb>
               <AddMetricButton />
-              <h4>Mesures</h4>
+              <h4>{t('metrics')}</h4>
               <br />
               <MetricsList />
             </Col>

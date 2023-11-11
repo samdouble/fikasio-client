@@ -31,9 +31,9 @@ const ItemUpsertPage = () => {
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.entity(entityId) }}>
             {entity?.name}
           </Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} active>Créer un item</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} active>{t('createAnItem')}</Breadcrumb.Item>
         </Breadcrumb>
-        <h4>Créer un item</h4>
+        <h4>{t('createAnItem')}</h4>
         <ItemInformationsForm
           entityId={entityId}
           id={itemId}

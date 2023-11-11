@@ -22,13 +22,13 @@ const TasksView = ({
   showDueDateFilter,
   tasks,
 }: TasksViewProps) => {
+  const { t } = useTranslation();
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
   const [showCompleteTasks, setShowCompleteTasks] = useState(false);
   const [showIncompleteTasks, setShowIncompleteTasks] = useState(true);
   const [showArchivedTasks, setShowArchivedTasks] = useState(false);
   const [showOnlyDueToday, setShowOnlyDueToday] = useState(false);
   const [showOnlyDueThisWeek, setShowOnlyDueThisWeek] = useState(false);
-  const { t } = useTranslation();
 
   const handleChangeCompletionFilter = val => {
     if (val === 'ALL') {

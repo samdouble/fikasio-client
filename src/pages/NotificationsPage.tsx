@@ -30,9 +30,9 @@ const NotificationsPage = () => {
       <BasePage>
         <Breadcrumb>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-          <Breadcrumb.Item active>Notifications</Breadcrumb.Item>
+          <Breadcrumb.Item active>{t('notifications')}</Breadcrumb.Item>
         </Breadcrumb>
-        <h4>Notifications</h4>
+        <h4>{t('notifications')}</h4>
         {
           lateTasksCount ? (
             <>

@@ -43,9 +43,9 @@ const DashboardPage = () => {
           <Col lg={12}>
             <Breadcrumb>
               <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-              <Breadcrumb.Item active>Tableau de bord</Breadcrumb.Item>
+              <Breadcrumb.Item active>{t('dashboard')}</Breadcrumb.Item>
             </Breadcrumb>
-            <h4>Tableau de bord</h4>
+            <h4>{t('dashboard')}</h4>
             <Card>
               <p>Aujourd'hui</p>
               <div style={{ fontSize: 48 }}>

@@ -12,7 +12,7 @@ const AddEntityButton = ({ style }) => (
       style={style}
       variant="primary"
     >
-        Créer une entité
+      Créer une entité
     </Button>
   </Link>
 );

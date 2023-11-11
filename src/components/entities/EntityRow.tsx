@@ -21,7 +21,6 @@ const EntityRow = ({
         style={{
           textAlign: 'center',
         }}
-        width={35}
       >
         <Checkbox
           defaultIsChecked={isSelected}
@@ -47,7 +46,12 @@ const EntityRow = ({
           </div>
         </Link>
       </td>
-      <td width={35}>
+      <td
+        style={{
+          textAlign: 'center',
+          width: 35,
+        }}
+      >
         <Link
           style={{ textDecoration: 'none' }}
           to={links.itemUpsert(entity.id, 'NEW')}
@@ -64,8 +68,8 @@ const EntityRow = ({
       <td
         style={{
           textAlign: 'center',
+          width: 35,
         }}
-        width={35}
       >
         <Dropdown
           style={{

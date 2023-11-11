@@ -39,11 +39,10 @@ const ProgressModal = ({
         title={ task && task.description }
       >
         <form
-          className="formulaire"
           id="TaskProgress_form"
         >
           <Form.Group>
-            <Form.Label>Progrès</Form.Label>
+            <Form.Label>{t('progress')}</Form.Label>
             <Form.Control type="text" name="progress" />
           </Form.Group>
           <div

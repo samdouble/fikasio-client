@@ -4,6 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { operations } from 'services';
 import { Entity } from 'services/entities/types';
+import { ItemActionTypes } from 'services/items/actions';
 import { Item } from 'services/items/types';
 import { RootState } from 'services/store';
 import ItemsList from '../items/ItemsList';
@@ -28,8 +29,10 @@ const EntityView = ({
 
   const addItem = async item => {
     return operations.items.createItem(entity.id, item)(dispatch)
-      .then(() => {
+      .then(res => {
+        const { item } = res.payload;
         dispatch(operations.pane.clearPaneContent());
+        return item;
       });
   };
 

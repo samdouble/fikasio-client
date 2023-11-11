@@ -38,9 +38,18 @@ const EntitiesList = ({
     >
       <thead>
         <tr>
-          <th />
+          <th
+            style={{
+              width: 35,
+            }}
+          />
           <th>{t('name')}</th>
-          <th colSpan={2} />
+          <th
+            colSpan={2}
+            style={{
+              width: 70,
+            }}
+          />
         </tr>
       </thead>
       <tbody>

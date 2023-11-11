@@ -29,11 +29,10 @@ const ObjectiveStats = ({
       render={({ handleSubmit }) => (
         <form
           id="ObjectiveProgress_form"
-          className="formulaire"
           onSubmit={handleSubmit}
         >
           <RBForm.Group>
-            <RBForm.Label>Progrès</RBForm.Label>
+            <RBForm.Label>{t('progress')}</RBForm.Label>
             <Field
               name="number:progress"
               component="input"

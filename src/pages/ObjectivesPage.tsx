@@ -22,9 +22,9 @@ const ObjectivesPage = () => {
     <BasePage>
       <Breadcrumb>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>Objectifs</Breadcrumb.Item>
+        <Breadcrumb.Item active>{t('objectives')}</Breadcrumb.Item>
       </Breadcrumb>
-      <h4>Objectifs</h4>
+      <h4>{t('objectives')}</h4>
       <ObjectivesView
         objectives={objectives}
         showAddButton

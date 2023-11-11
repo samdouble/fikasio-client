@@ -23,10 +23,10 @@ const TemplateUpsertPage = () => {
       <BasePage>
         <Breadcrumb>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} active>Créer un modèle</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>{t('timesheet')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} active>{t('createATemplate')}</Breadcrumb.Item>
         </Breadcrumb>
-        <h4>Créer un modèle</h4>
+        <h4>{t('createATemplate')}</h4>
         <TemplateInformationsForm
           template={template}
         />

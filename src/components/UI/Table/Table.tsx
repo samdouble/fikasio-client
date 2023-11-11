@@ -50,12 +50,9 @@ const Table = ({
   const [orderDirection, setOrderDirection] = useState<string>('ASC');
   const [orderedRows, setOrderedRows] = useState(rows ? [...rows] : []);
   const prevOrderedBy = usePrevious(orderedBy);
-  const prevRows = usePrevious(rows);
 
   useEffect(() => {
-    if (!prevRows && rows) {
-      setOrderedRows([...rows]);
-    }
+    setOrderedRows([...(rows || [])]);
   }, [rows]);
 
   useEffect(() => {
@@ -116,6 +113,7 @@ const Table = ({
                       key={column.name}
                       style={{
                         textAlign: 'center',
+                        width: 35,
                       }}
                     />
                   );
@@ -148,7 +146,6 @@ const Table = ({
       <tbody>
         {
           orderedRows
-            .slice(0)
             .map((row, index) => {
               return (
                 <tr
