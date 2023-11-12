@@ -59,6 +59,7 @@ const fr = {
   type: 'Type',
   xSelectedActivities: '{{count}} activités sélectionnées',
   xSelectedEntities: '{{count}} entités sélectionnées',
+  xSelectedItems: '{{count}} items sélectionnés',
   xSelectedTasks: '{{count}} tâches sélectionnées',
   week: 'Semaine',
   yes: 'Oui',

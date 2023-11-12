@@ -1,40 +1,23 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import { operations } from 'services';
 import { Entity } from 'services/entities/types';
-import { ItemActionTypes } from 'services/items/actions';
-import { Item } from 'services/items/types';
 import { RootState } from 'services/store';
-import ItemsList from '../items/ItemsList';
+import ItemsView from '../items/ItemsView';
 import EntityInformationsForm from './EntityInformationsForm';
 import EntityFieldsTable from './EntityFieldsTable';
 
 export interface EntityViewProps {
   defaultTab?: string,
   entity: Entity,
-  onItemSelect: (item: Item) => void;
-  selectedItems: Item[];
 }
 
 const EntityView = ({
   defaultTab,
   entity,
-  onItemSelect,
-  selectedItems,
 }: EntityViewProps) => {
   const items = useSelector((state: RootState) => state.items);
-  const dispatch = useDispatch();
-
-  const addItem = async item => {
-    return operations.items.createItem(entity.id, item)(dispatch)
-      .then(res => {
-        const { item } = res.payload;
-        dispatch(operations.pane.clearPaneContent());
-        return item;
-      });
-  };
 
   return (
     <div>
@@ -46,12 +29,9 @@ const EntityView = ({
           eventKey="ITEMS"
           title="Items"
         >
-          <ItemsList
+          <ItemsView
             entity={entity}
             items={items?.filter(i => i.entityId === entity.id)}
-            onAddItem={item => addItem(item)}
-            onItemSelect={onItemSelect}
-            selectedItems={selectedItems}
           />
         </Tab>
         <Tab

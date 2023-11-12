@@ -59,6 +59,7 @@ const en = {
   type: 'Type',
   xSelectedActivities: '{{count}} selected activities',
   xSelectedEntities: '{{count}} selected entities',
+  xSelectedItems: '{{count}} selected items',
   xSelectedTasks: '{{count}} selected tasks',
   week: 'Week',
   yes: 'Yes',
