@@ -21,16 +21,10 @@ export const processFormData = formData => Object
       finalKey = keyType1;
       finalValue = value;
     }
-    if (value === 'null') {
-      finalValue = null;
-    }
-    if (finalValue !== null) {
-      return {
-        ...obj,
-        [finalKey]: finalValue,
-      };
-    }
-    return obj;
+    return {
+      ...obj,
+      [finalKey]: finalValue,
+    };
   }, {});
 
 export const getFormData = idHTML => {

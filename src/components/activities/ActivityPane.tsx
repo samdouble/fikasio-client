@@ -76,6 +76,9 @@ const ActivityPane = ({
       formData.duration *= 60;
     }
     delete formData.durationUnits;
+    if (!Object.keys(formData).includes('templateId')) {
+      formData.templateId = null;
+    }
     if (activity?.id) {
       operations.activities.updateActivity(activity?.id, formData)(dispatch)
         .then(() => dispatch(operations.pane.clearPaneContent()));
