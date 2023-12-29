@@ -1,16 +1,27 @@
 import React from 'react';
 
-const Dot = ({ width, color }) => {
+interface DotProps {
+  color: string;
+  style?: React.CSSProperties;
+  width: number;
+}
+
+const Dot = ({
+  color,
+  style,
+  width,
+}: DotProps) => {
   return (
     <span
       className="dot"
       style={{
-        height: width,
-        width,
         backgroundColor: color,
         borderRadius: '50%',
         display: 'inline-block',
+        height: width,
         marginRight: 10,
+        width,
+        ...style,
       }}
     />
   );

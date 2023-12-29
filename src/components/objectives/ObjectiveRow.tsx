@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
 import ProjectTag from 'components/projects/ProjectTag';
+import Dot from 'components/UI/Dot';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
-import Dot from './Dot';
 import { getEstimatedCompletionDate } from './utils';
 
 const ObjectiveRow = ({
@@ -36,7 +36,10 @@ const ObjectiveRow = ({
           cursor: 'pointer',
         }}
       >
-        <Dot color={color} width={15} />
+        <Dot
+          color={color}
+          width={15}
+        />
         { objective.name }
       </td>
       <td width={140}>

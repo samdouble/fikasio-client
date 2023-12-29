@@ -138,10 +138,10 @@ const TemplatePane = ({
           </RBForm.Group>
           <div
             style={{
-              float: 'right',
               bottom: 10,
+              float: 'right',
               paddingBottom: 15,
-              position: 'absolute',
+              position: 'fixed',
               right: 30,
             }}
           >

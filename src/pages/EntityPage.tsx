@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { useTranslation } from 'react-i18next';
 import EntityView from 'components/entities/EntityView';
-import AddItemButton from 'components/entities/items/AddItemButton';
 import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
@@ -30,15 +29,6 @@ const EntityPage = () => {
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
         <Breadcrumb.Item active>{ entity?.name }</Breadcrumb.Item>
       </Breadcrumb>
-      <Link to={links.itemUpsert(entity?.id, 'NEW')}>
-        <AddItemButton
-          entity={entity}
-          style={{
-            float: 'right',
-            marginRight: 0,
-          }}
-        />
-      </Link>
       <h4>{ entity?.name }</h4>
       <br />
       {

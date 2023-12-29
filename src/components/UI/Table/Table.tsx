@@ -56,10 +56,13 @@ const Table = ({
   }, [rows]);
 
   useEffect(() => {
-    const newOrderDirection = (prevOrderedBy && orderedBy && prevOrderedBy.property === orderedBy.property)
+    const newOrderDirection = (prevOrderedBy && orderedBy && prevOrderedBy.name === orderedBy.name)
       ? 'DESC'
       : 'ASC';
     setOrderDirection(newOrderDirection);
+  }, [orderedBy, rows]);
+
+  useEffect(() => {
     if (rows && orderedBy) {
       const newOrderedRows = [...rows]
         .sort((rowA, rowB) => {
@@ -70,7 +73,7 @@ const Table = ({
         });
       setOrderedRows(newOrderedRows);
     }
-  }, [orderedBy, rows]);
+  }, [orderDirection, orderedBy, rows]);
 
   return (
     <RBTable

@@ -321,7 +321,7 @@ const ActivityPane = ({
               bottom: 10,
               float: 'right',
               paddingBottom: 15,
-              position: 'absolute',
+              position: 'fixed',
               right: 30,
             }}>
             <Button

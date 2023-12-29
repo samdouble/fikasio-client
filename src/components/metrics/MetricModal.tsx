@@ -52,9 +52,11 @@ const MetricModal = ({
               </RBForm.Group>
               <div
                 style={{
-                  bottom: 0,
+                  bottom: 10,
                   float: 'right',
                   paddingBottom: 15,
+                  position: 'fixed',
+                  right: 30,
                 }}
               >
                 <Button

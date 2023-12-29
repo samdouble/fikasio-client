@@ -14,12 +14,16 @@ const NotificationsCounter = ({
       style={{
         color: '#ffffff',
         backgroundColor: '#ce0000',
-        borderRadius: '50%',
+        borderRadius: '10%',
         padding: '2px 6px',
         ...style,
       }}
     >
-      { count }
+      {
+        (count <= 99)
+          ? count
+          : '99+'
+      }
     </span>
   );
 };

@@ -6,13 +6,14 @@ import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
+import NotificationsCounter from 'components/notifications/NotificationsCounter';
+import { calculateNotifications } from 'components/notifications/utils';
+import ResourcesHandler from 'components/ResourcesHandler';
+import Dot from 'components/UI/Dot';
 import UserImage from 'images/user.png';
 import { operations } from 'services';
 import { RootState } from 'services/store';
 import links from 'utils/links';
-import NotificationsCounter from '../notifications/NotificationsCounter';
-import ResourcesHandler from '../ResourcesHandler';
-import { calculateNotifications } from '../notifications/utils';
 import './Sidebar.scss';
 
 const Sidebar = () => {
@@ -291,13 +292,13 @@ const Sidebar = () => {
                 !isExpanded && !!notificationsCount && (
                   <>
                     &nbsp;
-                    <NotificationsCounter
-                      count={notificationsCount}
+                    <Dot
+                      color="#ce0000"
                       style={{
-                        position: 'absolute',
                         left: 30,
-                        lineHeight: 1,
+                        position: 'absolute',
                       }}
+                      width={10}
                     />
                   </>
                 )
