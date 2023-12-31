@@ -1,36 +1,36 @@
 import React from 'react';
 import { DateTime } from 'luxon';
-import { isSameDay, isSameWeek } from 'utils/time';
 import DragList from './DragList/DragList';
 import './style.scss';
 
 const TasksBoard = ({
+  filter,
   // onAddTask,
   // onOpenProgressModal,
   // onTaskSelect,
-  showCompleteTasks,
-  showIncompleteTasks,
-  showArchivedTasks,
-  showOnlyDueToday,
-  showOnlyDueThisWeek,
   tasks,
 }) => {
   const tasksToShow = tasks
+    .filter(task => (
+      (filter.complete !== false && task.status === 'Completed' && !task.isArchived)
+        || (filter.complete !== true && task.status !== 'Completed' && !task.isArchived)
+    ))
+    .filter(task => (
+      (filter.archived && task.isArchived)
+        || (!filter.archived && !task.isArchived)
+    ))
     .filter(task => {
-      const isDueToday = task.dueAt && isSameDay(DateTime.now(), DateTime.fromISO(task.dueAt));
-      const isDueThisWeek = task.dueAt && isSameWeek(Date.now(), DateTime.fromISO(task.dueAt).toMillis());
-      return (
-        (
-          (showCompleteTasks && task.status === 'Completed' && !task.isArchived)
-          || (showIncompleteTasks && task.status !== 'Completed' && !task.isArchived)
-          || (showArchivedTasks && task.isArchived)
-        )
-        && (
-          (!showOnlyDueToday && !showOnlyDueThisWeek)
-          || (showOnlyDueToday && isDueToday)
-          || (showOnlyDueThisWeek && isDueThisWeek)
-        )
-      );
+      const dueAtGt = filter.dueAt.$gt && DateTime.fromJSDate(filter.dueAt.$gt);
+      const dueAtGte = filter.dueAt.$gte && DateTime.fromJSDate(filter.dueAt.$gte);
+      const dueAtLt = filter.dueAt.$lt && DateTime.fromJSDate(filter.dueAt.$lt);
+      const dueAtLte = filter.dueAt.$lte && DateTime.fromJSDate(filter.dueAt.$lte);
+      const dueAt = task.dueAt && DateTime.fromISO(task.dueAt);
+      if (!dueAt) return false;
+      if (dueAtGt && dueAt <= dueAtGt) return false;
+      if (dueAtGte && dueAt < dueAtGte) return false;
+      if (dueAtLt && dueAt >= dueAtLt) return false;
+      if (dueAtLt && dueAt > dueAtLte) return false;
+      return true;
     });
   return (
     <DragList

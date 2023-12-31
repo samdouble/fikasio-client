@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { DateTime } from 'luxon';
 import ResourcesHandler from 'components/ResourcesHandler';
 import TasksView from 'components/tasks/TasksView';
 import BasePage from 'components/UI/BasePage';
@@ -20,10 +21,23 @@ const HomePage = () => {
     <BasePage>
       <h4>{t('tasks')}</h4>
       <TasksView
-        onTaskClick={taskId => operations.pane.setPaneContent({
-          type: 'TASK',
-          id: taskId,
-        })(dispatch)}
+        filter={{
+          dueAt: {
+            $gte: DateTime.now()
+              .set({ hour: 0, minute: 0, second: 0 })
+              .toJSDate(),
+            $lt: DateTime.now()
+              .plus({ days: 1 })
+              .set({ hour: 0, minute: 0, second: 0 })
+              .toJSDate(),
+          },
+        }}
+        onTaskClick={
+          taskId => operations.pane.setPaneContent({
+            type: 'TASK',
+            id: taskId,
+          })(dispatch)
+        }
         showAddButton
         showCompletionFilter
         showDueDateFilter

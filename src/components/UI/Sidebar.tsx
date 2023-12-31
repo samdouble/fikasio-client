@@ -37,54 +37,60 @@ const Sidebar = () => {
           setIsExpanded(false);
         }}
       >
-        <Tooltip
-          id="dashboard"
-          style={{
-            zIndex: 1000,
-          }}
-        />
-        <Tooltip
-          id="projects"
-          style={{
-            zIndex: 1000,
-          }}
-        />
-        <Tooltip
-          id="objectives"
-          style={{
-            zIndex: 1000,
-          }}
-        />
-        <Tooltip
-          id="tasks"
-          style={{
-            zIndex: 1000,
-          }}
-        />
-        <Tooltip
-          id="entities"
-          style={{
-            zIndex: 1000,
-          }}
-        />
-        <Tooltip
-          id="metrics"
-          style={{
-            zIndex: 1000,
-          }}
-        />
-        <Tooltip
-          id="timesheet"
-          style={{
-            zIndex: 1000,
-          }}
-        />
-        <Tooltip
-          id="notifications"
-          style={{
-            zIndex: 1000,
-          }}
-        />
+        {
+          !isExpanded && (
+            <>
+              <Tooltip
+                id="dashboard"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+              <Tooltip
+                id="projects"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+              <Tooltip
+                id="objectives"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+              <Tooltip
+                id="tasks"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+              <Tooltip
+                id="entities"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+              <Tooltip
+                id="metrics"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+              <Tooltip
+                id="timesheet"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+              <Tooltip
+                id="notifications"
+                style={{
+                  zIndex: 1000,
+                }}
+              />
+            </>
+          )
+        }
         <ProSidebar
           backgroundColor="#7E5B9A"
           collapsed={!isExpanded}

@@ -9,15 +9,11 @@ import ProgressModal from '../ProgressModal';
 import './style.scss';
 
 const TasksViewer = ({
+  filter,
   onTaskClick,
   onTaskSelect,
   projectId,
   selectedTasks,
-  showCompleteTasks,
-  showIncompleteTasks,
-  showArchivedTasks,
-  showOnlyDueToday,
-  showOnlyDueThisWeek,
   tasks,
 }) => {
   const [showProgressModal, setShowProgressModal] = useState(false);
@@ -43,33 +39,25 @@ const TasksViewer = ({
   if (viewMode === 'BOARD') {
     taskView = (
       <TasksBoard
+        filter={filter}
         // onAddTask={task => addTask(task)}
         // onOpenProgressModal={task => handleOpenProgressModal(task)}
         // onTaskClick={onTaskClick}
         // onTaskSelect={onTaskSelect}
         // selectedTasks={selectedTasks}
-        showArchivedTasks={showArchivedTasks}
-        showCompleteTasks={showCompleteTasks}
-        showIncompleteTasks={showIncompleteTasks}
-        showOnlyDueThisWeek={showOnlyDueThisWeek}
-        showOnlyDueToday={showOnlyDueToday}
         tasks={tasks}
       />
     );
   } else if (viewMode === 'LIST') {
     taskView = (
       <TasksList
+        filter={filter}
         onAddTask={task => addTask(task)}
         onOpenProgressModal={task => handleOpenProgressModal(task)}
         onTaskClick={onTaskClick}
         onTaskSelect={onTaskSelect}
         projectId={projectId}
         selectedTasks={selectedTasks}
-        showArchivedTasks={showArchivedTasks}
-        showCompleteTasks={showCompleteTasks}
-        showIncompleteTasks={showIncompleteTasks}
-        showOnlyDueThisWeek={showOnlyDueThisWeek}
-        showOnlyDueToday={showOnlyDueToday}
         tasks={tasks}
       />
     );

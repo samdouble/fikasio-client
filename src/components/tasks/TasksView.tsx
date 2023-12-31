@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DateTime } from 'luxon';
 import { Task } from 'services/tasks/types';
 import AddTaskButton from './AddTaskButton';
 import TasksFilters from './TasksFilters/TasksFilters';
 import TasksViewer from './TasksViewer/TasksViewer';
 
+interface TasksViewFilter {
+  archived?: boolean;
+  complete?: boolean;
+  dueAt?: {
+    $gt?: string;
+    $gte?: string;
+    $lt?: string;
+    $lte?: string;
+  };
+}
 interface TasksViewProps {
+  filter?: TasksViewFilter;
   onTaskClick: (taskId: string) => void;
   projectId?: string;
   showAddButton?: boolean;
@@ -16,6 +28,7 @@ interface TasksViewProps {
 }
 
 const TasksView = ({
+  filter: pFilter,
   onTaskClick,
   projectId,
   showAddButton,
@@ -24,43 +37,79 @@ const TasksView = ({
   tasks,
 }: TasksViewProps) => {
   const { t } = useTranslation();
+  const [filter, setFilter] = useState<TasksViewFilter>({
+    complete: false,
+    ...pFilter,
+  });
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
-  const [showCompleteTasks, setShowCompleteTasks] = useState(false);
-  const [showIncompleteTasks, setShowIncompleteTasks] = useState(true);
-  const [showArchivedTasks, setShowArchivedTasks] = useState(false);
-  const [showOnlyDueToday, setShowOnlyDueToday] = useState(false);
-  const [showOnlyDueThisWeek, setShowOnlyDueThisWeek] = useState(false);
 
   const handleChangeCompletionFilter = val => {
     if (val === 'ALL') {
-      setShowCompleteTasks(true);
-      setShowIncompleteTasks(true);
-      setShowArchivedTasks(true);
+      setFilter({
+        ...filter,
+        archived: false,
+        complete: undefined,
+        ...pFilter,
+      });
     } else if (val === 'COMPLETE') {
-      setShowCompleteTasks(true);
-      setShowIncompleteTasks(false);
-      setShowArchivedTasks(false);
+      setFilter({
+        ...filter,
+        archived: false,
+        complete: true,
+        ...pFilter,
+      });
     } else if (val === 'INCOMPLETE') {
-      setShowCompleteTasks(false);
-      setShowIncompleteTasks(true);
-      setShowArchivedTasks(false);
+      setFilter({
+        ...filter,
+        archived: false,
+        complete: false,
+        ...pFilter,
+      });
     } else if (val === 'ARCHIVED') {
-      setShowCompleteTasks(false);
-      setShowIncompleteTasks(false);
-      setShowArchivedTasks(true);
+      setFilter({
+        ...filter,
+        archived: true,
+        complete: undefined,
+        ...pFilter,
+      });
     }
   };
 
   const handleChangeDueDateFilter = val => {
     if (val === 'ALL') {
-      setShowOnlyDueToday(false);
-      setShowOnlyDueThisWeek(false);
+      setFilter({
+        ...filter,
+        dueAt: undefined,
+        ...pFilter,
+      });
     } else if (val === 'FOR_TODAY') {
-      setShowOnlyDueToday(true);
-      setShowOnlyDueThisWeek(false);
+      setFilter({
+        ...filter,
+        dueAt: {
+          $gte: DateTime.now()
+            .set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+          $lt: DateTime.now()
+            .plus({ days: 1 })
+            .set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+        },
+        ...pFilter,
+      });
     } else if (val === 'FOR_THISWEEK') {
-      setShowOnlyDueToday(false);
-      setShowOnlyDueThisWeek(true);
+      setFilter({
+        ...filter,
+        dueAt: {
+          $gte: DateTime.now()
+            .startOf('week')
+            .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+            .toJSDate(),
+          $lt: DateTime.now()
+            .startOf('week')
+            .plus({ days: 7 })
+            .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+            .toJSDate(),
+        },
+        ...pFilter,
+      });
     }
   };
 
@@ -99,15 +148,11 @@ const TasksView = ({
         showDueDateFilter={showDueDateFilter}
       />
       <TasksViewer
+        filter={filter}
         onTaskClick={onTaskClick}
         onTaskSelect={handleSelectTask}
         projectId={projectId}
         selectedTasks={selectedTasks}
-        showCompleteTasks={showCompleteTasks}
-        showIncompleteTasks={showIncompleteTasks}
-        showArchivedTasks={showArchivedTasks}
-        showOnlyDueToday={showOnlyDueToday}
-        showOnlyDueThisWeek={showOnlyDueThisWeek}
         tasks={tasks}
       />
       {
