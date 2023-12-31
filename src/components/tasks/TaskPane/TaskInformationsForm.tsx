@@ -74,10 +74,14 @@ const TaskInformationsForm = ({
       formData.estimatedCompletionTime *= 60;
     }
     if (task && task.id) {
-      operations.tasks.updateTask(task.id, omit(formData, ['estimatedCompletionTimeUnits']))(dispatch)
+      operations.tasks.updateTask(task.id,
+        omit(formData, ['estimatedCompletionTimeUnits']),
+      )(dispatch)
         .then(() => dispatch(operations.pane.clearPaneContent()));
     } else {
-      operations.tasks.createTask(omit(formData, ['estimatedCompletionTimeUnits']))(dispatch)
+      operations.tasks.createTask(
+        omit(formData, ['estimatedCompletionTimeUnits']),
+      )(dispatch)
         .then(() => dispatch(operations.pane.clearPaneContent()));
     }
   };

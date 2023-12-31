@@ -92,7 +92,7 @@ const ActivitiesList = ({
             .map(activity => (
               <ActivityRow
                 activity={activity}
-                isSelected={selectedActivities.find(a => activity.id === a.id)}
+                isSelected={!!selectedActivities.find(a => activity.id === a.id)}
                 key={activity.id}
                 onAddActivity={addActivity}
                 onClick={onActivityClick}

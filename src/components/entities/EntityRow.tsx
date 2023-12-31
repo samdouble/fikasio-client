@@ -23,7 +23,7 @@ const EntityRow = ({
         }}
       >
         <Checkbox
-          defaultIsChecked={isSelected}
+          isChecked={isSelected}
           onClick={() => onSelect(entity)}
         />
       </td>

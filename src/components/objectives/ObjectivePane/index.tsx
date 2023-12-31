@@ -7,7 +7,7 @@ import ObjectiveInformations from './ObjectiveInformations';
 import ObjectiveProgress from './ObjectiveProgress';
 import ObjectiveStats from './ObjectiveStats';
 
-const ProjectPane = ({
+const ObjectivePane = ({
   defaultTab,
   id,
 }) => {
@@ -58,4 +58,4 @@ const ProjectPane = ({
   );
 };
 
-export default ProjectPane;
+export default ObjectivePane;

@@ -80,6 +80,17 @@ const EntitiesView = ({
               width: '60%',
             }}
           >
+            <FontAwesomeIcon
+              icon="times"
+              onClick={() => {
+                setSelectedEntities([]);
+              }}
+              style={{
+                cursor: 'pointer',
+                marginRight: 10,
+                width: 25,
+              }}
+            />
             <b>
               {t('xSelectedEntities', { count: selectedEntities.length })}
             </b>

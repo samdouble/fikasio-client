@@ -17,6 +17,7 @@ const Footer = () => {
         <Col md={12}>
           <div className="text-left">
             <a href={links.privacy()}>{t('privacy')}</a>
+            <br />
             <a href={links.tos()}>{t('termsOfService')}</a>
           </div>
         </Col>

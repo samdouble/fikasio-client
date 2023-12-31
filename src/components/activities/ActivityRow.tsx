@@ -73,7 +73,7 @@ const ActivityRow = ({
         width={35}
       >
         <Checkbox
-          defaultIsChecked={isSelected}
+          isChecked={isSelected}
           onClick={() => onSelect(activity)}
         />
       </td>

@@ -42,28 +42,29 @@ const ListItem = ({ item, index }) => {
       draggableId={item.id}
       index={index}
     >
-      {(provided, snapshot) => {
-        return (
-          <DragItem
-            ref={provided.innerRef}
-            snapshot={snapshot}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            <CardHeader>HEADER</CardHeader>
-            <span>Content</span>
-            <CardFooter>
-              <span>{item.content}</span>
-              <Author>
-                {item.id}
-                <Avatar
-                  src={`data:image/svg+xml;utf8,${generateFromString(item.id)}`}
-                />
-              </Author>
-            </CardFooter>
-          </DragItem>
-        );
-      }}
+      {
+        (provided, snapshot) => {
+          return (
+            <DragItem
+              ref={provided.innerRef}
+              snapshot={snapshot}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              <CardHeader>{item.content}</CardHeader>
+              <span>Content</span>
+              <CardFooter>
+                <Author>
+                  {item.id}
+                  <Avatar
+                    src={`data:image/svg+xml;utf8,${generateFromString(item.id)}`}
+                  />
+                </Author>
+              </CardFooter>
+            </DragItem>
+          );
+        }
+      }
     </Draggable>
   );
 };

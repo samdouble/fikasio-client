@@ -15,6 +15,7 @@ const NotificationsCounter = ({
         color: '#ffffff',
         backgroundColor: '#ce0000',
         borderRadius: '10%',
+        fontSize: '0.9em',
         padding: '2px 6px',
         ...style,
       }}

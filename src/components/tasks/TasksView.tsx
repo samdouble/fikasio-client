@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Task } from 'services/tasks/types';
 import AddTaskButton from './AddTaskButton';
 import TasksFilters from './TasksFilters/TasksFilters';
@@ -124,6 +125,17 @@ const TasksView = ({
               width: '60%',
             }}
           >
+            <FontAwesomeIcon
+              icon="times"
+              onClick={() => {
+                setSelectedTasks([]);
+              }}
+              style={{
+                cursor: 'pointer',
+                marginRight: 10,
+                width: 25,
+              }}
+            />
             <b>
               {t('xSelectedTasks', { count: selectedTasks.length })}
             </b>

@@ -96,7 +96,7 @@ const TaskRow = ({
         width={35}
       >
         <Checkbox
-          defaultIsChecked={isSelected}
+          isChecked={isSelected}
           onClick={() => onSelect(task)}
         />
       </td>

@@ -103,6 +103,17 @@ const ActivitiesView = ({
               width: '60%',
             }}
           >
+            <FontAwesomeIcon
+              icon="times"
+              onClick={() => {
+                setSelectedActivities([]);
+              }}
+              style={{
+                cursor: 'pointer',
+                marginRight: 10,
+                width: 25,
+              }}
+            />
             <b>
               {t('xSelectedActivities', { count: selectedActivities.length })}
             </b>

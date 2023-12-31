@@ -46,7 +46,8 @@ const SearchBar = ({ style }) => {
           name: t.description,
           type: 'TASK',
         })),
-    ];
+    ]
+    .slice(0, 10);
   };
 
   const onChange = (event, { newValue }) => {

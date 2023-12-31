@@ -59,7 +59,7 @@ const EntitiesList = ({
             .map(entity => (
               <EntityRow
                 entity={entity}
-                isSelected={selectedEntities.find(e => entity.id === e.id)}
+                isSelected={!!selectedEntities.find(e => entity.id === e.id)}
                 key={entity.id}
                 onDelete={() => handleDelete(entity)}
                 onSelect={onEntitySelect}
