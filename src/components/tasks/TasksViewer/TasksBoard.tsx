@@ -20,10 +20,10 @@ const TasksBoard = ({
         || (!filter.archived && !task.isArchived)
     ))
     .filter(task => {
-      const dueAtGt = filter.dueAt.$gt && DateTime.fromJSDate(filter.dueAt.$gt);
-      const dueAtGte = filter.dueAt.$gte && DateTime.fromJSDate(filter.dueAt.$gte);
-      const dueAtLt = filter.dueAt.$lt && DateTime.fromJSDate(filter.dueAt.$lt);
-      const dueAtLte = filter.dueAt.$lte && DateTime.fromJSDate(filter.dueAt.$lte);
+      const dueAtGt = filter.dueAt && filter.dueAt.$gt && DateTime.fromJSDate(filter.dueAt.$gt);
+      const dueAtGte = filter.dueAt && filter.dueAt.$gte && DateTime.fromJSDate(filter.dueAt.$gte);
+      const dueAtLt = filter.dueAt && filter.dueAt.$lt && DateTime.fromJSDate(filter.dueAt.$lt);
+      const dueAtLte = filter.dueAt && filter.dueAt.$lte && DateTime.fromJSDate(filter.dueAt.$lte);
       const dueAt = task.dueAt && DateTime.fromISO(task.dueAt);
       if (!dueAt) return false;
       if (dueAtGt && dueAt <= dueAtGt) return false;

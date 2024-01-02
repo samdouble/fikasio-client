@@ -295,37 +295,37 @@ const TaskInformationsForm = ({
                 <>
                   <RBForm.Check
                     id="recurrence"
-                    label="Lundi"
+                    label={t('monday')}
                     type="radio"
                   />
                   <RBForm.Check
                     id="recurrence"
-                    label="Mardi"
+                    label={t('tuesday')}
                     type="radio"
                   />
                   <RBForm.Check
                     id="recurrence"
-                    label="Mercredi"
+                    label={t('wednesday')}
                     type="radio"
                   />
                   <RBForm.Check
                     id="recurrence"
-                    label="Jeudi"
+                    label={t('thursday')}
                     type="radio"
                   />
                   <RBForm.Check
                     id="recurrence"
-                    label="Vendredi"
+                    label={t('friday')}
                     type="radio"
                   />
                   <RBForm.Check
                     id="recurrence"
-                    label="Samedi"
+                    label={t('saturday')}
                     type="radio"
                   />
                   <RBForm.Check
                     id="recurrence"
-                    label="Dimanche"
+                    label={t('sunday')}
                     type="radio"
                   />
                 </>)
@@ -334,9 +334,9 @@ const TaskInformationsForm = ({
           <div
             style={{
               bottom: 10,
-              float: 'right',
+              float: "right",
               paddingBottom: 15,
-              position: 'fixed',
+              position: "fixed",
               right: 30,
             }}
           >

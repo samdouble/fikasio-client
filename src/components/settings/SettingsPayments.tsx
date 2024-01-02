@@ -13,15 +13,16 @@ import {
   formatCVC,
   formatExpirationDate,
 } from 'utils/creditCards';
+import { processFormData } from 'utils/forms';
 
 const SettingsPayments = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const onSubmit = async values => {
-    operations.cards.createCard({
-      ...values,
-    })(dispatch);
+    const formData: any = processFormData(values);
+    formData.cardNumber = formData.cardNumber.replace(' ', '');
+    operations.cards.createCard(formData)(dispatch);
   };
 
   return (

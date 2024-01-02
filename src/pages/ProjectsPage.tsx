@@ -22,7 +22,7 @@ const ProjectsPage = () => {
     <BasePage>
       <Breadcrumb>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>Projets</Breadcrumb.Item>
+        <Breadcrumb.Item active>{t('projects')}</Breadcrumb.Item>
       </Breadcrumb>
       <h4>{t('projects')}</h4>
       <ProjectsView
