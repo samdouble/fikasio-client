@@ -33,7 +33,10 @@ const ProjectPane = ({
         className="mb-3"
         defaultActiveKey={defaultTab || 'tasks'}
       >
-        <Tab eventKey="tasks" title={`${t('tasks')} (${projectTasksIncomplete?.length})`}>
+        <Tab
+          eventKey="tasks"
+          title={`${t('tasks')} (${projectTasksIncomplete?.length})`}
+        >
           <TasksView
             onTaskClick={
               taskId => operations.pane.setPaneContent({
@@ -48,14 +51,20 @@ const ProjectPane = ({
             tasks={projectTasks}
           />
         </Tab>
-        <Tab eventKey="objectives" title={`Objectifs (${projectObjectives?.length})`}>
+        <Tab
+          eventKey="objectives"
+          title={`Objectifs (${projectObjectives?.length})`}
+        >
           <ObjectivesView
             objectives={projectObjectives}
             showAddButton
             showCompletionFilter
           />
         </Tab>
-        <Tab eventKey="workload" title="Charge de travail">
+        <Tab
+          eventKey="workload"
+          title="Charge de travail"
+        >
           <Table>
             <tbody>
               <tr>
@@ -64,7 +73,10 @@ const ProjectPane = ({
             </tbody>
           </Table>
         </Tab>
-        <Tab eventKey="stats" title="Statistiques">
+        <Tab
+          eventKey="stats"
+          title="Statistiques"
+        >
           <Stats
             projectId={project?.id}
           />

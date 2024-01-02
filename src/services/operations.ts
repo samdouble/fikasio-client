@@ -1,4 +1,5 @@
 import { operations as activities } from './activities';
+import { operations as cards } from './cards';
 import { operations as entities } from './entities';
 import { operations as events } from './events';
 import { operations as items } from './items';
@@ -14,6 +15,7 @@ import { operations as templates } from './templates';
 
 const operations = {
   activities,
+  cards,
   entities,
   events,
   items,

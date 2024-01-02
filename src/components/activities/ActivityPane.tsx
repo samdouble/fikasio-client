@@ -99,8 +99,8 @@ const ActivityPane = ({
 
   return (
     <Form
-      keepDirtyOnReinitialize
       initialValues={activityWithInitialValues}
+      keepDirtyOnReinitialize
       mutators={{
         ...arrayMutators,
         setComments: (args, state, utils) => {
@@ -189,7 +189,7 @@ const ActivityPane = ({
           <br />
           <br />
           <RBForm.Group>
-            <RBForm.Label>Durée</RBForm.Label>
+            <RBForm.Label>{t('duration')}</RBForm.Label>
             <table>
               <tbody>
                 <tr>
@@ -209,8 +209,8 @@ const ActivityPane = ({
                       name="durationUnits"
                       style={{ width: 250 }}
                     >
-                      <option value="minutes">minutes</option>
-                      <option value="hours">heures</option>
+                      <option value="minutes">{t('minutes')}</option>
+                      <option value="hours">{t('hours')}</option>
                     </Field>
                   </td>
                 </tr>
@@ -218,7 +218,7 @@ const ActivityPane = ({
             </table>
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Modèle</RBForm.Label>
+            <RBForm.Label>{t('template')}</RBForm.Label>
             <Field
               className="form-control"
               component="select"

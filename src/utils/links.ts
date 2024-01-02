@@ -1,7 +1,6 @@
 const home = () => '/home';
 const login = () => '/login';
 const signup = () => '/signup';
-const documentation = () => '/docs';
 const privacy = () => '/privacy';
 const tos = () => '/tos';
 const dashboard = () => '/dashboard';
@@ -26,7 +25,6 @@ const paths = {
   home: home(),
   login: login(),
   signup: signup(),
-  documentation: documentation(),
   privacy: privacy(),
   tos: tos(),
   dashboard: dashboard(),
@@ -52,7 +50,6 @@ const links = {
   home,
   login: () => login(),
   signup: () => signup(),
-  documentation: () => documentation(),
   privacy: () => privacy(),
   tos: () => tos(),
   dashboard: () => dashboard(),

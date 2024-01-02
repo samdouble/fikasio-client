@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import activities from './activities';
+import cards from './cards';
 import entities from './entities';
 import events from './events';
 import items from './items';
@@ -16,6 +17,7 @@ import templates from './templates';
 
 export default combineReducers({
   activities,
+  cards,
   entities,
   events,
   items,

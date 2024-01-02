@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import { useTranslation } from 'react-i18next';
 import { Entity } from 'services/entities/types';
 import { RootState } from 'services/store';
 import ItemsView from '../items/ItemsView';
@@ -17,6 +18,7 @@ const EntityView = ({
   defaultTab,
   entity,
 }: EntityViewProps) => {
+  const { t } = useTranslation();
   const items = useSelector((state: RootState) => state.items);
 
   return (
@@ -27,7 +29,7 @@ const EntityView = ({
       >
         <Tab
           eventKey="ITEMS"
-          title="Items"
+          title={t('items')}
         >
           <ItemsView
             entity={entity}
@@ -36,7 +38,7 @@ const EntityView = ({
         </Tab>
         <Tab
           eventKey="INFOS"
-          title="Informations"
+          title={t('informations')}
         >
           <EntityInformationsForm
             entity={entity}
@@ -44,7 +46,7 @@ const EntityView = ({
         </Tab>
         <Tab
           eventKey="FIELDS"
-          title="Champs"
+          title={t('fields')}
         >
           <EntityFieldsTable
             entity={entity}

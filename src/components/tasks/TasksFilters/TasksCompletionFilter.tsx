@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface TasksCompletionFilterProps {
   onChange: (value: string) => void;
@@ -9,6 +10,8 @@ const TasksCompletionFilter = ({
   onChange,
   style,
 }: TasksCompletionFilterProps) => {
+  const { t } = useTranslation();
+
   return (
     <select
       className="form-control"
@@ -18,10 +21,10 @@ const TasksCompletionFilter = ({
         width: 250,
       }}
     >
-      <option value="INCOMPLETE">Tâches non complétées</option>
-      <option value="COMPLETE">Tâches complétées</option>
-      <option value="ARCHIVED">Tâches archivées</option>
-      <option value="ALL">Toutes les tâches</option>
+      <option value="INCOMPLETE">{t('incompleteTasks')}</option>
+      <option value="COMPLETE">{t('completeTasks')}</option>
+      <option value="ARCHIVED">{t('archivedTasks')}</option>
+      <option value="ALL">{t('allTasks')}</option>
     </select>
   );
 };

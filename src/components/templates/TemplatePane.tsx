@@ -62,7 +62,7 @@ const TemplatePane = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Champs</RBForm.Label>
+            <RBForm.Label>{t('fields')}</RBForm.Label>
             <FieldArray name="fields">
               {({ fields }) => (
                 <div>

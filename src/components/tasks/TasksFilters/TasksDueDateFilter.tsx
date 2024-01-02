@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface TasksDueDateFilterProps {
   onChange: (value: string) => void;
@@ -9,6 +10,8 @@ const TasksDueDateFilter = ({
   onChange,
   style,
 }: TasksDueDateFilterProps) => {
+  const { t } = useTranslation();
+
   return (
     <select
       className="form-control"
@@ -18,9 +21,9 @@ const TasksDueDateFilter = ({
         width: 250,
       }}
     >
-      <option value="ALL">Toutes les tâches</option>
-      <option value="FOR_TODAY">Tâches pour aujourd'hui</option>
-      <option value="FOR_THISWEEK">Tâches pour cette semaine</option>
+      <option value="ALL">{t('allTasks')}</option>
+      <option value="FOR_TODAY">{t('tasksDueForToday')}</option>
+      <option value="FOR_THISWEEK">{t('tasksDueForThisWeek')}</option>
     </select>
   );
 };

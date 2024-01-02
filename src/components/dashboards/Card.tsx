@@ -5,7 +5,7 @@ const Card = ({ children }) => {
     <div
       style={{
         border: '1px solid #ababab',
-        boxShadow: '5px 10px 8px #888888',
+        // boxShadow: '2px 4px 3px #888888',
         display: 'inline-block',
         padding: 20,
         margin: 10,

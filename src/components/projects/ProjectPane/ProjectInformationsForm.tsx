@@ -56,7 +56,7 @@ const ProjectInformationsForm = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Description</RBForm.Label>
+            <RBForm.Label>{t('description')}</RBForm.Label>
             <Field
               className="form-control"
               component="textarea"
@@ -64,7 +64,7 @@ const ProjectInformationsForm = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Couleur</RBForm.Label>
+            <RBForm.Label>{t('color')}</RBForm.Label>
             <br />
             <Field
               name="color"
@@ -86,7 +86,7 @@ const ProjectInformationsForm = ({
                       }}
                       variant={!color ? 'link' : ''}
                     >
-                      Sélectionner
+                      {t('select')}
                     </Button>
                     {
                       isColorpickerOpen && (
@@ -112,7 +112,7 @@ const ProjectInformationsForm = ({
           <RBForm.Group
             className="projectRow_dueAt"
           >
-            <RBForm.Label>Échéance</RBForm.Label>
+            <RBForm.Label>{t('deadline')}</RBForm.Label>
             <br />
             <Field
               component={
@@ -140,7 +140,7 @@ const ProjectInformationsForm = ({
           <br />
           <br />
           <RBForm.Group>
-            <RBForm.Label>Membres</RBForm.Label>
+            <RBForm.Label>{t('members')}</RBForm.Label>
             <FieldArray name="members">
               {({ fields }) => (
                 <div>

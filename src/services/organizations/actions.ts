@@ -210,4 +210,3 @@ export const deleteMemberResponse = (payload: { organizationId: string, memberId
   type: OrganizationActionTypes.DELETE_ORGANIZATION_MEMBER_RESPONSE,
   payload,
 });
-

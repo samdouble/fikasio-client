@@ -85,7 +85,9 @@ const TopMenu = () => {
                       {t('settings')}
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href={links.paths.documentation}>
+                    <NavDropdown.Item
+                      href="https://fikas.io/docs"
+                    >
                       <FontAwesomeIcon
                         icon="book"
                         size="lg"
@@ -110,7 +112,9 @@ const TopMenu = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                 ) : (
-                  <Nav.Link href={links.paths.login}>{t('login')}</Nav.Link>
+                  <Nav.Link href={links.paths.login}>
+                    {t('login')}
+                  </Nav.Link>
                 )
               }
             </Nav>

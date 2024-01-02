@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
+import { useTranslation } from 'react-i18next';
 import { getEvents } from 'services/events/endpoints';
 import LineChart from '../../dashboards/LineChart';
 import { getEstimatedCompletionDate } from '../utils';
@@ -14,6 +15,7 @@ export interface ObjectiveProgressEvent {
 const ObjectiveStats = ({
   objective,
 }) => {
+  const { t } = useTranslation();
   const [events, setEvents] = useState<ObjectiveProgressEvent[]>([]);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const ObjectiveStats = ({
             }}
           >
             <div>
-              <b>Dernière mise à jour du progrès</b>
+              <b>{t('lastUpdate')}</b>
               <br />
               Il y a { timeSinceLastProgressEvent ? Math.round(timeSinceLastProgressEvent) : '-' } jours
             </div>
@@ -64,7 +66,7 @@ const ObjectiveStats = ({
               { Math.round(100 * completionRatio) }%
             </div>
             <div>
-              <b>Temps restant</b>
+              <b>{t('timeLeft')}</b>
               <br />
               <div
                 style={{
@@ -75,7 +77,7 @@ const ObjectiveStats = ({
               </div>
             </div>
             <div>
-              <b>Date estimée de complétion</b>
+              <b>{t('estimatedCompletionDate')}</b>
               <br />
               <div
                 style={{
@@ -87,7 +89,7 @@ const ObjectiveStats = ({
               </div>
             </div>
             <div>
-              <b>Rythme requis</b>
+              <b>{t('requiredPace')}</b>
               <br />
               <div>
                 { Math.round((goal - currentProgress) / daysLeft) } / jour

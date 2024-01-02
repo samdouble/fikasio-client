@@ -56,7 +56,7 @@ const ObjectiveInformations = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Description</RBForm.Label>
+            <RBForm.Label>{t('description')}</RBForm.Label>
             <FieldArray
               className="form-control"
               component="textarea"
@@ -64,7 +64,7 @@ const ObjectiveInformations = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Objectif</RBForm.Label>
+            <RBForm.Label>{t('objective')}</RBForm.Label>
             <Field
               className="form-control"
               component="input"
@@ -80,12 +80,12 @@ const ObjectiveInformations = ({
               style={{ width: 228 }}
             >
               <option />
-              <option value="DAILY">Quotidiennement</option>
-              <option value="WEEKLY">Hebdomadairement</option>
+              <option value="DAILY">{t('daily')}</option>
+              <option value="WEEKLY">{t('weekly')}</option>
             </Field>
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Échéance</RBForm.Label>
+            <RBForm.Label>{t('deadline')}</RBForm.Label>
             <br />
             <Field
               component={
@@ -112,7 +112,7 @@ const ObjectiveInformations = ({
           <br />
           <br />
           <RBForm.Group>
-            <RBForm.Label>Progrès initial</RBForm.Label>
+            <RBForm.Label>{t('initialProgress')}</RBForm.Label>
             <Field
               className="form-control"
               component="input"
@@ -121,7 +121,7 @@ const ObjectiveInformations = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Projets</RBForm.Label>
+            <RBForm.Label>{t('projects')}</RBForm.Label>
             <FieldArray
               className="form-control"
               defaultValue={objectiveProjects}

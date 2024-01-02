@@ -13,7 +13,6 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import DashboardPage from './pages/DashboardPage';
-import DocumentationPage from './pages/DocumentationPage';
 import EntitiesPage from './pages/EntitiesPage';
 import EntityPage from './pages/EntityPage';
 import EntityUpsertPage from './pages/EntityUpsertPage';
@@ -50,7 +49,6 @@ const App = () => {
         <Switch>
           <Route component={LoginPage} path={links.paths.login} />
           <Route component={SignupPage} path={links.paths.signup} />
-          <Route component={DocumentationPage} path={links.paths.documentation} />
           <PrivateRoute
             component={HomePage}
             exact

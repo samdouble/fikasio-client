@@ -95,7 +95,7 @@ const TaskInformationsForm = ({
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <RBForm.Group>
-            <RBForm.Label>Détails</RBForm.Label>
+            <RBForm.Label>{t('details')}</RBForm.Label>
             <Field
               component="textarea"
               name="details"
@@ -136,7 +136,7 @@ const TaskInformationsForm = ({
             */
           }
           <RBForm.Group>
-            <RBForm.Label>Date de début</RBForm.Label>
+            <RBForm.Label>{t('startDate')}</RBForm.Label>
             <br />
             <Field
               component={
@@ -164,7 +164,7 @@ const TaskInformationsForm = ({
           <br />
           <br />
           <RBForm.Group>
-            <RBForm.Label>Échéance</RBForm.Label>
+            <RBForm.Label>{t('dueDate')}</RBForm.Label>
             <br />
             <Field
               component={
@@ -192,7 +192,7 @@ const TaskInformationsForm = ({
           <br />
           <br />
           <RBForm.Group>
-            <RBForm.Label>Temps de complétion estimé</RBForm.Label>
+            <RBForm.Label>{t('estimatedCompletionTime')}</RBForm.Label>
             <table>
               <tbody>
                 <tr>
@@ -212,8 +212,8 @@ const TaskInformationsForm = ({
                       name="estimatedCompletionTimeUnits"
                       style={{ width: 250 }}
                     >
-                      <option value="minutes">minutes</option>
-                      <option value="hours">heures</option>
+                      <option value="minutes">{t('minutes')}</option>
+                      <option value="hours">{t('hours')}</option>
                     </Field>
                   </td>
                 </tr>
@@ -221,7 +221,7 @@ const TaskInformationsForm = ({
             </table>
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Projets</RBForm.Label>
+            <RBForm.Label>{t('projects')}</RBForm.Label>
             <FieldArray
               className="form-control"
               defaultValue={taskProjects}
@@ -284,7 +284,7 @@ const TaskInformationsForm = ({
             </FieldArray>
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Récurrence</RBForm.Label>
+            <RBForm.Label>{t('recurrence')}</RBForm.Label>
             <Switch
               onChange={setHasRecurrence}
               style={{ marginLeft: 5 }}
