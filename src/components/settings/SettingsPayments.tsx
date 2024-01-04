@@ -21,7 +21,7 @@ const SettingsPayments = () => {
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);
-    formData.cardNumber = formData.cardNumber.replace(' ', '');
+    formData.cardNumber = formData.cardNumber.replaceAll(' ', '');
     operations.cards.createCard(formData)(dispatch);
   };
 
