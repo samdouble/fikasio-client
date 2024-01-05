@@ -60,6 +60,7 @@ const fr = {
   or: 'ou',
   organizations: 'Organisations',
   password: 'Mot de passe',
+  pay: 'Payer',
   payments: 'Paiements',
   privacy: 'Confidentialité',
   progress: 'Progrès',

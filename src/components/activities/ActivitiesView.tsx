@@ -73,15 +73,15 @@ const ActivitiesView = ({
           }}
         />
         <Button
-          variant="outline-secondary"
           active={viewMode === 'LIST'}
           onClick={() => setViewMode('LIST')}
+          variant="outline-secondary"
         >
           <FontAwesomeIcon icon="list" size="1x" />
         </Button>
         <Button
-          onClick={() => setViewMode('CALENDAR')}
           active={viewMode === 'CALENDAR'}
+          onClick={() => setViewMode('CALENDAR')}
           variant="outline-secondary"
         >
           <FontAwesomeIcon icon="calendar-alt" size="1x" />

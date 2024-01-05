@@ -60,6 +60,7 @@ const en = {
   or: 'or',
   organizations: 'Organizations',
   password: 'Password',
+  pay: 'Pay',
   payments: 'Payments',
   privacy: 'Privacy',
   progress: 'Progress',
