@@ -9,7 +9,6 @@ const options = {
   amount: 1099,
   currency: 'usd',
   mode: 'subscription' as 'subscription',
-  // Fully customizable with appearance API.
   appearance: {
     /*...*/
   },

@@ -6,6 +6,7 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { createCard } from 'services/cards/endpoints';
 
 const CheckoutForm = () => {
   const { t } = useTranslation();
@@ -14,27 +15,21 @@ const CheckoutForm = () => {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = async event => {
-    event.preventDefault();
+  const handleSubmit = async e => {
+    e.preventDefault();
 
     if (elements == null) {
       return;
     }
 
-    // Trigger form validation and wallet collection
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      // Show error to your customer
       setErrorMessage(submitError.message || null);
       return;
     }
 
-    // Create the PaymentIntent and obtain clientSecret from your server endpoint
-    const res = await fetch('/create-intent', {
-      method: 'POST',
-    });
-
-    const { client_secret: clientSecret } = await res.json();
+    const clientSecret = await createCard({})
+      .then(res => res.card.client_secret);
 
     if (stripe) {
       const { error } = await stripe.confirmPayment({
