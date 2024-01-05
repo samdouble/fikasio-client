@@ -58,8 +58,8 @@ const CheckoutForm = () => {
       <PaymentElement />
       <Button
         disabled={!stripe || !elements}
-        // onClick={() => setViewMode('LIST')}
-        variant="outline-secondary"
+        onClick={e => handleSubmit(e)}
+        variant="success"
       >
         {t('pay')}
       </Button>
