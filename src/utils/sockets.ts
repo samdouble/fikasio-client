@@ -1,4 +1,4 @@
-import io, { Socket } from 'socket.io-client';
+// import io, { Socket } from 'socket.io-client';
 import WebSocket from 'ws';
 
 const ws: WebSocket = new WebSocket('wss://api.fikas.io/');
@@ -6,16 +6,16 @@ const ws: WebSocket = new WebSocket('wss://api.fikas.io/');
 ws.on('error', console.error);
 
 ws.on('open', function open() {
-  console.log('connected');
+  console.info('connected');
   ws.send(Date.now());
 });
 
 ws.on('close', function close() {
-  console.log('disconnected');
+  console.info('disconnected');
 });
 
 ws.on('message', function message(data) {
-  console.log(`Round-trip time: ${Date.now()} ms: ${data}`);
+  console.info(`Round-trip time: ${Date.now()} ms: ${data}`);
 
   setTimeout(function timeout() {
     ws.send(Date.now());
