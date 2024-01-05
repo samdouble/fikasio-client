@@ -1,9 +1,41 @@
 import io, { Socket } from 'socket.io-client';
+import WebSocket from 'ws';
 
+const ws: WebSocket = new WebSocket('wss://api.fikas.io/');
+
+ws.on('error', console.error);
+
+ws.on('open', function open() {
+  console.log('connected');
+  ws.send(Date.now());
+});
+
+ws.on('close', function close() {
+  console.log('disconnected');
+});
+
+ws.on('message', function message(data) {
+  console.log(`Round-trip time: ${Date.now()} ms: ${data}`);
+
+  setTimeout(function timeout() {
+    ws.send(Date.now());
+  }, 500);
+});
+
+export function initializeSocket() {
+}
+
+export function getSocket(): WebSocket {
+  return ws;
+}
+
+/*
 let socket: Socket | null = null;
 
 export function initializeSocket() {
-  socket = io('wss://api.fikas.io', { transports: ['websocket', 'polling'] });
+  socket = io('wss://api.fikas.io', {
+    transports: ['websocket', 'polling'],
+  });
   socket.connect();
   socket.on('connect', () => {
     // console.log('CONNECTED');
@@ -19,3 +51,4 @@ export function initializeSocket() {
 export function getSocket(): Socket | null {
   return socket;
 }
+*/

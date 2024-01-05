@@ -84,7 +84,8 @@
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3",
     "use-previous": "^1.2.0",
-    "use-timeout": "^1.1.0"
+    "use-timeout": "^1.1.0",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.30.3",
