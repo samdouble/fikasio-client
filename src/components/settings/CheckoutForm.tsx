@@ -29,7 +29,7 @@ const CheckoutForm = () => {
     }
 
     const clientSecret = await createCard({})
-      .then(res => res.card.client_secret);
+      .then(res => res.card.stripePaymentIntent.client_secret);
 
     if (stripe) {
       const { error } = await stripe.confirmPayment({
