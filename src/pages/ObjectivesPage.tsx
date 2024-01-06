@@ -14,7 +14,6 @@ import './style.scss';
 const ObjectivesPage = () => {
   const dispatch = useDispatch();
   const objectives = useSelector((state: RootState) => state.objectives);
-  const metrics = useSelector((state: RootState) => state.metrics);
   const projects = useSelector((state: RootState) => state.projects);
   const { t } = useTranslation();
 
@@ -35,10 +34,9 @@ const ObjectivesPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[objectives, metrics, projects]}
+      resources={[objectives, projects]}
       resourceFetchers={[
         () => dispatch(operations.objectives.fetchObjectives()),
-        () => dispatch(operations.metrics.fetchMetrics()),
         () => dispatch(operations.projects.fetchProjects()),
       ]}
       getContents={getPage}

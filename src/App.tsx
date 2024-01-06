@@ -18,7 +18,6 @@ import EntitiesPage from './pages/EntitiesPage';
 import EntityPage from './pages/EntityPage';
 import EntityUpsertPage from './pages/EntityUpsertPage';
 import ItemUpsertPage from './pages/ItemUpsertPage';
-import MetricsPage from './pages/MetricsPage';
 import NotificationsPage from './pages/NotificationsPage';
 import ObjectivesPage from './pages/ObjectivesPage';
 import OrganizationPage from './pages/OrganizationPage';
@@ -67,7 +66,6 @@ const App = () => {
           <PrivateRoute component={ItemUpsertPage} path={links.paths.itemUpsert} />
           <PrivateRoute component={EntityPage} path={links.paths.entity} />
           <PrivateRoute component={EntitiesPage} path={links.paths.entities} />
-          <PrivateRoute component={MetricsPage} path={links.paths.metrics} />
           <PrivateRoute component={NotificationsPage} path={links.paths.notifications} />
           <PrivateRoute component={ObjectivesPage} path={links.paths.objectives} />
           <PrivateRoute component={OrganizationPage} path={links.paths.organization} />

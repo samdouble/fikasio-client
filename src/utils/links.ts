@@ -8,7 +8,6 @@ const entities = () => '/entities';
 const entity = id => `/entities/${id}`;
 const entityUpsert = () => `/entities/create`;
 const itemUpsert = (entityId, itemId) => `/entities/${entityId}/items/${itemId}`;
-const metrics = () => '/metrics';
 const notifications = () => '/notifications';
 const objectives = () => '/objectives';
 const organizations = () => '/organizations';
@@ -32,7 +31,6 @@ const paths = {
   entity: entity(':id'),
   entityUpsert: entityUpsert(),
   itemUpsert: itemUpsert(':entityId', ':itemId'),
-  metrics: metrics(),
   notifications: notifications(),
   objectives: objectives(),
   organizations: organizations(),
@@ -57,7 +55,6 @@ const links = {
   entity: id => entity(id),
   entityUpsert: () => entityUpsert(),
   itemUpsert: (entityId, itemId) => itemUpsert(entityId, itemId),
-  metrics: () => metrics(),
   notifications: () => notifications(),
   objectives: () => objectives(),
   organizations: () => organizations(),

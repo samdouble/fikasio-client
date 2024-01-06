@@ -5,7 +5,6 @@ import entities from './entities';
 import events from './events';
 import items from './items';
 import login from './login';
-import metrics from './metrics';
 import objectives from './objectives';
 import organizations from './organizations';
 import pane from './pane';
@@ -22,7 +21,6 @@ export default combineReducers({
   events,
   items,
   login,
-  metrics,
   objectives,
   organizations,
   pane,

@@ -11,7 +11,6 @@ import './style.scss';
 
 const HomePage = () => {
   const { t } = useTranslation();
-  const metrics = useSelector((state: RootState) => state.metrics);
   const objectives = useSelector((state: RootState) => state.objectives);
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
@@ -51,11 +50,10 @@ const HomePage = () => {
       getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.tasks.fetchTasks()),
-        () => dispatch(operations.metrics.fetchMetrics()),
         () => dispatch(operations.objectives.fetchObjectives()),
         () => dispatch(operations.projects.fetchProjects()),
       ]}
-      resources={[metrics, objectives, projects, tasks]}
+      resources={[objectives, projects, tasks]}
     />
   );
 }

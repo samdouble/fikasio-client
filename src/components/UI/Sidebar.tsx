@@ -71,12 +71,6 @@ const Sidebar = () => {
                 }}
               />
               <Tooltip
-                id="metrics"
-                style={{
-                  zIndex: 1000,
-                }}
-              />
-              <Tooltip
                 id="timesheet"
                 style={{
                   zIndex: 1000,
@@ -240,24 +234,6 @@ const Sidebar = () => {
                 }}
               />
               {t('entities')}
-            </MenuItem>
-            <MenuItem
-              component={(
-                <Link
-                  to={links.paths.metrics}
-                />
-              )}
-              data-tooltip-content={t('metrics')}
-              data-tooltip-id="metrics"
-            >
-              <FontAwesomeIcon
-                icon="ruler"
-                size="sm"
-                style={{
-                  marginRight: 15,
-                }}
-              />
-              {t('metrics')}
             </MenuItem>
             <MenuItem
               component={(

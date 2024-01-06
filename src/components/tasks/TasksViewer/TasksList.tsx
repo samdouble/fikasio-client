@@ -97,7 +97,7 @@ const TasksList = ({
             })
             .map(task => (
               <TaskRow
-                isSelected={!!selectedTasks.find(t => task.id === t.id)}
+                isSelected={!!selectedTasks.find(t1 => task.id === t1.id)}
                 key={`${task.id}-${task.dueAt}`}
                 onAddTask={addTask}
                 onClick={onTaskClick}

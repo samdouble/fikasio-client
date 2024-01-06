@@ -4,7 +4,6 @@ import { operations as entities } from './entities';
 import { operations as events } from './events';
 import { operations as items } from './items';
 import { operations as login } from './login';
-import { operations as metrics } from './metrics';
 import { operations as objectives } from './objectives';
 import { operations as organizations } from './organizations';
 import { operations as pane } from './pane';
@@ -20,7 +19,6 @@ const operations = {
   events,
   items,
   login,
-  metrics,
   objectives,
   organizations,
   pane,
