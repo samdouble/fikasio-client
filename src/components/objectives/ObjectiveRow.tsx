@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
+import { Checkbox } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import Dot from 'components/UI/Dot';
 import DropdownToggle from 'components/UI/DropdownToggle';
@@ -12,7 +13,9 @@ import { operations } from 'services';
 import { getEstimatedCompletionDate } from './utils';
 
 const ObjectiveRow = ({
+  isSelected,
   objective,
+  onSelect,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -26,7 +29,18 @@ const ObjectiveRow = ({
   const color = (isLate ? '#ff0000' : (isEstimatedLate ? '#dfa901' : '#5b995b'));
 
   return (
-    <tr>
+    <tr className="objectiveRow">
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
+        <Checkbox
+          isChecked={isSelected}
+          onClick={() => onSelect(objective)}
+        />
+      </td>
       <td
         onClick={() => operations.pane.setPaneContent({
           type: 'OBJECTIVE',

@@ -59,6 +59,9 @@ const CheckoutForm = () => {
       <Button
         disabled={!stripe || !elements}
         onClick={e => handleSubmit(e)}
+        style={{
+          float: 'right',
+        }}
         variant="success"
       >
         {t('pay')}

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { operations } from 'services';
+import { Objective } from 'services/objectives/types';
 import ObjectivesList from './ObjectivesList';
 import AddObjectiveButton from './AddObjectiveButton';
 import ObjectivesCompletionFilter from './ObjectivesCompletionFilter';
@@ -10,10 +13,26 @@ const ObjectivesView = ({
   showAddButton,
   showCompletionFilter,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [selectedObjectives, setSelectedObjectives] = useState<Objective[]>([]);
   const [showCompleteObjectives, setShowCompleteObjectives] = useState(false);
   const [showIncompleteObjectives, setShowIncompleteObjectives] = useState(true);
   const [showArchivedObjectives, setShowArchivedObjectives] = useState(false);
+
+  const handleSelectObjective = objective => {
+    const isObjectiveAlreadySelected = selectedObjectives.find(a => a.id === objective.id);
+    if (isObjectiveAlreadySelected) {
+      setSelectedObjectives([
+        ...selectedObjectives.filter(a => a.id !== objective.id),
+      ]);
+    } else {
+      setSelectedObjectives([
+        ...selectedObjectives,
+        objective,
+      ]);
+    }
+  };
 
   const handleChangeCompletionFilter = val => {
     if (val === 'ALL') {
@@ -65,10 +84,45 @@ const ObjectivesView = ({
       <br />
       <ObjectivesList
         objectives={objectives}
+        onObjectiveSelect={handleSelectObjective}
+        onSelectAllObjectives={objectivesArray => setSelectedObjectives(objectivesArray)}
+        selectedObjectives={selectedObjectives}
         showCompleteObjectives={showCompleteObjectives}
         showIncompleteObjectives={showIncompleteObjectives}
         showArchivedObjectives={showArchivedObjectives}
       />
+      {
+        selectedObjectives.length > 0 && (
+          <div
+            style={{
+              backgroundColor: '#7E5B9A',
+              bottom: 50,
+              color: 'white',
+              height: 100,
+              left: '22%',
+              margin: 'auto',
+              padding: 10,
+              position: 'fixed',
+              width: '60%',
+            }}
+          >
+            <FontAwesomeIcon
+              icon="times"
+              onClick={() => {
+                setSelectedObjectives([]);
+              }}
+              style={{
+                cursor: 'pointer',
+                marginRight: 10,
+                width: 25,
+              }}
+            />
+            <b>
+              {t('xSelectedObjectives', { count: selectedObjectives.length })}
+            </b>
+          </div>
+        )
+      }
     </>
   );
 };

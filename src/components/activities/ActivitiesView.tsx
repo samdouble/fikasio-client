@@ -14,10 +14,10 @@ const ActivitiesView = ({
   date,
   onActivityClick,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [viewMode, setViewMode] = useState('LIST');
   const [selectedActivities, setSelectedActivities] = useState<Activity[]>([]);
-  const { t } = useTranslation();
 
   const addActivity = async activity => dispatch(operations.activities.createActivity(activity));
 
