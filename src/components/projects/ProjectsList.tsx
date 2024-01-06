@@ -35,7 +35,7 @@ const ProjectsList = ({
         {
           projects
             .map(project => {
-              const projectTasks = tasks?.filter(task => task.projects.some(p => p.id === project.id));
+              const projectTasks = tasks?.filter(task => task.projects?.some(p => p.id === project.id));
               const completionRatio = calculateCompletionPercentage(projectTasks);
               const incompleteTime = calculateIncompleteTime(projectTasks);
               return {

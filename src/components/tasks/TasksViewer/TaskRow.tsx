@@ -11,7 +11,18 @@ import ProjectTag from 'components/projects/ProjectTag';
 import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
+import { Task } from 'services/tasks/types';
 import AssigneeButton from './AssigneeButton';
+
+export interface TaskRowProps {
+  isSelected?: boolean;
+  onAddTask: (task: Task) => Promise<void>;
+  onEnterProgress: (task: Task) => Promise<void>;
+  onClick: (taskId: string) => Promise<void>;
+  onSelect: (task: Task) => Promise<void>;
+  projectId?: string;
+  task: any;
+}
 
 const TaskRow = ({
   isSelected,
@@ -20,10 +31,12 @@ const TaskRow = ({
   onClick,
   onSelect,
   projectId,
-  task,
-}) => {
+  task: pTask,
+}: TaskRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const [task, setTask] = useState(pTask);
   const [description, setIDescription] = useState((task && task.description) || '');
   const [hasFocus, setHasFocus] = useState(false);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
@@ -116,9 +129,16 @@ const TaskRow = ({
           onKeyDown={e => handleKeyDownDescription(e)}
           onKeyUp={e => handleKeyUpDescription(e, task)}
           onSave={async value => {
-            operations.tasks.patchTask(task.id, {
-              description: value,
-            })(dispatch);
+            if (task.id) {
+              operations.tasks.patchTask(task.id, {
+                description: value,
+              })(dispatch);
+            } else {
+              operations.tasks.createTask({
+                description: value,
+              })(dispatch)
+                .then(resultTask => setTask(resultTask));
+            }
           }}
           style={{
             float: 'left',
@@ -159,6 +179,7 @@ const TaskRow = ({
               padding: 3,
             }}
           >
+            <option />
             <option value="Doing">{t('doing')}</option>
             <option value="Blocked">{t('blocked')}</option>
             <option value="Completed">{t('completed')}</option>

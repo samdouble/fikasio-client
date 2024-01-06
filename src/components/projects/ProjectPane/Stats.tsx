@@ -19,7 +19,7 @@ const Stats = ({
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const project = (projects || []).find(p => p.id === projectId);
-  const projectTasks = tasks?.filter(task => task.projects.some(tp => tp.id === project?.id));
+  const projectTasks = tasks?.filter(task => task.projects?.some(tp => tp.id === project?.id));
   const projectTasksIncomplete = projectTasks?.filter(task => task.status !== 'Completed');
   const hasUnspecifiedTasks = projectTasksIncomplete?.some(task => !task.dueAt || !task.estimatedCompletionTime);
   const completeTime = calculateCompleteTime(projectTasks);

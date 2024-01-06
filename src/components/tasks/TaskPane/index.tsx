@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
@@ -19,17 +19,22 @@ const TaskPane = ({
 }: TaskPaneProps) => {
   const dispatch = useDispatch();
   const tasks = useSelector((state: RootState) => state.tasks);
-  const task = (tasks || []).find(t => t.id === id);
+  const [task, setTask] = useState((tasks || []).find(t => t.id === id));
 
   return (
     <>
       <AutosaveTextarea
         defaultValue={task?.description}
         onSave={async description => {
-          if (task) {
+          if (task && task.id) {
             operations.tasks.patchTask(task.id, {
               description,
             })(dispatch);
+          } else {
+            operations.tasks.createTask({
+              description,
+            })(dispatch)
+              .then(resultTask => setTask(resultTask));
           }
         }}
         style={{

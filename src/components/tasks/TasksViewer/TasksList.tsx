@@ -90,7 +90,20 @@ const TasksList = ({
       </thead>
       <tbody>
         {
-          tasksToShow.sort((t1, t2) => {
+          (!tasksToShow || !tasksToShow.length)
+            && (
+              <TaskRow
+                onAddTask={addTask}
+                onClick={onTaskClick}
+                onEnterProgress={onOpenProgressModal}
+                onSelect={onTaskSelect}
+                projectId={projectId}
+                task={{}}
+              />
+            )
+        }
+        {
+          tasksToShow?.sort((t1, t2) => {
               if (!t1.dueAt) return -1;
               if (!t2.dueAt) return 1;
               return t1.dueAt < t2.dueAt ? -1 : 1;
