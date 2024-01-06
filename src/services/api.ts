@@ -1,4 +1,5 @@
 import Route from 'route-parser';
+import envvars from 'utils/envvars';
 
 export class HttpResponseError extends Error {
   status: string;
@@ -54,7 +55,7 @@ const dataAsBodyPayload = data => {
 };
 
 const perform = async (endpoint, ressources) => {
-  const server = (process.env.NODE_ENV === 'production') ? 'https://api.fikas.io' : '';
+  const server = (process.env.NODE_ENV === 'production') ? envvars.apiServer : '';
   return fetch(`${server}/v1${endpoint}`, {
     ...ressources,
     credentials: 'include',

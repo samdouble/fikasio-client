@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon';
+import { operations } from 'services';
 import { Task } from 'services/tasks/types';
 import AddTaskButton from './AddTaskButton';
 import TasksFilters from './TasksFilters/TasksFilters';
@@ -21,6 +23,7 @@ interface TasksViewProps {
   filter?: TasksViewFilter;
   onTaskClick: (taskId: string) => void;
   projectId?: string;
+  shouldSetDueForToday?: boolean;
   showAddButton?: boolean;
   showCompletionFilter?: boolean;
   showDueDateFilter?: boolean;
@@ -31,17 +34,30 @@ const TasksView = ({
   filter: pFilter,
   onTaskClick,
   projectId,
+  shouldSetDueForToday,
   showAddButton,
   showCompletionFilter,
   showDueDateFilter,
   tasks,
 }: TasksViewProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [filter, setFilter] = useState<TasksViewFilter>({
     complete: false,
     ...pFilter,
   });
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
+
+  const addTask = async task => {
+    return operations.tasks.createTask({
+      ...task,
+      ...(shouldSetDueForToday && {
+        dueAt: DateTime.now()
+          .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+          .toISO(),
+      }),
+    })(dispatch);
+  };
 
   const handleChangeCompletionFilter = val => {
     if (val === 'ALL') {
@@ -149,6 +165,7 @@ const TasksView = ({
       />
       <TasksViewer
         filter={filter}
+        onAddTask={task => addTask(task)}
         onSelectAllTasks={tasksArray => setSelectedTasks(tasksArray)}
         onTaskClick={onTaskClick}
         onTaskSelect={handleSelectTask}

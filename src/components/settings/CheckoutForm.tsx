@@ -7,6 +7,7 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import { createCard } from 'services/cards/endpoints';
+import envvars from 'utils/envvars';
 
 const CheckoutForm = () => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const CheckoutForm = () => {
         elements,
         clientSecret,
         confirmParams: {
-          return_url: 'https://app.fikas.io/settings',
+          return_url: envvars.stripeConfirmationUrl,
         },
       });
   

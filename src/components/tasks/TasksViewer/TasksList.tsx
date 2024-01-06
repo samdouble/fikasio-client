@@ -48,7 +48,9 @@ const TasksList = ({
         if (resultTask) {
           const elementsWithClassname = document.getElementsByClassName(resultTask.id!);
           const nbElementsWithClassname = elementsWithClassname.length;
-          (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();
+          if (nbElementsWithClassname) {
+            (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();
+          }
         }
       });
   };
@@ -98,7 +100,11 @@ const TasksList = ({
                 onEnterProgress={onOpenProgressModal}
                 onSelect={onTaskSelect}
                 projectId={projectId}
-                task={{}}
+                task={{
+                  dueAt: DateTime.now()
+                    .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+                    .toISO(),
+                }}
               />
             )
         }

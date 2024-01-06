@@ -12,6 +12,7 @@ import links from 'utils/links';
 import Logo from 'images/logo.png';
 import { operations } from 'services';
 import { RootState } from 'services/store';
+import envvars from 'utils/envvars';
 import './style.scss';
 
 const TopMenu = () => {
@@ -86,7 +87,7 @@ const TopMenu = () => {
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item
-                      href="https://fikas.io/docs"
+                      href={envvars.documentationUrl}
                     >
                       <FontAwesomeIcon
                         icon="book"

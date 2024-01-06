@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { operations } from 'services';
 import TasksBoard from './TasksBoard';
 import TasksList from './TasksList';
 import ProgressModal from '../ProgressModal';
@@ -10,6 +8,7 @@ import './style.scss';
 
 const TasksViewer = ({
   filter,
+  onAddTask,
   onSelectAllTasks,
   onTaskClick,
   onTaskSelect,
@@ -20,11 +19,6 @@ const TasksViewer = ({
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [editedTask, setEditedTask] = useState(null);
   const [viewMode, setViewMode] = useState('LIST');
-  const dispatch = useDispatch();
-
-  const addTask = async task => {
-    return operations.tasks.createTask(task)(dispatch);
-  };
 
   const handleOpenProgressModal = task => {
     setShowProgressModal(true);
@@ -41,7 +35,7 @@ const TasksViewer = ({
     taskView = (
       <TasksBoard
         filter={filter}
-        // onAddTask={task => addTask(task)}
+        // onAddTask={onAddTask}
         // onOpenProgressModal={task => handleOpenProgressModal(task)}
         // onTaskClick={onTaskClick}
         // onTaskSelect={onTaskSelect}
@@ -53,7 +47,7 @@ const TasksViewer = ({
     taskView = (
       <TasksList
         filter={filter}
-        onAddTask={task => addTask(task)}
+        onAddTask={onAddTask}
         onOpenProgressModal={task => handleOpenProgressModal(task)}
         onSelectAllTasks={onSelectAllTasks}
         onTaskClick={onTaskClick}

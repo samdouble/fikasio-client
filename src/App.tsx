@@ -30,6 +30,7 @@ import TemplateUpsertPage from './pages/TemplateUpsertPage';
 import TemplatePage from './pages/TemplatePage';
 import TemplatesPage from './pages/TemplatesPage';
 import Page404 from './pages/Page404';
+import envvars from 'utils/envvars';
 import links from './utils/links';
 import './App.scss';
 
@@ -42,7 +43,7 @@ const App = () => {
   const location = useLocation();
   const loginState = useSelector((state: RootState) => state.login);
 
-  useWebSocket('wss://api.fikas.io/', {
+  useWebSocket(envvars.websocketServer, {
     onOpen: () => {
       console.info('WebSocket connection established.');
     },

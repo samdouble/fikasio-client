@@ -37,6 +37,7 @@ const HomePage = () => {
             id: taskId,
           })(dispatch)
         }
+        shouldSetDueForToday
         showAddButton
         showCompletionFilter
         showDueDateFilter
