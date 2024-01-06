@@ -55,7 +55,7 @@ const ObjectivesList = ({
           </th>
           <th>{t('description')}</th>
           <th style={{ width: 140 }}>{t('projects')}</th>
-          <th style={{ width: 80 }}>{t('progression')}</th>
+          <th style={{ width: 90 }}>{t('progress')}</th>
           <th style={{ width: 150 }}>{t('deadline')}</th>
           <th style={{ width: 35 }} />
         </tr>

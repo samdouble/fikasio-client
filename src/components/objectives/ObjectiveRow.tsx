@@ -67,7 +67,7 @@ const ObjectiveRow = ({
             ))
         }
       </td>
-      <td width={140}>
+      <td width={200}>
         {
           objective && objective.goal
             ? `${objective.progress || objective.initialProgress || 0} / ${objective.goal}`

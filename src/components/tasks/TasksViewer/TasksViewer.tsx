@@ -10,6 +10,7 @@ import './style.scss';
 
 const TasksViewer = ({
   filter,
+  onSelectAllTasks,
   onTaskClick,
   onTaskSelect,
   projectId,
@@ -54,6 +55,7 @@ const TasksViewer = ({
         filter={filter}
         onAddTask={task => addTask(task)}
         onOpenProgressModal={task => handleOpenProgressModal(task)}
+        onSelectAllTasks={onSelectAllTasks}
         onTaskClick={onTaskClick}
         onTaskSelect={onTaskSelect}
         projectId={projectId}

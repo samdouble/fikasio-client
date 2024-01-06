@@ -149,6 +149,7 @@ const TasksView = ({
       />
       <TasksViewer
         filter={filter}
+        onSelectAllTasks={tasksArray => setSelectedTasks(tasksArray)}
         onTaskClick={onTaskClick}
         onTaskSelect={handleSelectTask}
         projectId={projectId}
