@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { IconPack, library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import useWebSocket from 'react-use-websocket';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TopMenu from 'components/TopMenu';
 import Footer from 'components/UI/Footer';
@@ -41,6 +42,12 @@ library.add(
 const App = () => {
   const location = useLocation();
   const loginState = useSelector((state: RootState) => state.login);
+
+  useWebSocket('wss://api.fikas.io/', {
+    onOpen: () => {
+      console.info('WebSocket connection established.');
+    },
+  });
 
   return (
     <div className="App" id="App">
