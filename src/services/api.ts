@@ -119,9 +119,14 @@ export const patch = async (endpoint, params = {}, body = {}) => {
   );
 };
 
-export const del = async (endpoint, params = {}, query = {}) => {
+export const del = async (endpoint, params = {}, query = {}, body: any = undefined) => {
   const ressources = {
     method: 'DELETE',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }),
+    ...(body && { body: dataAsBodyPayload(body) }),
   };
   const route = new Route(endpoint);
   return perform(

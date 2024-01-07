@@ -28,6 +28,11 @@ export default function reducer(state: Task[] | null = null, action: TaskAction)
       });
     case TaskActionTypes.DELETE_TASK_RESPONSE:
       return state?.filter(task => (task.id !== action.payload.taskId));
+    case TaskActionTypes.DELETE_MANY_TASKS_RESPONSE:
+      return state?.filter(task => (
+        !task.id
+        || !action.payload.tasksIds.includes(task.id)
+      ));
     default:
       return state;
   }

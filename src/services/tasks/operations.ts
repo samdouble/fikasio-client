@@ -5,6 +5,7 @@ import {
   updateTask as APIupdateTask,
   patchTask as APIpatchTask,
   deleteTask as APIdeleteTask,
+  deleteManyTasks as APIdeleteManyTasks,
 } from './endpoints';
 import { fetchOnceOperation } from '../fetchOperation';
 import {
@@ -18,6 +19,8 @@ import {
   patchTaskResponse,
   deleteTaskRequest,
   deleteTaskResponse,
+  deleteManyTasksRequest,
+  deleteManyTasksResponse,
   TaskAction,
 } from './actions';
 import { Task } from './types';
@@ -69,12 +72,21 @@ const deleteTask = (id: string) => {
   };
 };
 
+const deleteManyTasks = (ids: string[]) => {
+  return (dispatch: TaskDispatch) => {
+    dispatch(deleteManyTasksRequest(ids));
+    return APIdeleteManyTasks(ids)
+      .then(res => dispatch(deleteManyTasksResponse({ ...res })));
+  };
+};
+
 const operations = {
   fetchTasks,
   createTask,
   updateTask,
   patchTask,
   deleteTask,
+  deleteManyTasks,
 };
 
 export default operations;

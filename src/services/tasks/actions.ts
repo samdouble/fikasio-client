@@ -11,6 +11,8 @@ export enum TaskActionTypes {
   PATCH_TASK_RESPONSE = 'PATCH_TASK_RESPONSE',
   DELETE_TASK_REQUEST = 'DELETE_TASK_REQUEST',
   DELETE_TASK_RESPONSE = 'DELETE_TASK_RESPONSE',
+  DELETE_MANY_TASKS_REQUEST = 'DELETE_MANY_TASKS_REQUEST',
+  DELETE_MANY_TASKS_RESPONSE = 'DELETE_MANY_TASKS_RESPONSE',
 }
 
 export type TaskAction =
@@ -23,7 +25,9 @@ export type TaskAction =
   | { type: TaskActionTypes.PATCH_TASK_REQUEST; payload: { id: string; task: Partial<Task> } }
   | { type: TaskActionTypes.PATCH_TASK_RESPONSE; payload: { task: Task } }
   | { type: TaskActionTypes.DELETE_TASK_REQUEST; payload: { taskId: string } }
-  | { type: TaskActionTypes.DELETE_TASK_RESPONSE; payload: { taskId: string } };
+  | { type: TaskActionTypes.DELETE_TASK_RESPONSE; payload: { taskId: string } }
+  | { type: TaskActionTypes.DELETE_MANY_TASKS_REQUEST; payload: { tasksIds: string[] } }
+  | { type: TaskActionTypes.DELETE_MANY_TASKS_RESPONSE; payload: { tasksIds: string[] } };
 
 export const createTaskRequest = (task: Partial<Task>): TaskAction => ({
   type: TaskActionTypes.CREATE_TASK_REQUEST,
@@ -72,5 +76,15 @@ export const deleteTaskRequest = (taskId: string): TaskAction => ({
 
 export const deleteTaskResponse = (payload: { taskId: string }): TaskAction => ({
   type: TaskActionTypes.DELETE_TASK_RESPONSE,
+  payload,
+});
+
+export const deleteManyTasksRequest = (tasksIds: string[]): TaskAction => ({
+  type: TaskActionTypes.DELETE_MANY_TASKS_REQUEST,
+  payload: { tasksIds },
+});
+
+export const deleteManyTasksResponse = (payload: { tasksIds: string[] }): TaskAction => ({
+  type: TaskActionTypes.DELETE_MANY_TASKS_RESPONSE,
   payload,
 });

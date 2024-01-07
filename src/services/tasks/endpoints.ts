@@ -34,6 +34,10 @@ const deleteTask = id => {
   return del(`/tasks/:id`, { id }, {});
 };
 
+const deleteManyTasks = ids => {
+  return del(`/tasks/batch`, {}, {}, { ids });
+};
+
 export {
   getTasks,
   getTask,
@@ -42,4 +46,5 @@ export {
   updateTask,
   patchTask,
   deleteTask,
+  deleteManyTasks,
 };

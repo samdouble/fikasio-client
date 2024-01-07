@@ -18,7 +18,7 @@ const HomePage = () => {
 
   const getPage = () => (
     <BasePage>
-      <h4>{t('tasks')}</h4>
+      <h4>{t('tasksDueForToday')}</h4>
       <TasksView
         filter={{
           dueAt: {

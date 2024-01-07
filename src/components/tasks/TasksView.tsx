@@ -202,6 +202,24 @@ const TasksView = ({
             <b>
               {t('xSelectedTasks', { count: selectedTasks.length })}
             </b>
+            <FontAwesomeIcon
+              icon="times"
+              onClick={
+                () => dispatch(
+                  operations.tasks.deleteManyTasks(
+                    selectedTasks
+                      .filter(selectedTask => !!selectedTask.id)
+                      .map(selectedTask => selectedTask.id!),
+                  ),
+                )
+              }
+              size="1x"
+              style={{
+                color: '#ce0000',
+                cursor: 'pointer',
+                marginLeft: 10,
+              }}
+            />
           </div>
         )
       }
