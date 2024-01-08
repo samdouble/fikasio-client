@@ -43,11 +43,14 @@ const App = () => {
   const location = useLocation();
   const loginState = useSelector((state: RootState) => state.login);
 
-  useWebSocket(envvars.websocketServer, {
-    onOpen: () => {
-      console.info('WebSocket connection established.');
+  useWebSocket(
+    (process.env.NODE_ENV === 'production') ? envvars.websocketServer : '',
+    {
+      onOpen: () => {
+        console.info('WebSocket connection established.');
+      },
     },
-  });
+  );
 
   return (
     <div className="App" id="App">

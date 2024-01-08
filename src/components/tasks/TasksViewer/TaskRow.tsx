@@ -55,11 +55,12 @@ const TaskRow = ({
     setHasFocus(true);
   };
 
-  const handleKeyDownDescription = e => {
+  const handleKeyDownDescription = (e, updatedTask) => {
     if (e.key === 'Enter') {
       onAddTask({
         type: 'Template',
         description: '',
+        dueAt: updatedTask.dueAt,
         ...(projectId && { projects: [{ id: projectId }] }),
       });
       e.preventDefault();
@@ -126,15 +127,17 @@ const TaskRow = ({
           defaultValue={description}
           onBlur={() => handleBlur()}
           onFocus={() => handleFocus()}
-          onKeyDown={e => handleKeyDownDescription(e)}
+          onKeyDown={e => handleKeyDownDescription(e, task)}
           onKeyUp={e => handleKeyUpDescription(e, task)}
           onSave={async value => {
             if (task.id) {
               operations.tasks.patchTask(task.id, {
+                ...task,
                 description: value,
               })(dispatch);
             } else {
               operations.tasks.createTask({
+                ...task,
                 description: value,
               })(dispatch)
                 .then(resultTask => setTask(resultTask));

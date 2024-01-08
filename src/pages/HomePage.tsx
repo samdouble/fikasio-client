@@ -37,10 +37,31 @@ const HomePage = () => {
             id: taskId,
           })(dispatch)
         }
-        shouldSetDueForToday
-        showAddButton
         showCompletionFilter
-        showDueDateFilter
+        tasks={tasks}
+      />
+      <h4>{t('tasksDueForThisWeek')}</h4>
+      <TasksView
+        filter={{
+          dueAt: {
+            $gte: DateTime.now()
+              .plus({ days: 1 })
+              .set({ hour: 0, minute: 0, second: 0 })
+              .toJSDate(),
+            $lt: DateTime.now()
+              .plus({ days: 6 })
+              .plus({ days: 1 })
+              .set({ hour: 0, minute: 0, second: 0 })
+              .toJSDate(),
+          },
+        }}
+        onTaskClick={
+          taskId => operations.pane.setPaneContent({
+            type: 'TASK',
+            id: taskId,
+          })(dispatch)
+        }
+        showCompletionFilter
         tasks={tasks}
       />
     </BasePage>

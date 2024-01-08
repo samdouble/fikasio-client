@@ -23,7 +23,6 @@ interface TasksViewProps {
   filter?: TasksViewFilter;
   onTaskClick: (taskId: string) => void;
   projectId?: string;
-  shouldSetDueForToday?: boolean;
   showAddButton?: boolean;
   showCompletionFilter?: boolean;
   showDueDateFilter?: boolean;
@@ -34,7 +33,6 @@ const TasksView = ({
   filter: pFilter,
   onTaskClick,
   projectId,
-  shouldSetDueForToday,
   showAddButton,
   showCompletionFilter,
   showDueDateFilter,
@@ -49,14 +47,7 @@ const TasksView = ({
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
 
   const addTask = async task => {
-    return operations.tasks.createTask({
-      ...task,
-      ...(shouldSetDueForToday && {
-        dueAt: DateTime.now()
-          .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
-          .toISO(),
-      }),
-    })(dispatch);
+    return operations.tasks.createTask(task)(dispatch);
   };
 
   const handleChangeCompletionFilter = val => {
