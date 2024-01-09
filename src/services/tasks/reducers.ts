@@ -26,6 +26,15 @@ export default function reducer(state: Task[] | null = null, action: TaskAction)
         }
         return task;
       });
+    case TaskActionTypes.PATCH_MANY_TASKS_RESPONSE:
+      return state?.map(task => {
+        const taskIfUpdated = action.payload.tasks
+          .find(t => t.id === task.id);
+        if (taskIfUpdated) {
+          return taskIfUpdated;
+        }
+        return task;
+      });
     case TaskActionTypes.DELETE_TASK_RESPONSE:
       return state?.filter(task => (task.id !== action.payload.taskId));
     case TaskActionTypes.DELETE_MANY_TASKS_RESPONSE:

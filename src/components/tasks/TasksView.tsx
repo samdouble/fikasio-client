@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import uniqBy from 'lodash.uniqby';
 import { DateTime } from 'luxon';
+import Datepicker from 'components/UI/Datepicker';
 import { operations } from 'services';
 import { Task } from 'services/tasks/types';
 import AddTaskButton from './AddTaskButton';
@@ -45,6 +48,7 @@ const TasksView = ({
     ...pFilter,
   });
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
+  const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
 
   const addTask = async task => {
     return operations.tasks.createTask(task)(dispatch);
@@ -134,6 +138,12 @@ const TasksView = ({
     }
   };
 
+  const uniqueDueAtForSelectedTasks = uniqBy(
+    selectedTasks,
+    task => task.dueAt ? DateTime.fromISO(task.dueAt).toFormat('yyyy-MM-dd') : null,
+  ).map(task => task.dueAt);
+  const allSelectedTasksHaveSameDueAt = uniqueDueAtForSelectedTasks.length === 1;
+
   return (
     <>
       {
@@ -196,13 +206,12 @@ const TasksView = ({
             <FontAwesomeIcon
               icon="times"
               onClick={
-                () => dispatch(
-                  operations.tasks.deleteManyTasks(
-                    selectedTasks
-                      .filter(selectedTask => !!selectedTask.id)
-                      .map(selectedTask => selectedTask.id!),
-                  ),
-                )
+                () => operations.tasks.deleteManyTasks(
+                  selectedTasks
+                    .filter(selectedTask => !!selectedTask.id)
+                    .map(selectedTask => selectedTask.id!),
+                )(dispatch)
+                .then(() => setSelectedTasks([]))
               }
               size="1x"
               style={{
@@ -211,6 +220,62 @@ const TasksView = ({
                 marginLeft: 10,
               }}
             />
+            <div
+              onClick={() => setIsDueAtDatepickerOpen(true)}
+              style={{
+                cursor: 'pointer',
+                width: 150,
+              }}
+            >
+              <ClickOutside
+                onClickOutside={() => setIsDueAtDatepickerOpen(false)}
+              >
+                <Datepicker
+                  defaultValue={
+                    allSelectedTasksHaveSameDueAt
+                    ? DateTime.fromISO(uniqueDueAtForSelectedTasks[0]).toMillis()
+                    : null
+                  }
+                  isOpen={isDueAtDatepickerOpen}
+                  onBlur={() => setIsDueAtDatepickerOpen(false)}
+                  onChange={dueAt => {
+                    const timestamp = DateTime.fromJSDate(dueAt)
+                      .set({ hour: 23, minute: 59, second: 59 })
+                      .toISO();
+                    const selectedTasksIds = selectedTasks
+                      .filter(selectedTask => !!selectedTask.id)
+                      .map(selectedTask => selectedTask.id!)
+                    operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: timestamp })(dispatch)
+                      .then(() => setSelectedTasks([]));
+                  }}
+                />
+              </ClickOutside>
+              <FontAwesomeIcon
+                icon="calendar-alt"
+                size="1x"
+                style={{ marginRight: 10 }}
+              />
+              {
+                allSelectedTasksHaveSameDueAt && DateTime.fromISO(uniqueDueAtForSelectedTasks[0]).toFormat('yyyy-MM-dd')
+              }
+              {
+                allSelectedTasksHaveSameDueAt && (
+                  <FontAwesomeIcon
+                    className="taskRow_dueAt_remove"
+                    icon="times"
+                    onClick={e => {
+                      e.stopPropagation();
+                      const selectedTasksIds = selectedTasks
+                        .filter(selectedTask => !!selectedTask.id)
+                        .map(selectedTask => selectedTask.id!)
+                      operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: null })(dispatch)
+                        .then(() => setSelectedTasks([]));
+                    }}
+                    size="1x"
+                  />
+                )
+              }
+            </div>
           </div>
         )
       }

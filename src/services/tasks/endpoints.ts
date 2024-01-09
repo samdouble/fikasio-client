@@ -30,6 +30,10 @@ const patchTask = (id, task) => {
   return patch(`/tasks/:id`, { id }, task);
 };
 
+const patchManyTasks = (ids, infos) => {
+  return patch(`/tasks/batch`, {}, { ids, infos });
+};
+
 const deleteTask = id => {
   return del(`/tasks/:id`, { id }, {});
 };
@@ -45,6 +49,7 @@ export {
   createTask,
   updateTask,
   patchTask,
+  patchManyTasks,
   deleteTask,
   deleteManyTasks,
 };

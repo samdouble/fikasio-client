@@ -4,6 +4,7 @@ import {
   createTask as APIcreateTask,
   updateTask as APIupdateTask,
   patchTask as APIpatchTask,
+  patchManyTasks as APIpatchManyTasks,
   deleteTask as APIdeleteTask,
   deleteManyTasks as APIdeleteManyTasks,
 } from './endpoints';
@@ -17,6 +18,8 @@ import {
   updateTaskResponse,
   patchTaskRequest,
   patchTaskResponse,
+  patchManyTasksRequest,
+  patchManyTasksResponse,
   deleteTaskRequest,
   deleteTaskResponse,
   deleteManyTasksRequest,
@@ -64,6 +67,14 @@ const patchTask = (id: string, task: Partial<Task>) => {
   };
 };
 
+const patchManyTasks = (ids: string[], infos: Partial<Task>) => {
+  return (dispatch: TaskDispatch) => {
+    dispatch(patchManyTasksRequest(ids, infos));
+    return APIpatchManyTasks(ids, infos)
+      .then(res => dispatch(patchManyTasksResponse({ ...res })));
+  };
+};
+
 const deleteTask = (id: string) => {
   return (dispatch: TaskDispatch) => {
     dispatch(deleteTaskRequest(id));
@@ -85,6 +96,7 @@ const operations = {
   createTask,
   updateTask,
   patchTask,
+  patchManyTasks,
   deleteTask,
   deleteManyTasks,
 };
