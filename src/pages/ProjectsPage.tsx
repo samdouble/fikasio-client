@@ -32,6 +32,10 @@ const ProjectsPage = () => {
             id: projectId,
           })(dispatch)
         }
+        projects={projects}
+        showAddButton
+        showCompletionFilter
+        showDueDateFilter
       />
     </BasePage>
   );

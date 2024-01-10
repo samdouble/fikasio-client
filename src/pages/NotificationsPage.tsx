@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import ResourcesHandler from 'components/ResourcesHandler';
+import ProjectsView from 'components/projects/ProjectsView';
 import TasksView from 'components/tasks/TasksView';
 import { calculateNotifications } from 'components/notifications/utils';
 import BasePage from 'components/UI/BasePage';
@@ -22,6 +23,10 @@ const NotificationsPage = () => {
 
   const getPage = () => {
     const notifications = tasks && projects && calculateNotifications(tasks, projects);
+    // Projects
+    const lateProjects = notifications && notifications.lateProjects;
+    const lateProjectsCount = lateProjects?.length;
+    // Tasks
     const lateTasks = notifications && notifications.lateTasks;
     const tasksDueAfterProjectDue = notifications && notifications.tasksDueAfterProjectDue;
     const lateTasksCount = lateTasks?.length;
@@ -33,6 +38,26 @@ const NotificationsPage = () => {
           <Breadcrumb.Item active>{t('notifications')}</Breadcrumb.Item>
         </Breadcrumb>
         <h4>{t('notifications')}</h4>
+        {
+          lateProjectsCount ? (
+            <>
+              <div>
+                Vous avez <b>{lateProjectsCount} projet{lateProjectsCount > 1 && 's'} en retard</b>.
+              </div>
+              <ProjectsView
+                onProjectSelect={projectId => operations.pane.setPaneContent({
+                  type: 'PROJECT',
+                  id: projectId,
+                })(dispatch)}
+                projects={lateProjects}
+              />
+            </>
+          ) : (
+            <div>
+              Vous n'avez aucun projet en retard.
+            </div>
+          )
+        }
         {
           lateTasksCount ? (
             <>
@@ -71,9 +96,9 @@ const NotificationsPage = () => {
                         return (
                           <tr key={task.id}>
                             <td>{ task && task.description }</td>
-                            <td>{ task && task.dueAt && DateTime.fromISO(task.dueAt).toFormat('yyyy-MM-dd') }</td>
+                            <td width={140}>{ task && task.dueAt && DateTime.fromISO(task.dueAt).toFormat('yyyy-MM-dd') }</td>
                             <td>{ project && project.name }</td>
-                            <td>{ project && project.dueAt && DateTime.fromISO(project.dueAt).toFormat('yyyy-MM-dd') }</td>
+                            <td width={140}>{ project && project.dueAt && DateTime.fromISO(project.dueAt).toFormat('yyyy-MM-dd') }</td>
                           </tr>
                         );
                       })

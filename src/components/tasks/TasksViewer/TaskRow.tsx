@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import ClickOutside from 'react-click-outside';
+import usePrevious from 'use-previous';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import isEqual from 'lodash.isequal';
 import { DateTime } from 'luxon';
 import { AutosaveTextarea, Checkbox } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
@@ -36,10 +38,20 @@ const TaskRow = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const prevPTask = usePrevious(pTask);
   const [task, setTask] = useState(pTask);
   const [description, setIDescription] = useState((task && task.description) || '');
   const [hasFocus, setHasFocus] = useState(false);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isEqual(pTask, prevPTask)) {
+      setTask({
+        ...task,
+        ...pTask,
+      });
+    }
+  }, [pTask]);
 
   useEffect(() => {
     if (!hasFocus) {

@@ -81,6 +81,7 @@ const fr = {
   tasks: 'Tâches',
   tasksDueForToday: 'Tâches dûes pour aujourd\'hui',
   tasksDueForThisWeek: 'Tâches dûes pour cette semaine',
+  template: 'Modèle',
   templates: 'Modèles',
   termsOfService: 'Conditions d\'utilisation',
   timeLeft: 'Temps restant',

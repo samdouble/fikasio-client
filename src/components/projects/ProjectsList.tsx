@@ -8,12 +8,12 @@ import { calculateIncompleteTime, calculateCompletionPercentage } from '../tasks
 
 const ProjectsList = ({
   onProjectSelect,
+  projects,
   showCompleteProjects,
   showIncompleteProjects,
   showArchivedProjects,
 }) => {
   const { t } = useTranslation();
-  const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
 
   return projects ? (

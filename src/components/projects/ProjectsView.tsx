@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
+import { Project } from 'services/projects/types';
 import ProjectsList from './ProjectsList';
 import AddProjectButton from './AddProjectButton';
-import ProjectsFilter from './ProjectsFilter';
+import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
+
+interface ProjectsViewProps {
+  onProjectSelect: (projectId: string) => void;
+  projects?: Project[] | null;
+  showAddButton?: boolean;
+  showCompletionFilter?: boolean;
+  showDueDateFilter?: boolean;
+}
 
 const ProjectsView = ({
   onProjectSelect,
-}) => {
+  projects,
+  showAddButton,
+  showCompletionFilter,
+  showDueDateFilter,
+}: ProjectsViewProps) => {
   const [showCompleteProjects, setShowCompleteProjects] = useState(false);
   const [showIncompleteProjects, setShowIncompleteProjects] = useState(true);
   const [showArchivedProjects, setShowArchivedProjects] = useState(false);
 
-  const handleChangeFilter = val => {
+  const handleChangeCompletionFilter = val => {
     if (val === 'ALL') {
       setShowCompleteProjects(true);
       setShowIncompleteProjects(true);
@@ -30,26 +43,34 @@ const ProjectsView = ({
     }
   };
 
+  const handleChangeDueDateFilter = _val => {
+
+  };
+
   return (
     <>
-      <AddProjectButton
-        onClick={onProjectSelect}
-        style={{
-          float: 'right',
-          marginRight: 0,
-        }}
-      />
-      <ProjectsFilter
-        onChange={handleChangeFilter}
-        style={{
-          float: 'right',
-          margin: 5,
-        }}
+      {
+        showAddButton && (
+          <AddProjectButton
+            onClick={onProjectSelect}
+            style={{
+              float: 'right',
+              marginRight: 0,
+            }}
+          />
+        )
+      }
+      <ProjectsFilters
+        onChangeCompletionFilter={handleChangeCompletionFilter}
+        onChangeDueDateFilter={handleChangeDueDateFilter}
+        showCompletionFilter={showCompletionFilter}
+        showDueDateFilter={showDueDateFilter}
       />
       <br />
       <br />
       <ProjectsList
         onProjectSelect={onProjectSelect}
+        projects={projects}
         showCompleteProjects={showCompleteProjects}
         showIncompleteProjects={showIncompleteProjects}
         showArchivedProjects={showArchivedProjects}

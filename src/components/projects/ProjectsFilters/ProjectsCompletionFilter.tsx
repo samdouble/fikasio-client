@@ -1,7 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const ProjectsFilter = ({ onChange, style }) => {
+interface ProjectsCompletionFilterProps {
+  onChange: (value: string) => void;
+  style?: React.CSSProperties;
+}
+
+const ProjectsCompletionFilter = ({
+  onChange,
+  style,
+}: ProjectsCompletionFilterProps) => {
   const { t } = useTranslation();
 
   return (
@@ -14,11 +22,11 @@ const ProjectsFilter = ({ onChange, style }) => {
       }}
     >
       <option value="INCOMPLETE">{t('ongoingProjects')}</option>
-      <option value="COMPLETE">{t('completedProjects')}</option>
+      <option value="COMPLETE">{t('completeProjects')}</option>
       <option value="ARCHIVED">{t('archivedProjects')}</option>
       <option value="ALL">{t('allProjects')}</option>
     </select>
   );
-}
+};
 
-export default ProjectsFilter;
+export default ProjectsCompletionFilter;

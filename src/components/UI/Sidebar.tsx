@@ -25,9 +25,11 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   const notifications = tasks && projects && calculateNotifications(tasks, projects);
+  const lateProjects = notifications && notifications.lateProjects;
   const lateTasks = notifications && notifications.lateTasks;
   const tasksDueAfterProjectDue = notifications && notifications.tasksDueAfterProjectDue;
   const notificationsCount = (lateTasks && lateTasks.length)
+    + (lateProjects && lateProjects.length)
     + (tasksDueAfterProjectDue && tasksDueAfterProjectDue.length);
 
   const getPage = () => {

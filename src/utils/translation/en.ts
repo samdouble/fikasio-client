@@ -81,6 +81,7 @@ const en = {
   tasks: 'Tasks',
   tasksDueForToday: 'Tasks Due for Today',
   tasksDueForThisWeek: 'Tasks Due for this Week',
+  template: 'Template',
   templates: 'Templates',
   termsOfService: 'Terms of Service',
   timeLeft: 'Time Left',
