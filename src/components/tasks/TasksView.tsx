@@ -124,7 +124,7 @@ const TasksView = ({
     }
   };
 
-  const handleSelectTask = task => {
+  const handleTaskSelect = task => {
     const isTaskAlreadySelected = selectedTasks.find(a => a.id === task.id);
     if (isTaskAlreadySelected) {
       setSelectedTasks([
@@ -169,7 +169,7 @@ const TasksView = ({
         onAddTask={task => addTask(task)}
         onSelectAllTasks={tasksArray => setSelectedTasks(tasksArray)}
         onTaskClick={onTaskClick}
-        onTaskSelect={handleSelectTask}
+        onTaskSelect={handleTaskSelect}
         projectId={projectId}
         selectedTasks={selectedTasks}
         tasks={tasks}

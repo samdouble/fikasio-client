@@ -2,19 +2,41 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
+import { Checkbox } from '@fikasio/react-ui-components';
 import { RootState } from 'services/store';
 import ProjectRow from './ProjectRow';
 import { calculateIncompleteTime, calculateCompletionPercentage } from '../tasks/utils';
 
 const ProjectsList = ({
+  onProjectClick,
   onProjectSelect,
+  onSelectAllProjects,
   projects,
+  selectedProjects,
   showCompleteProjects,
   showIncompleteProjects,
   showArchivedProjects,
 }) => {
   const { t } = useTranslation();
   const tasks = useSelector((state: RootState) => state.tasks);
+  
+  const projectsToShow = projects?.map(project => {
+      const projectTasks = tasks?.filter(task => task.projects?.some(p => p.id === project.id));
+      const completionRatio = calculateCompletionPercentage(projectTasks);
+      const incompleteTime = calculateIncompleteTime(projectTasks);
+      return {
+        ...project,
+        completionRatio,
+        incompleteTime,
+        isCompleted: completionRatio === 1,
+      };
+    })
+    .filter(project => (
+      (showCompleteProjects && project.isCompleted && !project.isArchived)
+      || (showIncompleteProjects && !project.isCompleted && !project.isArchived)
+      || (showArchivedProjects && project.isArchived)
+    ));
+  const allProjectsAreChecked = projectsToShow?.length === selectedProjects.length;
 
   return projects ? (
     <Table
@@ -24,6 +46,24 @@ const ProjectsList = ({
     >
       <thead>
         <tr>
+          <th style={{ width: 35 }}>
+            {
+              projectsToShow?.length
+                ? (
+                  <Checkbox
+                    defaultIsChecked={allProjectsAreChecked}
+                    onClick={() => {
+                      if (allProjectsAreChecked) {
+                        onSelectAllProjects([]);
+                      } else {
+                        onSelectAllProjects(projectsToShow);
+                      }
+                    }}
+                  />
+                )
+                : <div />
+            }
+          </th>
           <th>{t('name')}</th>
           <th style={{ width: 150 }}>{t('timeLeft')}</th>
           <th style={{ width: 150 }}>{t('completion')}</th>
@@ -33,32 +73,17 @@ const ProjectsList = ({
       </thead>
       <tbody>
         {
-          projects
-            .map(project => {
-              const projectTasks = tasks?.filter(task => task.projects?.some(p => p.id === project.id));
-              const completionRatio = calculateCompletionPercentage(projectTasks);
-              const incompleteTime = calculateIncompleteTime(projectTasks);
-              return {
-                ...project,
-                completionRatio,
-                incompleteTime,
-                isCompleted: completionRatio === 1,
-              };
-            })
-            .filter(project => (
-              (showCompleteProjects && project.isCompleted && !project.isArchived)
-              || (showIncompleteProjects && !project.isCompleted && !project.isArchived)
-              || (showArchivedProjects && project.isArchived)
-            ))
-            .sort((p1, p2) => {
+          projectsToShow?.sort((p1, p2) => {
               const p1NameNoAccents = p1.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
               const p2NameNoAccents = p2.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
               return p1NameNoAccents < p2NameNoAccents ? -1 : 1;
             })
             .map(project => (
               <ProjectRow
+                isSelected={!!selectedProjects.find(p1 => project.id === p1.id)}
                 key={project.id}
-                onClick={onProjectSelect}
+                onClick={onProjectClick}
+                onSelect={onProjectSelect}
                 project={project}
               />
             ))

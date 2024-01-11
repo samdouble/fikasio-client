@@ -111,10 +111,12 @@ const TaskRow = ({
     && DateTime.fromISO(task.dueAt) < DateTime.now();
 
   return (
-    <tr className={classNames({
-      taskRow: true,
-      done: task && task.status === 'Completed',
-    })}>
+    <tr
+      className={classNames({
+        taskRow: true,
+        done: task && task.status === 'Completed',
+      })}
+    >
       <td
         style={{
           textAlign: 'center',

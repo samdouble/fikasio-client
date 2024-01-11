@@ -45,7 +45,7 @@ const NotificationsPage = () => {
                 Vous avez <b>{lateProjectsCount} projet{lateProjectsCount > 1 && 's'} en retard</b>.
               </div>
               <ProjectsView
-                onProjectSelect={projectId => operations.pane.setPaneContent({
+                onProjectClick={projectId => operations.pane.setPaneContent({
                   type: 'PROJECT',
                   id: projectId,
                 })(dispatch)}

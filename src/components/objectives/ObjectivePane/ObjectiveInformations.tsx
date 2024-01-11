@@ -33,7 +33,7 @@ const ObjectiveInformations = ({
 
   const onSubmit = async values => {
     const formData = values;
-    if (objective.id) {
+    if (objective && objective.id) {
       operations.objectives.updateObjective(objective.id, formData)(dispatch);
     } else {
       operations.objectives.createObjective(formData)(dispatch);

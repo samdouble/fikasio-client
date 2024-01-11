@@ -6,24 +6,51 @@ import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import classNames from 'classnames';
+import { Checkbox } from '@fikasio/react-ui-components';
 import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
+import { Project } from 'services/projects/types';
 import { isEmpty } from 'utils/isEmpty';
 import { round } from 'utils/maths';
 import './style.scss';
 
+export interface ProjectRowProps {
+  isSelected?: boolean;
+  onClick: (projectId: string) => Promise<void>;
+  onSelect: (project: Project) => Promise<void>;
+  project: Project;
+}
+
 const ProjectRow = ({
+  isSelected,
   onClick,
+  onSelect,
   project,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
   const hasdueAtPassed = project && project.dueAt && DateTime.fromISO(project.dueAt) < DateTime.now();
 
   return (
-    <tr className={classNames({ done: project.isCompleted && !project.isArchived })}>
+    <tr
+      className={classNames({
+        done: project.isCompleted && !project.isArchived,
+      })}
+    >
+      <td
+        style={{
+          textAlign: 'center',
+        }}
+        width={35}
+      >
+        <Checkbox
+          isChecked={isSelected}
+          onClick={() => onSelect(project)}
+        />
+      </td>
       <td
         onClick={() => onClick(project.id)}
         style={{ cursor: 'pointer' }}

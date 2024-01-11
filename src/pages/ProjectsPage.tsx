@@ -26,7 +26,7 @@ const ProjectsPage = () => {
       </Breadcrumb>
       <h4>{t('projects')}</h4>
       <ProjectsView
-        onProjectSelect={
+        onProjectClick={
           projectId => operations.pane.setPaneContent({
             type: 'PROJECT',
             id: projectId,
