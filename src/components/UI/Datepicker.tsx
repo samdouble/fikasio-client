@@ -41,6 +41,7 @@ const Datepicker = ({
       onBlur={onBlur}
       onChange={onChange}
       popperPlacement="auto"
+      portalId="root-portal"
       ref={c => _calendar = c}
       selected={defaultValue}
       shouldCloseOnSelect={shouldCloseOnSelect || false}
