@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useTranslation } from 'react-i18next';
 import { operations } from 'services';
+import { LoginRequestAction } from 'services/login/actions';
 import links from 'utils/links';
 import { getFormData } from 'utils/forms';
 import { initializeSocket } from 'utils/sockets';
@@ -21,12 +22,15 @@ const SignupPage = () => {
   useEffect(() => {
     operations.login.login()(dispatch)
       .then(res => {
-        if (res) {
+        const loginRequestResponse = res as LoginRequestAction;
+        if (loginRequestResponse && loginRequestResponse.payload) {
           initializeSocket();
           history.push(location.state ? location.state.from : links.paths.home);
         }
       })
-      .catch(() => operations.login.login(null)(dispatch));
+      .catch(() => {
+        operations.login.login(null)(dispatch);
+      });
   }, []);
 
   const handleSignup = () => {

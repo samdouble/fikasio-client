@@ -11,13 +11,18 @@ export enum LoginActionTypes {
   PATCH_USERME_RESPONSE = 'PATCH_USERME_RESPONSE',
 }
 
+export interface LoginRequestAction {
+  payload: { emailAddress: string | null, password: string | null };
+  type: LoginActionTypes.LOGIN_REQUEST;
+}
+
 export interface PatchUserMeAction {
   payload: { user: User };
   type: LoginActionTypes.PATCH_USERME_RESPONSE;
 }
 
 export type LoginAction =
-  | { type: LoginActionTypes.LOGIN_REQUEST; payload: { emailAddress: string | null, password: string | null } }
+  | LoginRequestAction
   | { type: LoginActionTypes.LOGIN_RESPONSE; payload: any }
   | { type: LoginActionTypes.LOGOUT_REQUEST; }
   | { type: LoginActionTypes.LOGOUT_RESPONSE; }

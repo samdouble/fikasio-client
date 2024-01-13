@@ -54,7 +54,7 @@ services:
     mongo0:
         hostname: mongo0
         container_name: mongo0
-        image: mongo:6.0.11
+        image: mongo:7.0.5
         ports:
             - 27017:27017
         expose:
@@ -73,7 +73,7 @@ services:
     mongo1:
         hostname: mongo1
         container_name: mongo1
-        image: mongo:6.0.11
+        image: mongo:7.0.5
         ports:
             - 27018:27017
         expose:
@@ -88,7 +88,7 @@ services:
     mongo2:
         hostname: mongo2
         container_name: mongo2
-        image: mongo:6.0.11
+        image: mongo:7.0.5
         ports:
             - 27019:27017
         expose:

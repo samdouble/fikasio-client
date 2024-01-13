@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# wait to be able to access to at least one of the nodes of the replica-set
-mongo --nodb --eval '
+# Wait to be able to access to at least one of the nodes of the replica-set
+mongosh --nodb --eval '
 var connection;
 do {
   try {
@@ -11,8 +11,8 @@ do {
   }
 } while( !connection );'
 
-# wait for replica-set setUp to finish
-mongo --host mongo0:27017 --eval '
+# Wait for replica-set setup to finish
+mongosh --host mongo0:27017 --eval '
 var cfg = {
 "_id": "rs0",
     "version": 1,
