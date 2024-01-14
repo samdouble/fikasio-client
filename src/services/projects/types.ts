@@ -4,4 +4,5 @@ export interface Project {
   id: string;
   isArchived: boolean;
   name: string;
+  startAt: Date | null;
 }
