@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import EntityView from 'components/entities/EntityView';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -12,11 +13,19 @@ import links from 'utils/links';
 import './style.scss';
 
 const EntityPage = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
   const entities = useSelector((state: RootState) => state.entities);
   const entity = entities && entities.find(e => e.id === id);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   useEffect(() => {
     dispatch(operations.items.fetchItems(id));

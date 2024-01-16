@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import TemplateInformationsForm from 'components/templates/TemplateView/TemplateInformationsForm';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -12,10 +13,18 @@ import links from 'utils/links';
 import './style.scss';
 
 const TemplateUpsertPage = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
   const { t } = useTranslation();
   const { templateId } = useParams<{ templateId: string; }>();
   const templates = useSelector((state: RootState) => state.templates);
-  const dispatch = useDispatch();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   const getPage = () => {
     const template = templates && templates.find(temp => temp.id === templateId);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IconPack, library } from '@fortawesome/fontawesome-svg-core';
@@ -43,14 +43,18 @@ const App = () => {
   const location = useLocation();
   const loginState = useSelector((state: RootState) => state.login);
 
-  useWebSocket(
-    (process.env.NODE_ENV === 'production') ? envvars.websocketServer : '',
+  const { lastJsonMessage } = useWebSocket(
+    (process.env.NODE_ENV === 'production') ? envvars.websocketServer : 'ws://localhost:8000',
     {
       onOpen: () => {
         console.info('WebSocket connection established.');
       },
     },
   );
+
+  useEffect(() => {
+    console.info(lastJsonMessage);
+  }, [lastJsonMessage]);
 
   return (
     <div className="App" id="App">

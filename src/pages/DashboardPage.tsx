@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import Card from 'components/dashboards/Card';
@@ -17,6 +18,7 @@ import links from 'utils/links';
 import './style.scss';
 
 const DashboardPage = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const objectives = useSelector((state: RootState) => state.objectives);
   const dispatch = useDispatch();
@@ -25,6 +27,10 @@ const DashboardPage = () => {
   const nbDone = tasks.filter(task => task.status === 'Completed').length;
 
   useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
     getTasks({})
       .then(res => setTasks(res.tasks));
   }, []);

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import AddTemplateButton from 'components/templates/AddTemplateButton';
 import TemplatesView from 'components/templates/TemplatesView';
@@ -13,9 +14,17 @@ import links from 'utils/links';
 import './style.scss';
 
 const TemplatesPage = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const templates = useSelector((state: RootState) => state.templates);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   const getPage = () => (
     <BasePage>

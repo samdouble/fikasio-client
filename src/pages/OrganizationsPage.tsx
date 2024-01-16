@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import OrganizationsView from 'components/organizations/OrganizationsView';
@@ -12,9 +13,17 @@ import links from 'utils/links';
 import './style.scss';
 
 const OrganizationsPage = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const organizations = useSelector((state: RootState) => state.organizations);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   const getPage = () => (
     <BasePage>

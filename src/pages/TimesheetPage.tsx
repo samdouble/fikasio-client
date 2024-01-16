@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import Button from 'react-bootstrap/Button';
 import { Tooltip } from 'react-tooltip';
 import { CSVLink } from 'react-csv';
@@ -23,7 +24,8 @@ const TimesheetPage = () => {
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
   const templates = useSelector((state: RootState) => state.templates);
-  const { search } = useLocation();
+  const location = useLocation();
+  const { search } = location;
   const searchParams = new URLSearchParams(search);
   const dateParam = searchParams.get('date');
   const [date, setDate] = useState(
@@ -45,6 +47,13 @@ const TimesheetPage = () => {
     second: 59,
     millisecond: 999,
   }).toISO();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   useEffect(() => {
     dispatch(operations.activities.fetchActivities({

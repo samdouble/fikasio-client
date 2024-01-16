@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -10,11 +12,19 @@ import { RootState } from 'services/store';
 import './style.scss';
 
 const HomePage = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const objectives = useSelector((state: RootState) => state.objectives);
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   const getPage = () => (
     <BasePage>

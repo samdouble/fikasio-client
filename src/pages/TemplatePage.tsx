@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import TemplateView from 'components/templates/TemplateView';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -12,11 +13,19 @@ import links from 'utils/links';
 import './style.scss';
 
 const TemplatePage = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
   const templates = useSelector((state: RootState) => state.templates);
   const template = templates && templates.find(temp => temp.id === id);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   const getPage = () => (
     <BasePage>

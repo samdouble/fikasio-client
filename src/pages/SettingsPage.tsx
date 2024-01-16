@@ -1,11 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import SettingsGeneral from 'components/settings/SettingsGeneral';
@@ -17,9 +18,17 @@ import links from 'utils/links';
 import './style.scss';
 
 const SettingsPage = () => {
+  const location = useLocation();
   const { t } = useTranslation();
   const cards = useSelector((state: RootState) => state.cards);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
 
   const getPage = () => (
     <BasePage>

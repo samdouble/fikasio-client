@@ -6,6 +6,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { operations } from 'services';
 import { googleSignIn } from 'services/login/endpoints';
@@ -25,6 +26,10 @@ const LoginPage = () => {
   const prevLoginState = usePrevious(loginState);
 
   useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
     operations.login.login()(dispatch)
       .catch(() => undefined);
   }, []);

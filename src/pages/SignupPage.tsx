@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { operations } from 'services';
 import { LoginRequestAction } from 'services/login/actions';
@@ -13,13 +14,17 @@ import { initializeSocket } from 'utils/sockets';
 import './style.scss';
 
 const SignupPage = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [showSignupError, setShowSignupError] = useState(false);
   const history = useHistory();
-  const location = useLocation();
 
   useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
     operations.login.login()(dispatch)
       .then(res => {
         const loginRequestResponse = res as LoginRequestAction;

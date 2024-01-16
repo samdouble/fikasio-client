@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 
 const Page404 = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: 'pageview',
+      page: location.pathname,
+    });
+  }, []);
+
   return (
     <div>
       404
