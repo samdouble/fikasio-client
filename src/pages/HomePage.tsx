@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -27,54 +28,59 @@ const HomePage = () => {
   }, []);
 
   const getPage = () => (
-    <BasePage>
-      <h4>{t('tasksDueForToday')}</h4>
-      <TasksView
-        filter={{
-          dueAt: {
-            $gte: DateTime.now()
-              .set({ hour: 0, minute: 0, second: 0 })
-              .toJSDate(),
-            $lt: DateTime.now()
-              .plus({ days: 1 })
-              .set({ hour: 0, minute: 0, second: 0 })
-              .toJSDate(),
-          },
-        }}
-        onTaskClick={
-          taskId => operations.pane.setPaneContent({
-            type: 'TASK',
-            id: taskId,
-          })(dispatch)
-        }
-        showCompletionFilter
-        tasks={tasks}
-      />
-      <h4>{t('tasksDueForThisWeek')}</h4>
-      <TasksView
-        filter={{
-          dueAt: {
-            $gte: DateTime.now()
-              .plus({ days: 1 })
-              .set({ hour: 0, minute: 0, second: 0 })
-              .toJSDate(),
-            $lt: DateTime.now()
-              .plus({ days: 6 })
-              .plus({ days: 1 })
-              .set({ hour: 0, minute: 0, second: 0 })
-              .toJSDate(),
-          },
-        }}
-        onTaskClick={
-          taskId => operations.pane.setPaneContent({
-            type: 'TASK',
-            id: taskId,
-          })(dispatch)
-        }
-        showCompletionFilter
-        tasks={tasks}
-      />
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('home')}</title>
+      </Helmet>
+      <BasePage>
+        <h4>{t('tasksDueForToday')}</h4>
+        <TasksView
+          filter={{
+            dueAt: {
+              $gte: DateTime.now()
+                .set({ hour: 0, minute: 0, second: 0 })
+                .toJSDate(),
+              $lt: DateTime.now()
+                .plus({ days: 1 })
+                .set({ hour: 0, minute: 0, second: 0 })
+                .toJSDate(),
+            },
+          }}
+          onTaskClick={
+            taskId => operations.pane.setPaneContent({
+              type: 'TASK',
+              id: taskId,
+            })(dispatch)
+          }
+          showCompletionFilter
+          tasks={tasks}
+        />
+        <h4>{t('tasksDueForThisWeek')}</h4>
+        <TasksView
+          filter={{
+            dueAt: {
+              $gte: DateTime.now()
+                .plus({ days: 1 })
+                .set({ hour: 0, minute: 0, second: 0 })
+                .toJSDate(),
+              $lt: DateTime.now()
+                .plus({ days: 6 })
+                .plus({ days: 1 })
+                .set({ hour: 0, minute: 0, second: 0 })
+                .toJSDate(),
+            },
+          }}
+          onTaskClick={
+            taskId => operations.pane.setPaneContent({
+              type: 'TASK',
+              id: taskId,
+            })(dispatch)
+          }
+          showCompletionFilter
+          tasks={tasks}
+        />
+      </BasePage>
+    </>
   );
 
   return (

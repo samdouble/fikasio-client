@@ -5,6 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { operations } from 'services';
 import { LoginRequestAction } from 'services/login/actions';
@@ -64,6 +65,9 @@ const SignupPage = () => {
 
   return (
     <div className="Signup">
+      <Helmet>
+        <title>{t('signup')}</title>
+      </Helmet>
       {
         showSignupError && (
           <Alert variant="danger" >

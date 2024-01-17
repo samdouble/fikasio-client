@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import Button from 'react-bootstrap/Button';
 import { Tooltip } from 'react-tooltip';
 import { CSVLink } from 'react-csv';
@@ -84,110 +85,115 @@ const TimesheetPage = () => {
   ]));
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item
-          linkAs={Link}
-          linkProps={{ to: links.paths.home }}
+    <>
+      <Helmet>
+        <title>{t('timesheet')}</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item
+            linkAs={Link}
+            linkProps={{ to: links.paths.home }}
+          >
+            {t('home')}
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>{t('timesheet')}</Breadcrumb.Item>
+        </Breadcrumb>
+        <Link to={links.paths.templates}>
+          <Button
+            style={{
+              float: 'right',
+            }}
+            variant="light"
+          >
+            {t('templates')}
+          </Button>
+        </Link>
+        <CSVLink
+          data={CSVData}
+          filename={`export_${date.toFormat('yyyy-MM-dd')}.csv`}
+          headers={CSVHeaders}
         >
-          {t('home')}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>{t('timesheet')}</Breadcrumb.Item>
-      </Breadcrumb>
-      <Link to={links.paths.templates}>
-        <Button
-          style={{
-            float: 'right',
-          }}
-          variant="light"
-        >
-          {t('templates')}
-        </Button>
-      </Link>
-      <CSVLink
-        data={CSVData}
-        filename={`export_${date.toFormat('yyyy-MM-dd')}.csv`}
-        headers={CSVHeaders}
-      >
-        <Button
-          data-tooltip-content={t('exportToCsv')}
-          data-tooltip-id="exportToCsv"
-          style={{
-            float: 'right',
-          }}
-          variant="light"
-        >
-          <FontAwesomeIcon
-            icon="download"
-            size="1x"
-          />
-        </Button>
-        <Tooltip id="exportToCsv" />
-      </CSVLink>
-      <h4>
-        {t('timesheet')}
-        &nbsp;
-        <span
-          onClick={() => { setDate(date.minus({ days: 1 })); }}
-          style={{
-            cursor: 'pointer',
-          }}
-        >
-          <FontAwesomeIcon
-            icon="caret-left"
-            size="1x"
+          <Button
+            data-tooltip-content={t('exportToCsv')}
+            data-tooltip-id="exportToCsv"
+            style={{
+              float: 'right',
+            }}
+            variant="light"
+          >
+            <FontAwesomeIcon
+              icon="download"
+              size="1x"
+            />
+          </Button>
+          <Tooltip id="exportToCsv" />
+        </CSVLink>
+        <h4>
+          {t('timesheet')}
+          &nbsp;
+          <span
+            onClick={() => { setDate(date.minus({ days: 1 })); }}
             style={{
               cursor: 'pointer',
             }}
-          />
+          >
+            <FontAwesomeIcon
+              icon="caret-left"
+              size="1x"
+              style={{
+                cursor: 'pointer',
+              }}
+            />
+            &nbsp;
+          </span>
           &nbsp;
-        </span>
-        &nbsp;
-        { date.toFormat('yyyy-MM-dd') }
-        &nbsp;
-        <span
-          onClick={() => { setDate(date.plus({ days: 1 })); }}
-          style={{
-            cursor: 'pointer',
-          }}
-        >
+          { date.toFormat('yyyy-MM-dd') }
           &nbsp;
-          <FontAwesomeIcon
-            icon="caret-right"
-            size="1x"
+          <span
+            onClick={() => { setDate(date.plus({ days: 1 })); }}
             style={{
               cursor: 'pointer',
             }}
-          />
-        </span>
-      </h4>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <b>Pourcentage du temps spécifié</b>
-            </td>
-            <td>
-              {
-                (filledTime + unfilledTime !== 0)
-                  ? `${round((filledTime / (filledTime + unfilledTime)) * 100, 1)}%`
-                  : '0%'
-              }
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <ActivitiesView
-        activities={activities}
-        date={date}
-        onActivityClick={activity => dispatch(
-          operations.pane.setPaneContent({
-            type: 'ACTIVITY',
-            activity,
-          })
-        )}
-      />
-    </BasePage>
+          >
+            &nbsp;
+            <FontAwesomeIcon
+              icon="caret-right"
+              size="1x"
+              style={{
+                cursor: 'pointer',
+              }}
+            />
+          </span>
+        </h4>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <b>Pourcentage du temps spécifié</b>
+              </td>
+              <td>
+                {
+                  (filledTime + unfilledTime !== 0)
+                    ? `${round((filledTime / (filledTime + unfilledTime)) * 100, 1)}%`
+                    : '0%'
+                }
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ActivitiesView
+          activities={activities}
+          date={date}
+          onActivityClick={activity => dispatch(
+            operations.pane.setPaneContent({
+              type: 'ACTIVITY',
+              activity,
+            })
+          )}
+        />
+      </BasePage>
+    </>
   );
 
   return (

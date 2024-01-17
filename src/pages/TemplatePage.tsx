@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import TemplateView from 'components/templates/TemplateView';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -28,22 +29,27 @@ const TemplatePage = () => {
   }, []);
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>{t('timesheet')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{ template?.name }</Breadcrumb.Item>
-      </Breadcrumb>
-      <h4>{ template?.name }</h4>
-      <br />
-      {
-        template && (
-          <TemplateView
-            template={template}
-          />
-        )
-      }
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('templates')} - { template?.name }</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>{t('timesheet')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{ template?.name }</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>{ template?.name }</h4>
+        <br />
+        {
+          template && (
+            <TemplateView
+              template={template}
+            />
+          )
+        }
+      </BasePage>
+    </>
   );
 
   return (

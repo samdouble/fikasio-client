@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import ProjectsView from 'components/projects/ProjectsView';
@@ -28,25 +29,30 @@ const ProjectsPage = () => {
   }, []);
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{t('projects')}</Breadcrumb.Item>
-      </Breadcrumb>
-      <h4>{t('projects')}</h4>
-      <ProjectsView
-        onProjectClick={
-          projectId => operations.pane.setPaneContent({
-            type: 'PROJECT',
-            id: projectId,
-          })(dispatch)
-        }
-        projects={projects}
-        showAddButton
-        showCompletionFilter
-        showDueDateFilter
-      />
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('projects')}</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{t('projects')}</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>{t('projects')}</h4>
+        <ProjectsView
+          onProjectClick={
+            projectId => operations.pane.setPaneContent({
+              type: 'PROJECT',
+              id: projectId,
+            })(dispatch)
+          }
+          projects={projects}
+          showAddButton
+          showCompletionFilter
+          showDueDateFilter
+        />
+      </BasePage>
+    </>
   );
 
   return (

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import ObjectivesView from 'components/objectives/ObjectivesView';
@@ -27,18 +28,23 @@ const ObjectivesPage = () => {
   }, []);
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{t('objectives')}</Breadcrumb.Item>
-      </Breadcrumb>
-      <h4>{t('objectives')}</h4>
-      <ObjectivesView
-        objectives={objectives}
-        showAddButton
-        showCompletionFilter
-      />
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('objectives')}</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{t('objectives')}</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>{t('objectives')}</h4>
+        <ObjectivesView
+          objectives={objectives}
+          showAddButton
+          showCompletionFilter
+        />
+      </BasePage>
+    </>
   );
 
   return (

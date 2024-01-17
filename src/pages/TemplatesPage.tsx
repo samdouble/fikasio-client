@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import AddTemplateButton from 'components/templates/AddTemplateButton';
 import TemplatesView from 'components/templates/TemplatesView';
@@ -27,23 +28,28 @@ const TemplatesPage = () => {
   }, []);
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
-        <Breadcrumb.Item active>{t('templates')}</Breadcrumb.Item>
-      </Breadcrumb>
-      <AddTemplateButton
-        style={{
-          float: 'right',
-        }}
-      />
-      <h4>{t('templates')}</h4>
-      <br />
-      <TemplatesView
-        templates={templates}
-      />
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('templates')}</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>Feuille de temps</Breadcrumb.Item>
+          <Breadcrumb.Item active>{t('templates')}</Breadcrumb.Item>
+        </Breadcrumb>
+        <AddTemplateButton
+          style={{
+            float: 'right',
+          }}
+        />
+        <h4>{t('templates')}</h4>
+        <br />
+        <TemplatesView
+          templates={templates}
+        />
+      </BasePage>
+    </>
   );
 
   return (

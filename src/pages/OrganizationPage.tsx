@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import OrganizationView from 'components/organizations/OrganizationView';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -28,22 +29,27 @@ const OrganizationPage = () => {
   }, []);
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.organizations }}>{t('organizations')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{ organization?.name }</Breadcrumb.Item>
-      </Breadcrumb>
-      <h4>{ organization?.name }</h4>
-      <br />
-      {
-        organization && (
-          <OrganizationView
-            organization={organization}
-          />
-        )
-      }
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('organizations')} - { organization?.name }</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.organizations }}>{t('organizations')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{ organization?.name }</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>{ organization?.name }</h4>
+        <br />
+        {
+          organization && (
+            <OrganizationView
+              organization={organization}
+            />
+          )
+        }
+      </BasePage>
+    </>
   );
 
   return (

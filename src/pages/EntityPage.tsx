@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import EntityView from 'components/entities/EntityView';
 import ResourcesHandler from 'components/ResourcesHandler';
@@ -32,22 +33,27 @@ const EntityPage = () => {
   }, [id]);
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{ entity?.name }</Breadcrumb.Item>
-      </Breadcrumb>
-      <h4>{ entity?.name }</h4>
-      <br />
-      {
-        entity && (
-          <EntityView
-            entity={entity}
-          />
-        )
-      }
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('entities')} - { entity?.name }</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{ entity?.name }</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>{ entity?.name }</h4>
+        <br />
+        {
+          entity && (
+            <EntityView
+              entity={entity}
+            />
+          )
+        }
+      </BasePage>
+    </>
   );
 
   return (

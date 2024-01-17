@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import OrganizationsView from 'components/organizations/OrganizationsView';
@@ -26,21 +27,26 @@ const OrganizationsPage = () => {
   }, []);
 
   const getPage = () => (
-    <BasePage>
-      <Breadcrumb>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-        <Breadcrumb.Item active>{t('organizations')}</Breadcrumb.Item>
-      </Breadcrumb>
-      <h4>{t('organizations')}</h4>
-      <OrganizationsView
-        onOrganizationSelect={
-          organizationId => operations.pane.setPaneContent({
-            type: 'ORGANIZATION',
-            id: organizationId,
-          })(dispatch)
-        }
-      />
-    </BasePage>
+    <>
+      <Helmet>
+        <title>{t('organizations')}</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{t('organizations')}</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>{t('organizations')}</h4>
+        <OrganizationsView
+          onOrganizationSelect={
+            organizationId => operations.pane.setPaneContent({
+              type: 'ORGANIZATION',
+              id: organizationId,
+            })(dispatch)
+          }
+        />
+      </BasePage>
+    </>
   );
 
   return (

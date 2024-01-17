@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
 import Card from 'components/dashboards/Card';
@@ -37,6 +38,9 @@ const DashboardPage = () => {
 
   const getPage = () => (
     <>
+      <Helmet>
+        <title>{t('dashboard')}</title>
+      </Helmet>
       <Sidebar />
       <Container
         fluid
@@ -53,15 +57,17 @@ const DashboardPage = () => {
             </Breadcrumb>
             <h4>{t('dashboard')}</h4>
             <Card>
-              <p>Aujourd'hui</p>
+              <p>{t('today')}</p>
               <div style={{ fontSize: 48 }}>
-                <b>2581</b> points
+                <b>2581</b>
+                {t('points')}
               </div>
             </Card>
             <Card>
-              <p>Cette semaine</p>
+              <p>{t('thisWeek')}</p>
               <div style={{ fontSize: 48 }}>
-                <b>2581</b> points
+                <b>2581</b>
+                {t('points')}
               </div>
             </Card>
             <p>{ nbDone } / { nbTotal }</p>
