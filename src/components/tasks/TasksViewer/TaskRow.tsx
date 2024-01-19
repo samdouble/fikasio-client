@@ -131,7 +131,9 @@ const TaskRow = ({
       <td
         className="taskRow_description"
         onClick={() => onClick && onClick(task.id)}
-        style={{ cursor: 'pointer' }}
+        style={{
+          cursor: 'pointer',
+        }}
       >
         <AutosaveTextarea
           className={classNames({

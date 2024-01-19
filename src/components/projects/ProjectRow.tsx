@@ -73,11 +73,11 @@ const ProjectRow = ({
       </td>
       <td
         className="projectRow_dueAt"
-        width={150}
         onClick={() => setIsDueAtDatepickerOpen(true)}
         style={{
           cursor: 'pointer',
           ...(!project.isCompleted && hasdueAtPassed && { color: '#ff0000' }),
+          width: 150,
         }}
       >
         <ClickOutside

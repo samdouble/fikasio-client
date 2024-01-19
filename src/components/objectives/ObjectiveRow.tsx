@@ -79,8 +79,8 @@ const ObjectiveRow = ({
         style={{
           cursor: 'pointer',
           ...(isLate && { color: '#ff0000' }),
+          width: 150,
         }}
-        width={160}
       >
         <DatePicker
           customInput={<input type="hidden" />}

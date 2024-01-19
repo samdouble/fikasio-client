@@ -60,6 +60,9 @@ const TasksList = ({
       bordered
       hover
       responsive
+      style={{
+        overflowX: 'scroll',
+      }}
     >
       <thead>
         <tr>
@@ -81,7 +84,7 @@ const TasksList = ({
                 : <div />
             }
           </th>
-          <th>{t('description')}</th>
+          <th style={{ width: 500 }}>{t('description')}</th>
           <th style={{ width: 140 }}>{t('projects')}</th>
           <th style={{ width: 140 }}>{t('status')}</th>
           <th style={{ width: 140 }}>{t('assignee')}</th>

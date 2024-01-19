@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import usePrevious from 'use-previous';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import Table from 'react-bootstrap/Table';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -75,69 +77,71 @@ const LoginPage = () => {
         <title>{t('login')}</title>
       </Helmet>
       <h4>{t('login')}</h4>
-      <Table
-        className="LoginPage_table"
+      <Container
+        fluid
+        style={{
+          paddingTop: 30,
+        }}
       >
-        <tbody>
-          <tr>
-            <td>
-              {
-                showLoginError && (
-                  <Alert variant="danger" >
-                    <strong>{t('invalidConnection')}</strong>
-                  </Alert>
-                )
-              }
-              <form
-                id="Login_form"
-              >
-                <Form.Group>
-                  <Form.Control
-                    autoFocus
-                    name="emailAddress"
-                    placeholder={t('emailAddress')}
-                    style={{ marginBottom: 10 }}
-                    type="text"
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control
-                    id="password"
-                    name="password"
-                    onKeyUp={handleKeyUp}
-                    placeholder={t('password')}
-                    type="password"
-                  />
-                </Form.Group>
-              </form>
-              <Button
-                onClick={handleLogin}
-                type="submit"
-                variant="primary"
-              >
-                {t('login')}
-              </Button>
+        <Row>
+          {
+            showLoginError && (
+              <Alert variant="danger" >
+                <strong>{t('invalidConnection')}</strong>
+              </Alert>
+            )
+          }
+        </Row>
+        <Row>
+          <Col md={6}>
+            <form
+              id="Login_form"
+            >
+              <Form.Group>
+                <Form.Control
+                  autoFocus
+                  name="emailAddress"
+                  placeholder={t('emailAddress')}
+                  style={{ marginBottom: 10 }}
+                  type="text"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  id="password"
+                  name="password"
+                  onKeyUp={handleKeyUp}
+                  placeholder={t('password')}
+                  type="password"
+                />
+              </Form.Group>
+            </form>
+            <Button
+              onClick={handleLogin}
+              type="submit"
+              variant="primary"
+            >
+              {t('login')}
+            </Button>
+            {t('or')}
+            &nbsp;
+            <a href={links.paths.signup}>
+              {t('createAnAccount')}
+            </a>
+          </Col>
+          <Col md={6}>
+            <Button
+              onClick={handleGoogleSignIn}
+              type="button"
+              variant="danger"
+            >
+              <span className="fa fa-google" />
               &nbsp;
-              {t('or')}
-              &nbsp;
-              <a href={links.paths.signup}>
-                {t('createAnAccount')}
-              </a>
-            </td>
-            <td>
-              <Button
-                onClick={handleGoogleSignIn}
-                type="button"
-                variant="danger"
-              >
-                <span className="fa fa-google" />
-                &nbsp;
-                {t('loginWithGoogle')}
-              </Button>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+              {t('loginWithGoogle')}
+            </Button>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
