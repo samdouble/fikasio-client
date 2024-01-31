@@ -84,10 +84,11 @@ const ActivityPane = ({
       formData.templateId = null;
     }
 
-    formData.tasks = formData.tasks.map(t1 => ({
-      ...t1,
-      duration: parseInt(t1.duration, 10),
-    }));
+    formData.tasks = (formData.tasks || [])
+      .map(t1 => ({
+        ...t1,
+        duration: parseInt(t1.duration, 10),
+      }));
 
     if (activity?.id) {
       operations.activities.updateActivity(activity?.id, formData)(dispatch)

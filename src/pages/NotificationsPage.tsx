@@ -49,7 +49,7 @@ const NotificationsPage = () => {
     const uniqueDueDates = uniqBy(allTasksDueInTheFuture, t1 => DateTime.fromISO(t1.dueAt).toISODate())
       .map(t1 => DateTime.fromISO(t1.dueAt).set({ hour: 23, minute: 59, second: 59, millisecond: 999 }));
     const isOverloadedAtSomePoint = uniqueDueDates.find(dueDate => {
-      const nbDaysBeforeDate = dueDate.diffNow('days');
+      const nbDaysBeforeDate = dueDate.diffNow('days').values.days;
       const amountHoursBeforeDate = allTasksDueInTheFuture?.filter(t1 => 
           (DateTime.fromISO(t1.dueAt) <= dueDate && t1.estimatedCompletionTime)
         )
@@ -145,7 +145,7 @@ const NotificationsPage = () => {
             !!isOverloadedAtSomePoint && (
               <>
                 <div>
-                  Vous avez <b>{isOverloadedAtSomePoint}</b>.
+                  Vous avez <b>{isOverloadedAtSomePoint.toISODate()}</b>.
                 </div>
               </>
             )
