@@ -153,7 +153,7 @@ const ProjectInformationsForm = ({
                     dateFormat="yyyy-MM-dd"
                     onChange={val => {
                       const timestamp = DateTime.fromJSDate(val)
-                        .set({ hour: 23, minute: 59, second: 59 });
+                        .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
                       if (project && project.id) {
                         operations.projects.patchProject(project.id, { dueAt: timestamp.toISO() })(dispatch);
                       }

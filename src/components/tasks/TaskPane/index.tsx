@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import { useTranslation } from 'react-i18next';
 import { AutosaveTextarea } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { RootState } from 'services/store';
@@ -18,8 +19,9 @@ const TaskPane = ({
   id,
 }: TaskPaneProps) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const tasks = useSelector((state: RootState) => state.tasks);
-  const [task, setTask] = useState((tasks || []).find(t => t.id === id));
+  const [task, setTask] = useState((tasks || []).find(t1 => t1.id === id));
 
   return (
     <>
@@ -53,7 +55,7 @@ const TaskPane = ({
       >
         <Tab
           eventKey="INFOS"
-          title="Informations"
+          title={t('informations')}
         >
           <TaskInformationsForm
             onClose={() => dispatch(operations.pane.clearPaneContent())}
@@ -62,7 +64,7 @@ const TaskPane = ({
         </Tab>
         <Tab
           eventKey="DISCUSSION"
-          title="Discussion"
+          title={t('discussion')}
         >
           {
             task && (

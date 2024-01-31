@@ -85,6 +85,17 @@ const TopMenu = () => {
                       />
                       {t('settings')}
                     </NavDropdown.Item>
+                    <NavDropdown.Item href={links.paths.settings}>
+                      <FontAwesomeIcon
+                        icon="message"
+                        size="lg"
+                        style={{
+                          fontSize: 16,
+                          marginRight: 10,
+                        }}
+                      />
+                      {t('feedback')}
+                    </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item
                       href={envvars.documentationUrl}

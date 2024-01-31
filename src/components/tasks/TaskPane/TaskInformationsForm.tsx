@@ -174,7 +174,7 @@ const TaskInformationsForm = ({
                     dateFormat="yyyy-MM-dd"
                     onChange={value => {
                       const timestamp = DateTime.fromJSDate(value)
-                        .set({ hour: 23, minute: 59, second: 59 });
+                        .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
                       if (task && task.id) {
                         operations.tasks.patchTask(task.id, { dueAt: timestamp.toISO() })(dispatch);
                       }

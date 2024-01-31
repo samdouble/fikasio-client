@@ -5,7 +5,7 @@ export interface Task {
   dueAt?: Date | null;
   estimatedCompletionTime?: number;
   isArchived?: boolean;
-  projects?: { id: string }[];
+  projects?: { id: string; }[];
   startAt?: Date | null;
   status?: 'Doing' | 'Blocked' | 'Completed';
   taskId?: string;

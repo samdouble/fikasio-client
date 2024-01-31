@@ -240,7 +240,7 @@ const TasksView = ({
                   onBlur={() => setIsDueAtDatepickerOpen(false)}
                   onChange={dueAt => {
                     const timestamp = DateTime.fromJSDate(dueAt)
-                      .set({ hour: 23, minute: 59, second: 59 })
+                      .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
                       .toISO();
                     const selectedTasksIds = selectedTasks
                       .filter(selectedTask => !!selectedTask.id)

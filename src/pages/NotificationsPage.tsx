@@ -7,6 +7,7 @@ import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
+import uniqBy from 'lodash.uniqby';
 import ResourcesHandler from 'components/ResourcesHandler';
 import ProjectsView from 'components/projects/ProjectsView';
 import TasksView from 'components/tasks/TasksView';
@@ -41,6 +42,24 @@ const NotificationsPage = () => {
     const tasksDueAfterProjectDue = notifications && notifications.tasksDueAfterProjectDue;
     const lateTasksCount = lateTasks?.length;
     const tasksDueAfterProjectDueCount = tasksDueAfterProjectDue && tasksDueAfterProjectDue.length;
+    // User overloaded with tasks at some point
+    const MAX_NB_WORK_HOURS_PER_DAY = 4;
+    const allTasksDueInTheFuture = tasks?.filter(t1 => t1.dueAt && t1.status !== 'Completed')
+      .sort((a, b) => (a.dueAt! < b.dueAt! ? -1 : 1));
+    const uniqueDueDates = uniqBy(allTasksDueInTheFuture, t1 => DateTime.fromISO(t1.dueAt).toISODate())
+      .map(t1 => DateTime.fromISO(t1.dueAt).set({ hour: 23, minute: 59, second: 59, millisecond: 999 }));
+    const isOverloadedAtSomePoint = uniqueDueDates.find(dueDate => {
+      const nbDaysBeforeDate = dueDate.diffNow('days');
+      const amountHoursBeforeDate = allTasksDueInTheFuture?.filter(t1 => 
+          (DateTime.fromISO(t1.dueAt) <= dueDate && t1.estimatedCompletionTime)
+        )
+        .map(t1 => t1.estimatedCompletionTime! / 60)
+        .reduce((acc, curr) => (acc! + curr!), 0);
+      return (amountHoursBeforeDate && nbDaysBeforeDate)
+        ? (amountHoursBeforeDate / nbDaysBeforeDate) > MAX_NB_WORK_HOURS_PER_DAY
+        : false;
+    });
+
     return (
       <>
         <Helmet>
@@ -119,6 +138,15 @@ const NotificationsPage = () => {
                     }
                   </tbody>
                 </Table>
+              </>
+            )
+          }
+          {
+            !!isOverloadedAtSomePoint && (
+              <>
+                <div>
+                  Vous avez <b>{isOverloadedAtSomePoint}</b>.
+                </div>
               </>
             )
           }

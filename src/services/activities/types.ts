@@ -10,6 +10,7 @@ export interface Activity {
   id: string;
   name: string;
   startTime: number;
+  tasks: { id: string; }[];
   templateId: string;
   values: Value[];
 }

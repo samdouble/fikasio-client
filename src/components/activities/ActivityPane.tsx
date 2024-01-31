@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -27,6 +28,7 @@ const ActivityPane = ({
 }: ActivityPaneProps) => {
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
+  const tasks = useSelector((state: RootState) => state.tasks);
   const templates = useSelector((state: RootState) => state.templates);
   const login = useSelector((state: RootState) => state.login);
   const me = login.user;
@@ -48,6 +50,8 @@ const ActivityPane = ({
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
   const template = templates?.find(t => t.id === templateId);
   const { t } = useTranslation();
+
+  const activityTasks = activity && activity.tasks;
 
   const handleChangeComments = e => {
     const text = e.target.value;
@@ -79,6 +83,12 @@ const ActivityPane = ({
     if (!Object.keys(formData).includes('templateId')) {
       formData.templateId = null;
     }
+
+    formData.tasks = formData.tasks.map(t1 => ({
+      ...t1,
+      duration: parseInt(t1.duration, 10),
+    }));
+
     if (activity?.id) {
       operations.activities.updateActivity(activity?.id, formData)(dispatch)
         .then(() => dispatch(operations.pane.clearPaneContent()));
@@ -117,7 +127,7 @@ const ActivityPane = ({
         <form onSubmit={handleSubmit}>
           <h4>{ activity && activity.name }</h4>
           <RBForm.Group>
-            <RBForm.Label>Temps</RBForm.Label>
+            <RBForm.Label>{t('time')}</RBForm.Label>
             <br />
             <Field
               component={
@@ -176,7 +186,7 @@ const ActivityPane = ({
                     }}
                     selected={endTime}
                     showTimeSelect
-                    timeCaption="Heure"
+                    timeCaption={t('time')}
                     timeFormat="HH:mm"
                     timeIntervals={15}
                   />
@@ -316,6 +326,78 @@ const ActivityPane = ({
             }}
             suggestions={commentsSuggestions}
           />
+          <RBForm.Group>
+            <RBForm.Label>{t('tasks')}</RBForm.Label>
+            <FieldArray
+              className="form-control"
+              defaultValue={activityTasks}
+              name="tasks"
+            >
+              {({ fields }) => {
+                return (
+                  <div>
+                    {
+                      fields.map((name, index) => (
+                        <table key={name}>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <Field
+                                  className="form-control"
+                                  component="select"
+                                  name={`${name}.id`}
+                                >
+                                  <option />
+                                  {
+                                    tasks?.filter(t1 => !t1.isArchived)
+                                      .sort((t1, t2) => (
+                                        t1.description.toLowerCase().localeCompare(t2.description.toLowerCase())
+                                      ))
+                                      .map(task => (
+                                        <option
+                                          key={task.id}
+                                          value={task.id}
+                                        >
+                                          {task.description}
+                                        </option>
+                                      ))
+                                  }
+                                </Field>
+                              </td>
+                              <td>
+                                <Field
+                                  className="form-control"
+                                  component="input"
+                                  name={`${name}.duration`}
+                                />
+                              </td>
+                              <td width={35}>
+                                <FontAwesomeIcon
+                                  icon="times"
+                                  onClick={() => fields.remove(index)}
+                                  size="1x"
+                                  style={{
+                                    color: '#ce0000',
+                                    cursor: 'pointer',
+                                    marginLeft: 10,
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      ))
+                    }
+                    <Button
+                      onClick={() => fields.push({ id: '' })}
+                    >
+                      {t('add')}
+                    </Button>
+                  </div>
+                );
+              }}
+            </FieldArray>
+          </RBForm.Group>
           <div
             style={{
               bottom: 10,

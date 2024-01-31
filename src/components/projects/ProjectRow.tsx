@@ -91,7 +91,7 @@ const ProjectRow = ({
             onChange={dueAt => {
               const timestamp = DateTime
                 .fromJSDate(dueAt)
-                .set({ hour: 23, minute: 59, second: 59 })
+                .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
                 .toISO();
               operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
             }}
