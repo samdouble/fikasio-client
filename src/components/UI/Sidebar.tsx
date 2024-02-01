@@ -25,10 +25,12 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   const notifications = tasks && projects && calculateNotifications(tasks, projects);
-  const lateProjects = notifications && notifications.lateProjects;
-  const lateTasks = notifications && notifications.lateTasks;
-  const tasksDueAfterProjectDue = notifications && notifications.tasksDueAfterProjectDue;
-  const notificationsCount = (lateTasks && lateTasks.length)
+  const isOverloadedInTheFuture = !!notifications?.overloadInTheFuture;
+  const lateProjects = notifications?.lateProjects;
+  const lateTasks = notifications?.lateTasks;
+  const tasksDueAfterProjectDue = notifications?.tasksDueAfterProjectDue;
+  const notificationsCount = (isOverloadedInTheFuture ? 1 : 0)
+    + (lateTasks && lateTasks.length)
     + (lateProjects && lateProjects.length)
     + (tasksDueAfterProjectDue && tasksDueAfterProjectDue.length);
 

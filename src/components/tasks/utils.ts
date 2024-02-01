@@ -1,4 +1,6 @@
 import { DateTime } from 'luxon';
+import uniqBy from 'lodash.uniqby';
+import { Task } from 'services/tasks/types';
 
 const calculateAverageCompletionTime = tasks => {
   const tasksWithNonNullEstimatedCompletionTime = tasks?.filter(task => task.estimatedCompletionTime);
@@ -99,6 +101,35 @@ const calculateTasksDueTooLate = (tasks, projects) => {
     ]), []);
 };
 
+const calculateOverloadInTheFuture = (tasks: Task[]) => {
+  const MAX_NB_WORK_HOURS_PER_DAY = 4;
+  const allTasksDueInTheFuture = tasks?.filter(t1 => t1.dueAt && t1.status !== 'Completed')
+    .sort((a, b) => (a.dueAt! < b.dueAt! ? -1 : 1));
+  const uniqueDueDates = uniqBy(allTasksDueInTheFuture, t1 => DateTime.fromISO(t1.dueAt).toISODate())
+    .map(t1 => DateTime.fromISO(t1.dueAt).set({ hour: 23, minute: 59, second: 59, millisecond: 999 }));
+
+  let isOverloadedInTheFuture: any = null;
+  for (const dueDate of uniqueDueDates) {
+    const nbDaysBeforeDate = dueDate.diffNow('days').values.days;
+    const amountHoursBeforeDate = allTasksDueInTheFuture?.filter(t1 => 
+        (DateTime.fromISO(t1.dueAt) <= dueDate && t1.estimatedCompletionTime)
+      )
+      .map(t1 => t1.estimatedCompletionTime! / 60)
+      .reduce((acc, curr) => (acc! + curr!), 0);
+    const averageHoursPerDayBeforeDate = amountHoursBeforeDate
+      && nbDaysBeforeDate
+      && (amountHoursBeforeDate / nbDaysBeforeDate);
+    if (averageHoursPerDayBeforeDate > MAX_NB_WORK_HOURS_PER_DAY) {
+      isOverloadedInTheFuture = {
+        date: dueDate,
+        averageHoursPerDayBeforeDate,
+      };
+      break;
+    }
+  }
+  return isOverloadedInTheFuture;
+};
+
 export {
   calculateCompleteTime,
   calculateIncompleteTime,
@@ -107,4 +138,5 @@ export {
   getLateTasks,
   calculateLatenessRatio,
   calculateTasksDueTooLate,
+  calculateOverloadInTheFuture,
 };
