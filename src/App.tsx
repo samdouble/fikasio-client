@@ -29,6 +29,8 @@ import TimesheetPage from './pages/TimesheetPage';
 import TemplateUpsertPage from './pages/TemplateUpsertPage';
 import TemplatePage from './pages/TemplatePage';
 import TemplatesPage from './pages/TemplatesPage';
+import PrivacyPage from './pages/PrivacyPage';
+import ToSPage from './pages/ToSPage';
 import Page404 from './pages/Page404';
 import envvars from 'utils/envvars';
 import links from './utils/links';
@@ -85,6 +87,8 @@ const App = () => {
           <PrivateRoute component={TemplatePage} path={links.paths.template} />
           <PrivateRoute component={TemplatesPage} path={links.paths.templates} />
           <PrivateRoute component={TimesheetPage} path={links.timesheet()} />
+          <PrivateRoute component={PrivacyPage} path={links.paths.privacy} />
+          <PrivateRoute component={ToSPage} path={links.paths.tos} />
           <Route component={Page404} />
         </Switch>
         {

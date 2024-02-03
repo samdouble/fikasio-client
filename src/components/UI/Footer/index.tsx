@@ -13,12 +13,18 @@ const Footer = () => {
       className="footer"
       fluid
     >
-      <Row>
+      <Row
+        style={{
+          backgroundColor: '#2e2e2e',
+          paddingBottom: 25,
+          paddingTop: 25,
+        }}
+      >
         <Col md={12}>
-          <div className="text-left">
-            <a href={links.privacy()}>{t('privacy')}</a>
-            <br />
-            <a href={links.tos()}>{t('termsOfService')}</a>
+          <div className="text-center">
+            &copy;
+            {new Date().getFullYear()}
+            <a href={links.tos()}>fikas.io</a>
           </div>
         </Col>
       </Row>
@@ -29,9 +35,11 @@ const Footer = () => {
           paddingTop: 25,
         }}
       >
-        <Col md={12}>
-          <div className="text-center">
-            &copy; {new Date().getFullYear()} <a href={links.tos()}>fikas.io</a>
+        <Col md={4}>
+          <div className="text-left">
+            <a href={links.privacy()}>{t('privacy')}</a>
+            <br />
+            <a href={links.tos()}>{t('termsOfService')}</a>
           </div>
         </Col>
       </Row>

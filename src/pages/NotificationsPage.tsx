@@ -15,6 +15,7 @@ import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
 import { RootState } from 'services/store';
 import links from 'utils/links';
+import { round } from 'utils/maths';
 import './style.scss';
 
 const NotificationsPage = () => {
@@ -129,8 +130,11 @@ const NotificationsPage = () => {
               <>
                 <div>
                   Vous avez une moyenne de
-                  {overloadInTheFuture.averageHoursPerDayBeforeDate}
-                  heures à compléter avant le
+                  &nbsp;
+                  {round(overloadInTheFuture.averageHoursPerDayBeforeDate, 1)}
+                  &nbsp;
+                  heures par jour à compléter avant le
+                  &nbsp;
                   <b>{overloadInTheFuture.date.toISODate()}</b>.
                 </div>
               </>
