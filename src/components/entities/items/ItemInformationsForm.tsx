@@ -110,6 +110,9 @@ const ItemInformationsForm = ({
                 dispatch(operations.pane.clearPaneContent());
                 history.push(links.entity(entityId));
               }}
+              style={{
+                backgroundColor: 'white',
+              }}
               variant="outline-secondary"
             >
               {t('cancel')}

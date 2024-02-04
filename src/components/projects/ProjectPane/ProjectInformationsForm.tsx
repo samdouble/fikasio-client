@@ -140,7 +140,6 @@ const ProjectInformationsForm = ({
             />
           </RBForm.Group>
           <br />
-          <br />
           <RBForm.Group
             className="projectRow_dueAt"
           >
@@ -169,7 +168,6 @@ const ProjectInformationsForm = ({
               name="dueAt"
             />
           </RBForm.Group>
-          <br />
           <br />
           <RBForm.Group>
             <RBForm.Label>{t('members')}</RBForm.Label>

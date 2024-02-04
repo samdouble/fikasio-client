@@ -56,6 +56,9 @@ const ProgressModal = ({
           >
             <Button
               onClick={() => onClose()}
+              style={{
+                backgroundColor: 'white',
+              }}
               variant="outline-secondary"
             >
               {t('cancel')}

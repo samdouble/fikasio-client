@@ -39,8 +39,20 @@ const ObjectiveStats = ({
             />
           </RBForm.Group>
           <div style={{ position: 'absolute', right: 15, bottom: 15 }}>
-            <Button variant="outline-secondary">{t('cancel')}</Button>
-            <Button type="submit" variant="success">{t('save')}</Button>
+            <Button
+              style={{
+                backgroundColor: 'white',
+              }}
+              variant="outline-secondary"
+            >
+              {t('cancel')}
+            </Button>
+            <Button
+              type="submit"
+              variant="success"
+            >
+              {t('save')}
+            </Button>
           </div>
         </form>
       )}

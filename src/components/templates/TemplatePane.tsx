@@ -147,6 +147,9 @@ const TemplatePane = ({
           >
             <Button
               onClick={() => { onClose && onClose(); }}
+              style={{
+                backgroundColor: 'white',
+              }}
               variant="outline-secondary"
             >
               {t('cancel')}

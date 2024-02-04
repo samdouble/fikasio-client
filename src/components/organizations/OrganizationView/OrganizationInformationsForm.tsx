@@ -58,6 +58,9 @@ const OrganizationInformationsForm = ({
           >
             <Button
               onClick={() => dispatch(operations.pane.clearPaneContent())}
+              style={{
+                backgroundColor: 'white',
+              }}
               variant="outline-secondary"
             >
               {t('cancel')}
