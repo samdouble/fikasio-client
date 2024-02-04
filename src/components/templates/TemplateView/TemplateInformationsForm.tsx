@@ -53,7 +53,7 @@ const TemplateInformationsForm = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Couleur</RBForm.Label>
+            <RBForm.Label>{t('color')}</RBForm.Label>
             <br />
             <Field
               name="color"
@@ -75,7 +75,7 @@ const TemplateInformationsForm = ({
                       }}
                       variant={!color ? 'link' : ''}
                     >
-                      Sélectionner
+                      {t('select')}
                     </Button>
                     {
                       isColorpickerOpen && (

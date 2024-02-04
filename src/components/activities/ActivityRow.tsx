@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
-import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
-import { AutosaveTextarea, Checkbox } from '@fikasio/react-ui-components';
-import Datepicker from 'components/UI/Datepicker';
+import { AutosaveTextarea, Checkbox, DatePicker } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { RootState } from 'services/store';
@@ -117,32 +115,28 @@ const ActivityRow = ({
           cursor: 'pointer',
         }}
       >
-        <ClickOutside
-          onClickOutside={() => setIsStartDateTimeDatepickerOpen(false)}
-        >
-          <Datepicker
-            defaultValue={DateTime.fromISO(activity.startTime).toMillis()}
-            isOpen={isStartDateTimeDatepickerOpen}
-            name="startTime"
-            onBlur={() => setIsStartDateTimeDatepickerOpen(false)}
-            onChange={date => {
-              const timestamp = DateTime.fromJSDate(date)
-                .set({ millisecond: 0 });
-              if (activity.id) {
-                const duration = endDateTime.diff(timestamp, 'minutes').minutes;
-                operations.activities.patchActivity(activity.id, {
-                  duration,
-                  startTime: timestamp.toISO(),
-                })(dispatch);
-              }
-            }}
-            showTimeSelect
-            timeCaption="Heure"
-            timeFormat="HH:mm"
-            timeIntervals={15}
-          />
-        </ClickOutside>
-        { startDateTime && startDateTime.toFormat('yyyy-MM-dd HH:mm') }
+        <DatePicker
+          defaultValue={DateTime.fromISO(activity.startTime).toJSDate()}
+          displayFormat="yyyy-MM-dd HH:mm"
+          isOpen={isStartDateTimeDatepickerOpen}
+          name="startTime"
+          onChange={date => {
+            const timestamp = DateTime.fromJSDate(date)
+              .set({ millisecond: 0 });
+            if (activity.id) {
+              const duration = endDateTime.diff(timestamp, 'minutes').minutes;
+              operations.activities.patchActivity(activity.id, {
+                duration,
+                startTime: timestamp.toISO(),
+              })(dispatch);
+            }
+          }}
+          shouldCloseOnSelect
+          showTimeSelect
+          timeCaption={t('hour')}
+          timeFormat="HH:mm"
+          timeIntervals={15}
+        />
       </td>
       <td
         onClick={() => setIsEndDateTimeDatepickerOpen(true)}
@@ -150,32 +144,28 @@ const ActivityRow = ({
           cursor: 'pointer',
         }}
       >
-        <ClickOutside
-          onClickOutside={() => setIsEndDateTimeDatepickerOpen(false)}
-        >
-          <Datepicker
-            defaultValue={DateTime.fromISO(activity.endTime).toMillis()}
-            isOpen={isEndDateTimeDatepickerOpen}
-            name="endTime"
-            onBlur={() => setIsEndDateTimeDatepickerOpen(false)}
-            onChange={date => {
-              const timestamp = DateTime.fromJSDate(date)
-                .set({ millisecond: 0 });
-              if (activity.id) {
-                const duration = timestamp.diff(startDateTime, 'minutes').minutes;
-                operations.activities.patchActivity(activity.id, {
-                  duration,
-                  endTime: timestamp.toISO(),
-                })(dispatch);
-              }
-            }}
-            showTimeSelect
-            timeCaption="Heure"
-            timeFormat="HH:mm"
-            timeIntervals={15}
-          />
-        </ClickOutside>
-        { endDateTime && endDateTime.toFormat('yyyy-MM-dd HH:mm') }
+        <DatePicker
+          defaultValue={DateTime.fromISO(activity.endTime).toJSDate()}
+          displayFormat="yyyy-MM-dd HH:mm"
+          isOpen={isEndDateTimeDatepickerOpen}
+          name="endTime"
+          onChange={date => {
+            const timestamp = DateTime.fromJSDate(date)
+              .set({ millisecond: 0 });
+            if (activity.id) {
+              const duration = timestamp.diff(startDateTime, 'minutes').minutes;
+              operations.activities.patchActivity(activity.id, {
+                duration,
+                endTime: timestamp.toISO(),
+              })(dispatch);
+            }
+          }}
+          shouldCloseOnSelect
+          showTimeSelect
+          timeCaption={t('hour')}
+          timeFormat="HH:mm"
+          timeIntervals={15}
+        />
       </td>
       <td>
         { activity.duration && Duration.fromMillis(activity.duration * 60 * 1000).toFormat('h:mm') }

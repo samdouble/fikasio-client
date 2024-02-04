@@ -140,6 +140,8 @@ const ProjectInformationsForm = ({
               name="startAt"
             />
           </RBForm.Group>
+          <br />
+          <br />
           <RBForm.Group
             className="projectRow_dueAt"
           >

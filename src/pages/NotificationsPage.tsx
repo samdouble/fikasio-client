@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -7,10 +7,11 @@ import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
+import { DatePicker } from '@fikasio/react-ui-components';
 import ResourcesHandler from 'components/ResourcesHandler';
+import { calculateNotifications } from 'components/notifications/utils';
 import ProjectsView from 'components/projects/ProjectsView';
 import TasksView from 'components/tasks/TasksView';
-import { calculateNotifications } from 'components/notifications/utils';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
 import { RootState } from 'services/store';
@@ -24,6 +25,8 @@ const NotificationsPage = () => {
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
+  const [isProjectDueAtDatepickerOpen, setIsProjectDueAtDatepickerOpen] = useState(false);
+  const [isTaskDueAtDatepickerOpen, setIsTaskDueAtDatepickerOpen] = useState(false);
 
   useEffect(() => {
     ReactGA.send({
@@ -106,6 +109,14 @@ const NotificationsPage = () => {
                   hover
                   responsive
                 >
+                  <thead>
+                    <tr>
+                      <th>{t('task')}</th>
+                      <th style={{ width: 150 }}>{t('dueDate')}</th>
+                      <th>{t('project')}</th>
+                      <th style={{ width: 150 }}>{t('dueDate')}</th>
+                    </tr>
+                  </thead>
                   <tbody>
                     {
                       tasksDueAfterProjectDue
@@ -113,9 +124,47 @@ const NotificationsPage = () => {
                           return (
                             <tr key={task.id}>
                               <td>{ task && task.description }</td>
-                              <td width={140}>{ task && task.dueAt && DateTime.fromISO(task.dueAt).toFormat('yyyy-MM-dd') }</td>
+                              <td
+                                onClick={() => setIsProjectDueAtDatepickerOpen(true)}
+                                width={150}
+                              >
+                                <DatePicker
+                                  defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toJSDate() : null}
+                                  displayFormat="yyyy-MM-dd"
+                                  isOpen={isProjectDueAtDatepickerOpen}
+                                  onChange={dueAt => {
+                                    const timestamp = DateTime.fromJSDate(dueAt)
+                                      .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+                                      .toISO();
+                                    operations.tasks.patchTask(task.id, { dueAt: timestamp })(dispatch);
+                                  }}
+                                  onClose={() => setIsProjectDueAtDatepickerOpen(false)}
+                                  shouldCloseOnSelect
+                                  showRemoveValue
+                                  showTimeSelect={false}
+                                />
+                              </td>
                               <td>{ project && project.name }</td>
-                              <td width={140}>{ project && project.dueAt && DateTime.fromISO(project.dueAt).toFormat('yyyy-MM-dd') }</td>
+                              <td
+                                onClick={() => setIsTaskDueAtDatepickerOpen(true)}
+                                width={150}
+                              >
+                                <DatePicker
+                                  defaultValue={project.dueAt ? DateTime.fromISO(project.dueAt).toJSDate() : null}
+                                  displayFormat="yyyy-MM-dd"
+                                  isOpen={isTaskDueAtDatepickerOpen}
+                                  onChange={dueAt => {
+                                    const timestamp = DateTime.fromJSDate(dueAt)
+                                      .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+                                      .toISO();
+                                    operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
+                                  }}
+                                  onClose={() => setIsTaskDueAtDatepickerOpen(false)}
+                                  shouldCloseOnSelect
+                                  showRemoveValue
+                                  showTimeSelect={false}
+                                />
+                              </td>
                             </tr>
                           );
                         })
@@ -129,12 +178,9 @@ const NotificationsPage = () => {
             !!overloadInTheFuture && (
               <>
                 <div>
-                  Vous avez une moyenne de
-                  &nbsp;
-                  {round(overloadInTheFuture.averageHoursPerDayBeforeDate, 1)}
-                  &nbsp;
-                  heures par jour à compléter avant le
-                  &nbsp;
+                  Vous avez une moyenne de&nbsp;
+                  {round(overloadInTheFuture.averageHoursPerDayBeforeDate, 1)}&nbsp;
+                  heures par jour à compléter avant le&nbsp;
                   <b>{overloadInTheFuture.date.toISODate()}</b>.
                 </div>
               </>

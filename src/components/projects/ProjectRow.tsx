@@ -2,18 +2,15 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
-import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import classNames from 'classnames';
-import { Checkbox } from '@fikasio/react-ui-components';
-import Datepicker from 'components/UI/Datepicker';
+import { Checkbox, DatePicker } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { Project } from 'services/projects/types';
 import { isEmpty } from 'utils/isEmpty';
 import { round } from 'utils/maths';
-import './style.scss';
 
 export interface ProjectRowProps {
   isSelected?: boolean;
@@ -80,46 +77,27 @@ const ProjectRow = ({
           width: 150,
         }}
       >
-        <ClickOutside
-          onClickOutside={() => setIsDueAtDatepickerOpen(false)}
-        >
-          <Datepicker
-            defaultValue={DateTime.fromISO(project.dueAt).toMillis()}
-            isOpen={isDueAtDatepickerOpen}
-            name="dueAt"
-            onBlur={() => setIsDueAtDatepickerOpen(false)}
-            onChange={dueAt => {
-              const timestamp = DateTime
-                .fromJSDate(dueAt)
-                .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
-                .toISO();
-              operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
-            }}
-          />
-        </ClickOutside>
-        <FontAwesomeIcon
-          icon="calendar-alt"
-          size="1x"
-          style={{ marginRight: 10 }}
+        <DatePicker
+          defaultValue={DateTime.fromISO(project.dueAt).toJSDate()}
+          displayFormat="yyyy-MM-dd"
+          isOpen={isDueAtDatepickerOpen}
+          name="dueAt"
+          onChange={dueAt => {
+            const timestamp = DateTime
+              .fromJSDate(dueAt)
+              .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+              .toISO();
+            operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
+          }}
+          onClose={() => setIsDueAtDatepickerOpen(false)}
+          onRemoveValue={e => {
+            e.stopPropagation();
+            operations.projects.patchProject(project.id, { dueAt: null })(dispatch);
+          }}
+          shouldCloseOnSelect
+          showRemoveValue
+          showTimeSelect={false}
         />
-        {
-          project
-            && project.dueAt
-            && DateTime.fromISO(project.dueAt).toFormat('yyyy-MM-dd')
-        }
-        {
-          project && project.dueAt && (
-            <FontAwesomeIcon
-              className="projectRow_dueAt_remove"
-              icon="times"
-              onClick={e => {
-                e.stopPropagation();
-                operations.projects.patchProject(project.id, { dueAt: null })(dispatch);
-              }}
-              size="1x"
-            />
-          )
-        }
       </td>
       <td
         style={{

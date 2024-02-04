@@ -26,14 +26,3 @@ tr.done {
   border: 1px solid #dddddd;
   background-color: #ffffff;
 }
-
-.taskRow_dueAt_remove {
-  color: #b2b2b2;
-  display: inline;
-  margin-left: 10px;
-  visibility: hidden;
-}
-
-.taskRow_dueAt:hover > .taskRow_dueAt_remove {
-  visibility: visible;
-}

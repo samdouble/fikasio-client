@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
-import ClickOutside from 'react-click-outside';
 import usePrevious from 'use-previous';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import isEqual from 'lodash.isequal';
 import { DateTime } from 'luxon';
-import { AutosaveTextarea, Checkbox } from '@fikasio/react-ui-components';
+import { AutosaveTextarea, Checkbox, DatePicker } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
-import Datepicker from 'components/UI/Datepicker';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { Task } from 'services/tasks/types';
@@ -256,40 +254,24 @@ const TaskRow = ({
           width: 150,
         }}
       >
-        <ClickOutside
-          onClickOutside={() => setIsDueAtDatepickerOpen(false)}
-        >
-          <Datepicker
-            defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toMillis() : null}
-            isOpen={isDueAtDatepickerOpen}
-            onBlur={() => setIsDueAtDatepickerOpen(false)}
-            onChange={dueAt => {
-              const timestamp = DateTime.fromJSDate(dueAt)
-                .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
-                .toISO();
-              operations.tasks.patchTask(task.id, { dueAt: timestamp })(dispatch);
-            }}
-          />
-        </ClickOutside>
-        <FontAwesomeIcon
-          icon="calendar-alt"
-          size="1x"
-          style={{ marginRight: 10 }}
+        <DatePicker
+          defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toJSDate() : null}
+          isOpen={isDueAtDatepickerOpen}
+          onChange={dueAt => {
+            const timestamp = DateTime.fromJSDate(dueAt)
+              .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+              .toISO();
+            operations.tasks.patchTask(task.id, { dueAt: timestamp })(dispatch);
+          }}
+          onClose={() => setIsDueAtDatepickerOpen(false)}
+          onRemoveValue={e => {
+            e.stopPropagation();
+            operations.tasks.patchTask(task.id, { dueAt: null })(dispatch);
+          }}
+          shouldCloseOnSelect
+          showRemoveValue
+          showTimeSelect={false}
         />
-        {task && task.dueAt && DateTime.fromISO(task.dueAt).toFormat('yyyy-MM-dd')}
-        {
-          task && task.dueAt && (
-            <FontAwesomeIcon
-              className="taskRow_dueAt_remove"
-              icon="times"
-              onClick={e => {
-                e.stopPropagation();
-                operations.tasks.patchTask(task.id, { dueAt: null })(dispatch);
-              }}
-              size="1x"
-            />
-          )
-        }
       </td>
       <td
         style={{

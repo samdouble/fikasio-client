@@ -23,7 +23,7 @@ const Footer = () => {
         <Col md={12}>
           <div className="text-center">
             &copy;
-            {new Date().getFullYear()}
+            {new Date().getFullYear()}&nbsp;
             <a href={links.tos()}>fikas.io</a>
           </div>
         </Col>

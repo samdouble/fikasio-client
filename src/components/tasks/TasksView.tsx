@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import ClickOutside from 'react-click-outside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import uniqBy from 'lodash.uniqby';
 import { DateTime } from 'luxon';
-import Datepicker from 'components/UI/Datepicker';
+import { DatePicker } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { Task } from 'services/tasks/types';
 import AddTaskButton from './AddTaskButton';
@@ -227,54 +226,36 @@ const TasksView = ({
                 width: 150,
               }}
             >
-              <ClickOutside
-                onClickOutside={() => setIsDueAtDatepickerOpen(false)}
-              >
-                <Datepicker
-                  defaultValue={
-                    allSelectedTasksHaveSameDueAt
-                    ? DateTime.fromISO(uniqueDueAtForSelectedTasks[0]).toMillis()
-                    : null
-                  }
-                  isOpen={isDueAtDatepickerOpen}
-                  onBlur={() => setIsDueAtDatepickerOpen(false)}
-                  onChange={dueAt => {
-                    const timestamp = DateTime.fromJSDate(dueAt)
-                      .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
-                      .toISO();
-                    const selectedTasksIds = selectedTasks
-                      .filter(selectedTask => !!selectedTask.id)
-                      .map(selectedTask => selectedTask.id!)
-                    operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: timestamp })(dispatch)
-                      .then(() => setSelectedTasks([]));
-                  }}
-                />
-              </ClickOutside>
-              <FontAwesomeIcon
-                icon="calendar-alt"
-                size="1x"
-                style={{ marginRight: 10 }}
+              <DatePicker
+                defaultValue={
+                  allSelectedTasksHaveSameDueAt
+                  ? DateTime.fromISO(uniqueDueAtForSelectedTasks[0]).toJSDate()
+                  : null
+                }
+                isOpen={isDueAtDatepickerOpen}
+                onChange={dueAt => {
+                  const timestamp = DateTime.fromJSDate(dueAt)
+                    .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+                    .toISO();
+                  const selectedTasksIds = selectedTasks
+                    .filter(selectedTask => !!selectedTask.id)
+                    .map(selectedTask => selectedTask.id!)
+                  operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: timestamp })(dispatch)
+                    .then(() => setSelectedTasks([]));
+                }}
+                onClose={() => setIsDueAtDatepickerOpen(false)}
+                onRemoveValue={e => {
+                  e.stopPropagation();
+                  const selectedTasksIds = selectedTasks
+                    .filter(selectedTask => !!selectedTask.id)
+                    .map(selectedTask => selectedTask.id!)
+                  operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: null })(dispatch)
+                    .then(() => setSelectedTasks([]));
+                }}
+                shouldCloseOnSelect
+                showRemoveValue
+                showTimeSelect={false}
               />
-              {
-                allSelectedTasksHaveSameDueAt && DateTime.fromISO(uniqueDueAtForSelectedTasks[0]).toFormat('yyyy-MM-dd')
-              }
-              {
-                allSelectedTasksHaveSameDueAt && (
-                  <FontAwesomeIcon
-                    className="taskRow_dueAt_remove"
-                    icon="times"
-                    onClick={e => {
-                      e.stopPropagation();
-                      const selectedTasksIds = selectedTasks
-                        .filter(selectedTask => !!selectedTask.id)
-                        .map(selectedTask => selectedTask.id!)
-                      operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: null })(dispatch)
-                        .then(() => setSelectedTasks([]));
-                    }}
-                    size="1x"
-                  />
-                )
-              }
             </div>
           </div>
         )
