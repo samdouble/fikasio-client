@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { getEvents } from 'services/events/endpoints';
 import LineChart from '../../dashboards/LineChart';
 import { getEstimatedCompletionDate } from '../utils';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'components/UI/Form.scss';
 
 export interface ObjectiveProgressEvent {

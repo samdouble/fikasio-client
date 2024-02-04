@@ -40,7 +40,7 @@ const ObjectivesList = ({
               objectivesToShow?.length
                 ? (
                   <Checkbox
-                    defaultIsChecked={allObjectivesAreChecked}
+                    isChecked={allObjectivesAreChecked}
                     onClick={() => {
                       if (allObjectivesAreChecked) {
                         onSelectAllObjectives([]);

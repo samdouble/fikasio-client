@@ -39,6 +39,28 @@ const calculateCompletionPercentage = tasks => {
   return completeTime / (completeTime + incompleteTime);
 };
 
+const filterTasks = (tasks, filter) => tasks?.filter(task => (
+    (filter.complete !== false && task.status === 'Completed' && !task.isArchived)
+      || (filter.complete !== true && task.status !== 'Completed' && !task.isArchived)
+  ))
+  .filter(task => (
+    (filter.archived && task.isArchived)
+      || (!filter.archived && !task.isArchived)
+  ))
+  .filter(task => {
+    const dueAtGt = filter.dueAt?.$gt && DateTime.fromJSDate(filter.dueAt.$gt);
+    const dueAtGte = filter.dueAt?.$gte && DateTime.fromJSDate(filter.dueAt.$gte);
+    const dueAtLt = filter.dueAt?.$lt && DateTime.fromJSDate(filter.dueAt.$lt);
+    const dueAtLte = filter.dueAt?.$lte && DateTime.fromJSDate(filter.dueAt.$lte);
+    const dueAt = task.dueAt && DateTime.fromISO(task.dueAt);
+    if (!dueAt) return !filter.dueAt;
+    if (dueAtGt && dueAt <= dueAtGt) return false;
+    if (dueAtGte && dueAt < dueAtGte) return false;
+    if (dueAtLt && dueAt >= dueAtLt) return false;
+    if (dueAtLt && dueAt > dueAtLte) return false;
+    return true;
+  });
+
 const getFurthestDueDate = tasks => {
   return tasks
     .reduce((acc, task) => ((acc && acc < task.dueAt) ? acc : task.dueAt || null), null);
@@ -110,7 +132,10 @@ const calculateOverloadInTheFuture = (tasks: Task[]) => {
 
   let isOverloadedInTheFuture: any = null;
   for (const dueDate of uniqueDueDates) {
-    const nbDaysBeforeDate = dueDate.diffNow('days').values.days;
+    const nbDaysBeforeDate = dueDate.diff(
+      DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
+      'days',
+    ).values.days;
     const amountHoursBeforeDate = allTasksDueInTheFuture?.filter(t1 => 
         (DateTime.fromISO(t1.dueAt) <= dueDate && t1.estimatedCompletionTime)
       )
@@ -134,6 +159,7 @@ export {
   calculateCompleteTime,
   calculateIncompleteTime,
   calculateCompletionPercentage,
+  filterTasks,
   getFurthestDueDate,
   getLateTasks,
   calculateLatenessRatio,

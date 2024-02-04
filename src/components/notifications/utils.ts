@@ -1,9 +1,9 @@
-import { getLateProjects } from '../projects/utils';
+import { getLateProjects } from 'components/projects/utils';
 import {
   calculateOverloadInTheFuture,
   calculateTasksDueTooLate,
   getLateTasks,
-} from '../tasks/utils';
+} from 'components/tasks/utils';
 
 const calculateNotifications = (tasks, projects) => {
   const overloadInTheFuture = calculateOverloadInTheFuture(tasks);

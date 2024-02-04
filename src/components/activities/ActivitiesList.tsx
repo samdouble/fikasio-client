@@ -64,7 +64,7 @@ const ActivitiesList = ({
               activitiesToShow?.length
                 ? (
                   <Checkbox
-                    defaultIsChecked={allActivitiesAreChecked}
+                    isChecked={allActivitiesAreChecked}
                     onClick={() => {
                       if (allActivitiesAreChecked) {
                         onSelectAllActivities([]);

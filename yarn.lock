@@ -1439,10 +1439,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fikasio/react-ui-components@^0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.3.5.tgz#bdd90ed084402b640ced928307fb51391756147c"
-  integrity sha512-LuBBtL6eCf84vY1h/WMnJLNUEP7xC5EqJq1mw1E30/W3J03t3LQwMgduKiKf4/PCWY1pOKyn4SBKo9428e2hpA==
+"@fikasio/react-ui-components@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.3.6.tgz#5ec96ee00b6078175ecb2ac68eb671a148aefe39"
+  integrity sha512-MS3VjLOCd8xv2PMCB4dX4WOBg09VkkRH7vhy5IYPBsX0kjaBgWIFHHWjHq5HTqSSsX+ZVj3qMYw2o/bokiSkhA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.0"
     "@fortawesome/free-brands-svg-icons" "^6.5.1"
@@ -11045,7 +11045,7 @@ react-d3@^0.4.0:
     d3 "^3.5.0"
     react ">0.12.0"
 
-react-datepicker@3.8, react-datepicker@^3.8.0:
+react-datepicker@3.8:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-3.8.0.tgz#c3bccd3e3f47aa66864a2fa75651be097414430b"
   integrity sha512-iFVNEp8DJoX5yEvEiciM7sJKmLGrvE70U38KhpG13XrulNSijeHw1RZkhd/0UmuXR71dcZB/kdfjiidifstZjw==

@@ -7,7 +7,6 @@ import TaskRow from './TaskRow';
 import './style.scss';
 
 const TasksList = ({
-  filter,
   onAddTask,
   onOpenProgressModal,
   onSelectAllTasks,
@@ -19,28 +18,7 @@ const TasksList = ({
 }) => {
   const { t } = useTranslation();
 
-  const tasksToShow = tasks?.filter(task => (
-      (filter.complete !== false && task.status === 'Completed' && !task.isArchived)
-        || (filter.complete !== true && task.status !== 'Completed' && !task.isArchived)
-    ))
-    .filter(task => (
-      (filter.archived && task.isArchived)
-        || (!filter.archived && !task.isArchived)
-    ))
-    .filter(task => {
-      const dueAtGt = filter.dueAt?.$gt && DateTime.fromJSDate(filter.dueAt.$gt);
-      const dueAtGte = filter.dueAt?.$gte && DateTime.fromJSDate(filter.dueAt.$gte);
-      const dueAtLt = filter.dueAt?.$lt && DateTime.fromJSDate(filter.dueAt.$lt);
-      const dueAtLte = filter.dueAt?.$lte && DateTime.fromJSDate(filter.dueAt.$lte);
-      const dueAt = task.dueAt && DateTime.fromISO(task.dueAt);
-      if (!dueAt) return !filter.dueAt;
-      if (dueAtGt && dueAt <= dueAtGt) return false;
-      if (dueAtGte && dueAt < dueAtGte) return false;
-      if (dueAtLt && dueAt >= dueAtLt) return false;
-      if (dueAtLt && dueAt > dueAtLte) return false;
-      return true;
-    });
-  const allTasksAreChecked = tasksToShow?.length === selectedTasks.length;
+  const allTasksAreChecked = tasks?.length === selectedTasks.length;
 
   const addTask = async task => {
     onAddTask(task)
@@ -68,15 +46,15 @@ const TasksList = ({
         <tr>
           <th style={{ width: 35 }}>
             {
-              tasksToShow?.length
+              tasks?.length
                 ? (
                   <Checkbox
-                    defaultIsChecked={allTasksAreChecked}
+                    isChecked={allTasksAreChecked}
                     onClick={() => {
                       if (allTasksAreChecked) {
                         onSelectAllTasks([]);
                       } else {
-                        onSelectAllTasks(tasksToShow);
+                        onSelectAllTasks(tasks);
                       }
                     }}
                   />
@@ -95,7 +73,7 @@ const TasksList = ({
       </thead>
       <tbody>
         {
-          (!tasksToShow || !tasksToShow.length)
+          (!tasks || !tasks.length)
             && (
               <TaskRow
                 onAddTask={addTask}
@@ -112,7 +90,7 @@ const TasksList = ({
             )
         }
         {
-          tasksToShow?.sort((t1, t2) => {
+          tasks?.sort((t1, t2) => {
               if (!t1.dueAt) return -1;
               if (!t2.dueAt) return 1;
               return t1.dueAt < t2.dueAt ? -1 : 1;

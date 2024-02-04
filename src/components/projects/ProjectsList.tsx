@@ -51,7 +51,7 @@ const ProjectsList = ({
               projectsToShow?.length
                 ? (
                   <Checkbox
-                    defaultIsChecked={allProjectsAreChecked}
+                    isChecked={allProjectsAreChecked}
                     onClick={() => {
                       if (allProjectsAreChecked) {
                         onSelectAllProjects([]);

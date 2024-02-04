@@ -164,7 +164,6 @@ const TasksView = ({
         showDueDateFilter={showDueDateFilter}
       />
       <TasksViewer
-        filter={filter}
         onAddTask={task => addTask(task)}
         onSelectAllTasks={tasksArray => setSelectedTasks(tasksArray)}
         onTaskClick={onTaskClick}

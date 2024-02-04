@@ -7,7 +7,6 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
 import { getFormData } from 'utils/forms';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'components/UI/Form.scss';
 
 const ObjectiveStats = ({

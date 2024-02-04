@@ -103,6 +103,13 @@ const en = {
   xSelectedTasks: '{{count}} selected tasks',
   week: 'Week',
   yes: 'Yes',
+  youHaveNoOverdueProjects: 'You have no overdue projects.',
+  youHaveXOverdueProjects: 'You have {{count}} overdue projects.',
+  youHaveNoOverdueTasks: 'You have no overdue tasks.',
+  youHaveXOverdueTasks: 'You have {{count}} overdue tasks.',
+  youHaveTooMuchToDo: 'You have an average of {{avgHours}} hours per day to complete before {{date}}.',
+  youHaveTooMuchToDoNext7Days: 'You have an average of {{avgHours}} hours per day to complete in the next 7 days.',
+  youHaveTooMuchToDoToday: 'You have an average of {{avgHours}} hours per day to complete before the end of the day.',
 };
 
 export default en;

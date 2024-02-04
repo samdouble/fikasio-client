@@ -62,7 +62,7 @@ const NotificationsPage = () => {
             lateProjectsCount ? (
               <>
                 <div>
-                  Vous avez <b>{lateProjectsCount} projet{lateProjectsCount > 1 && 's'} en retard</b>.
+                  {t('youHaveXOverdueProjects', { count: lateProjectsCount })}
                 </div>
                 <ProjectsView
                   onProjectClick={projectId => operations.pane.setPaneContent({
@@ -74,7 +74,7 @@ const NotificationsPage = () => {
               </>
             ) : (
               <div>
-                Vous n'avez aucun projet en retard.
+                {t('youHaveNoOverdueProjects')}
               </div>
             )
           }
@@ -82,7 +82,7 @@ const NotificationsPage = () => {
             lateTasksCount ? (
               <>
                 <div>
-                  Vous avez <b>{lateTasksCount} tâche{lateTasksCount > 1 && 's'} en retard</b>.
+                  {t('youHaveXOverdueTasks', { count: lateTasksCount })}
                 </div>
                 <TasksView
                   onTaskClick={taskId => operations.pane.setPaneContent({
@@ -94,7 +94,7 @@ const NotificationsPage = () => {
               </>
             ) : (
               <div>
-                Vous n'avez aucune tâche en retard.
+                {t('youHaveNoOverdueTasks')}
               </div>
             )
           }
@@ -178,10 +178,12 @@ const NotificationsPage = () => {
             !!overloadInTheFuture && (
               <>
                 <div>
-                  Vous avez une moyenne de&nbsp;
-                  {round(overloadInTheFuture.averageHoursPerDayBeforeDate, 1)}&nbsp;
-                  heures par jour à compléter avant le&nbsp;
-                  <b>{overloadInTheFuture.date.toISODate()}</b>.
+                  {
+                    t('youHaveTooMuchToDo', {
+                      avgHours: round(overloadInTheFuture.averageHoursPerDayBeforeDate, 1),
+                      date: overloadInTheFuture.date.toISODate(),
+                    })
+                  }
                 </div>
               </>
             )

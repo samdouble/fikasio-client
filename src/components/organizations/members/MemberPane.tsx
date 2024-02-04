@@ -7,7 +7,6 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
 import { RootState } from 'services/store';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'components/UI/Form.scss';
 
 interface MemberPaneProps {

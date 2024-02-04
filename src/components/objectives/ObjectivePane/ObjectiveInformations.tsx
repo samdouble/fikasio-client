@@ -7,11 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
-import DatePicker from 'react-datepicker';
 import { DateTime } from 'luxon';
+import { DatePicker } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { RootState } from 'services/store';
-import 'react-datepicker/dist/react-datepicker.css';
 import 'components/UI/Form.scss';
 
 const ObjectiveInformations = ({

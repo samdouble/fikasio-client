@@ -7,7 +7,6 @@ import ProgressModal from '../ProgressModal';
 import './style.scss';
 
 const TasksViewer = ({
-  filter,
   onAddTask,
   onSelectAllTasks,
   onTaskClick,
@@ -34,7 +33,6 @@ const TasksViewer = ({
   if (viewMode === 'BOARD') {
     taskView = (
       <TasksBoard
-        filter={filter}
         // onAddTask={onAddTask}
         // onOpenProgressModal={task => handleOpenProgressModal(task)}
         // onTaskClick={onTaskClick}
@@ -46,7 +44,6 @@ const TasksViewer = ({
   } else if (viewMode === 'LIST') {
     taskView = (
       <TasksList
-        filter={filter}
         onAddTask={onAddTask}
         onOpenProgressModal={task => handleOpenProgressModal(task)}
         onSelectAllTasks={onSelectAllTasks}
