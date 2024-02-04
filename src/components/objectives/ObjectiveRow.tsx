@@ -83,7 +83,8 @@ const ObjectiveRow = ({
       >
         <DatePicker
           customInput={<input type="hidden" />}
-          dateFormat="yyyy-MM-dd"
+          defaultValue={dueDate || new Date()}
+          displayFormat="yyyy-MM-dd"
           isOpen={isDueAtDatepickerOpen}
           name="dueDate"
           onBlur={() => setIsDueAtDatepickerOpen(false)}
@@ -94,7 +95,6 @@ const ObjectiveRow = ({
             operations.objectives.patchObjective(objective.id, { dueDate: timestamp.toString() })(dispatch);
           }}
           popperPlacement="auto"
-          selected={dueDate.toMillis() || Date.now()}
         />
         <FontAwesomeIcon
           icon="calendar-alt"

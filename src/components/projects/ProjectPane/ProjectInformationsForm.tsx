@@ -121,7 +121,8 @@ const ProjectInformationsForm = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    dateFormat="yyyy-MM-dd"
+                    defaultValue={startAt}
+                    displayFormat="yyyy-MM-dd"
                     onChange={value => {
                       const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 0, minute: 0, second: 0 });
@@ -131,7 +132,6 @@ const ProjectInformationsForm = ({
                       setStartAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
                     }}
-                    selected={startAt}
                   />
                 )
               }
@@ -151,7 +151,8 @@ const ProjectInformationsForm = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    dateFormat="yyyy-MM-dd"
+                    defaultValue={dueAt}
+                    displayFormat="yyyy-MM-dd"
                     onChange={val => {
                       const timestamp = DateTime.fromJSDate(val)
                         .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
@@ -161,7 +162,6 @@ const ProjectInformationsForm = ({
                       setDueAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
                     }}
-                    selected={dueAt}
                   />
                 )
               }

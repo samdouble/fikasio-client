@@ -92,6 +92,7 @@ const fr = {
   template: 'Modèle',
   templates: 'Modèles',
   termsOfService: 'Conditions d\'utilisation',
+  time: 'Temps',
   timeLeft: 'Temps restant',
   timesheet: 'Feuille de temps',
   type: 'Type',
@@ -109,7 +110,7 @@ const fr = {
   youHaveXOverdueTasks: 'Vous avez {{count}} tâches en retard.',
   youHaveTooMuchToDo: 'Vous avez une moyenne de {{avgHours}} heures par jour à compléter avant le {{date}}.',
   youHaveTooMuchToDoNext7Days: 'Vous avez une moyenne de {{avgHours}} heures par jour à compléter dans les 7 prochains jours.',
-  youHaveTooMuchToDoToday: 'Vous avez une moyenne de {{avgHours}} heures par jour à compléter avant la fin de la journée.',
+  youHaveTooMuchToDoToday: 'Vous avez {{avgHours}} heures à compléter avant la fin de la journée.',
 };
 
 export default fr;

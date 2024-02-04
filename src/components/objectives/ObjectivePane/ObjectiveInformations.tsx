@@ -91,7 +91,8 @@ const ObjectiveInformations = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    dateFormat="yyyy-MM-dd"
+                    defaultValue={dueDate || dateDueDate}
+                    displayFormat="yyyy-MM-dd"
                     onChange={date => {
                       const d = DateTime.fromJSDate(date).toFormat('yyyy-MM-dd');
                       if (objective) {
@@ -100,7 +101,6 @@ const ObjectiveInformations = ({
                       setDueDate(date);
                       input.onChange(d);
                     }}
-                    selected={dueDate || dateDueDate}
                   />
                 )
               }

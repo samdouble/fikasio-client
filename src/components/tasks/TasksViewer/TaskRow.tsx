@@ -12,6 +12,7 @@ import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { Task } from 'services/tasks/types';
+import { round } from 'utils/maths';
 import AssigneeButton from './AssigneeButton';
 
 export interface TaskRowProps {
@@ -225,7 +226,7 @@ const TaskRow = ({
           defaultValue={
             task
               && task.estimatedCompletionTime
-              && (task.estimatedCompletionTime / 60).toString()
+              && (round(task.estimatedCompletionTime / 60, 2)).toString()
           }
           onBlur={() => handleBlur()}
           onFocus={() => handleFocus()}

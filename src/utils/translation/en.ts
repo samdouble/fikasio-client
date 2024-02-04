@@ -92,6 +92,7 @@ const en = {
   template: 'Template',
   templates: 'Templates',
   termsOfService: 'Terms of Service',
+  time: 'Time',
   timeLeft: 'Time Left',
   timesheet: 'Timesheet',
   type: 'Type',
@@ -109,7 +110,7 @@ const en = {
   youHaveXOverdueTasks: 'You have {{count}} overdue tasks.',
   youHaveTooMuchToDo: 'You have an average of {{avgHours}} hours per day to complete before {{date}}.',
   youHaveTooMuchToDoNext7Days: 'You have an average of {{avgHours}} hours per day to complete in the next 7 days.',
-  youHaveTooMuchToDoToday: 'You have an average of {{avgHours}} hours per day to complete before the end of the day.',
+  youHaveTooMuchToDoToday: 'You have {{avgHours}} hours to complete before the end of the day.',
 };
 
 export default en;

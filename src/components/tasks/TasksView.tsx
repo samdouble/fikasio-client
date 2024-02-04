@@ -10,6 +10,7 @@ import { Task } from 'services/tasks/types';
 import AddTaskButton from './AddTaskButton';
 import TasksFilters from './TasksFilters/TasksFilters';
 import TasksViewer from './TasksViewer/TasksViewer';
+import { filterTasks } from './utils';
 
 interface TasksViewFilter {
   archived?: boolean;
@@ -22,7 +23,6 @@ interface TasksViewFilter {
   };
 }
 interface TasksViewProps {
-  filter?: TasksViewFilter;
   onTaskClick: (taskId: string) => void;
   projectId?: string;
   showAddButton?: boolean;
@@ -32,7 +32,6 @@ interface TasksViewProps {
 }
 
 const TasksView = ({
-  filter: pFilter,
   onTaskClick,
   projectId,
   showAddButton,
@@ -44,7 +43,6 @@ const TasksView = ({
   const { t } = useTranslation();
   const [filter, setFilter] = useState<TasksViewFilter>({
     complete: false,
-    ...pFilter,
   });
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
@@ -59,28 +57,24 @@ const TasksView = ({
         ...filter,
         archived: false,
         complete: undefined,
-        ...pFilter,
       });
     } else if (val === 'COMPLETE') {
       setFilter({
         ...filter,
         archived: false,
         complete: true,
-        ...pFilter,
       });
     } else if (val === 'INCOMPLETE') {
       setFilter({
         ...filter,
         archived: false,
         complete: false,
-        ...pFilter,
       });
     } else if (val === 'ARCHIVED') {
       setFilter({
         ...filter,
         archived: true,
         complete: undefined,
-        ...pFilter,
       });
     }
   };
@@ -90,7 +84,6 @@ const TasksView = ({
       setFilter({
         ...filter,
         dueAt: undefined,
-        ...pFilter,
       });
     } else if (val === 'FOR_TODAY') {
       setFilter({
@@ -102,7 +95,6 @@ const TasksView = ({
             .plus({ days: 1 })
             .set({ hour: 0, minute: 0, second: 0, millisecond: 0 }),
         },
-        ...pFilter,
       });
     } else if (val === 'FOR_THISWEEK') {
       setFilter({
@@ -118,7 +110,6 @@ const TasksView = ({
             .set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
             .toJSDate(),
         },
-        ...pFilter,
       });
     }
   };
@@ -170,7 +161,7 @@ const TasksView = ({
         onTaskSelect={handleTaskSelect}
         projectId={projectId}
         selectedTasks={selectedTasks}
-        tasks={tasks}
+        tasks={filterTasks(tasks, filter)}
       />
       {
         selectedTasks.length > 0 && (

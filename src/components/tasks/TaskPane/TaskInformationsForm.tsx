@@ -143,7 +143,8 @@ const TaskInformationsForm = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    dateFormat="yyyy-MM-dd"
+                    defaultValue={startAt}
+                    displayFormat="yyyy-MM-dd"
                     onChange={value => {
                       const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 0, minute: 0, second: 0 });
@@ -153,7 +154,6 @@ const TaskInformationsForm = ({
                       setStartAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
                     }}
-                    selected={startAt}
                   />
                 )
               }
@@ -171,7 +171,8 @@ const TaskInformationsForm = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    dateFormat="yyyy-MM-dd"
+                    defaultValue={dueAt}
+                    displayFormat="yyyy-MM-dd"
                     onChange={value => {
                       const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
@@ -181,7 +182,6 @@ const TaskInformationsForm = ({
                       setDueAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
                     }}
-                    selected={dueAt}
                   />
                 )
               }

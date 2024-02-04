@@ -135,7 +135,8 @@ const ActivityPane = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    dateFormat="yyyy-MM-dd HH:mm"
+                    defaultValue={startTime}
+                    displayFormat="yyyy-MM-dd HH:mm"
                     onChange={date => {
                       const timestamp = DateTime.fromJSDate(date)
                         .set({ millisecond: 0 });
@@ -153,9 +154,8 @@ const ActivityPane = ({
                         form.mutators.setDuration(end.diff(timestamp, 'minutes').minutes);
                       }
                     }}
-                    selected={startTime}
                     showTimeSelect
-                    timeCaption="Heure"
+                    timeCaption={t('hour')}
                     timeFormat="HH:mm"
                     timeIntervals={15}
                   />
@@ -165,13 +165,13 @@ const ActivityPane = ({
               name="startTime"
             />
             <br />
-            <br />
             <Field
               component={
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    dateFormat="yyyy-MM-dd HH:mm"
+                    displayFormat="yyyy-MM-dd HH:mm"
+                    defaultValue={endTime}
                     onChange={date => {
                       const timestamp = DateTime.fromJSDate(date)
                         .set({ millisecond: 0 });
@@ -185,7 +185,6 @@ const ActivityPane = ({
                         form.mutators.setDuration(timestamp.diff(start, 'minutes').minutes);
                       }
                     }}
-                    selected={endTime}
                     showTimeSelect
                     timeCaption={t('time')}
                     timeFormat="HH:mm"
@@ -197,7 +196,6 @@ const ActivityPane = ({
               name="endTime"
             />
           </RBForm.Group>
-          <br />
           <br />
           <RBForm.Group>
             <RBForm.Label>{t('duration')}</RBForm.Label>
