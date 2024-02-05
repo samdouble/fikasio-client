@@ -65,6 +65,8 @@ const App = () => {
         <Switch>
           <Route component={LoginPage} path={links.paths.login} />
           <Route component={SignupPage} path={links.paths.signup} />
+          <Route component={PrivacyPage} path={links.paths.privacy} />
+          <Route component={ToSPage} path={links.paths.tos} />
           <PrivateRoute
             component={HomePage}
             exact
@@ -87,8 +89,6 @@ const App = () => {
           <PrivateRoute component={TemplatePage} path={links.paths.template} />
           <PrivateRoute component={TemplatesPage} path={links.paths.templates} />
           <PrivateRoute component={TimesheetPage} path={links.timesheet()} />
-          <PrivateRoute component={PrivacyPage} path={links.paths.privacy} />
-          <PrivateRoute component={ToSPage} path={links.paths.tos} />
           <Route component={Page404} />
         </Switch>
         {

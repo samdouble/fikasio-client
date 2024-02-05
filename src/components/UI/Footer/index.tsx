@@ -16,7 +16,6 @@ const Footer = () => {
       <Row
         style={{
           backgroundColor: '#2e2e2e',
-          paddingBottom: 25,
           paddingTop: 25,
         }}
       >
@@ -32,7 +31,6 @@ const Footer = () => {
         style={{
           backgroundColor: '#2e2e2e',
           paddingBottom: 25,
-          paddingTop: 25,
         }}
       >
         <Col md={4}>
