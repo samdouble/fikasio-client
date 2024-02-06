@@ -78,7 +78,7 @@ const ProjectRow = ({
         }}
       >
         <DatePicker
-          defaultValue={DateTime.fromISO(project.dueAt).toJSDate()}
+          defaultValue={project.dueAt && DateTime.fromISO(project.dueAt).toJSDate()}
           displayFormat="yyyy-MM-dd"
           isOpen={isDueAtDatepickerOpen}
           name="dueAt"

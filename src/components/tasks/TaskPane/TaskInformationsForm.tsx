@@ -162,7 +162,6 @@ const TaskInformationsForm = ({
             />
           </RBForm.Group>
           <br />
-          <br />
           <RBForm.Group>
             <RBForm.Label>{t('dueDate')}</RBForm.Label>
             <br />
@@ -189,7 +188,6 @@ const TaskInformationsForm = ({
               name="dueAt"
             />
           </RBForm.Group>
-          <br />
           <br />
           <RBForm.Group>
             <RBForm.Label>{t('estimatedCompletionTime')}</RBForm.Label>

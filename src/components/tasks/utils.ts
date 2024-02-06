@@ -61,6 +61,11 @@ const filterTasks = (tasks, filter) => tasks?.filter(task => (
     return true;
   });
 
+const getFirstDueDate = tasks => {
+  return tasks
+    .reduce((acc, task) => ((acc && task.startAt < acc) ? acc : task.startAt || null), null);
+};
+
 const getFurthestDueDate = tasks => {
   return tasks
     .reduce((acc, task) => ((acc && acc < task.dueAt) ? acc : task.dueAt || null), null);
@@ -160,6 +165,7 @@ export {
   calculateIncompleteTime,
   calculateCompletionPercentage,
   filterTasks,
+  getFirstDueDate,
   getFurthestDueDate,
   getLateTasks,
   calculateLatenessRatio,

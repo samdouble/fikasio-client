@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import {
   calculateCompleteTime,
   calculateIncompleteTime,
   calculateCompletionPercentage,
+  getFirstDueDate,
   getFurthestDueDate,
 } from 'components/tasks/utils';
 import { formatYYYYMMDD } from 'utils/date';
@@ -17,6 +19,7 @@ import { RootState } from 'services/store';
 const Stats = ({
   projectId,
 }) => {
+  const { t } = useTranslation();
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const project = (projects || []).find(p => p.id === projectId);
@@ -26,6 +29,7 @@ const Stats = ({
   const completeTime = calculateCompleteTime(projectTasks);
   const incompleteTime = calculateIncompleteTime(projectTasks);
   const completionRatio = calculateCompletionPercentage(projectTasks);
+  const firstTS = getFirstDueDate(projectTasks);
   const estimatedCompletionTS = getFurthestDueDate(projectTasksIncomplete);
   const statsToDisplay = [
     {
@@ -39,9 +43,14 @@ const Stats = ({
         ? convertMinutesToHumanHM(completeTime)
         : '-',
     }, {
-      name: 'Temps restant',
+      name: t('timeLeft'),
       value: incompleteTime !== null
         ? convertMinutesToHumanHM(incompleteTime)
+        : '-',
+    }, {
+      name: t('startDate'),
+      value: firstTS !== null
+        ? formatYYYYMMDD(new Date(firstTS))
         : '-',
     }, {
       name: 'Date de complétion',
