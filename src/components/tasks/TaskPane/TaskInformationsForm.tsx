@@ -43,7 +43,7 @@ const TaskInformationsForm = ({
   );
 
   const detailsTextarea = useRef(null);
-  const [detailsTextareaHeight, setDetailsTextareaHeight] = useState(1); 
+  const [detailsTextareaHeight, setDetailsTextareaHeight] = useState(3); 
   
   const setTextareaHeight = element => {
     const rowHeight = 25;
