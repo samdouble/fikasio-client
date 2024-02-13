@@ -83,7 +83,7 @@ const ObjectiveRow = ({
       >
         <DatePicker
           customInput={<input type="hidden" />}
-          defaultValue={dueDate || new Date()}
+          defaultValue={dueDate.toJSDate() || new Date()}
           displayFormat="yyyy-MM-dd"
           isOpen={isDueAtDatepickerOpen}
           name="dueDate"
