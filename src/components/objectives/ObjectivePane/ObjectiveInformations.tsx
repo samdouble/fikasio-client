@@ -19,7 +19,7 @@ const ObjectiveInformations = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const projects = useSelector((state: RootState) => state.projects);
-  const dueDate = useState(
+  const [dueDate, setDueDate] = useState(
     objective && objective.dueDate
     ? DateTime.fromISO(objective.dueDate).toJSDate()
     : null,
