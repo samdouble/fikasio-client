@@ -87,9 +87,9 @@ const ProjectRow = ({
           displayFormat="yyyy-MM-dd"
           isOpen={isDueAtDatepickerOpen}
           name="dueAt"
-          onChange={dueAt => {
+          onChange={value => {
             const timestamp = DateTime
-              .fromJSDate(dueAt)
+              .fromJSDate(value)
               .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
               .toISO();
             operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
