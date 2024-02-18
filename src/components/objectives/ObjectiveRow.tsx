@@ -82,25 +82,17 @@ const ObjectiveRow = ({
       >
         <DatePicker
           customInput={<input type="hidden" />}
-          defaultValue={dueDate || new Date()}
+          defaultValue={dueDate.toJSDate()}
           displayFormat="yyyy-MM-dd"
           isOpen={isDueAtDatepickerOpen}
           name="dueDate"
           onBlur={() => setIsDueAtDatepickerOpen(false)}
-          onChange={dueAt => {
-            const timestamp = DateTime.fromJSDate(dueAt)
-              .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
-              .toFormat('yyyy-MM-dd');
-            operations.objectives.patchObjective(objective.id, { dueDate: timestamp.toString() })(dispatch);
+          onChange={value => {
+            const timestamp = DateTime.fromJSDate(value)
+              .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
+            operations.objectives.patchObjective(objective.id, { dueDate: timestamp.toISO() })(dispatch);
           }}
-          popperPlacement="auto"
         />
-        <FontAwesomeIcon
-          icon="calendar-alt"
-          size="1x"
-          style={{ marginRight: 10 }}
-        />
-        { objective.dueDate }
       </td>
       <td
         style={{

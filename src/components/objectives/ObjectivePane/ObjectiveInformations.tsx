@@ -19,14 +19,11 @@ const ObjectiveInformations = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const projects = useSelector((state: RootState) => state.projects);
-  const splitDueDate = objective && objective.dueDate && objective.dueDate.split('-');
-  const dateDueDate = splitDueDate
-    ? new Date(
-      parseInt(splitDueDate[0], 10),
-      parseInt(splitDueDate[1], 10) - 1,
-      parseInt(splitDueDate[2], 10))
-    : new Date();
-  const [dueDate, setDueDate] = useState(null);
+  const [dueDate, setDueDate] = useState(
+    objective && objective.dueDate
+    ? DateTime.fromISO(objective.dueDate).toJSDate()
+    : null,
+  );
 
   const objectiveProjects = objective && objective.projects;
 
@@ -91,10 +88,10 @@ const ObjectiveInformations = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    defaultValue={dueDate || dateDueDate}
+                    defaultValue={dueDate}
                     displayFormat="yyyy-MM-dd"
                     onChange={date => {
-                      const d = DateTime.fromJSDate(date).toFormat('yyyy-MM-dd');
+                      const d = DateTime.fromJSDate(date);
                       if (objective) {
                         operations.objectives.patchObjective(objective.id, { dueDate: d })(dispatch);
                       }
@@ -104,7 +101,7 @@ const ObjectiveInformations = ({
                   />
                 )
               }
-              defaultValue={DateTime.fromJSDate(dueDate || dateDueDate).toFormat('yyyy-MM-dd')}
+              defaultValue={dueDate}
               name="dueDate"
             />
           </RBForm.Group>
