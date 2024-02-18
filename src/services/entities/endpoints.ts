@@ -10,6 +10,10 @@ export const getEntities = () => {
   return get('/entities', {}, {});
 };
 
+export const getEntityEvents = id => {
+  return get(`/entities/:id/events`, { id }, {});
+};
+
 export const createEntity = entity => {
   return post('/entities', {}, entity);
 };

@@ -10,6 +10,10 @@ export const getProjects = filter => {
   return get(`/projects`, {}, { filter });
 };
 
+export const getProjectEvents = id => {
+  return get(`/projects/:id/events`, { id }, {});
+};
+
 export const createProject = project => {
   return post(`/projects`, {}, project);
 };

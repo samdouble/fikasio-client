@@ -86,7 +86,8 @@ const SearchBar = ({ style }) => {
             paddingLeft: 30,
           }}
         />
-        */}
+        */
+      }
       <Autosuggest
         getSuggestionValue={suggestion => suggestion.name}
         inputProps={{

@@ -5,9 +5,10 @@ import { IconPack, library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import useWebSocket from 'react-use-websocket';
+import { useTranslation } from 'react-i18next';
+import { Footer } from '@fikasio/react-ui-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TopMenu from 'components/TopMenu';
-import Footer from 'components/UI/Footer';
 import { RootState } from 'services/store';
 import PrivateRoute from './PrivateRoute';
 import HomePage from './pages/HomePage';
@@ -44,6 +45,7 @@ library.add(
 const App = () => {
   const location = useLocation();
   const loginState = useSelector((state: RootState) => state.login);
+  const { t } = useTranslation();
 
   const { lastJsonMessage } = useWebSocket(
     (process.env.NODE_ENV === 'production') ? envvars.websocketServer : 'ws://localhost:8000',
@@ -97,7 +99,21 @@ const App = () => {
             || (location.pathname === links.paths.home && !loginState)
             || location.pathname === links.paths.login
             || location.pathname === links.paths.signup
-          ) && <Footer />
+          ) && (
+            <Footer
+              childrenTop={[
+                <>
+                  &copy;
+                  {new Date().getFullYear()}&nbsp;
+                  <a href={links.tos()}>fikas.io</a>
+                </>,
+              ]}
+              childrenLeft={[
+                <a href={links.privacy()}>{t('privacy')}</a>,
+                <a href={links.tos()}>{t('termsOfService')}</a>,
+              ]}
+            />
+          )
         }
       </div>
     </div>

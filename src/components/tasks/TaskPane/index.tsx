@@ -6,8 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { AutosaveTextarea } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { RootState } from 'services/store';
-import TaskInformationsForm from './TaskInformationsForm';
 import TaskDiscussion from './TaskDiscussion';
+import TaskHistory from './TaskHistory';
+import TaskInformationsForm from './TaskInformationsForm';
 
 interface TaskPaneProps {
   defaultTab?: string;
@@ -69,6 +70,18 @@ const TaskPane = ({
           {
             task && (
               <TaskDiscussion
+                task={task}
+              />
+            )
+          }
+        </Tab>
+        <Tab
+          eventKey="HISTORY"
+          title={t('history')}
+        >
+          {
+            task && (
+              <TaskHistory
                 task={task}
               />
             )

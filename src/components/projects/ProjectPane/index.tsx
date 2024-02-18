@@ -8,8 +8,9 @@ import ObjectivesView from 'components/objectives/ObjectivesView';
 import TasksView from 'components/tasks/TasksView';
 import { operations } from 'services';
 import { RootState } from 'services/store';
+import ProjectHistory from './ProjectHistory';
 import ProjectInformationsForm from './ProjectInformationsForm';
-import Stats from './Stats';
+import ProjectStats from './ProjectStats';
 
 const ProjectPane = ({
   defaultTab,
@@ -62,8 +63,8 @@ const ProjectPane = ({
           />
         </Tab>
         <Tab
-          eventKey="workload"
-          title="Charge de travail"
+          eventKey="WORKLOAD"
+          title={t('workload')}
         >
           <Table>
             <tbody>
@@ -75,19 +76,31 @@ const ProjectPane = ({
         </Tab>
         <Tab
           eventKey="stats"
-          title="Statistiques"
+          title={t('stats')}
         >
-          <Stats
+          <ProjectStats
             projectId={project?.id}
           />
         </Tab>
         <Tab
           eventKey="infos"
-          title="Informations"
+          title={t('informations')}
         >
           <ProjectInformationsForm
             project={project}
           />
+        </Tab>
+        <Tab
+          eventKey="HISTORY"
+          title={t('history')}
+        >
+          {
+            project && (
+              <ProjectHistory
+                project={project}
+              />
+            )
+          }
         </Tab>
       </Tabs>
     </>

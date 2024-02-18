@@ -35,11 +35,12 @@ const TaskDiscussion = ({
         useContentEditableDiv
       />
       {
-        comments.map(comment => (
-          <div>
-            { comment }
-          </div>
-        ))
+        comments
+          .map(comment => (
+            <div>
+              { comment }
+            </div>
+          ))
       }
     </>
   );

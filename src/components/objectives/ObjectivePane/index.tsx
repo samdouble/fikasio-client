@@ -2,7 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import { useTranslation } from 'react-i18next';
 import { RootState } from 'services/store';
+import ObjectiveHistory from './ObjectiveHistory';
 import ObjectiveInformations from './ObjectiveInformations';
 import ObjectiveProgress from './ObjectiveProgress';
 import ObjectiveStats from './ObjectiveStats';
@@ -11,6 +13,7 @@ const ObjectivePane = ({
   defaultTab,
   id,
 }) => {
+  const { t } = useTranslation();
   const objectives = useSelector((state: RootState) => state.objectives);
   const objective = (objectives || []).find(o => o.id === id);
 
@@ -24,8 +27,8 @@ const ObjectivePane = ({
         {
           objective?.id && (
             <Tab
-              eventKey="stats"
-              title="Statistiques"
+              eventKey="STATS"
+              title={t('stats')}
             >
               <ObjectiveStats
                 objective={objective}
@@ -36,8 +39,8 @@ const ObjectivePane = ({
         {
           objective?.id && (
             <Tab
-              eventKey="progress"
-              title="Progrès"
+              eventKey="PROGRESS"
+              title={t('progress')}
             >
               <ObjectiveProgress
                 objective={objective}
@@ -46,12 +49,24 @@ const ObjectivePane = ({
           )
         }
         <Tab
-          eventKey="infos"
-          title="Informations"
+          eventKey="INFOS"
+          title={t('informations')}
         >
           <ObjectiveInformations
             objective={objective}
           />
+        </Tab>
+        <Tab
+          eventKey="HISTORY"
+          title={t('history')}
+        >
+          {
+            objective && (
+              <ObjectiveHistory
+                objective={objective}
+              />
+            )
+          }
         </Tab>
       </Tabs>
     </>

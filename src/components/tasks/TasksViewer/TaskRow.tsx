@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import isEqual from 'lodash.isequal';
 import { DateTime } from 'luxon';
-import { AutosaveTextarea, Checkbox, DatePicker } from '@fikasio/react-ui-components';
+import { AutosaveTextarea, Checkbox, DatePicker, Selector } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
@@ -180,6 +180,7 @@ const TaskRow = ({
               />
             ))
         }
+        <Selector />
       </td>
       <td width={140}>
         {

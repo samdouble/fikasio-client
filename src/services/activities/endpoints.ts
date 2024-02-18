@@ -14,6 +14,10 @@ export const getActivities = (filter, sort, q) => {
   });
 };
 
+export const getActivityEvents = id => {
+  return get(`/activities/:id/events`, { id }, {});
+};
+
 export const createActivity = activity => {
   return post('/activities', {}, activity);
 };

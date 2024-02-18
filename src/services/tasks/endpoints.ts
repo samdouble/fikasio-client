@@ -6,50 +6,42 @@ import {
   del,
 } from '../api';
 
-const getTask = id => {
+export const getTask = id => {
   return get(`/tasks/:id`, { id }, {});
 };
 
-const getTasks = filter => {
+export const getTasks = filter => {
   return get(`/tasks`, {}, { filter });
 };
 
-const getTaskComments = id => {
+export const getTaskComments = id => {
   return get(`/tasks/:id/comments`, { id }, {});
 };
 
-const createTask = task => {
+export const getTaskEvents = id => {
+  return get(`/tasks/:id/events`, { id }, {});
+};
+
+export const createTask = task => {
   return post(`/tasks`, {}, task);
 };
 
-const updateTask = (id, task) => {
+export const updateTask = (id, task) => {
   return put(`/tasks/:id`, { id }, task);
 };
 
-const patchTask = (id, task) => {
+export const patchTask = (id, task) => {
   return patch(`/tasks/:id`, { id }, task);
 };
 
-const patchManyTasks = (ids, infos) => {
+export const patchManyTasks = (ids, infos) => {
   return patch(`/tasks/batch`, {}, { ids, infos });
 };
 
-const deleteTask = id => {
+export const deleteTask = id => {
   return del(`/tasks/:id`, { id }, {});
 };
 
-const deleteManyTasks = ids => {
+export const deleteManyTasks = ids => {
   return del(`/tasks/batch`, {}, {}, { ids });
-};
-
-export {
-  getTasks,
-  getTask,
-  getTaskComments,
-  createTask,
-  updateTask,
-  patchTask,
-  patchManyTasks,
-  deleteTask,
-  deleteManyTasks,
 };

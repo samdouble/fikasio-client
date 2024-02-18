@@ -10,6 +10,10 @@ export const getObjectives = filter => {
   return get(`/objectives`, {}, { filter });
 };
 
+export const getObjectiveEvents = id => {
+  return get(`/objectives/:id/events`, { id }, {});
+};
+
 export const createObjective = objective => {
   return post(`/objectives`, {}, objective);
 };
