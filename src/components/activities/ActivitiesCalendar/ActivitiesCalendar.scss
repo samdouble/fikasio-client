@@ -17,6 +17,14 @@
   z-index: 0 !important;
 }
 
+.rbc-time-gutter .rbc-time-slot {
+  min-height: 12px;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  min-height: 15px;
+}
+
 .rbc-toolbar {
   display: block !important;
 }
