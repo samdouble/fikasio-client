@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Select } from '@fikasio/react-ui-components';
 
 interface ProjectsDueDateFilterProps {
   onChange: (value: string) => void;
@@ -13,18 +14,19 @@ const ProjectsDueDateFilter = ({
   const { t } = useTranslation();
 
   return (
-    <select
-      className="form-control"
-      onChange={e => onChange(e && e.target && e.target.value)}
+    <Select
+      defaultValue="ALL"
+      onChange={option => onChange(option.value)}
+      options={[
+        { label: t('allProjects'), value: 'ALL' },
+        { label: t('projectsDueForToday'), value: 'FOR_TODAY' },
+        { label: t('projectsDueForThisWeek'), value: 'FOR_THISWEEK' },
+      ]}
       style={{
         ...style,
         width: 250,
       }}
-    >
-      <option value="ALL">{t('allProjects')}</option>
-      <option value="FOR_TODAY">{t('projectsDueForToday')}</option>
-      <option value="FOR_THISWEEK">{t('projectsDueForThisWeek')}</option>
-    </select>
+    />
   );
 };
 

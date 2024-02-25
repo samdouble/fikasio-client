@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@fikasio/react-ui-components';
 import links from 'utils/links';
 
 const AddTemplateButton = ({ style }) => {
@@ -15,14 +15,13 @@ const AddTemplateButton = ({ style }) => {
       }}
       to={links.paths.templateUpsert}
     >
-      <Button
+      <Button.Action
         style={{
           margin: 0,
         }}
-        variant="primary"
       >
         {t('createATemplate')}
-      </Button>
+      </Button.Action>
     </Link>
   );
 };

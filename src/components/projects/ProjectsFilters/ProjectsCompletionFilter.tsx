@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Select } from '@fikasio/react-ui-components';
 
 interface ProjectsCompletionFilterProps {
   onChange: (value: string) => void;
@@ -13,19 +14,20 @@ const ProjectsCompletionFilter = ({
   const { t } = useTranslation();
 
   return (
-    <select
-      className="form-control"
-      onChange={e => onChange(e && e.target && e.target.value)}
+    <Select
+      defaultValue="INCOMPLETE"
+      onChange={option => onChange(option.value)}
+      options={[
+        { label: t('ongoingProjects'), value: 'INCOMPLETE' },
+        { label: t('completeProjects'), value: 'COMPLETE' },
+        { label: t('archivedProjects'), value: 'ARCHIVED' },
+        { label: t('allProjects'), value: 'ALL' },
+      ]}
       style={{
         ...style,
         width: 250,
       }}
-    >
-      <option value="INCOMPLETE">{t('ongoingProjects')}</option>
-      <option value="COMPLETE">{t('completeProjects')}</option>
-      <option value="ARCHIVED">{t('archivedProjects')}</option>
-      <option value="ALL">{t('allProjects')}</option>
-    </select>
+    />
   );
 };
 

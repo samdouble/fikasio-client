@@ -1,18 +1,17 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@fikasio/react-ui-components';
 
 const AddActivityButton = ({ onClick, style }) => {
   const { t } = useTranslation();
 
   return (
-    <Button
+    <Button.Action
       onClick={() => onClick({})}
       style={style}
-      variant="primary"
     >
       {t('createAnActivity')}
-    </Button>
+    </Button.Action>
   );
 };
 

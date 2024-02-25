@@ -1,9 +1,9 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@fikasio/react-ui-components';
 
 const AddTaskButton = ({
   onClick,
@@ -16,12 +16,11 @@ const AddTaskButton = ({
     <div
       style={style}
     >
-      <Button
+      <Button.Action
         onClick={() => onClick('NEW')}
-        variant="primary"
       >
         {t('createATask')}
-      </Button>
+      </Button.Action>
       {
         showCreateSectionButton && (
           <ButtonGroup

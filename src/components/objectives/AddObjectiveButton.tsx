@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@fikasio/react-ui-components';
 
 const AddObjectiveButton = ({
   onClick,
@@ -9,15 +9,12 @@ const AddObjectiveButton = ({
   const { t } = useTranslation();
 
   return (
-    <Button
+    <Button.Action
       onClick={() => onClick('NEW')}
-      style={{
-        ...style,
-      }}
-      variant="primary"
+      style={style}
     >
       {t('createAnObjective')}
-    </Button>
+    </Button.Action>
   );
 };
 

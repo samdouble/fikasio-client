@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { LoginRequestAction } from 'services/login/actions';
 import links from 'utils/links';
@@ -105,13 +105,12 @@ const SignupPage = () => {
           />
         </Form.Group>
       </form>
-      <Button
-        variant="primary"
+      <Button.Action
         onClick={handleSignup}
         type="submit"
       >
         {t('createAnAccount')}
-      </Button>
+      </Button.Action>
       &nbsp;
       {t('or')}
       &nbsp;

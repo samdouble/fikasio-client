@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
+import { Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { PatchUserMeAction } from 'services/login/actions';
 import { RootState } from 'services/store';
@@ -19,9 +20,9 @@ const SettingsGeneral = () => {
   const { user } = login;
   const { language } = user;
 
-  const handleChangeLanguage = e => {
+  const handleChangeLanguage = newLanguage => {
     operations.login.patchUserMe({
-      language: e.target.value,
+      language: newLanguage,
     })(dispatch)
     .then(res => {
       const patchUserMeResponse = res as PatchUserMeAction;
@@ -39,14 +40,14 @@ const SettingsGeneral = () => {
     <>
       <RBForm.Group>
         <RBForm.Label>{t('language')}</RBForm.Label>
-        <select
-          className="form-control"
+        <Select
           defaultValue={language}
           onChange={e => handleChangeLanguage(e)}
-        >
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-        </select>
+          options={[
+            { label: 'English', value: 'en' },
+            { label: 'Français', value: 'fr' },
+          ]}
+        />
       </RBForm.Group>
       <br />
       <Form

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@fikasio/react-ui-components';
 import links from 'utils/links';
 
 const AddItemButton = ({ entity, style }) => {
@@ -12,12 +12,11 @@ const AddItemButton = ({ entity, style }) => {
       style={{ textDecoration: 'none' }}
       to={links.itemUpsert(entity.id, 'NEW')}
     >
-      <Button
+      <Button.Action
         style={style}
-        variant="primary"
       >
         {t('createAnItem')}
-      </Button>
+      </Button.Action>
     </Link>
   );
 };

@@ -51,7 +51,7 @@ const FieldPane = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Type</RBForm.Label>
+            <RBForm.Label>{t('type')}</RBForm.Label>
             <Field
               component="select"
               className="form-control"
@@ -91,7 +91,7 @@ const FieldPane = ({
             </Field>
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Requis</RBForm.Label>
+            <RBForm.Label>{t('required')}</RBForm.Label>
             <Field
               component="input"
               className="form-control"

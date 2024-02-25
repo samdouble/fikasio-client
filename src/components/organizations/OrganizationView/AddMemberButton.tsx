@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Button from 'react-bootstrap/Button';
+import { Button } from '@fikasio/react-ui-components';
 
 const AddMemberButton = ({
   onClick,
@@ -9,15 +9,12 @@ const AddMemberButton = ({
   const { t } = useTranslation();
 
   return (
-    <Button
+    <Button.Action
       onClick={() => onClick('NEW')}
-      style={{
-        ...style,
-      }}
-      variant="primary"
+      style={style}
     >
       {t('addMember')}
-    </Button>
+    </Button.Action>
   );
 };
 

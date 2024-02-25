@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@fikasio/react-ui-components';
 
 const AddOrganizationButton = ({
   onClick,
@@ -9,13 +9,12 @@ const AddOrganizationButton = ({
   const { t } = useTranslation();
 
   return (
-    <Button
+    <Button.Action
       onClick={() => onClick('NEW')}
       style={style}
-      variant="primary"
     >
       {t('createAnOrganization')}
-    </Button>
+    </Button.Action>
   );
 };
 

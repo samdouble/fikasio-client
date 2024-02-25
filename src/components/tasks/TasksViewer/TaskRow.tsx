@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import isEqual from 'lodash.isequal';
 import { DateTime } from 'luxon';
-import { AutosaveTextarea, Checkbox, DatePicker, Selector } from '@fikasio/react-ui-components';
+import { AutosaveTextarea, Checkbox, DatePicker, Select, Selector } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
@@ -184,26 +184,15 @@ const TaskRow = ({
       </td>
       <td width={140}>
         {
-          <select
-            className="form-control"
-            onChange={e => handleTaskStatusChange(task, e.target.value)}
-            style={{
-              appearance: 'none',
-              backgroundColor: 'transparent',
-              backgroundImage: 'linear-gradient(to top, #f9f9f9, #fff 33%)',
-              border: 'none',
-              cursor: 'pointer',
-              lineHeight: 1.1,
-              outline: 'none',
-              padding: 3,
-            }}
-          >
-            <option />
-            <option value="Doing">{t('doing')}</option>
-            <option value="Blocked">{t('blocked')}</option>
-            <option value="Completed">{t('completed')}</option>
-            <option value="Deleted">{t('deleted')}</option>
-          </select>
+          <Select
+            onChange={option => handleTaskStatusChange(task, option.value)}
+            options={[
+              { label: t('doing'), value: 'Doing' },
+              { label: t('blocked'), value: 'Blocked' },
+              { label: t('completed'), value: 'Completed' },
+              { label: t('deleted'), value: 'Deleted' },
+            ]}
+          />
         }
       </td>
       <td width={140}>

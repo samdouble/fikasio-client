@@ -51,7 +51,7 @@ const FieldPane = ({
             />
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Type</RBForm.Label>
+            <RBForm.Label>{t('type')}</RBForm.Label>
             <Field
               component="select"
               className="form-control"
@@ -73,16 +73,17 @@ const FieldPane = ({
                       onChange={value => input.onChange(value)}
                     >
                       {
-                        options.map(option => {
-                          return (
-                            <option
-                              key={option.key}
-                              value={option.value}
-                            >
-                              {option.text}
-                            </option>
-                          )
-                        })
+                        options
+                          .map(option => {
+                            return (
+                              <option
+                                key={option.key}
+                                value={option.value}
+                              >
+                                {option.text}
+                              </option>
+                            )
+                          })
                       }
                     </select>
                   )
@@ -91,7 +92,7 @@ const FieldPane = ({
             </Field>
           </RBForm.Group>
           <RBForm.Group>
-            <RBForm.Label>Requis</RBForm.Label>
+            <RBForm.Label>{t('required')}</RBForm.Label>
             <Field
               component="input"
               className="form-control"
