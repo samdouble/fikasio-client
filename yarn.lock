@@ -1471,10 +1471,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fikasio/react-ui-components@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.5.1.tgz#f4b565351351295510cdc283c405628df411ced8"
-  integrity sha512-R3yzN4OLYBbV0xFMms6/mw6uPSieUSsij68Qrg/m7IPcEosfINpWAuEBBM1qaVcKF1kcP/xnPrXZVHlgT7hgtQ==
+"@fikasio/react-ui-components@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.6.1.tgz#2280335ac8648672d5b359b8f2be8a4c7e6f19a0"
+  integrity sha512-w/xcfBV6sawYjzbxKzosCZ7GGfWB006+RvtpGQGbYcuZ4LhuqgX/0Dc1ZfXClKQJiMEhKZy/DhlxyQrNK6Oo0g==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.0"
     "@fortawesome/free-brands-svg-icons" "^6.5.1"
@@ -1494,6 +1494,7 @@
     react-fontawesome "^1.7.1"
     react-select "^5.8.0"
     sass "^1.56.1"
+    use-previous "^1.2.0"
     use-timeout "^1.1.0"
     web-vitals "^2.1.4"
 

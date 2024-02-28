@@ -1,9 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Alert from 'react-bootstrap/Alert';
 import Table from 'react-bootstrap/Table';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
+import { Warning } from '@fikasio/react-ui-components';
 import {
   calculateCompleteTime,
   calculateIncompleteTime,
@@ -64,17 +63,9 @@ const Stats = ({
     <>
       {
         hasUnspecifiedTasks && (
-          <Alert variant="warning">
-            <FontAwesomeIcon
-              icon="triangle-exclamation"
-              size="lg"
-              style={{
-                fontSize: 16,
-                marginRight: 10,
-              }}
-            />
+          <Warning>
             Certaines tâches de ce projet n'ont pas de date d'échéance ou de temps de complétion estimé.
-          </Alert>
+          </Warning>
         )
       }
       <Table>

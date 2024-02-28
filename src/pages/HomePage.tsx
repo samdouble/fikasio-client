@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import Alert from 'react-bootstrap/Alert';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime } from 'luxon';
+import { Warning } from '@fikasio/react-ui-components';
 import ResourcesHandler from 'components/ResourcesHandler';
 import TasksView from 'components/tasks/TasksView';
 import { calculateOverloadInTheFuture, filterTasks } from 'components/tasks/utils';
@@ -68,21 +67,13 @@ const HomePage = () => {
         <h4>{t('tasksDueForToday')}</h4>
         {
           !!overloadToday && (
-            <Alert variant="warning">
-              <FontAwesomeIcon
-                icon="triangle-exclamation"
-                size="lg"
-                style={{
-                  fontSize: 16,
-                  marginRight: 10,
-                }}
-              />
+            <Warning>
               {
                 t('youHaveTooMuchToDoToday', {
                   avgHours: round(overloadToday.averageHoursPerDayBeforeDate, 1),
                 })
               }
-            </Alert>
+            </Warning>
           )
         }
         <TasksView
@@ -98,21 +89,13 @@ const HomePage = () => {
         <h4>{t('tasksDueForThisWeek')}</h4>
         {
           !!overloadThisWeek && (
-            <Alert variant="warning">
-              <FontAwesomeIcon
-                icon="triangle-exclamation"
-                size="lg"
-                style={{
-                  fontSize: 16,
-                  marginRight: 10,
-                }}
-              />
+            <Warning>
               {
                 t('youHaveTooMuchToDoNext7Days', {
                   avgHours: round(overloadThisWeek.averageHoursPerDayBeforeDate, 1),
                 })
               }
-            </Alert>
+            </Warning>
           )
         }
         <TasksView

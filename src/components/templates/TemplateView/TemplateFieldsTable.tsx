@@ -31,13 +31,13 @@ const TemplateFieldsTable = ({
         <thead>
           <tr>
             <th>{t('name')}</th>
-            <th>Type</th>
+            <th>{t('type')}</th>
             <th
               style={{
                 width: 60,
               }}
             >
-              Requis
+              {t('required')}
             </th>
             <th
               style={{
