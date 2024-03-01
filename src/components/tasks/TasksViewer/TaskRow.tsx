@@ -192,6 +192,9 @@ const TaskRow = ({
               { label: t('completed'), value: 'Completed' },
               { label: t('deleted'), value: 'Deleted' },
             ]}
+            style={{
+              border: 'none',
+            }}
           />
         }
       </td>
