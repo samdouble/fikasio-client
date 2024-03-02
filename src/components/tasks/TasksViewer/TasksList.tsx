@@ -44,7 +44,9 @@ const TasksList = ({
     >
       <thead>
         <tr>
-          <th style={{ width: 35 }}>
+          <th
+            style={{ width: 35 }}
+          >
             {
               tasks?.length
                 ? (
@@ -63,11 +65,11 @@ const TasksList = ({
             }
           </th>
           <th style={{ minWidth: 500 }}>{t('description')}</th>
-          <th style={{ width: 140 }}>{t('projects')}</th>
-          <th style={{ width: 140 }}>{t('status')}</th>
-          <th style={{ width: 140 }}>{t('assignee')}</th>
-          <th style={{ width: 90 }}>{t('progress')}</th>
-          <th style={{ width: 150 }}>{t('deadline')}</th>
+          <th style={{ minWidth: 140 }}>{t('projects')}</th>
+          <th style={{ minWidth: 140 }}>{t('status')}</th>
+          <th style={{ minWidth: 140 }}>{t('assignee')}</th>
+          <th style={{ minWidth: 90 }}>{t('progress')}</th>
+          <th style={{ minWidth: 150 }}>{t('deadline')}</th>
           <th style={{ width: 35 }} />
         </tr>
       </thead>
