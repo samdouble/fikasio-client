@@ -11,8 +11,9 @@ import Form from 'react-bootstrap/Form';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
+import { useGoogleLogin } from '@react-oauth/google';
 import { operations } from 'services';
-import { googleSignIn } from 'services/login/endpoints';
+import { loginGoogle } from 'services/login/endpoints';
 import { RootState } from 'services/store';
 import links from 'utils/links';
 import { getFormData } from 'utils/forms';
@@ -44,6 +45,22 @@ const LoginPage = () => {
     }
   }, [loginState]);
 
+  const handleGoogleSignIn = useGoogleLogin({
+    onSuccess: ({
+      access_token: accessToken,
+      scope,
+      token_type: tokenType,
+    }) => {
+      loginGoogle({
+        accessToken,
+        scope,
+        tokenType,
+      });
+    },
+    onError: error => console.error(error),
+    onNonOAuthError: error => console.error(error),
+  });
+
   const handleLogin = () => {
     const formData: any = getFormData('Login_form');
     operations.login.login(formData.emailAddress, formData.password)(dispatch)
@@ -68,8 +85,6 @@ const LoginPage = () => {
       handleLogin();
     }
   };
-
-  const handleGoogleSignIn = () => googleSignIn();
 
   return (
     <div className="Login">
@@ -131,7 +146,7 @@ const LoginPage = () => {
           </Col>
           <Col md={6}>
             <Button
-              onClick={handleGoogleSignIn}
+              onClick={() => handleGoogleSignIn()}
               type="button"
               variant="danger"
             >

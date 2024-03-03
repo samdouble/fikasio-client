@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
-import { Select } from '@fikasio/react-ui-components';
+import { Input, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { PatchUserMeAction } from 'services/login/actions';
 import { RootState } from 'services/store';
@@ -65,15 +65,32 @@ const SettingsGeneral = () => {
               >
                 {({ fields }) => (
                   <div>
-                    {
-                      fields.map((name, index) => (
-                        <table key={name}>
-                          <tbody>
-                            <tr>
+                    <table
+                      style={{
+                        width: '100%',
+                      }}
+                    >
+                      <tbody>
+                      {
+                        fields
+                          .map((name, index) => (
+                            <tr
+                              key={name}
+                            >
                               <td>
                                 <Field
                                   className="form-control"
-                                  component="input"
+                                  component={
+                                    ({ input }) => (
+                                      <Input
+                                        defaultValue={input.value}
+                                        name={name}
+                                        onChange={value => {
+                                          input.onChange(value);
+                                        }}
+                                      />
+                                    )
+                                  }
                                   name={name}
                                 />
                               </td>
@@ -90,10 +107,10 @@ const SettingsGeneral = () => {
                                 />
                               </td>
                             </tr>
-                          </tbody>
-                        </table>
-                      ))
-                    }
+                          ))
+                      }
+                      </tbody>
+                    </table>
                     <Button
                       onClick={() => fields.push('')}
                     >

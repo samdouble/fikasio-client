@@ -6,6 +6,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import useWebSocket from 'react-use-websocket';
 import { useTranslation } from 'react-i18next';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Footer } from '@fikasio/react-ui-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TopMenu from 'components/TopMenu';
@@ -61,62 +62,66 @@ const App = () => {
   }, [lastJsonMessage]);
 
   return (
-    <div className="App" id="App">
-      <div className="siteContent">
-        <TopMenu />
-        <Switch>
-          <Route component={LoginPage} path={links.paths.login} />
-          <Route component={SignupPage} path={links.paths.signup} />
-          <Route component={PrivacyPage} path={links.paths.privacy} />
-          <Route component={ToSPage} path={links.paths.tos} />
-          <PrivateRoute
-            component={HomePage}
-            exact
-            path="/"
-          />
-          <PrivateRoute component={HomePage} path={links.paths.home} />
-          <PrivateRoute component={DashboardPage} path={links.paths.dashboard} />
-          <PrivateRoute component={EntityUpsertPage} path={links.paths.entityUpsert} />
-          <PrivateRoute component={ItemUpsertPage} path={links.paths.itemUpsert} />
-          <PrivateRoute component={EntityPage} path={links.paths.entity} />
-          <PrivateRoute component={EntitiesPage} path={links.paths.entities} />
-          <PrivateRoute component={NotificationsPage} path={links.paths.notifications} />
-          <PrivateRoute component={ObjectivesPage} path={links.paths.objectives} />
-          <PrivateRoute component={OrganizationPage} path={links.paths.organization} />
-          <PrivateRoute component={OrganizationsPage} path={links.paths.organizations} />
-          <PrivateRoute component={ProjectsPage} path={links.paths.projects} />
-          <PrivateRoute component={SettingsPage} path={links.paths.settings} />
-          <PrivateRoute component={TasksPage} path={links.paths.tasks} />
-          <PrivateRoute component={TemplateUpsertPage} path={links.paths.templateUpsert} />
-          <PrivateRoute component={TemplatePage} path={links.paths.template} />
-          <PrivateRoute component={TemplatesPage} path={links.paths.templates} />
-          <PrivateRoute component={TimesheetPage} path={links.timesheet()} />
-          <Route component={Page404} />
-        </Switch>
-        {
-          (
-            (location.pathname === '/' && !loginState)
-            || (location.pathname === links.paths.home && !loginState)
-            || location.pathname === links.paths.login
-            || location.pathname === links.paths.signup
-          ) && (
-            <Footer
-              childrenTop={[
-                <>
-                  &copy;
-                  {new Date().getFullYear()}&nbsp;
-                  <a href={links.tos()}>fikas.io</a>
-                </>,
-              ]}
-              childrenLeft={[
-                <a href={links.privacy()}>{t('privacy')}</a>,
-                <a href={links.tos()}>{t('termsOfService')}</a>,
-              ]}
+    <GoogleOAuthProvider
+      clientId={envvars.googleOAuthClientId}
+    >
+      <div className="App" id="App">
+        <div className="siteContent">
+          <TopMenu />
+          <Switch>
+            <Route component={LoginPage} path={links.paths.login} />
+            <Route component={SignupPage} path={links.paths.signup} />
+            <Route component={PrivacyPage} path={links.paths.privacy} />
+            <Route component={ToSPage} path={links.paths.tos} />
+            <PrivateRoute
+              component={HomePage}
+              exact
+              path="/"
             />
-          )
-        }
+            <PrivateRoute component={HomePage} path={links.paths.home} />
+            <PrivateRoute component={DashboardPage} path={links.paths.dashboard} />
+            <PrivateRoute component={EntityUpsertPage} path={links.paths.entityUpsert} />
+            <PrivateRoute component={ItemUpsertPage} path={links.paths.itemUpsert} />
+            <PrivateRoute component={EntityPage} path={links.paths.entity} />
+            <PrivateRoute component={EntitiesPage} path={links.paths.entities} />
+            <PrivateRoute component={NotificationsPage} path={links.paths.notifications} />
+            <PrivateRoute component={ObjectivesPage} path={links.paths.objectives} />
+            <PrivateRoute component={OrganizationPage} path={links.paths.organization} />
+            <PrivateRoute component={OrganizationsPage} path={links.paths.organizations} />
+            <PrivateRoute component={ProjectsPage} path={links.paths.projects} />
+            <PrivateRoute component={SettingsPage} path={links.paths.settings} />
+            <PrivateRoute component={TasksPage} path={links.paths.tasks} />
+            <PrivateRoute component={TemplateUpsertPage} path={links.paths.templateUpsert} />
+            <PrivateRoute component={TemplatePage} path={links.paths.template} />
+            <PrivateRoute component={TemplatesPage} path={links.paths.templates} />
+            <PrivateRoute component={TimesheetPage} path={links.timesheet()} />
+            <Route component={Page404} />
+          </Switch>
+          {
+            (
+              (location.pathname === '/' && !loginState)
+              || (location.pathname === links.paths.home && !loginState)
+              || location.pathname === links.paths.login
+              || location.pathname === links.paths.signup
+            ) && (
+              <Footer
+                childrenTop={[
+                  <>
+                    &copy;
+                    {new Date().getFullYear()}&nbsp;
+                    <a href={links.tos()}>fikas.io</a>
+                  </>,
+                ]}
+                childrenLeft={[
+                  <a href={links.privacy()}>{t('privacy')}</a>,
+                  <a href={links.tos()}>{t('termsOfService')}</a>,
+                ]}
+              />
+            )
+          }
+        </div>
       </div>
-    </div>
+    </GoogleOAuthProvider>
   );
 };
 
