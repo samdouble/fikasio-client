@@ -31,8 +31,6 @@ import TimesheetPage from './pages/TimesheetPage';
 import TemplateUpsertPage from './pages/TemplateUpsertPage';
 import TemplatePage from './pages/TemplatePage';
 import TemplatesPage from './pages/TemplatesPage';
-import PrivacyPage from './pages/PrivacyPage';
-import ToSPage from './pages/ToSPage';
 import Page404 from './pages/Page404';
 import envvars from 'utils/envvars';
 import links from './utils/links';
@@ -71,8 +69,6 @@ const App = () => {
           <Switch>
             <Route component={LoginPage} path={links.paths.login} />
             <Route component={SignupPage} path={links.paths.signup} />
-            <Route component={PrivacyPage} path={links.paths.privacy} />
-            <Route component={ToSPage} path={links.paths.tos} />
             <PrivateRoute
               component={HomePage}
               exact
@@ -110,7 +106,7 @@ const App = () => {
                     &copy;
                     {new Date().getFullYear()}&nbsp;
                     <a
-                      href={links.tos()}
+                      href={envvars.urlWebsite}
                       key="link"
                       style={{ textDecoration: 'none' }}
                     >
@@ -119,11 +115,11 @@ const App = () => {
                   </>,
                 ]}
                 childrenLeft={[
-                  <a href={links.privacy()} key="privacy">{t('privacy')}</a>,
-                  <a href={links.tos()} key="tos">{t('termsOfService')}</a>,
+                  <a href={envvars.urlPrivacy} key="privacy">{t('privacy')}</a>,
+                  <a href={envvars.urlToS} key="tos">{t('termsOfService')}</a>,
                 ]}
                 childrenRight={[
-                  <a href={envvars.documentationUrl} key="documentation">{t('documentation')}</a>,
+                  <a href={envvars.urlDocumentation} key="documentation">{t('documentation')}</a>,
                 ]}
               />
             )

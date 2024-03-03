@@ -46,6 +46,7 @@ const DashboardPage = () => {
         fluid
         style={{
           paddingLeft: 100,
+          paddingRight: 30,
           paddingTop: 90,
         }}
       >

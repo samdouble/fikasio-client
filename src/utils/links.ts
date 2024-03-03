@@ -1,8 +1,6 @@
 const home = () => '/home';
 const login = () => '/login';
 const signup = () => '/signup';
-const privacy = () => '/privacy';
-const tos = () => '/tos';
 const dashboard = () => '/dashboard';
 const entities = () => '/entities';
 const entity = id => `/entities/${id}`;
@@ -24,8 +22,6 @@ const paths = {
   home: home(),
   login: login(),
   signup: signup(),
-  privacy: privacy(),
-  tos: tos(),
   dashboard: dashboard(),
   entities: entities(),
   entity: entity(':id'),
@@ -48,8 +44,6 @@ const links = {
   home,
   login: () => login(),
   signup: () => signup(),
-  privacy: () => privacy(),
-  tos: () => tos(),
   dashboard: () => dashboard(),
   entities: () => entities(),
   entity: id => entity(id),

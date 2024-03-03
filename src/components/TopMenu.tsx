@@ -98,7 +98,7 @@ const TopMenu = () => {
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item
-                      href={envvars.documentationUrl}
+                      href={envvars.urlDocumentation}
                     >
                       <FontAwesomeIcon
                         icon="book"
