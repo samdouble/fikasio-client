@@ -2,12 +2,12 @@ import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import envvars from 'utils/envvars';
-import CheckoutForm from './CheckoutForm';
+import CheckoutForm from './payments/CheckoutForm';
 
 const stripePromise = loadStripe(envvars.stripePublishKey);
 
 const options = {
-  amount: 1099,
+  amount: 199,
   currency: 'usd',
   mode: 'subscription' as 'subscription',
   appearance: {
@@ -15,7 +15,7 @@ const options = {
   },
 };
 
-const SettingsPayments = () => (
+const SettingsBilling = () => (
   <Elements
     options={options}
     stripe={stripePromise}
@@ -24,4 +24,4 @@ const SettingsPayments = () => (
   </Elements>
 );
 
-export default SettingsPayments;
+export default SettingsBilling;

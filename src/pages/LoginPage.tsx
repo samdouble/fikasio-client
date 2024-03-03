@@ -18,6 +18,7 @@ import { RootState } from 'services/store';
 import links from 'utils/links';
 import { getFormData } from 'utils/forms';
 import { initializeSocket } from 'utils/sockets';
+import { setLanguage } from 'utils/translation';
 import './style.scss';
 
 const LoginPage = () => {
@@ -40,6 +41,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (!prevLoginState && loginState) {
+      setLanguage(loginState.user.language);
       initializeSocket();
       history.push(location.state ? location.state.from : links.paths.home);
     }
@@ -64,8 +66,9 @@ const LoginPage = () => {
   const handleLogin = () => {
     const formData: any = getFormData('Login_form');
     operations.login.login(formData.emailAddress, formData.password)(dispatch)
-      .then(res => {
+      .then((res: any) => {
         if (res) {
+          setLanguage(res.user.language);
           initializeSocket();
           history.push(location.state ? location.state.from : links.paths.home);
         }
@@ -95,6 +98,7 @@ const LoginPage = () => {
       <Container
         fluid
         style={{
+          paddingLeft: 0,
           paddingTop: 30,
         }}
       >

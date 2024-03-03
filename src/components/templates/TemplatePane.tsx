@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
+import { Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { RootState } from 'services/store';
 import { processFormData } from 'utils/forms';
@@ -92,19 +93,18 @@ const TemplatePane = ({
                                 {
                                   ({ input, options }) => {
                                     return (
-                                      <select
-                                        className="form-control"
+                                      <Select
+                                        defaultValue={input.value}
                                         name={input.name}
                                         onChange={value => input.onChange(value)}
-                                      >
-                                        {
-                                          options.map(x => {
-                                            return (
-                                              <option key={x.key} value={x.value}>{x.text}</option>
-                                            )
-                                          })
+                                        options={
+                                          options
+                                            .map(option => ({
+                                              label: option.text,
+                                              value: options.value,
+                                            }))
                                         }
-                                      </select>
+                                      />
                                     )
                                   }
                                 }

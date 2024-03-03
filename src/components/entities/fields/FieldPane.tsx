@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
+import { Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { RootState } from 'services/store';
 import 'components/UI/Form.scss';
@@ -66,26 +67,18 @@ const FieldPane = ({
               {
                 ({ input, options }) => {
                   return (
-                    <select
-                      className="form-control"
+                    <Select
                       defaultValue={input.value}
                       name={input.name}
                       onChange={value => input.onChange(value)}
-                    >
-                      {
+                      options={
                         options
-                          .map(option => {
-                            return (
-                              <option
-                                key={option.key}
-                                value={option.value}
-                              >
-                                {option.text}
-                              </option>
-                            )
-                          })
+                          .map(option => ({
+                            label: option.text,
+                            value: options.value,
+                          }))
                       }
-                    </select>
+                    />
                   )
                 }
               }

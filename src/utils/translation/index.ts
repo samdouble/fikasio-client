@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import enTranslation from './en';
 import frTranslation from './fr';
 
-const defaultLanguage = 'fr';
+const defaultLanguage = 'en';
 const resources = {
   en: {
     translation: enTranslation,

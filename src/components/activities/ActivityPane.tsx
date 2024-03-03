@@ -9,7 +9,7 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { DateTime } from 'luxon';
 import uniqBy from 'lodash.uniqby';
-import { DatePicker } from '@fikasio/react-ui-components';
+import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { getActivities } from 'services/activities/endpoints';
 import { Activity } from 'services/activities/types';
@@ -238,28 +238,22 @@ const ActivityPane = ({
               {
                 ({ input }) => {
                   return (
-                    <select
-                      className="form-control"
+                    <Select
                       defaultValue={input.value}
                       name={input.name}
-                      onChange={e => {
-                        input.onChange(e);
-                        handleChangeTemplate(e.target.value);
+                      onChange={option => {
+                        input.onChange(option.value);
+                        handleChangeTemplate(option.value);
                       }}
-                    >
-                      <option />
-                      {
-                        templates?.sort((t1, t2) => (t1.name < t2.name ? -1 : 1))
-                          .map(t1 => (
-                            <option
-                              key={t1.id}
-                              value={t1.id}
-                            >
-                              { t1.name }
-                            </option>
-                          ))
+                      options={
+                        (templates || [])
+                          .sort((t1, t2) => (t1.name < t2.name ? -1 : 1))
+                          .map(t1 => ({
+                            label: t1.name,
+                            value: t1.id,
+                          }))
                       }
-                    </select>
+                    />
                   );
                 }
               }

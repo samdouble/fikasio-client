@@ -109,12 +109,21 @@ const App = () => {
                   <>
                     &copy;
                     {new Date().getFullYear()}&nbsp;
-                    <a href={links.tos()}>fikas.io</a>
+                    <a
+                      href={links.tos()}
+                      key="link"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      fikas.io
+                    </a>
                   </>,
                 ]}
                 childrenLeft={[
-                  <a href={links.privacy()}>{t('privacy')}</a>,
-                  <a href={links.tos()}>{t('termsOfService')}</a>,
+                  <a href={links.privacy()} key="privacy">{t('privacy')}</a>,
+                  <a href={links.tos()} key="tos">{t('termsOfService')}</a>,
+                ]}
+                childrenRight={[
+                  <a href={envvars.documentationUrl} key="documentation">{t('documentation')}</a>,
                 ]}
               />
             )

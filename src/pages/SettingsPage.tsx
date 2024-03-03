@@ -10,8 +10,10 @@ import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import ResourcesHandler from 'components/ResourcesHandler';
+import SettingsAccount from 'components/settings/SettingsAccount';
+import SettingsAdvanced from 'components/settings/SettingsAdvanced';
+import SettingsBilling from 'components/settings/SettingsBilling';
 import SettingsGeneral from 'components/settings/SettingsGeneral';
-import SettingsPayments from 'components/settings/SettingsPayments';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
 import { RootState } from 'services/store';
@@ -57,12 +59,32 @@ const SettingsPage = () => {
             </Row>
           </Tab>
           <Tab
-            eventKey="PAYMENTS"
-            title={t('payments')}
+            eventKey="ACCOUNT"
+            title={t('account')}
           >
             <Row>
               <Col md={4}>
-                <SettingsPayments />
+                <SettingsAccount />
+              </Col>
+            </Row>
+          </Tab>
+          <Tab
+            eventKey="BILLING"
+            title={t('billing')}
+          >
+            <Row>
+              <Col md={4}>
+                <SettingsBilling />
+              </Col>
+            </Row>
+          </Tab>
+          <Tab
+            eventKey="ADVANCED"
+            title={t('advanced')}
+          >
+            <Row>
+              <Col md={4}>
+                <SettingsAdvanced />
               </Col>
             </Row>
           </Tab>

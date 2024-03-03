@@ -28,13 +28,15 @@ const ActivitiesCalendar = ({
   const me = loginState.user;
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
-  const [events, setEvents] = useState<Event[]>(convertActivitiesToCalendarEvents(activities, me.censoredWords));
+  const [events, setEvents] = useState<Event[]>([]);
   const { t } = useTranslation();
 
   useEffect(() => {
-    setEvents(
-      convertActivitiesToCalendarEvents(activities, me.censoredWords),
-    );
+    if (activities) {
+      setEvents(
+        convertActivitiesToCalendarEvents(activities, me.censoredWords),
+      );
+    }
   }, [activities]);
 
   useTimeout(() => {

@@ -5,7 +5,7 @@ export const convertActivitiesToCalendarEvents = (activities, censoredWords) => 
     id: activity.id,
     templateId: activity.templateId,
     title: censoredWords
-      .some(censoredWord => activity.comments.toLowerCase().includes(censoredWord.toLowerCase()))
+      .some(censoredWord => (activity.comments || '').toLowerCase().includes(censoredWord.toLowerCase()))
       ? '*****'
       : activity.comments,
     start: DateTime.fromISO(activity.startTime).toJSDate(),

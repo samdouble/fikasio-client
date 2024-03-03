@@ -8,7 +8,7 @@ import { PatchUserMeAction } from 'services/login/actions';
 import { RootState } from 'services/store';
 import { setLanguage } from 'utils/translation';
 
-const SettingsGeneral = () => {
+const SettingsAccount = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const login = useSelector((state: RootState) => state.login);
@@ -30,7 +30,7 @@ const SettingsGeneral = () => {
       <RBForm.Label>{t('language')}</RBForm.Label>
       <Select
         defaultValue={language}
-        onChange={option => handleChangeLanguage(option.value)}
+        onChange={e => handleChangeLanguage(e)}
         options={[
           { label: 'English', value: 'en' },
           { label: 'Français', value: 'fr' },
@@ -40,4 +40,4 @@ const SettingsGeneral = () => {
   );
 };
 
-export default SettingsGeneral;
+export default SettingsAccount;
