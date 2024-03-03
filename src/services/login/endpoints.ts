@@ -2,7 +2,7 @@ import { get, post, patch } from '../api';
 
 export const login = ({ emailAddress = null, password = null }) => post('/login', {}, { emailAddress, password });
 
-export const loginGoogle = ({ accessToken, scope, tokenType }) => get('/login/google', {}, { accessToken, scope, tokenType });
+export const loginGoogle = ({ accessToken, scope, tokenType }) => get('/auth/google', {}, { accessToken, scope, tokenType });
 
 export const logout = () => post('/logout', {}, {});
 
