@@ -74,10 +74,9 @@ const ProjectInformationsForm = ({
             <Field
               component="select"
               className="form-control"
-              defaultValue="BOOLEAN"
-              name="type"
+              name="parentProject"
               options={
-                projects?.filter(p => p.id !== project.id)
+                projects?.filter(p => p.id !== project?.id)
                   .map(p => ({
                     key: p.id,
                     text: p.name,
@@ -164,7 +163,7 @@ const ProjectInformationsForm = ({
                     onChange={value => {
                       const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 0, minute: 0, second: 0 });
-                      if (project && project.id) {
+                      if (project?.id) {
                         operations.projects.patchProject(project.id, { startAt: timestamp.toISO() })(dispatch);
                       }
                       setStartAt(timestamp.toJSDate());
