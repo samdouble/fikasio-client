@@ -264,7 +264,6 @@ const TaskRow = ({
           }}
           shouldCloseOnSelect
           showRemoveValue
-          showTimeSelect={false}
         />
       </td>
       <td
