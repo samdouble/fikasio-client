@@ -119,7 +119,6 @@ const ActivityRow = ({
           defaultValue={DateTime.fromISO(activity.startTime).toJSDate()}
           displayFormat="yyyy-MM-dd HH:mm"
           isOpen={isStartDateTimeDatepickerOpen}
-          name="startTime"
           onChange={date => {
             const timestamp = DateTime.fromJSDate(date)
               .set({ millisecond: 0 });
@@ -148,7 +147,6 @@ const ActivityRow = ({
           defaultValue={DateTime.fromISO(activity.endTime).toJSDate()}
           displayFormat="yyyy-MM-dd HH:mm"
           isOpen={isEndDateTimeDatepickerOpen}
-          name="endTime"
           onChange={date => {
             const timestamp = DateTime.fromJSDate(date)
               .set({ millisecond: 0 });

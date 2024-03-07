@@ -29,11 +29,7 @@ const ProjectRow = ({
   const { t } = useTranslation();
 
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
-  const [dueAt, setDueAt] = useState(
-    project && project.dueAt
-    ? DateTime.fromISO(project.dueAt).toJSDate()
-    : null,
-  );
+
   const hasdueAtPassed = project && project.dueAt && DateTime.fromISO(project.dueAt) < DateTime.now();
 
   return (
@@ -83,17 +79,15 @@ const ProjectRow = ({
         }}
       >
         <DatePicker
-          defaultValue={dueAt}
+          defaultValue={project.dueAt ? DateTime.fromISO(project.dueAt).toJSDate() : null}
           displayFormat="yyyy-MM-dd"
           isOpen={isDueAtDatepickerOpen}
-          name="dueAt"
           onChange={value => {
             const timestamp = DateTime
               .fromJSDate(value)
               .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
               .toISO();
             operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
-            setDueAt(timestamp.toJSDate());
           }}
           onClose={() => setIsDueAtDatepickerOpen(false)}
           onRemoveValue={e => {
@@ -102,7 +96,6 @@ const ProjectRow = ({
           }}
           shouldCloseOnSelect
           showRemoveValue
-          showTimeSelect={false}
         />
       </td>
       <td

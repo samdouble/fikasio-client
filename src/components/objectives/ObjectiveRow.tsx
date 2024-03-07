@@ -81,17 +81,20 @@ const ObjectiveRow = ({
         }}
       >
         <DatePicker
-          customInput={<input type="hidden" />}
-          defaultValue={dueDate.toJSDate()}
-          displayFormat="yyyy-MM-dd"
+          defaultValue={objective.dueDate ? DateTime.fromISO(objective.dueDate).toJSDate() : null}
           isOpen={isDueAtDatepickerOpen}
-          name="dueDate"
-          onBlur={() => setIsDueAtDatepickerOpen(false)}
           onChange={value => {
             const timestamp = DateTime.fromJSDate(value)
               .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
             operations.objectives.patchObjective(objective.id, { dueDate: timestamp.toISO() })(dispatch);
           }}
+          onClose={() => setIsDueAtDatepickerOpen(false)}
+          onRemoveValue={e => {
+            e.stopPropagation();
+            operations.objectives.patchObjective(objective.id, { dueDate: null })(dispatch);
+          }}
+          shouldCloseOnSelect
+          showRemoveValue
         />
       </td>
       <td

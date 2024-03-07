@@ -1,5 +1,5 @@
 export interface Objective {
-  dueDate: string;
+  dueDate: string | null;
   id: string;
   isArchived: boolean;
   name: string;
