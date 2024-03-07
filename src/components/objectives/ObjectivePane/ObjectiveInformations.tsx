@@ -105,8 +105,6 @@ const ObjectiveInformations = ({
               name="dueDate"
             />
           </RBForm.Group>
-          <br />
-          <br />
           <RBForm.Group>
             <RBForm.Label>{t('initialProgress')}</RBForm.Label>
             <Field

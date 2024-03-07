@@ -13,7 +13,7 @@
     "test-ci": "react-scripts test --env=jsdom --ci --collectCoverage"
   },
   "dependencies": {
-    "@fikasio/react-ui-components": "^0.7.2",
+    "@fikasio/react-ui-components": "^0.7.5",
     "@fortawesome/fontawesome-svg-core": "6",
     "@fortawesome/free-brands-svg-icons": "6",
     "@fortawesome/free-regular-svg-icons": "6",

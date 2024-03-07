@@ -28,6 +28,7 @@ const ActivityPane = ({
 }: ActivityPaneProps) => {
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
+  const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const templates = useSelector((state: RootState) => state.templates);
   const login = useSelector((state: RootState) => state.login);
@@ -50,6 +51,8 @@ const ActivityPane = ({
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
   const template = templates?.find(t => t.id === templateId);
   const { t } = useTranslation();
+
+  const activityProjects = activity && activity.projects;
 
   const activityTasks = activity && activity.tasks;
 
@@ -216,10 +219,32 @@ const ActivityPane = ({
                       className="form-control"
                       component="select"
                       name="durationUnits"
-                      style={{ width: 250 }}
+                      options={[
+                        { key: 'minutes', text: t('minutes'), value: 'minutes' },
+                        { key: 'hours', text: t('hours'), value: 'hours' },
+                      ]}
                     >
-                      <option value="minutes">{t('minutes')}</option>
-                      <option value="hours">{t('hours')}</option>
+                      {
+                        ({ input, options }) => {
+                          return (
+                            <Select
+                              defaultValue={input.value}
+                              name={input.name}
+                              onChange={value => input.onChange(value)}
+                              options={
+                                options
+                                  .map(option => ({
+                                    label: option.text,
+                                    value: options.value,
+                                  }))
+                              }
+                              style={{
+                                width: 100,
+                              }}
+                            />
+                          )
+                        }
+                      }
                     </Field>
                   </td>
                 </tr>
@@ -262,7 +287,9 @@ const ActivityPane = ({
           {
             template && (
               <RBForm.Group>
-                <FieldArray name="values">
+                <FieldArray
+                  name="values"
+                >
                   {
                     ({ fields }) => (
                       <div>
@@ -319,6 +346,69 @@ const ActivityPane = ({
             }}
             suggestions={commentsSuggestions}
           />
+          <RBForm.Group>
+            <RBForm.Label>{t('projects')}</RBForm.Label>
+            <FieldArray
+              className="form-control"
+              defaultValue={activityProjects}
+              name="projects"
+            >
+              {({ fields }) => {
+                return (
+                  <div>
+                    {
+                      fields.map((name, index) => (
+                        <table key={name}>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <Field
+                                  className="form-control"
+                                  component="select"
+                                  name={`${name}.id`}
+                                >
+                                  <option />
+                                  {
+                                    projects?.filter(p => !p.isArchived)
+                                      .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
+                                      .map(project => (
+                                        <option
+                                          key={project.id}
+                                          value={project.id}
+                                        >
+                                          {project.name}
+                                        </option>
+                                      ))
+                                  }
+                                </Field>
+                              </td>
+                              <td width={35}>
+                                <FontAwesomeIcon
+                                  icon="times"
+                                  onClick={() => fields.remove(index)}
+                                  size="1x"
+                                  style={{
+                                    color: '#ce0000',
+                                    cursor: 'pointer',
+                                    marginLeft: 10,
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      ))
+                    }
+                    <Button
+                      onClick={() => fields.push({ id: '' })}
+                    >
+                      {t('add')}
+                    </Button>
+                  </div>
+                );
+              }}
+            </FieldArray>
+          </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>{t('tasks')}</RBForm.Label>
             <FieldArray

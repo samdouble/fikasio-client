@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
@@ -10,8 +10,9 @@ import { FieldArray } from 'react-final-form-arrays';
 import ClickOutside from 'react-click-outside';
 import { CompactPicker } from 'react-color';
 import { DateTime } from 'luxon';
-import { DatePicker } from '@fikasio/react-ui-components';
+import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
+import { RootState } from 'services/store';
 import { invertColor } from 'utils/colors';
 import 'components/UI/Form.scss';
 
@@ -20,6 +21,7 @@ const ProjectInformationsForm = ({
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const projects = useSelector((state: RootState) => state.projects);
   const [startAt, setStartAt] = useState(
     project && project.startAt
     ? DateTime.fromISO(project.startAt).toJSDate()
@@ -66,6 +68,42 @@ const ProjectInformationsForm = ({
               component="textarea"
               name="description"
             />
+          </RBForm.Group>
+          <RBForm.Group>
+            <RBForm.Label>{t('parentProject')}</RBForm.Label>
+            <Field
+              component="select"
+              className="form-control"
+              defaultValue="BOOLEAN"
+              name="type"
+              options={
+                projects?.filter(p => p.id !== project.id)
+                  .map(p => ({
+                    key: p.id,
+                    text: p.name,
+                    value: p.id,
+                  }))
+              }
+            >
+              {
+                ({ input, options }) => {
+                  return (
+                    <Select
+                      defaultValue={input.value}
+                      name={input.name}
+                      onChange={value => input.onChange(value)}
+                      options={
+                        options
+                          .map(option => ({
+                            label: option.text,
+                            value: options.value,
+                          }))
+                      }
+                    />
+                  )
+                }
+              }
+            </Field>
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>{t('color')}</RBForm.Label>

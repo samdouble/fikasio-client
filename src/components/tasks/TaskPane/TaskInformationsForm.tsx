@@ -42,6 +42,10 @@ const TaskInformationsForm = ({
     : null,
   );
 
+  const taskProjects = task
+    ? task.projects
+    : (projectId && projects?.find(p => p.id === projectId) ? [{ id: projectId }] : []);
+
   const detailsTextarea = useRef(null);
   const [detailsTextareaHeight, setDetailsTextareaHeight] = useState(3); 
   
@@ -63,10 +67,6 @@ const TaskInformationsForm = ({
   const handleDetailsChange = event => {
     setTextareaHeight(event.target)
   };
-
-  const taskProjects = task
-    ? task.projects
-    : (projectId && projects?.find(p => p.id === projectId) ? [{ id: projectId }] : []);
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);

@@ -9,6 +9,7 @@ export interface Activity {
   endTime: string;
   id: string;
   name: string;
+  projects: { id: string; }[];
   startTime: number;
   tasks: { id: string; }[];
   templateId: string;
