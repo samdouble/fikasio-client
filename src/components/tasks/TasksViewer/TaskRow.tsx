@@ -245,7 +245,7 @@ const TaskRow = ({
         style={{
           cursor: 'pointer',
           ...(hasdueAtPassed && { color: '#ff0000' }),
-          width: 150,
+          minWidth: 150,
         }}
       >
         <DatePicker
@@ -264,6 +264,7 @@ const TaskRow = ({
           }}
           shouldCloseOnSelect
           showRemoveValue
+          showTimeSelect={false}
         />
       </td>
       <td

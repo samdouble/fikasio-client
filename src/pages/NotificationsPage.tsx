@@ -126,7 +126,9 @@ const NotificationsPage = () => {
                               <td>{ task && task.description }</td>
                               <td
                                 onClick={() => setIsProjectDueAtDatepickerOpen(true)}
-                                width={150}
+                                style={{
+                                  minWidth: 150,
+                                }}
                               >
                                 <DatePicker
                                   defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toJSDate() : null}
@@ -147,7 +149,9 @@ const NotificationsPage = () => {
                               <td>{ project && project.name }</td>
                               <td
                                 onClick={() => setIsTaskDueAtDatepickerOpen(true)}
-                                width={150}
+                                style={{
+                                  minWidth: 150,
+                                }}
                               >
                                 <DatePicker
                                   defaultValue={project.dueAt ? DateTime.fromISO(project.dueAt).toJSDate() : null}

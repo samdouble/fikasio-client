@@ -77,7 +77,7 @@ const ObjectiveRow = ({
         style={{
           cursor: 'pointer',
           ...(isLate && { color: '#ff0000' }),
-          width: 150,
+          minWidth: 150,
         }}
       >
         <DatePicker
@@ -95,6 +95,7 @@ const ObjectiveRow = ({
           }}
           shouldCloseOnSelect
           showRemoveValue
+          showTimeSelect={false}
         />
       </td>
       <td

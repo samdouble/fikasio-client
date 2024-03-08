@@ -75,7 +75,7 @@ const ProjectRow = ({
         style={{
           cursor: 'pointer',
           ...(!project.isCompleted && hasdueAtPassed && { color: '#ff0000' }),
-          width: 150,
+          minWidth: 150,
         }}
       >
         <DatePicker
@@ -96,6 +96,7 @@ const ProjectRow = ({
           }}
           shouldCloseOnSelect
           showRemoveValue
+          showTimeSelect={false}
         />
       </td>
       <td

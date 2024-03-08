@@ -113,6 +113,7 @@ const ActivityRow = ({
         onClick={() => setIsStartDateTimeDatepickerOpen(true)}
         style={{
           cursor: 'pointer',
+          minWidth: 150,
         }}
       >
         <DatePicker
@@ -141,6 +142,7 @@ const ActivityRow = ({
         onClick={() => setIsEndDateTimeDatepickerOpen(true)}
         style={{
           cursor: 'pointer',
+          minWidth: 150,
         }}
       >
         <DatePicker
