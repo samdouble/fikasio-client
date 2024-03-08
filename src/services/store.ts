@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
 import { createLogger } from 'redux-logger';
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
