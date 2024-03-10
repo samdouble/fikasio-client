@@ -11,7 +11,6 @@ export const api = createApi({
     getTasks: builder.query<Task[], { filter?: string; }>({
       query: arg => {
         const { filter } = arg;
-        console.log('arg: ', arg);
         return {
           url: 'tasks',
           params: { filter },
@@ -22,6 +21,4 @@ export const api = createApi({
   }),
 });
 
-
 export const { useGetTasksQuery } = api;
-
