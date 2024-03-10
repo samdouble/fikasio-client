@@ -50,6 +50,7 @@ const ProjectsPage = () => {
           showAddButton
           showCompletionFilter
           showDueDateFilter
+          showViewModeButtons
         />
       </BasePage>
     </>

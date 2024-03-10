@@ -65,6 +65,7 @@ const ObjectivesView = ({
             })(dispatch)}
             style={{
               float: 'right',
+              ...(showAddButton && { marginRight: 0 }),
             }}
           />
         )

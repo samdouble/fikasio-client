@@ -7,7 +7,7 @@ import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
-import { DatePicker } from '@fikasio/react-ui-components';
+import { DatePicker, Error, Warning } from '@fikasio/react-ui-components';
 import ResourcesHandler from 'components/ResourcesHandler';
 import { calculateNotifications } from 'components/notifications/utils';
 import ProjectsView from 'components/projects/ProjectsView';
@@ -43,9 +43,11 @@ const NotificationsPage = () => {
     // Tasks
     const lateTasks = notifications?.lateTasks;
     const tasksDueAfterProjectDue = notifications?.tasksDueAfterProjectDue;
+    const tasksWithNoDueDate = notifications?.tasksWithNoDueDate;
     const lateTasksCount = lateTasks?.length;
-    const tasksDueAfterProjectDueCount = tasksDueAfterProjectDue?.length;
     const overloadInTheFuture = notifications?.overloadInTheFuture;
+    const tasksDueAfterProjectDueCount = tasksDueAfterProjectDue?.length;
+    const tasksWithNoDueDateCount = tasksWithNoDueDate?.length;
 
     return (
       <>
@@ -61,14 +63,16 @@ const NotificationsPage = () => {
           {
             lateProjectsCount ? (
               <>
-                <div>
+                <Error>
                   {t('youHaveXOverdueProjects', { count: lateProjectsCount })}
-                </div>
+                </Error>
                 <ProjectsView
-                  onProjectClick={projectId => operations.pane.setPaneContent({
-                    type: 'PROJECT',
-                    id: projectId,
-                  })(dispatch)}
+                  onProjectClick={
+                    projectId => operations.pane.setPaneContent({
+                      type: 'PROJECT',
+                      id: projectId,
+                    })(dispatch)
+                  }
                   projects={lateProjects}
                 />
               </>
@@ -81,14 +85,16 @@ const NotificationsPage = () => {
           {
             lateTasksCount ? (
               <>
-                <div>
+                <Error>
                   {t('youHaveXOverdueTasks', { count: lateTasksCount })}
-                </div>
+                </Error>
                 <TasksView
-                  onTaskClick={taskId => operations.pane.setPaneContent({
-                    type: 'TASK',
-                    id: taskId,
-                  })(dispatch)}
+                  onTaskClick={
+                    taskId => operations.pane.setPaneContent({
+                      type: 'TASK',
+                      id: taskId,
+                    })(dispatch)
+                  }
                   tasks={lateTasks}
                 />
               </>
@@ -99,11 +105,29 @@ const NotificationsPage = () => {
             )
           }
           {
+            !!tasksWithNoDueDateCount && (
+              <>
+                <Warning>
+                  {t('youHaveXTasksWithNoDueDate', { count: tasksWithNoDueDateCount })}
+                </Warning>
+                <TasksView
+                  onTaskClick={
+                    taskId => operations.pane.setPaneContent({
+                      type: 'TASK',
+                      id: taskId,
+                    })(dispatch)
+                  }
+                  tasks={tasksWithNoDueDate}
+                />
+              </>
+            )
+          }
+          {
             !!tasksDueAfterProjectDueCount && (
               <>
-                <div>
+                <Warning>
                   Vous avez <b>{tasksDueAfterProjectDueCount} tâche{tasksDueAfterProjectDueCount > 1 && 's'} qui sont dûes pour une date postérieure à la fin d'un projet dont elles font partie</b>.
-                </div>
+                </Warning>
                 <Table
                   bordered
                   hover
@@ -181,14 +205,14 @@ const NotificationsPage = () => {
           {
             !!overloadInTheFuture && (
               <>
-                <div>
+                <Warning>
                   {
                     t('youHaveTooMuchToDo', {
                       avgHours: round(overloadInTheFuture.averageHoursPerDayBeforeDate, 1),
                       date: overloadInTheFuture.date.toISODate(),
                     })
                   }
-                </div>
+                </Warning>
               </>
             )
           }

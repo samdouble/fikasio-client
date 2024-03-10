@@ -36,10 +36,11 @@ const ProjectsList = ({
       || (showIncompleteProjects && !project.isCompleted && !project.isArchived)
       || (showArchivedProjects && project.isArchived)
     ));
+
   const allProjectsAreChecked = projectsToShow?.length
     && (projectsToShow?.length === selectedProjects.length);
 
-  return projects ? (
+  return projects && (
     <Table
       responsive
       bordered
@@ -85,7 +86,7 @@ const ProjectsList = ({
         }
       </tbody>
     </Table>
-  ) : <div />;
+  );
 };
 
 export default ProjectsList;

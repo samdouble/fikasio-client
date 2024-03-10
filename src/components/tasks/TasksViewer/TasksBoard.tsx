@@ -4,7 +4,6 @@ import './style.scss';
 
 const TasksBoard = ({
   // onAddTask,
-  // onOpenProgressModal,
   // onTaskSelect,
   tasks,
 }) => {

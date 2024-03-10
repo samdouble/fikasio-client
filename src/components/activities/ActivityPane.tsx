@@ -359,7 +359,9 @@ const ActivityPane = ({
                                           onChange={value => input.onChange(value)}
                                           options={
                                             projects?.filter(p => !p.isArchived)
-                                              .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
+                                              .sort((p1, p2) => (
+                                                p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())
+                                              ))
                                               .map(project => ({
                                                 label: project.name,
                                                 value: project.id,

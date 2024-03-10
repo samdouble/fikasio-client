@@ -8,7 +8,6 @@ import './style.scss';
 
 const TasksList = ({
   onAddTask,
-  onOpenProgressModal,
   onSelectAllTasks,
   onTaskClick,
   onTaskSelect,
@@ -75,7 +74,6 @@ const TasksList = ({
               <TaskRow
                 onAddTask={addTask}
                 onClick={onTaskClick}
-                onEnterProgress={onOpenProgressModal}
                 onSelect={onTaskSelect}
                 projectId={projectId}
                 task={{
@@ -98,7 +96,6 @@ const TasksList = ({
                 key={`${task.id}-${task.dueAt}`}
                 onAddTask={addTask}
                 onClick={onTaskClick}
-                onEnterProgress={onOpenProgressModal}
                 onSelect={onTaskSelect}
                 projectId={projectId}
                 task={task}

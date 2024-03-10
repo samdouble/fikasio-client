@@ -18,7 +18,6 @@ import AssigneeButton from './AssigneeButton';
 export interface TaskRowProps {
   isSelected?: boolean;
   onAddTask: (task: Task) => Promise<void>;
-  onEnterProgress: (task: Task) => Promise<void>;
   onClick: (taskId: string) => Promise<void>;
   onSelect: (task: Task) => Promise<void>;
   projectId?: string;
@@ -28,7 +27,6 @@ export interface TaskRowProps {
 const TaskRow = ({
   isSelected,
   onAddTask,
-  onEnterProgress,
   onClick,
   onSelect,
   projectId,
@@ -187,6 +185,7 @@ const TaskRow = ({
           <Select
             onChange={value => handleTaskStatusChange(task, value)}
             options={[
+              { label: '-', value: null },
               { label: t('doing'), value: 'Doing' },
               { label: t('blocked'), value: 'Blocked' },
               { label: t('completed'), value: 'Completed' },
@@ -204,7 +203,6 @@ const TaskRow = ({
         />
       </td>
       <td
-        onClick={() => onEnterProgress(task)}
         style={{
           cursor: 'pointer',
           width: 90,

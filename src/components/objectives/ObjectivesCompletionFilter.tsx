@@ -11,7 +11,7 @@ const ObjectivesCompletionFilter = ({ onChange, style }) => {
       onChange={value => onChange(value)}
       options={[
         { label: t('ongoingObjectives'), value: 'INCOMPLETE' },
-        { label: t('completedObjectives'), value: 'COMPLETE' },
+        { label: t('completeObjectives'), value: 'COMPLETE' },
         { label: t('archivedObjectives'), value: 'ARCHIVED' },
         { label: t('allObjectives'), value: 'ALL' },
       ]}

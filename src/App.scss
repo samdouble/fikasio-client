@@ -121,6 +121,10 @@ label:focus,
   padding: 0;
 }
 
+table tr td {
+  vertical-align: middle;
+}
+
 // Tabs
 .nav-tabs {
   border: none;

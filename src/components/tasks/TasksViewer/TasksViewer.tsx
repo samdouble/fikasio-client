@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TasksBoard from './TasksBoard';
 import TasksList from './TasksList';
-import ProgressModal from '../ProgressModal';
 import './style.scss';
 
 const TasksViewer = ({
@@ -13,28 +12,16 @@ const TasksViewer = ({
   onTaskSelect,
   projectId,
   selectedTasks,
+  showViewModeButtons,
   tasks,
 }) => {
-  const [showProgressModal, setShowProgressModal] = useState(false);
-  const [editedTask, setEditedTask] = useState(null);
   const [viewMode, setViewMode] = useState('LIST');
-
-  const handleOpenProgressModal = task => {
-    setShowProgressModal(true);
-    setEditedTask(task);
-  };
-
-  const handleCloseProgressModal = () => {
-    setShowProgressModal(false);
-    setEditedTask(null);
-  };
 
   let taskView;
   if (viewMode === 'BOARD') {
     taskView = (
       <TasksBoard
         // onAddTask={onAddTask}
-        // onOpenProgressModal={task => handleOpenProgressModal(task)}
         // onTaskClick={onTaskClick}
         // onTaskSelect={onTaskSelect}
         // selectedTasks={selectedTasks}
@@ -45,7 +32,6 @@ const TasksViewer = ({
     taskView = (
       <TasksList
         onAddTask={onAddTask}
-        onOpenProgressModal={task => handleOpenProgressModal(task)}
         onSelectAllTasks={onSelectAllTasks}
         onTaskClick={onTaskClick}
         onTaskSelect={onTaskSelect}
@@ -61,28 +47,25 @@ const TasksViewer = ({
   return tasks && (
     <>
       {
-        showProgressModal && <ProgressModal
-          isOpen={showProgressModal}
-          onClose={() => handleCloseProgressModal()}
-          task={editedTask}
-        />
+        showViewModeButtons && (
+          <div style={{ textAlign: 'left' }}>
+            <Button
+              active={viewMode === 'LIST'}
+              onClick={() => setViewMode('LIST')}
+              variant="outline-secondary"
+            >
+              <FontAwesomeIcon icon="list" size="1x" />
+            </Button>
+            <Button
+              active={viewMode === 'BOARD'}
+              onClick={() => setViewMode('BOARD')}
+              variant="outline-secondary"
+            >
+              <FontAwesomeIcon icon="th" size="1x" />
+            </Button>
+          </div>
+        )
       }
-      <div style={{ textAlign: 'left' }}>
-        <Button
-          active={viewMode === 'LIST'}
-          onClick={() => setViewMode('LIST')}
-          variant="outline-secondary"
-        >
-          <FontAwesomeIcon icon="list" size="1x" />
-        </Button>
-        <Button
-          active={viewMode === 'BOARD'}
-          onClick={() => setViewMode('BOARD')}
-          variant="outline-secondary"
-        >
-          <FontAwesomeIcon icon="th" size="1x" />
-        </Button>
-      </div>
       { taskView }
     </>
   );

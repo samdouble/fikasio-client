@@ -105,29 +105,6 @@ const calculateLatenessRatio = tasks => {
   */
 };
 
-const calculateTasksDueTooLate = (tasks, projects) => {
-  const tasksDueTooLate = tasks
-    .map(t => {
-      const taskProjects = (t.projects || [])
-        .map(({ id }) => projects.find(p => p.id === id));
-      const projectsDueBefore = taskProjects.filter(p => t.dueAt && p.dueAt && p.dueAt < t.dueAt);
-      return {
-        ...t,
-        projectsDueBefore,
-      };
-    })
-    .filter(t => t.projectsDueBefore.length);
-  return tasksDueTooLate
-    .reduce((acc, task) => ([
-      ...acc,
-      ...task.projectsDueBefore
-        .map(p => ({
-          task,
-          project: p,
-        })),
-    ]), []);
-};
-
 const calculateOverloadInTheFuture = (tasks: Task[]) => {
   const MAX_NB_WORK_HOURS_PER_DAY = 4;
   const allTasksDueInTheFuture = tasks?.filter(t1 => t1.dueAt && t1.status !== 'Completed')
@@ -160,6 +137,34 @@ const calculateOverloadInTheFuture = (tasks: Task[]) => {
   return isOverloadedInTheFuture;
 };
 
+const calculateTasksDueTooLate = (tasks, projects) => {
+  const tasksDueTooLate = tasks
+    .map(t => {
+      const taskProjects = (t.projects || [])
+        .map(({ id }) => projects.find(p => p.id === id));
+      const projectsDueBefore = taskProjects.filter(p => t.dueAt && p.dueAt && p.dueAt < t.dueAt);
+      return {
+        ...t,
+        projectsDueBefore,
+      };
+    })
+    .filter(t => t.projectsDueBefore.length);
+  return tasksDueTooLate
+    .reduce((acc, task) => ([
+      ...acc,
+      ...task.projectsDueBefore
+        .map(p => ({
+          task,
+          project: p,
+        })),
+    ]), []);
+};
+
+const calculateTasksWithNoDueDate = tasks => {
+  return tasks
+    .filter(t => !t.dueAt);
+};
+
 export {
   calculateCompleteTime,
   calculateIncompleteTime,
@@ -169,6 +174,7 @@ export {
   getFurthestDueDate,
   getLateTasks,
   calculateLatenessRatio,
-  calculateTasksDueTooLate,
   calculateOverloadInTheFuture,
+  calculateTasksDueTooLate,
+  calculateTasksWithNoDueDate,
 };

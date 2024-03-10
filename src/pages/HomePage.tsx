@@ -84,6 +84,7 @@ const HomePage = () => {
             })(dispatch)
           }
           showCompletionFilter
+          showViewModeButtons
           tasks={tasksForToday}
         />
         <h4>{t('tasksDueForThisWeek')}</h4>
@@ -106,6 +107,7 @@ const HomePage = () => {
             })(dispatch)
           }
           showCompletionFilter
+          showViewModeButtons
           tasks={tasksForThisWeek}
         />
       </BasePage>

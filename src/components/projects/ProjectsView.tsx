@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Project } from 'services/projects/types';
 import ProjectsList from './ProjectsList';
@@ -12,6 +13,7 @@ interface ProjectsViewProps {
   showAddButton?: boolean;
   showCompletionFilter?: boolean;
   showDueDateFilter?: boolean;
+  showViewModeButtons?: boolean;
 }
 
 const ProjectsView = ({
@@ -20,6 +22,7 @@ const ProjectsView = ({
   showAddButton,
   showCompletionFilter,
   showDueDateFilter,
+  showViewModeButtons,
 }: ProjectsViewProps) => {
   const { t } = useTranslation();
   const [selectedProjects, setSelectedProjects] = useState<Project[]>([]);
@@ -84,18 +87,31 @@ const ProjectsView = ({
         showCompletionFilter={showCompletionFilter}
         showDueDateFilter={showDueDateFilter}
       />
-      <br />
-      <br />
-      <ProjectsList
-        onProjectClick={onProjectClick}
-        onProjectSelect={handleProjectSelect}
-        onSelectAllProjects={projectsArray => setSelectedProjects(projectsArray)}
-        projects={projects}
-        selectedProjects={selectedProjects}
-        showCompleteProjects={showCompleteProjects}
-        showIncompleteProjects={showIncompleteProjects}
-        showArchivedProjects={showArchivedProjects}
-      />
+      <>
+        {
+          showViewModeButtons && (
+            <div style={{ textAlign: 'left' }}>
+              <Button
+                active
+                onClick={() => undefined}
+                variant="outline-secondary"
+              >
+                <FontAwesomeIcon icon="list" size="1x" />
+              </Button>
+            </div>
+          )
+        }
+        <ProjectsList
+          onProjectClick={onProjectClick}
+          onProjectSelect={handleProjectSelect}
+          onSelectAllProjects={projectsArray => setSelectedProjects(projectsArray)}
+          projects={projects}
+          selectedProjects={selectedProjects}
+          showCompleteProjects={showCompleteProjects}
+          showIncompleteProjects={showIncompleteProjects}
+          showArchivedProjects={showArchivedProjects}
+        />
+      </>
       {
         selectedProjects.length > 0 && (
           <div

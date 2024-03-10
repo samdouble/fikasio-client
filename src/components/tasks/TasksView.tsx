@@ -28,6 +28,7 @@ interface TasksViewProps {
   showAddButton?: boolean;
   showCompletionFilter?: boolean;
   showDueDateFilter?: boolean;
+  showViewModeButtons?: boolean;
   tasks?: Task[] | null;
 }
 
@@ -37,6 +38,7 @@ const TasksView = ({
   showAddButton,
   showCompletionFilter,
   showDueDateFilter,
+  showViewModeButtons,
   tasks,
 }: TasksViewProps) => {
   const dispatch = useDispatch();
@@ -161,6 +163,7 @@ const TasksView = ({
         onTaskSelect={handleTaskSelect}
         projectId={projectId}
         selectedTasks={selectedTasks}
+        showViewModeButtons={showViewModeButtons}
         tasks={filterTasks(tasks, filter)}
       />
       {

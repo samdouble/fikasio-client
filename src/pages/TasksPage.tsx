@@ -58,6 +58,7 @@ const TasksPage = () => {
             showAddButton
             showCompletionFilter
             showDueDateFilter
+            showViewModeButtons
             tasks={tasks}
           />
         </BasePage>
