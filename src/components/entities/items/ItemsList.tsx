@@ -36,10 +36,15 @@ const ItemsList = ({
   };
 
   const handleKeyUp = (e, updatedItem) => {
-    if ( !updatedItem && e.target.textContent !== '') {
+    if (!updatedItem && e.target.textContent !== '') {
       operations.items.createItem(entity.id, {})(dispatch);
     }
   };
+
+  const rows = [
+    (!items || !items.length) && {},
+    ...(items || []),
+  ];
 
   return (
     <Table
@@ -57,7 +62,7 @@ const ItemsList = ({
             return {
               name: field.name,
               render: row => {
-                const defaultValue = row.values.find(val => val.fieldId === field.id)?.value;
+                const defaultValue = row.values?.find(val => val.fieldId === field.id)?.value;
                 if (['STRING', 'NUMBER'].includes(field.type)) {
                   return (
                     <AutosaveTextarea
@@ -66,9 +71,18 @@ const ItemsList = ({
                       onKeyDown={e => handleKeyDown(e)}
                       onKeyUp={e => handleKeyUp(e, row)}
                       onSave={async value => {
-                        operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
-                          value,
-                        })(dispatch);
+                        if (row.id) {
+                          operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
+                            value,
+                          })(dispatch);
+                        } else {
+                          operations.items.createItem(entity.id, {
+                            values: [{
+                              fieldId: field.id,
+                              value,
+                            }],
+                          })(dispatch);
+                        }
                       }}
                       style={{
                         border: 'none',
@@ -97,7 +111,7 @@ const ItemsList = ({
               },
               sortable: true,
               type: 'cell',
-              value: row => row.values.find(val => val.fieldId === field.id)?.value,
+              value: row => row.values?.find(val => val.fieldId === field.id)?.value,
             };
           }),
         {
@@ -152,7 +166,7 @@ const ItemsList = ({
           </Dropdown.Menu>
         </Dropdown>
       )}
-      rows={items}
+      rows={rows}
     />
   );
 };

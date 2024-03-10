@@ -36,7 +36,8 @@ const ProjectsList = ({
       || (showIncompleteProjects && !project.isCompleted && !project.isArchived)
       || (showArchivedProjects && project.isArchived)
     ));
-  const allProjectsAreChecked = projectsToShow?.length === selectedProjects.length;
+  const allProjectsAreChecked = projectsToShow?.length
+    && (projectsToShow?.length === selectedProjects.length);
 
   return projects ? (
     <Table
@@ -47,22 +48,16 @@ const ProjectsList = ({
       <thead>
         <tr>
           <th style={{ width: 35 }}>
-            {
-              projectsToShow?.length
-                ? (
-                  <Checkbox
-                    isChecked={allProjectsAreChecked}
-                    onClick={() => {
-                      if (allProjectsAreChecked) {
-                        onSelectAllProjects([]);
-                      } else {
-                        onSelectAllProjects(projectsToShow);
-                      }
-                    }}
-                  />
-                )
-                : <div />
-            }
+            <Checkbox
+              isChecked={allProjectsAreChecked}
+              onClick={() => {
+                if (allProjectsAreChecked) {
+                  onSelectAllProjects([]);
+                } else {
+                  onSelectAllProjects(projectsToShow);
+                }
+              }}
+            />
           </th>
           <th>{t('name')}</th>
           <th style={{ width: 150 }}>{t('timeLeft')}</th>

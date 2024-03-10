@@ -18,7 +18,8 @@ const TasksList = ({
 }) => {
   const { t } = useTranslation();
 
-  const allTasksAreChecked = tasks?.length === selectedTasks.length;
+  const allTasksAreChecked = tasks?.length
+    && (tasks?.length === selectedTasks.length);
 
   const addTask = async task => {
     onAddTask(task)
@@ -47,22 +48,16 @@ const TasksList = ({
           <th
             style={{ width: 35 }}
           >
-            {
-              tasks?.length
-                ? (
-                  <Checkbox
-                    isChecked={allTasksAreChecked}
-                    onClick={() => {
-                      if (allTasksAreChecked) {
-                        onSelectAllTasks([]);
-                      } else {
-                        onSelectAllTasks(tasks);
-                      }
-                    }}
-                  />
-                )
-                : <div />
-            }
+            <Checkbox
+              isChecked={allTasksAreChecked}
+              onClick={() => {
+                if (allTasksAreChecked) {
+                  onSelectAllTasks([]);
+                } else {
+                  onSelectAllTasks(tasks);
+                }
+              }}
+            />
           </th>
           <th style={{ minWidth: 500 }}>{t('description')}</th>
           <th style={{ minWidth: 140 }}>{t('projects')}</th>

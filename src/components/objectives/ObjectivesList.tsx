@@ -25,7 +25,8 @@ const ObjectivesList = ({
       )
     );
   });
-  const allObjectivesAreChecked = objectivesToShow?.length === selectedObjectives.length;
+  const allObjectivesAreChecked = objectivesToShow?.length
+    && (objectivesToShow?.length === selectedObjectives.length);
 
   return (
     <Table
@@ -36,22 +37,16 @@ const ObjectivesList = ({
       <thead>
         <tr>
           <th style={{ width: 35 }}>
-            {
-              objectivesToShow?.length
-                ? (
-                  <Checkbox
-                    isChecked={allObjectivesAreChecked}
-                    onClick={() => {
-                      if (allObjectivesAreChecked) {
-                        onSelectAllObjectives([]);
-                      } else {
-                        onSelectAllObjectives(objectivesToShow);
-                      }
-                    }}
-                  />
-                )
-                : <div />
-            }
+            <Checkbox
+              isChecked={allObjectivesAreChecked}
+              onClick={() => {
+                if (allObjectivesAreChecked) {
+                  onSelectAllObjectives([]);
+                } else {
+                  onSelectAllObjectives(objectivesToShow);
+                }
+              }}
+            />
           </th>
           <th>{t('description')}</th>
           <th style={{ width: 140 }}>{t('projects')}</th>

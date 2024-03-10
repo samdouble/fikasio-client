@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
@@ -23,17 +23,16 @@ import './style.scss';
 
 const TimesheetPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const activities = useSelector((state: RootState) => state.activities);
   const templates = useSelector((state: RootState) => state.templates);
   const location = useLocation();
   const { search } = location;
   const searchParams = new URLSearchParams(search);
   const dateParam = searchParams.get('date');
-  const [date, setDate] = useState(
-    dateParam
+  const date = dateParam
     ? DateTime.fromFormat(dateParam, 'yyyy-MM-dd')
-    : DateTime.now(),
-  );
+    : DateTime.now();
   const { t } = useTranslation();
 
   const startTs = date.set({
@@ -133,7 +132,11 @@ const TimesheetPage = () => {
           {t('timesheet')}
           &nbsp;
           <span
-            onClick={() => { setDate(date.minus({ days: 1 })); }}
+            onClick={() => {
+              const newDate = date.minus({ days: 1 });
+              // setDate(newDate);
+              history.push(links.timesheet({ date: newDate.toFormat('yyyy-MM-dd') }));
+            }}
             style={{
               cursor: 'pointer',
             }}
@@ -151,7 +154,11 @@ const TimesheetPage = () => {
           { date.toFormat('yyyy-MM-dd') }
           &nbsp;
           <span
-            onClick={() => { setDate(date.plus({ days: 1 })); }}
+            onClick={() => {
+              const newDate = date.plus({ days: 1 });
+              // setDate(newDate);
+              history.push(links.timesheet({ date: newDate.toFormat('yyyy-MM-dd') }));
+            }}
             style={{
               cursor: 'pointer',
             }}

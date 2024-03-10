@@ -49,7 +49,8 @@ const ActivitiesList = ({
     const endOfDay = date.endOf('day');
     return DateTime.fromISO(a.startTime) <= endOfDay && DateTime.fromISO(a.endTime) >= startOfDay;
   });
-  const allActivitiesAreChecked = activitiesToShow?.length === selectedActivities.length;
+  const allActivitiesAreChecked = activitiesToShow?.length 
+    && (activitiesToShow?.length === selectedActivities.length);
 
   return (
     <Table
@@ -60,22 +61,16 @@ const ActivitiesList = ({
       <thead>
         <tr>
           <th style={{ width: 35 }}>
-            {
-              activitiesToShow?.length
-                ? (
-                  <Checkbox
-                    isChecked={allActivitiesAreChecked}
-                    onClick={() => {
-                      if (allActivitiesAreChecked) {
-                        onSelectAllActivities([]);
-                      } else {
-                        onSelectAllActivities(activitiesToShow);
-                      }
-                    }}
-                  />
-                )
-                : <div />
-            }
+            <Checkbox
+              isChecked={allActivitiesAreChecked}
+              onClick={() => {
+                if (allActivitiesAreChecked) {
+                  onSelectAllActivities([]);
+                } else {
+                  onSelectAllActivities(activitiesToShow);
+                }
+              }}
+            />
           </th>
           <th>{t('comment')}</th>
           <th style={{ width: 180 }}>{t('start')}</th>

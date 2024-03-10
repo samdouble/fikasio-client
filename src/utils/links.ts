@@ -16,7 +16,12 @@ const tasks = () => '/tasks';
 const templates = () => '/templates';
 const template = id => `/templates/${id}`;
 const templateUpsert = () => `/templates/create`;
-const timesheet = (date?: string) => `/timesheet${date ? `?date=${date}` : ''}`;
+const timesheet = (filter: { [key: string]: any; } = {}) => {
+  if (filter.date) {
+    return `/timesheet?date=${filter.date}`;
+  }
+  return '/timesheet';
+};
 
 const paths = {
   home: home(),
@@ -37,7 +42,7 @@ const paths = {
   templates: templates(),
   template: template(':id'),
   templateUpsert: templateUpsert(),
-  timesheet: timesheet(':date?' as string),
+  timesheet,
 };
 
 const links = {
@@ -59,7 +64,7 @@ const links = {
   templates: () => templates(),
   template: id => template(id),
   templateUpsert: () => templateUpsert(),
-  timesheet: (date?: string) => timesheet(date),
+  timesheet,
   paths,
 };
 
