@@ -54,35 +54,23 @@ const MemberPane = ({
           <RBForm.Group>
             <RBForm.Label>{t('type')}</RBForm.Label>
             <Field
-              component="select"
-              className="form-control"
-              defaultValue="BOOLEAN"
-              name="type"
-              options={[
-                { key: 'BOOLEAN', text: 'Booléen', value: 'BOOLEAN' },
-                { key: 'NUMBER', text: 'Nombre', value: 'NUMBER' },
-                { key: 'STRING', text: 'Texte', value: 'STRING' },
-              ]}
-            >
-              {
-                ({ input, options }) => {
+              component={
+                ({ input }) => {
                   return (
                     <Select
                       defaultValue={input.value}
-                      name={input.name}
                       onChange={value => input.onChange(value)}
-                      options={
-                        options
-                          .map(option => ({
-                            label: option.text,
-                            value: options.value,
-                          }))
-                      }
+                      options={[
+                        { key: 'BOOLEAN', text: t('boolean'), value: 'BOOLEAN' },
+                        { key: 'NUMBER', text: t('number'), value: 'NUMBER' },
+                        { key: 'STRING', text: t('text'), value: 'STRING' },
+                      ]}
                     />
                   )
                 }
               }
-            </Field>
+              name="type"
+            />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>{t('required')}</RBForm.Label>

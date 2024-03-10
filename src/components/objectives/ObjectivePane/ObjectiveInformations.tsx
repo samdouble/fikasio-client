@@ -8,7 +8,7 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { DateTime } from 'luxon';
-import { DatePicker } from '@fikasio/react-ui-components';
+import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { RootState } from 'services/store';
 import 'components/UI/Form.scss';
@@ -69,16 +69,26 @@ const ObjectiveInformations = ({
             />
             <Field
               allowNull
-              className="form-control"
-              component="select"
+              component={
+                ({ input }) => {
+                  return (
+                    <Select
+                      defaultValue={input.value}
+                      onChange={value => input.onChange(value)}
+                      options={[
+                        { label: t('daily'), value: 'DAILY' },
+                        { label: t('weekly'), value: 'WEEKLY' },
+                      ]}
+                      style={{
+                        width: 228,
+                      }}
+                    />
+                  )
+                }
+              }
               name="goalFrequency"
               parse={value => (value === '' ? null : value)}
-              style={{ width: 228 }}
-            >
-              <option />
-              <option value="DAILY">{t('daily')}</option>
-              <option value="WEEKLY">{t('weekly')}</option>
-            </Field>
+            />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>{t('deadline')}</RBForm.Label>
@@ -130,25 +140,27 @@ const ObjectiveInformations = ({
                           <tr>
                             <td>
                               <Field
-                                className="form-control"
-                                component="select"
-                                name={`${name}.id`}
-                              >
-                                <option />
-                                {
-                                  projects?.sort(
-                                    (p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase()))
-                                  )
-                                    .map(project => (
-                                      <option
-                                        key={project.id}
-                                        value={project.id}
-                                      >
-                                        {project.name}
-                                      </option>
-                                    ))
+                                component={
+                                  ({ input }) => {
+                                    return (
+                                      <Select
+                                        defaultValue={input.value}
+                                        onChange={value => input.onChange(value)}
+                                        options={
+                                          projects?.sort(
+                                            (p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase()))
+                                          )
+                                            .map(project => ({
+                                              label: project.name,
+                                              value: project.id,
+                                            }))
+                                        }
+                                      />
+                                    )
+                                  }
                                 }
-                              </Field>
+                                name={`${name}.id`}
+                              />
                             </td>
                             <td rowSpan={2} width={35}>
                               <FontAwesomeIcon

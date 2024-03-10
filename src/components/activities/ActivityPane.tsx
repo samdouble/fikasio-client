@@ -216,36 +216,26 @@ const ActivityPane = ({
                   </td>
                   <td>
                     <Field
-                      className="form-control"
-                      component="select"
-                      name="durationUnits"
-                      options={[
-                        { key: 'minutes', text: t('minutes'), value: 'minutes' },
-                        { key: 'hours', text: t('hours'), value: 'hours' },
-                      ]}
-                    >
-                      {
-                        ({ input, options }) => {
+                      component={
+                        ({ input }) => {
                           return (
                             <Select
                               defaultValue={input.value}
-                              name={input.name}
                               onChange={value => input.onChange(value)}
-                              options={
-                                options
-                                  .map(option => ({
-                                    label: option.text,
-                                    value: options.value,
-                                  }))
-                              }
+                              options={[
+                                { label: t('minutes'), value: 'minutes' },
+                                { label: t('hours'), value: 'hours' },
+                              ]}
                               style={{
-                                width: 100,
+                                width: 150,
                               }}
                             />
                           )
                         }
                       }
-                    </Field>
+                      defaultValue="minutes"
+                      name="durationUnits"
+                    />
                   </td>
                 </tr>
               </tbody>
@@ -254,18 +244,11 @@ const ActivityPane = ({
           <RBForm.Group>
             <RBForm.Label>{t('template')}</RBForm.Label>
             <Field
-              className="form-control"
-              component="select"
-              defaultValue={templateId}
-              name="templateId"
-              style={{ width: 250 }}
-            >
-              {
+              component={
                 ({ input }) => {
                   return (
                     <Select
                       defaultValue={input.value}
-                      name={input.name}
                       onChange={value => {
                         input.onChange(value);
                         handleChangeTemplate(value);
@@ -278,11 +261,16 @@ const ActivityPane = ({
                             value: t1.id,
                           }))
                       }
+                      style={{
+                        width: 250,
+                      }}
                     />
                   );
                 }
               }
-            </Field>
+              defaultValue={templateId}
+              name="templateId"
+            />
           </RBForm.Group>
           {
             template && (
@@ -363,24 +351,26 @@ const ActivityPane = ({
                             <tr>
                               <td>
                                 <Field
-                                  className="form-control"
-                                  component="select"
-                                  name={`${name}.id`}
-                                >
-                                  <option />
-                                  {
-                                    projects?.filter(p => !p.isArchived)
-                                      .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
-                                      .map(project => (
-                                        <option
-                                          key={project.id}
-                                          value={project.id}
-                                        >
-                                          {project.name}
-                                        </option>
-                                      ))
+                                  component={
+                                    ({ input }) => {
+                                      return (
+                                        <Select
+                                          defaultValue={input.value}
+                                          onChange={value => input.onChange(value)}
+                                          options={
+                                            projects?.filter(p => !p.isArchived)
+                                              .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
+                                              .map(project => ({
+                                                label: project.name,
+                                                value: project.id,
+                                              }))
+                                          }
+                                        />
+                                      )
+                                    }
                                   }
-                                </Field>
+                                  name={`${name}.id`}
+                                />
                               </td>
                               <td width={35}>
                                 <FontAwesomeIcon
@@ -426,26 +416,28 @@ const ActivityPane = ({
                             <tr>
                               <td>
                                 <Field
-                                  className="form-control"
-                                  component="select"
-                                  name={`${name}.id`}
-                                >
-                                  <option />
-                                  {
-                                    tasks?.filter(t1 => !t1.isArchived)
-                                      .sort((t1, t2) => (
-                                        t1.description.toLowerCase().localeCompare(t2.description.toLowerCase())
-                                      ))
-                                      .map(task => (
-                                        <option
-                                          key={task.id}
-                                          value={task.id}
-                                        >
-                                          {task.description}
-                                        </option>
-                                      ))
+                                  component={
+                                    ({ input }) => {
+                                      return (
+                                        <Select
+                                          defaultValue={input.value}
+                                          onChange={value => input.onChange(value)}
+                                          options={
+                                            tasks?.filter(t1 => !t1.isArchived)
+                                              .sort((t1, t2) => (
+                                                t1.description.toLowerCase().localeCompare(t2.description.toLowerCase())
+                                              ))
+                                              .map(task => ({
+                                                label: task.description,
+                                                value: task.id,
+                                              }))
+                                          }
+                                        />
+                                      )
+                                    }
                                   }
-                                </Field>
+                                  name={`${name}.id`}
+                                />
                               </td>
                               <td>
                                 <Field

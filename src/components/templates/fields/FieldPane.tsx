@@ -60,9 +60,9 @@ const FieldPane = ({
                     defaultValue={input.value}
                     onChange={value => input.onChange(value)}
                     options={[
-                      { key: 'BOOLEAN', label: t('boolean'), value: 'BOOLEAN' },
-                      { key: 'NUMBER', label: t('number'), value: 'NUMBER' },
-                      { key: 'STRING', label: t('text'), value: 'STRING' },
+                      { label: t('boolean'), value: 'BOOLEAN' },
+                      { label: t('number'), value: 'NUMBER' },
+                      { label: t('text'), value: 'STRING' },
                     ]}
                   />
                 )

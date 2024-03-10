@@ -72,37 +72,25 @@ const ProjectInformationsForm = ({
           <RBForm.Group>
             <RBForm.Label>{t('parentProject')}</RBForm.Label>
             <Field
-              component="select"
-              className="form-control"
-              name="parentProject"
-              options={
-                projects?.filter(p => p.id !== project?.id)
-                  .map(p => ({
-                    key: p.id,
-                    text: p.name,
-                    value: p.id,
-                  }))
-              }
-            >
-              {
-                ({ input, options }) => {
+              component={
+                ({ input }) => {
                   return (
                     <Select
                       defaultValue={input.value}
-                      name={input.name}
                       onChange={value => input.onChange(value)}
                       options={
-                        options
-                          .map(option => ({
-                            label: option.text,
-                            value: options.value,
+                        projects?.filter(p => p.id !== project?.id)
+                          .map(p => ({
+                            label: p.name,
+                            value: p.id,
                           }))
                       }
                     />
                   )
                 }
               }
-            </Field>
+              name="parentProject"
+            />
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>{t('color')}</RBForm.Label>

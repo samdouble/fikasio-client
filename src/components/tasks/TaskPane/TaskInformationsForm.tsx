@@ -10,7 +10,7 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import omit from 'lodash.omit';
 import { DateTime } from 'luxon';
-import { DatePicker } from '@fikasio/react-ui-components';
+import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { Task } from 'services/tasks/types';
 import { RootState } from 'services/store';
@@ -117,24 +117,6 @@ const TaskInformationsForm = ({
               }
             </Field>
           </RBForm.Group>
-          {
-            /*
-            <RBForm.Group>
-              <RBForm.Label>Statut</RBForm.Label>
-              <br />
-              <Field
-                name="status"
-                component="select"
-                className="form-control"
-                style={{ width: 250 }}
-              >
-                <option value="ACTIVE">En cours</option>
-                <option value="BLOCKED">Bloquée</option>
-                <option value="COMPLETED">Complétée</option>
-              </Field>
-            </RBForm.Group>
-            */
-          }
           <RBForm.Group>
             <RBForm.Label>{t('startDate')}</RBForm.Label>
             <br />
@@ -205,14 +187,22 @@ const TaskInformationsForm = ({
                   </td>
                   <td>
                     <Field
-                      className="form-control"
-                      component="select"
+                      component={
+                        ({ input }) => {
+                          return (
+                            <Select
+                              defaultValue={input.value}
+                              onChange={value => input.onChange(value)}
+                              options={[
+                                { label: t('minutes'), value: 'minutes' },
+                                { label: t('hours'), value: 'hours' },
+                              ]}
+                            />
+                          )
+                        }
+                      }
                       name="estimatedCompletionTimeUnits"
-                      style={{ width: 250 }}
-                    >
-                      <option value="minutes">{t('minutes')}</option>
-                      <option value="hours">{t('hours')}</option>
-                    </Field>
+                    />
                   </td>
                 </tr>
               </tbody>
@@ -235,24 +225,26 @@ const TaskInformationsForm = ({
                             <tr>
                               <td>
                                 <Field
-                                  className="form-control"
-                                  component="select"
-                                  name={`${name}.id`}
-                                >
-                                  <option />
-                                  {
-                                    projects?.filter(p => !p.isArchived)
-                                      .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
-                                      .map(project => (
-                                        <option
-                                          key={project.id}
-                                          value={project.id}
-                                        >
-                                          {project.name}
-                                        </option>
-                                      ))
+                                  component={
+                                    ({ input }) => {
+                                      return (
+                                        <Select
+                                          defaultValue={input.value}
+                                          onChange={value => input.onChange(value)}
+                                          options={
+                                            projects?.filter(p => !p.isArchived)
+                                              .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
+                                              .map(p => ({
+                                                label: p.name,
+                                                value: p.id,
+                                              }))
+                                          }
+                                        />
+                                      )
+                                    }
                                   }
-                                </Field>
+                                  name={`${name}.id`}
+                                />
                               </td>
                               <td width={35}>
                                 <FontAwesomeIcon
