@@ -62,7 +62,7 @@ const ItemsList = ({
                   return (
                     <AutosaveTextarea
                       className="itemRow_field_editable"
-                      defaultValue={defaultValue}
+                      defaultValue={defaultValue || ''}
                       onKeyDown={e => handleKeyDown(e)}
                       onKeyUp={e => handleKeyUp(e, row)}
                       onSave={async value => {
@@ -85,7 +85,7 @@ const ItemsList = ({
                 } else if (field.type === 'BOOLEAN') {
                   return (
                     <Checkbox
-                      defaultIsChecked={defaultValue}
+                      defaultIsChecked={defaultValue || false}
                       onClick={async value => {
                         operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
                           value,
