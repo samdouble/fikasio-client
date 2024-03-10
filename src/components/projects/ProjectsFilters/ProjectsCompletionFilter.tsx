@@ -16,7 +16,7 @@ const ProjectsCompletionFilter = ({
   return (
     <Select
       defaultValue="INCOMPLETE"
-      onChange={option => onChange(option.value)}
+      onChange={value => onChange(value)}
       options={[
         { label: t('ongoingProjects'), value: 'INCOMPLETE' },
         { label: t('completeProjects'), value: 'COMPLETE' },

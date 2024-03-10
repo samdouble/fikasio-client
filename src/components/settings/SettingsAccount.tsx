@@ -30,7 +30,7 @@ const SettingsAccount = () => {
       <RBForm.Label>{t('language')}</RBForm.Label>
       <Select
         defaultValue={language}
-        onChange={e => handleChangeLanguage(e)}
+        onChange={value => handleChangeLanguage(value)}
         options={[
           { label: 'English', value: 'en' },
           { label: 'Français', value: 'fr' },

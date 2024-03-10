@@ -16,7 +16,7 @@ const TasksCompletionFilter = ({
   return (
     <Select
       defaultValue="INCOMPLETE"
-      onChange={option => onChange(option.value)}
+      onChange={value => onChange(value)}
       options={[
         { label: t('incompleteTasks'), value: 'INCOMPLETE' },
         { label: t('completeTasks'), value: 'COMPLETE' },

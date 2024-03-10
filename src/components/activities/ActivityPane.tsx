@@ -266,9 +266,9 @@ const ActivityPane = ({
                     <Select
                       defaultValue={input.value}
                       name={input.name}
-                      onChange={option => {
-                        input.onChange(option.value);
-                        handleChangeTemplate(option.value);
+                      onChange={value => {
+                        input.onChange(value);
+                        handleChangeTemplate(value);
                       }}
                       options={
                         (templates || [])

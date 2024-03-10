@@ -30,7 +30,7 @@ const SettingsGeneral = () => {
       <RBForm.Label>{t('language')}</RBForm.Label>
       <Select
         defaultValue={language}
-        onChange={option => handleChangeLanguage(option.value)}
+        onChange={value => handleChangeLanguage(value)}
         options={[
           { label: 'English', value: 'en' },
           { label: 'Français', value: 'fr' },

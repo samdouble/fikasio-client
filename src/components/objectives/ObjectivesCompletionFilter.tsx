@@ -8,7 +8,7 @@ const ObjectivesCompletionFilter = ({ onChange, style }) => {
   return (
     <Select
       defaultValue="INCOMPLETE"
-      onChange={option => onChange(option.value)}
+      onChange={value => onChange(value)}
       options={[
         { label: t('ongoingObjectives'), value: 'INCOMPLETE' },
         { label: t('completedObjectives'), value: 'COMPLETE' },

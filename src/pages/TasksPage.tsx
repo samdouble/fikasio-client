@@ -10,6 +10,7 @@ import TasksView from 'components/tasks/TasksView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
 import { RootState } from 'services/store';
+// import { useGetTasksQuery } from 'services/tasks/newEndpoints';
 import links from 'utils/links';
 import './style.scss';
 
@@ -20,6 +21,13 @@ const TasksPage = () => {
   const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
+
+  /*
+  const { data, isFetching } = useGetTasksQuery({});
+  console.log(isFetching, data);
+  useEffect(() => {
+  }, [isFetching]);
+  */
 
   useEffect(() => {
     ReactGA.send({

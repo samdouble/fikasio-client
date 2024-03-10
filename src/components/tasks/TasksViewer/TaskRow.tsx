@@ -185,7 +185,7 @@ const TaskRow = ({
       <td width={140}>
         {
           <Select
-            onChange={option => handleTaskStatusChange(task, option.value)}
+            onChange={value => handleTaskStatusChange(task, value)}
             options={[
               { label: t('doing'), value: 'Doing' },
               { label: t('blocked'), value: 'Blocked' },
@@ -246,6 +246,7 @@ const TaskRow = ({
           cursor: 'pointer',
           ...(hasdueAtPassed && { color: '#ff0000' }),
           minWidth: 150,
+          width: 150,
         }}
       >
         <DatePicker

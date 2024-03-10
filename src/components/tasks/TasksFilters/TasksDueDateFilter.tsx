@@ -16,7 +16,7 @@ const TasksDueDateFilter = ({
   return (
     <Select
       defaultValue="ALL"
-      onChange={option => onChange(option.value)}
+      onChange={value => onChange(value)}
       options={[
         { label: t('allTasks'), value: 'ALL' },
         { label: t('tasksDueForToday'), value: 'FOR_TODAY' },

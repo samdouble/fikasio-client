@@ -1471,10 +1471,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fikasio/react-ui-components@^0.7.5":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.7.5.tgz#32452833d5964433032648b29d4f0c96a977ec93"
-  integrity sha512-7QuMARgdp31ojkSkzudhJ2WB9gFgK9Z3h4s5Nl8dylq0GhcSggxDbGtsvUjl62Kv585p5pg2HoQyM5tCzHHOZg==
+"@fikasio/react-ui-components@^0.7.8":
+  version "0.7.8"
+  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.7.8.tgz#d747ab2dcc8240f570b39a6819fe04cbed8a13b1"
+  integrity sha512-acuMygxLidf3kcWq2aZVtCtABZeVs/E7PTt/Wpg1HJvXEqEeZ43BRJiRaQi2TNzusJCB4Zp3wzsnvxXXJt45nw==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.0"
     "@fortawesome/free-brands-svg-icons" "^6.5.1"
@@ -11135,7 +11135,7 @@ react-chartjs-2@^3.0.3:
   resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-3.3.0.tgz#3f62681645acccc1ab27a9186c70f79d6d417f73"
   integrity sha512-4Mt0SR2aiUbWi/4762odRBYSnbNKSs4HWc0o3IW43py5bMfmfpeZU95w6mbvtuLZH/M3GsPJMU8DvDc+5U9blQ==
 
-react-click-outside@tj/react-click-outside:
+"react-click-outside@github:tj/react-click-outside", react-click-outside@tj/react-click-outside:
   version "1.1.1"
   resolved "https://codeload.github.com/tj/react-click-outside/tar.gz/a833ddc5be47490307f9fcc6ed09d8c353108510"
 
