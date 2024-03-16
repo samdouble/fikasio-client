@@ -26,7 +26,6 @@ const NotificationsPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
   const [isProjectDueAtDatepickerOpen, setIsProjectDueAtDatepickerOpen] = useState(false);
-  const [isTaskDueAtDatepickerOpen, setIsTaskDueAtDatepickerOpen] = useState(false);
 
   useEffect(() => {
     ReactGA.send({
@@ -172,7 +171,6 @@ const NotificationsPage = () => {
                               </td>
                               <td>{ project && project.name }</td>
                               <td
-                                onClick={() => setIsTaskDueAtDatepickerOpen(true)}
                                 style={{
                                   minWidth: 150,
                                 }}
@@ -180,14 +178,12 @@ const NotificationsPage = () => {
                                 <DatePicker
                                   defaultValue={project.dueAt ? DateTime.fromISO(project.dueAt).toJSDate() : null}
                                   displayFormat="yyyy-MM-dd"
-                                  isOpen={isTaskDueAtDatepickerOpen}
                                   onChange={dueAt => {
                                     const timestamp = DateTime.fromJSDate(dueAt)
                                       .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
                                       .toISO();
                                     operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
                                   }}
-                                  onClose={() => setIsTaskDueAtDatepickerOpen(false)}
                                   shouldCloseOnSelect
                                   showRemoveValue
                                   showTimeSelect={false}

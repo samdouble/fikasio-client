@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -20,6 +20,16 @@ const ItemsList = ({
   const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation();
+  const [rows, setRows] = useState(items);
+
+  useEffect(() => {
+    setRows([
+      ...((!items || !items.length) ? [{}] : []),
+      ...(items || []),
+    ]);
+  }, [items]);
+
+  console.log(rows);
 
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
@@ -40,11 +50,6 @@ const ItemsList = ({
       operations.items.createItem(entity.id, {})(dispatch);
     }
   };
-
-  const rows = [
-    (!items || !items.length) && {},
-    ...(items || []),
-  ];
 
   return (
     <Table

@@ -182,7 +182,9 @@ const TaskInformationsForm = ({
                       component="input"
                       defaultValue={task && task.estimatedCompletionTime}
                       name="number:estimatedCompletionTime"
-                      style={{ width: 100 }}
+                      style={{
+                        width: 100,
+                      }}
                     />
                   </td>
                   <td>
@@ -197,6 +199,9 @@ const TaskInformationsForm = ({
                                 { label: t('minutes'), value: 'minutes' },
                                 { label: t('hours'), value: 'hours' },
                               ]}
+                              style={{
+                                minWidth: 300,
+                              }}
                             />
                           )
                         }
@@ -241,6 +246,9 @@ const TaskInformationsForm = ({
                                                 value: p.id,
                                               }))
                                           }
+                                          style={{
+                                            minWidth: 300,
+                                          }}
                                         />
                                       )
                                     }
