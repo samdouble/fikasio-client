@@ -29,8 +29,6 @@ const ItemsList = ({
     ]);
   }, [items]);
 
-  console.log(rows);
-
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
       onAddItem({})
