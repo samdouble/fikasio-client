@@ -168,7 +168,7 @@ const TaskRow = ({
           useContentEditableDiv
         />
       </td>
-      <td width={140}>
+      <td width={150}>
         {
           task && task.projects && task.projects
             .map(p => (

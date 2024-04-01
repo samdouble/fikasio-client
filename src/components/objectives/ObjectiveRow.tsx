@@ -54,7 +54,7 @@ const ObjectiveRow = ({
         />
         { objective.name }
       </td>
-      <td width={140}>
+      <td width={150}>
         {
           objective && objective.projects && objective.projects
             .map(p => (
