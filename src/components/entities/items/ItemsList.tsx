@@ -29,8 +29,8 @@ const ItemsList = ({
     ]);
   }, [items]);
 
-  const handleKeyDown = e => {
-    if (e.key === 'Enter') {
+  const handleKeyDown = (e, field) => {
+    if (e.key === 'Enter' && field.type !== 'TEXT') {
       onAddItem({})
         .then(resultItem => {
           if (resultItem) {
@@ -66,12 +66,12 @@ const ItemsList = ({
               name: field.name,
               render: row => {
                 const defaultValue = row.values?.find(val => val.fieldId === field.id)?.value;
-                if (['STRING', 'NUMBER'].includes(field.type)) {
+                if (['NUMBER', 'STRING', 'TEXT'].includes(field.type)) {
                   return (
                     <AutosaveTextarea
                       className="itemRow_field_editable"
                       defaultValue={defaultValue || ''}
-                      onKeyDown={e => handleKeyDown(e)}
+                      onKeyDown={e => handleKeyDown(e, field)}
                       onKeyUp={e => handleKeyUp(e, row)}
                       onSave={async value => {
                         if (row.id) {
@@ -94,7 +94,10 @@ const ItemsList = ({
                         paddingLeft: 5,
                         paddingRight: 50,
                         paddingTop: 0,
-                        width: 'auto',
+                        ...(field.type === 'TEXT' && {
+                          resize: 'vertical',
+                          width: '100%',
+                        }),
                       }}
                       useContentEditableDiv
                     />
