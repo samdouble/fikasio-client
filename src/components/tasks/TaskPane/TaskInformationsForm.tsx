@@ -136,6 +136,9 @@ const TaskInformationsForm = ({
                       setStartAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
                     }}
+                    popperProps={{
+                      positionFixed: true,
+                    }}
                   />
                 )
               }
@@ -162,6 +165,9 @@ const TaskInformationsForm = ({
                       }
                       setDueAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
+                    }}
+                    popperProps={{
+                      positionFixed: true,
                     }}
                   />
                 )
