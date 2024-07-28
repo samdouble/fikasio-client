@@ -162,7 +162,7 @@ const calculateTasksDueTooLate = (tasks, projects) => {
 
 const calculateTasksWithNoDueDate = tasks => {
   return tasks
-    .filter(t => !t.dueAt);
+    .filter(t => t.status !== 'Completed' && !t.dueAt);
 };
 
 export {
