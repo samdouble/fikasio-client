@@ -221,7 +221,7 @@ const TasksView = ({
             >
               <DatePicker
                 defaultValue={
-                  allSelectedTasksHaveSameDueAt
+                  (allSelectedTasksHaveSameDueAt && uniqueDueAtForSelectedTasks[0])
                   ? DateTime.fromISO(uniqueDueAtForSelectedTasks[0]).toJSDate()
                   : null
                 }
