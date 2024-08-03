@@ -14,7 +14,7 @@ export enum ProjectActionTypes {
 }
 
 export type ProjectAction =
-  | { type: ProjectActionTypes.CREATE_PROJECT_REQUEST; payload: { project: Project } }
+  | { type: ProjectActionTypes.CREATE_PROJECT_REQUEST; payload: { project: Partial<Project> } }
   | { type: ProjectActionTypes.CREATE_PROJECT_RESPONSE; payload: { project: Project } }
   | { type: ProjectActionTypes.GET_PROJECTS_REQUEST; payload: { projects: Project[] } }
   | { type: ProjectActionTypes.GET_PROJECTS_RESPONSE; payload: { projects: Project[] } }
@@ -25,7 +25,7 @@ export type ProjectAction =
   | { type: ProjectActionTypes.DELETE_PROJECT_REQUEST; payload: { projectId: string } }
   | { type: ProjectActionTypes.DELETE_PROJECT_RESPONSE; payload: { projectId: string } };
 
-export const createProjectRequest = (payload: { project: Project }): ProjectAction => ({
+export const createProjectRequest = (payload: { project: Partial<Project> }): ProjectAction => ({
   type: ProjectActionTypes.CREATE_PROJECT_REQUEST,
   payload,
 });

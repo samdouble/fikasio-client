@@ -8,6 +8,7 @@ import AddProjectButton from './AddProjectButton';
 import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
 
 interface ProjectsViewProps {
+  onAddProject?: (project: Partial<Project>) => void;
   onProjectClick: (projectId: string) => void;
   projects?: Project[] | null;
   showAddButton?: boolean;
@@ -17,6 +18,7 @@ interface ProjectsViewProps {
 }
 
 const ProjectsView = ({
+  onAddProject,
   onProjectClick,
   projects,
   showAddButton,
@@ -102,6 +104,7 @@ const ProjectsView = ({
           )
         }
         <ProjectsList
+          onAddProject={onAddProject}
           onProjectClick={onProjectClick}
           onProjectSelect={handleProjectSelect}
           onSelectAllProjects={projectsArray => setSelectedProjects(projectsArray)}

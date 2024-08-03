@@ -34,7 +34,7 @@ function fetchProjects(filter = {}) {
   );
 }
 
-function createProject(project: Project) {
+function createProject(project: Partial<Project>) {
   return (dispatch: ProjectDispatch) => {
     dispatch(createProjectRequest({ project }));
     return APIcreateProject(project)

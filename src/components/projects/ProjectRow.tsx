@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import classNames from 'classnames';
-import { Checkbox, DatePicker } from '@fikasio/react-ui-components';
+import { AutosaveTextarea, Checkbox, DatePicker } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
 import { Project } from 'services/projects/types';
@@ -14,6 +14,7 @@ import { round } from 'utils/maths';
 
 export interface ProjectRowProps {
   isSelected?: boolean;
+  onAddProject: (project: Project) => Promise<void>;
   onClick: (projectId: string) => Promise<void>;
   onSelect: (project: Project) => Promise<void>;
   project: Project;
@@ -21,20 +22,60 @@ export interface ProjectRowProps {
 
 const ProjectRow = ({
   isSelected,
+  onAddProject,
   onClick,
   onSelect,
-  project,
+  project: pProject,
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const [project, setProject] = useState(pProject);
+  const [name, setName] = useState((project && project.name) || '');
+  const [hasFocus, setHasFocus] = useState(false);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
+
+  useEffect(() => {
+    if (!hasFocus) {
+      setName(project.name);
+    }
+  }, [project]);
+
+  const handleBlur = () => {
+    setHasFocus(false);
+  };
+
+  const handleFocus = () => {
+    setHasFocus(true);
+  };
+
+  const handleKeyDownName = e => {
+    if (e.key === 'Enter') {
+      onAddProject({
+        name: '',
+      });
+      e.preventDefault();
+    }
+  };
+
+  const handleKeyUpName = (e, updatedProject) => {
+    if (updatedProject) {
+      if (e.key === 'Backspace' && e.target.textContent === '') {
+        operations.projects.deleteProject(updatedProject.id)(dispatch);
+      }
+    } else if (e.target.textContent !== '') {
+      operations.projects.createProject({
+        name: e.target.textContent,
+      })(dispatch);
+    }
+  };
 
   const hasdueAtPassed = project && project.dueAt && DateTime.fromISO(project.dueAt) < DateTime.now();
 
   return (
     <tr
       className={classNames({
+        projectRow: true,
         done: project.isCompleted && !project.isArchived,
       })}
     >
@@ -50,10 +91,45 @@ const ProjectRow = ({
         />
       </td>
       <td
+        className="projectRow_name"
         onClick={() => onClick(project.id)}
         style={{ cursor: 'pointer' }}
       >
-        { project.name }
+        <AutosaveTextarea
+          className={classNames({
+            projectRow_name_editable: true,
+            [project.id]: true,
+          })}
+          defaultValue={name}
+          onBlur={() => handleBlur()}
+          onFocus={() => handleFocus()}
+          onKeyDown={e => handleKeyDownName(e)}
+          onKeyUp={e => handleKeyUpName(e, project)}
+          onSave={async value => {
+            if (project.id) {
+              operations.projects.patchProject(project.id, {
+                ...project,
+                name: value,
+              })(dispatch);
+            } else {
+              operations.tasks.createTask({
+                ...project,
+                name: value,
+              })(dispatch)
+                .then(resultProject => setProject(resultProject));
+            }
+          }}
+          style={{
+            float: 'left',
+            height: 25,
+            overflowY: 'hidden',
+            paddingLeft: 5,
+            paddingRight: 50,
+            paddingTop: 0,
+            width: 'auto',
+          }}
+          useContentEditableDiv
+        />
       </td>
       <td width={150}>
         {

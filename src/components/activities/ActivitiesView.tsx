@@ -16,7 +16,7 @@ const ActivitiesView = ({
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [viewMode, setViewMode] = useState('LIST');
+  const [viewMode, setViewMode] = useState('CALENDAR');
   const [selectedActivities, setSelectedActivities] = useState<Activity[]>([]);
 
   const addActivity = async activity => dispatch(operations.activities.createActivity(activity));

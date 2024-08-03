@@ -1,0 +1,15 @@
+
+
+.projectRow td {
+  border-left: none;
+  border-right: none;
+}
+
+.projectRow_name_editable {
+  border: 1px solid transparent;
+}
+
+.projectRow_name:hover > .projectRow_name_editable {
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+}

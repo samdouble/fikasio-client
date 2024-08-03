@@ -70,21 +70,20 @@ const ObjectiveInformations = ({
             <Field
               allowNull
               component={
-                ({ input }) => {
-                  return (
-                    <Select
-                      defaultValue={input.value}
-                      onChange={value => input.onChange(value)}
-                      options={[
-                        { label: t('daily'), value: 'DAILY' },
-                        { label: t('weekly'), value: 'WEEKLY' },
-                      ]}
-                      style={{
-                        width: 228,
-                      }}
-                    />
-                  )
-                }
+                ({ input }) => (
+                  <Select
+                    defaultValue={input.value}
+                    menuPortalTarget={null}
+                    onChange={value => input.onChange(value)}
+                    options={[
+                      { label: t('daily'), value: 'DAILY' },
+                      { label: t('weekly'), value: 'WEEKLY' },
+                    ]}
+                    style={{
+                      width: 228,
+                    }}
+                  />
+                )
               }
               name="goalFrequency"
               parse={value => (value === '' ? null : value)}

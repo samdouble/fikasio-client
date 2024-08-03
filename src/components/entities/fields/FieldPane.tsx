@@ -42,7 +42,7 @@ const FieldPane = ({
       mutators={{ ...arrayMutators }}
       onSubmit={onSubmit}
       render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
+        <form id="ewvce" onSubmit={handleSubmit}>
           <RBForm.Group>
             <RBForm.Label>{t('name')}</RBForm.Label>
             <Field
@@ -58,6 +58,7 @@ const FieldPane = ({
                 ({ input }) => (
                   <Select
                     defaultValue={input.value}
+                    menuPortalTarget={null}
                     onChange={value => input.onChange(value)}
                     options={[
                       { label: t('boolean'), value: 'BOOLEAN' },

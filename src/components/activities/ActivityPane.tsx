@@ -9,6 +9,7 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { DateTime } from 'luxon';
 import uniqBy from 'lodash.uniqby';
+import usePrevious from 'use-previous';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { getActivities } from 'services/activities/endpoints';
@@ -47,6 +48,7 @@ const ActivityPane = ({
       : null,
   );
   const [comments, setComments] = useState(activity?.comments);
+  const prevComments = usePrevious(comments);
   const [templateId, setTemplateId] = useState(activity?.templateId);
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
   const template = templates?.find(t => t.id === templateId);
@@ -59,15 +61,26 @@ const ActivityPane = ({
   const handleChangeComments = e => {
     const text = e.target.value;
     if (text.length >= 3) {
-      getActivities(null, { endTime: -1 }, text)
-        .then((res: { activities: Activity[] }) => {
-          const suggestedActivities = uniqBy(res.activities, el => el.comments)
+      if (prevComments?.includes(text)) {
+        setCommentsSuggestions(
+          commentsSuggestions
+            .filter(suggestedActivity => suggestedActivity.comments.toLowerCase().includes(text.toLowerCase()))
             .filter(suggestedActivity => (
               !me.censoredWords
                 .some(censoredWord => suggestedActivity.comments.toLowerCase().includes(censoredWord.toLowerCase()))
-            ));
-          setCommentsSuggestions(suggestedActivities);
-        });
+            ))
+        );
+      } else {
+        getActivities(null, { endTime: -1 }, text)
+          .then((res: { activities: Activity[] }) => {
+            const suggestedActivities = uniqBy(res.activities, el => el.comments)
+              .filter(suggestedActivity => (
+                !me.censoredWords
+                  .some(censoredWord => suggestedActivity.comments.toLowerCase().includes(censoredWord.toLowerCase()))
+              ));
+            setCommentsSuggestions(suggestedActivities);
+          });
+      }
     } else {
       setCommentsSuggestions([]);
     }
@@ -221,6 +234,7 @@ const ActivityPane = ({
                           return (
                             <Select
                               defaultValue={input.value}
+                              menuPortalTarget={null}
                               onChange={value => input.onChange(value)}
                               options={[
                                 { label: t('minutes'), value: 'minutes' },
@@ -249,6 +263,7 @@ const ActivityPane = ({
                   return (
                     <Select
                       defaultValue={input.value}
+                      menuPortalTarget={null}
                       onChange={value => {
                         input.onChange(value);
                         handleChangeTemplate(value);
@@ -356,6 +371,7 @@ const ActivityPane = ({
                                       return (
                                         <Select
                                           defaultValue={input.value}
+                                          menuPortalTarget={null}
                                           onChange={value => input.onChange(value)}
                                           options={
                                             projects?.filter(p => !p.isArchived)

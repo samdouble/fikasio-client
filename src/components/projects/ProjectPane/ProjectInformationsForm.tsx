@@ -77,6 +77,7 @@ const ProjectInformationsForm = ({
                   return (
                     <Select
                       defaultValue={input.value}
+                      menuPortalTarget={null}
                       onChange={value => input.onChange(value)}
                       options={
                         projects?.filter(p => p.id !== project?.id)

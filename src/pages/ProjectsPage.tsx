@@ -28,6 +28,10 @@ const ProjectsPage = () => {
     });
   }, []);
 
+  const addProject = async project => {
+    return operations.projects.createProject(project)(dispatch);
+  };
+
   const getPage = () => (
     <>
       <Helmet>
@@ -40,6 +44,7 @@ const ProjectsPage = () => {
         </Breadcrumb>
         <h4>{t('projects')}</h4>
         <ProjectsView
+          onAddProject={project => addProject(project)}
           onProjectClick={
             projectId => operations.pane.setPaneContent({
               type: 'PROJECT',
