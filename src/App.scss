@@ -125,6 +125,10 @@ table tr td {
   vertical-align: middle;
 }
 
+.table>:not(caption)>tr>td {
+  padding: .1rem .1rem;
+}
+
 // Tabs
 .nav-tabs {
   border: none;

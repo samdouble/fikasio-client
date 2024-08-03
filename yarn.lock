@@ -1471,10 +1471,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fikasio/react-ui-components@^0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.9.1.tgz#33dfe8cf6b8c4c543e32cb0d2871a55ffdfe4c11"
-  integrity sha512-Dbb3c6213z5zB/CLGE2xsDEgMsBdyvo7ZlPS1gRsiz109Q8fHMeIlZeuMeQ7kFwl9ZzFznMmZnhjhoTI0Xorgg==
+"@fikasio/react-ui-components@0.9.3":
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.9.3.tgz#37e8e8c219a7903f843c1eb57387d8f51bf65af4"
+  integrity sha512-AIwuhWUCfk1Zf5MXPo7WrgyuAUS5Ob1/IUmxUCJBb/MYn/GJQqtyUJgQFjsPTudcOyk60/fZ8O9TTIid7IpSrQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^6.4.0"
     "@fortawesome/free-brands-svg-icons" "^6.5.1"

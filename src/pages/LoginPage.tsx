@@ -112,7 +112,7 @@ const LoginPage = () => {
           }
         </Row>
         <Row>
-          <Col md={6}>
+          <Col md={12}>
             <form
               id="Login_form"
             >

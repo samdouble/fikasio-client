@@ -20,7 +20,10 @@ services:
             - /node_modules
 
     server:
-        image: registry.digitalocean.com/samdouble/fikasio-api:latest
+        #image: registry.digitalocean.com/samdouble/fikasio-api:latest
+        build:
+            context: ../fikasio-server
+            dockerfile: Dockerfile.prod
         container_name: fikasio-server
         restart: always
         environment:
@@ -29,6 +32,7 @@ services:
             - JWT_SECRET=9e274c25f744410b80cb83005dff7a52
             - MONGO_URL=mongodb://mongo0:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
             - NODE_ENV=development
+            - STRIPE_SECRET_KEY=sk_test_51NsEz8KsWRKy5brscLwrhbZ2kk4IwQGnDI5jMaWJ5VzfAvNtjkCdxsVQrRAFSv4d7lSbEjXXCAvSng9ebKzPjZbV007JfqKd3n
         links:
             - mongodb-init
             - mongo0
