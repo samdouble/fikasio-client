@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { AutosaveTextarea, Checkbox, DatePicker } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
+import { useAddProjectMutation, usePatchProjectMutation, useDeleteProjectMutation } from 'services/projects/api';
 import { Project } from 'services/projects/types';
 import { isEmpty } from 'utils/isEmpty';
 import { round } from 'utils/maths';
@@ -35,6 +36,10 @@ const ProjectRow = ({
   const [hasFocus, setHasFocus] = useState(false);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
 
+  const [createProject] = useAddProjectMutation();
+  const [patchProject] = usePatchProjectMutation();
+  const [deleteProject] = useDeleteProjectMutation();
+
   useEffect(() => {
     if (!hasFocus) {
       setName(project.name);
@@ -61,12 +66,12 @@ const ProjectRow = ({
   const handleKeyUpName = (e, updatedProject) => {
     if (updatedProject) {
       if (e.key === 'Backspace' && e.target.textContent === '') {
-        operations.projects.deleteProject(updatedProject.id)(dispatch);
+        deleteProject(updatedProject.id);
       }
     } else if (e.target.textContent !== '') {
-      operations.projects.createProject({
+      createProject({
         name: e.target.textContent,
-      })(dispatch);
+      });
     }
   };
 
@@ -107,10 +112,11 @@ const ProjectRow = ({
           onKeyUp={e => handleKeyUpName(e, project)}
           onSave={async value => {
             if (project.id) {
-              operations.projects.patchProject(project.id, {
+              patchProject({
+                id: project.id,
                 ...project,
                 name: value,
-              })(dispatch);
+              });
             } else {
               operations.tasks.createTask({
                 ...project,
@@ -163,12 +169,18 @@ const ProjectRow = ({
               .fromJSDate(value)
               .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
               .toISO();
-            operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
+            patchProject({
+              id: project.id,
+              dueAt: timestamp,
+            });
           }}
           onClose={() => setIsDueAtDatepickerOpen(false)}
           onRemoveValue={e => {
             e.stopPropagation();
-            operations.projects.patchProject(project.id, { dueAt: null })(dispatch);
+            patchProject({
+              id: project.id,
+              dueAt: null,
+            });
           }}
           shouldCloseOnSelect
           showRemoveValue
@@ -189,7 +201,7 @@ const ProjectRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => operations.projects.createProject(project)(dispatch)}
+              onClick={() => createProject(project)}
             >
               <FontAwesomeIcon
                 icon="copy"
@@ -203,7 +215,10 @@ const ProjectRow = ({
             <Dropdown.Item
               onClick={() => {
                 const isArchived = project.isArchived || false;
-                operations.projects.patchProject(project.id, { isArchived: !isArchived })(dispatch);
+                patchProject({
+                  id: project.id,
+                  isArchived: !isArchived,
+                });
               }}
             >
               <FontAwesomeIcon
@@ -216,7 +231,7 @@ const ProjectRow = ({
               {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => operations.projects.deleteProject(project.id)(dispatch)}
+              onClick={() => deleteProject(project.id)}
             >
               <FontAwesomeIcon
                 icon="times"

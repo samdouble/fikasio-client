@@ -14,6 +14,7 @@ import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
 import { getActivities } from 'services/activities/endpoints';
 import { Activity } from 'services/activities/types';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { TemplateField } from 'services/templates/types';
 import { RootState } from 'services/store';
 import { getFormFieldForType, processFormData } from 'utils/forms';
@@ -29,7 +30,7 @@ const ActivityPane = ({
 }: ActivityPaneProps) => {
   const dispatch = useDispatch();
   const activities = useSelector((state: RootState) => state.activities);
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
   const templates = useSelector((state: RootState) => state.templates);
   const login = useSelector((state: RootState) => state.login);

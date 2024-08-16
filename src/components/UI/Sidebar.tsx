@@ -312,9 +312,8 @@ const Sidebar = () => {
       resourceFetchers={[
         () => dispatch(operations.organizations.fetchOrganizations()),
         () => dispatch(operations.tasks.fetchTasks()),
-        () => dispatch(operations.projects.fetchProjects()),
       ]}
-      resources={[organizations, tasks, projects]}
+      resources={[organizations, tasks]}
     />
   );
 };

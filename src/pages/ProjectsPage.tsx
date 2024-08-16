@@ -9,6 +9,7 @@ import ResourcesHandler from 'components/ResourcesHandler';
 import ProjectsView from 'components/projects/ProjectsView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { useAddProjectMutation } from 'services/projects/api';
 import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
@@ -21,6 +22,8 @@ const ProjectsPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
 
+  const [createProject] = useAddProjectMutation();
+
   useEffect(() => {
     ReactGA.send({
       hitType: 'pageview',
@@ -29,7 +32,7 @@ const ProjectsPage = () => {
   }, []);
 
   const addProject = async project => {
-    return operations.projects.createProject(project)(dispatch);
+    return createProject(project);
   };
 
   const getPage = () => (
@@ -65,11 +68,10 @@ const ProjectsPage = () => {
     <ResourcesHandler
       getContents={getPage}
       resourceFetchers={[
-        () => dispatch(operations.projects.fetchProjects()),
         () => dispatch(operations.objectives.fetchObjectives()),
         () => dispatch(operations.tasks.fetchTasks()),
       ]}
-      resources={[projects, objectives, tasks]}
+      resources={[objectives, tasks]}
     />
   );
 };

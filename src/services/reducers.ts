@@ -1,32 +1,27 @@
-import { combineReducers } from 'redux';
 import activities from './activities';
 import cards from './cards';
 import entities from './entities';
-import events from './events';
 import items from './items';
 import login from './login';
 import objectives from './objectives';
 import organizations from './organizations';
 import pane from './pane';
 import payments from './payments';
-import projects from './projects';
 import pendingRequests from './pendingRequests';
 import tasks from './tasks';
 import templates from './templates';
 
-export default combineReducers({
+export default {
   activities,
   cards,
   entities,
-  events,
   items,
   login,
   objectives,
   organizations,
   pane,
   payments,
-  projects,
   pendingRequests,
   tasks,
   templates,
-});
+};

@@ -12,6 +12,7 @@ import { CompactPicker } from 'react-color';
 import { DateTime } from 'luxon';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
+import { useAddProjectMutation, usePatchProjectMutation, useUpdateProjectMutation } from 'services/projects/api';
 import { RootState } from 'services/store';
 import { invertColor } from 'utils/colors';
 import 'components/UI/Form.scss';
@@ -35,13 +36,20 @@ const ProjectInformationsForm = ({
   const [color, setColor] = useState(project?.color);
   const [isColorpickerOpen, setIsColorpickerOpen] = useState(false);
 
+  const [createProject] = useAddProjectMutation();
+  const [patchProject] = usePatchProjectMutation();
+  const [updateProject] = useUpdateProjectMutation();
+
   const onSubmit = async values => {
     const formData = values;
     if (project) {
-      operations.projects.updateProject(project.id, formData)(dispatch)
+      updateProject({
+        id: project.id,
+        ...formData,
+      })
         .then(() => dispatch(operations.pane.clearPaneContent()));
     } else {
-      operations.projects.createProject(formData)(dispatch)
+      createProject(formData)
         .then(() => dispatch(operations.pane.clearPaneContent()));
     }
   };
@@ -153,7 +161,10 @@ const ProjectInformationsForm = ({
                       const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 0, minute: 0, second: 0 });
                       if (project?.id) {
-                        operations.projects.patchProject(project.id, { startAt: timestamp.toISO() })(dispatch);
+                        patchProject({
+                          id: project.id,
+                          startAt: timestamp.toISO(),
+                        });
                       }
                       setStartAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
@@ -182,7 +193,10 @@ const ProjectInformationsForm = ({
                       const timestamp = DateTime.fromJSDate(val)
                         .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
                       if (project && project.id) {
-                        operations.projects.patchProject(project.id, { dueAt: timestamp.toISO() })(dispatch);
+                        patchProject({
+                          id: project.id,
+                          dueAt: timestamp.toISO(),
+                        });
                       }
                       setDueAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());

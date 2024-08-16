@@ -14,6 +14,7 @@ import ProjectsView from 'components/projects/ProjectsView';
 import TasksView from 'components/tasks/TasksView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { usePatchProjectMutation } from 'services/projects/api';
 import { RootState } from 'services/store';
 import links from 'utils/links';
 import { round } from 'utils/maths';
@@ -26,6 +27,8 @@ const NotificationsPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
   const [isProjectDueAtDatepickerOpen, setIsProjectDueAtDatepickerOpen] = useState(false);
+
+  const [patchProject] = usePatchProjectMutation();
 
   useEffect(() => {
     ReactGA.send({
@@ -182,7 +185,10 @@ const NotificationsPage = () => {
                                     const timestamp = DateTime.fromJSDate(dueAt)
                                       .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
                                       .toISO();
-                                    operations.projects.patchProject(project.id, { dueAt: timestamp })(dispatch);
+                                    patchProject({
+                                      id: project.id,
+                                      dueAt: timestamp,
+                                    });
                                   }}
                                   shouldCloseOnSelect
                                   showRemoveValue
@@ -219,10 +225,9 @@ const NotificationsPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[tasks, projects]}
+      resources={[tasks]}
       resourceFetchers={[
         () => dispatch(operations.tasks.fetchTasks()),
-        () => dispatch(operations.projects.fetchProjects()),
       ]}
       getContents={getPage}
     />

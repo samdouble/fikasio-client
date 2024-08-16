@@ -49,10 +49,9 @@ const ObjectivesPage = () => {
 
   return (
     <ResourcesHandler
-      resources={[objectives, projects]}
+      resources={[objectives]}
       resourceFetchers={[
         () => dispatch(operations.objectives.fetchObjectives()),
-        () => dispatch(operations.projects.fetchProjects()),
       ]}
       getContents={getPage}
     />

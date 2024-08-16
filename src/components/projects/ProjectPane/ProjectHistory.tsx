@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Table from 'react-bootstrap/Table';
 import { DateTime } from 'luxon';
-import { getProjectEvents } from 'services/projects/endpoints';
-import { Event } from 'services/events/types';
+import { useGetEventsForProjectQuery } from 'services/events/api';
 import { Project } from 'services/projects/types';
 
 interface ProjectHistoryProps {
@@ -12,18 +11,13 @@ interface ProjectHistoryProps {
 const ProjectHistory = ({
   project,
 }: ProjectHistoryProps) => {
-  const [events, setEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    getProjectEvents(project.id)
-      .then(res => setEvents(res.events));
-  }, []);
+  const { data: events } = useGetEventsForProjectQuery(project.id);
 
   return (
     <Table>
       <tbody>
         {
-          events
+          (events || [])
             .sort((eventA, eventB) => (eventB.createdAt < eventA.createdAt ? -1 : 1))
             .map(event => (
               <tr key={event.id}>

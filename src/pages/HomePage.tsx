@@ -19,7 +19,6 @@ const HomePage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const objectives = useSelector((state: RootState) => state.objectives);
-  const projects = useSelector((state: RootState) => state.projects);
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
 
@@ -120,9 +119,8 @@ const HomePage = () => {
       resourceFetchers={[
         () => dispatch(operations.tasks.fetchTasks()),
         () => dispatch(operations.objectives.fetchObjectives()),
-        () => dispatch(operations.projects.fetchProjects()),
       ]}
-      resources={[objectives, projects, tasks]}
+      resources={[objectives, tasks]}
     />
   );
 }

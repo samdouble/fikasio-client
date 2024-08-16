@@ -1,10 +1,13 @@
+import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { createLogger } from 'redux-logger';
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import reducers from 'services/reducers';
-import { api } from 'services/tasks/newEndpoints';
+import { apiEvents } from 'services/events/api';
+import { apiProjects } from 'services/projects/api';
+import { apiTasks } from 'services/tasks/api';
 
 let middlewares;
 if (process.env.NODE_ENV === 'production') {
@@ -15,16 +18,21 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const store = configureStore({
-  reducer: reducers,
-  /*reducer: {
+  reducer: combineReducers({
     ...reducers,
-    // [api.reducerPath]: api.reducer,
-  },*/
-  // Adding the api middleware enables caching, invalidation, polling,
-  // and other useful features of `rtk-query`.
-  middleware: getDefaultMiddleware => getDefaultMiddleware()
-      .concat(...middlewares)
-      .concat(api.middleware),
+    [apiEvents.reducerPath]: apiEvents.reducer,
+    [apiProjects.reducerPath]: apiProjects.reducer,
+    [apiTasks.reducerPath]: apiTasks.reducer,
+  }),
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware()
+      .concat(
+        ...middlewares,
+        apiEvents.middleware,
+        apiProjects.middleware,
+        apiTasks.middleware,
+      ),
 });
 
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
