@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Table from 'react-bootstrap/Table';
 import { DateTime } from 'luxon';
-import { getObjectiveEvents } from 'services/objectives/endpoints';
-import { Event } from 'services/events/types';
+import { useGetEventsForObjectiveQuery } from 'services/events/api';
 import { Objective } from 'services/objectives/types';
 
 interface ObjectiveHistoryProps {
@@ -12,18 +11,13 @@ interface ObjectiveHistoryProps {
 const ObjectiveHistory = ({
   objective,
 }: ObjectiveHistoryProps) => {
-  const [events, setEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    getObjectiveEvents(objective.id)
-      .then(res => setEvents(res.events));
-  }, []);
+  const { data: events } = useGetEventsForObjectiveQuery(objective.id);
 
   return (
     <Table>
       <tbody>
         {
-          events
+          (events || [])
             .sort((eventA, eventB) => (eventB.createdAt < eventA.createdAt ? -1 : 1))
             .map(event => (
               <tr key={event.id}>

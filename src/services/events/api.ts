@@ -29,7 +29,12 @@ export const apiEvents = createApi({
       transformErrorResponse: (response: { status: string | number }) => response.status,
       providesTags: ['Event'],
     }),
-
+    getEventsForObjective: builder.query<Event[], string>({
+      query: id => `objectives/${id}/events`,
+      transformResponse: (data: { events: Event[] }) => data.events,
+      transformErrorResponse: (response: { status: string | number }) => response.status,
+      providesTags: ['Event'],
+    }),
     getEventsForProject: builder.query<Event[], string>({
       query: id => `projects/${id}/events`,
       transformResponse: (data: { events: Event[] }) => data.events,
@@ -41,5 +46,6 @@ export const apiEvents = createApi({
 
 export const {
   useLazyGetEventsQuery,
+  useGetEventsForObjectiveQuery,
   useGetEventsForProjectQuery,
 } = apiEvents;
