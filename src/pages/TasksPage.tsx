@@ -17,7 +17,6 @@ import './style.scss';
 const TasksPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const objectives = useSelector((state: RootState) => state.objectives);
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
 
@@ -70,9 +69,8 @@ const TasksPage = () => {
       getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.tasks.fetchTasks()),
-        () => dispatch(operations.objectives.fetchObjectives()),
       ]}
-      resources={[tasks, objectives]}
+      resources={[tasks]}
     />
   );
 };

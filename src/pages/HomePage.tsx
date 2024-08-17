@@ -18,7 +18,6 @@ import './style.scss';
 const HomePage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const objectives = useSelector((state: RootState) => state.objectives);
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
 
@@ -118,9 +117,8 @@ const HomePage = () => {
       getContents={getPage}
       resourceFetchers={[
         () => dispatch(operations.tasks.fetchTasks()),
-        () => dispatch(operations.objectives.fetchObjectives()),
       ]}
-      resources={[objectives, tasks]}
+      resources={[tasks]}
     />
   );
 }

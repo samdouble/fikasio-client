@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
@@ -9,30 +8,36 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { DateTime } from 'luxon';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useAddObjectiveMutation, usePatchObjectiveMutation, useUpdateObjectiveMutation } from 'services/objectives/api';
+import { useGetProjectsQuery } from 'services/projects/api';
 import 'components/UI/Form.scss';
 
 const ObjectiveInformations = ({
   objective,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const [dueDate, setDueDate] = useState(
     objective && objective.dueDate
     ? DateTime.fromISO(objective.dueDate).toJSDate()
     : null,
   );
 
+  const [createObjective] = useAddObjectiveMutation();
+  const [patchObjective] = usePatchObjectiveMutation();
+  const [updateObjective] = useUpdateObjectiveMutation();
+
   const objectiveProjects = objective && objective.projects;
 
   const onSubmit = async values => {
     const formData = values;
     if (objective && objective.id) {
-      operations.objectives.updateObjective(objective.id, formData)(dispatch);
+      updateObjective({
+        id: objective.id,
+        ...formData,
+      });
     } else {
-      operations.objectives.createObjective(formData)(dispatch);
+      createObjective(formData);
     }
   };
 
@@ -102,7 +107,10 @@ const ObjectiveInformations = ({
                     onChange={date => {
                       const d = DateTime.fromJSDate(date);
                       if (objective) {
-                        operations.objectives.patchObjective(objective.id, { dueDate: d })(dispatch);
+                        patchObjective({
+                          id: objective.id,
+                          dueDate: d,
+                        });
                       }
                       setDueDate(date);
                       input.onChange(d);

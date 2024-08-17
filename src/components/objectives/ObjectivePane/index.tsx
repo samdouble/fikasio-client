@@ -1,9 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { useTranslation } from 'react-i18next';
-import { RootState } from 'services/store';
+import { useGetObjectivesQuery } from 'services/objectives/api';
 import ObjectiveHistory from './ObjectiveHistory';
 import ObjectiveInformations from './ObjectiveInformations';
 import ObjectiveProgress from './ObjectiveProgress';
@@ -14,7 +13,8 @@ const ObjectivePane = ({
   id,
 }) => {
   const { t } = useTranslation();
-  const objectives = useSelector((state: RootState) => state.objectives);
+
+  const { data: objectives } = useGetObjectivesQuery();
   const objective = (objectives || []).find(o => o.id === id);
 
   return (

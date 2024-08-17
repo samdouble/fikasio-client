@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Switch from 'react-input-switch';
@@ -12,8 +12,8 @@ import omit from 'lodash.omit';
 import { DateTime } from 'luxon';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { Task } from 'services/tasks/types';
-import { RootState } from 'services/store';
 import { processFormData } from 'utils/forms';
 
 interface TaskInformationsFormProps {
@@ -29,7 +29,7 @@ const TaskInformationsForm = ({
 }: TaskInformationsFormProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const [hasRecurrence, setHasRecurrence] = useState(false);
   const [startAt, setStartAt] = useState(
     task && task.startAt

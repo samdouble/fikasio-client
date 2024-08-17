@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 import ObjectivesView from 'components/objectives/ObjectivesView';
 import TasksView from 'components/tasks/TasksView';
 import { operations } from 'services';
+import { useGetObjectivesQuery } from 'services/objectives/api';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { RootState } from 'services/store';
 import ProjectHistory from './ProjectHistory';
 import ProjectInformationsForm from './ProjectInformationsForm';
@@ -16,8 +18,8 @@ const ProjectPane = ({
   defaultTab,
   id,
 }) => {
-  const objectives = useSelector((state: RootState) => state.objectives);
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: objectives } = useGetObjectivesQuery();
+  const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
   const { t } = useTranslation();

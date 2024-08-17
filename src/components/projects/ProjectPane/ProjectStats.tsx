@@ -10,6 +10,7 @@ import {
   getFirstDueDate,
   getFurthestDueDate,
 } from 'components/tasks/utils';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { formatYYYYMMDD } from 'utils/date';
 import { round } from 'utils/maths';
 import { convertMinutesToHumanHM } from 'utils/time';
@@ -19,7 +20,7 @@ const Stats = ({
   projectId,
 }) => {
   const { t } = useTranslation();
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
   const project = (projects || []).find(p => p.id === projectId);
   const projectTasks = tasks?.filter(task => task.projects?.some(tp => tp.id === project?.id));

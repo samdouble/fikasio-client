@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,11 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
-import { RootState } from 'services/store';
+import {
+  useGetOrganizationsQuery,
+  useAddMemberToOrganizationMutation,
+  useUpdateMemberInOrganizationMutation,
+} from 'services/organizations/api';
 import 'components/UI/Form.scss';
 
 interface MemberPaneProps {
@@ -19,19 +23,30 @@ const MemberPane = ({
   id,
   organizationId,
 }: MemberPaneProps) => {
-  const organizations = useSelector((state: RootState) => state.organizations);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { data: organizations } = useGetOrganizationsQuery();
+
+  const [createMember] = useAddMemberToOrganizationMutation();
+  const [updateMember] = useUpdateMemberInOrganizationMutation();
+
   const organization = (organizations || []).find(e => e.id === organizationId);
   const member = organization?.members.find(f => f.id === id);
 
   const onSubmit = async values => {
     const formData = values;
     if (id !== 'NEW') {
-      operations.organizations.members.updateMember(organizationId, id, formData)(dispatch)
+      updateMember({
+        organizationId,
+        id,
+        ...formData,
+      })
         .then(() => dispatch(operations.pane.clearPaneContent()));
     } else {
-      operations.organizations.members.createMember(organizationId, formData)(dispatch)
+      createMember({
+        organizationId,
+        ...formData,
+      })
         .then(() => dispatch(operations.pane.clearPaneContent()));
     }
   };

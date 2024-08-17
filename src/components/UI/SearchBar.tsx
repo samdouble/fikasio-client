@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { RootState } from 'services/store';
 import './SearchBar.scss';
 
@@ -19,7 +20,7 @@ const renderSuggestion = suggestion => (
 const SearchBar = ({ style }) => {
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
 
   const getSuggestions = text => {

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { operations } from 'services';
+import { useAddOrganizationMutation, useUpdateOrganizationMutation } from 'services/organizations/api';
 import { processFormData } from 'utils/forms';
 import links from 'utils/links';
 
@@ -17,12 +18,18 @@ const OrganizationInformationsForm = ({
   const history = useHistory();
   const { t } = useTranslation();
 
+  const [createOrganization] = useAddOrganizationMutation();
+  const [updateOrganization] = useUpdateOrganizationMutation();
+
   const onSubmit = async values => {
     const formData: any = processFormData(values);
     if (organization) {
-      operations.organizations.updateOrganization(organization.id, formData)(dispatch);
+      updateOrganization({
+        id: organization.id,
+        ...formData,
+      });
     } else {
-      operations.organizations.createOrganization(formData)(dispatch)
+      createOrganization(formData)
         .then(() => {
           dispatch(operations.pane.clearPaneContent());
           history.push(links.paths.organizations);

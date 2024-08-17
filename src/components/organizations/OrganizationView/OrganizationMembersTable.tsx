@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { operations } from 'services';
+import { useDeleteMemberFromOrganizationMutation } from 'services/organizations/api';
 import AddMemberButton from './AddMemberButton';
 
 const OrganizationMembersTable = ({
@@ -11,6 +12,8 @@ const OrganizationMembersTable = ({
 }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const [deleteMember] = useDeleteMemberFromOrganizationMutation();
 
   return (
     <>
@@ -78,7 +81,10 @@ const OrganizationMembersTable = ({
                       icon="times"
                       size="1x"
                       onClick={() => {
-                        operations.organizations.members.deleteMember(organization.id, member.id)(dispatch);
+                        deleteMember({
+                          organizationId: organization.id,
+                          id: member.id,
+                        });
                       }}
                       style={{
                         color: '#ce0000',

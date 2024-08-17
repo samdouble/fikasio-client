@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import { useTranslation } from 'react-i18next';
-import { getEvents } from 'services/events/endpoints';
+import 'components/UI/Form.scss';
+import { useLazyGetEventsQuery } from 'services/events/api';
 import LineChart from '../../dashboards/LineChart';
 import { getEstimatedCompletionDate } from '../utils';
-import 'components/UI/Form.scss';
-
-export interface ObjectiveProgressEvent {
-  createdAt: number;
-  progress: number;
-}
 
 const ObjectiveStats = ({
   objective,
 }) => {
   const { t } = useTranslation();
-  const [events, setEvents] = useState<ObjectiveProgressEvent[]>([]);
+  const [getEvents] = useLazyGetEventsQuery();
+  const [events, setEvents] = useState<any>([]);
 
   useEffect(() => {
     getEvents({
         type: 'ObjectiveProgress',
         objectiveId: objective.id,
       })
-      .then(res => setEvents(res.events));
+      .then(({ data }) => {
+        if (data) {
+          setEvents(data);
+        }
+      });
   }, [objective]);
 
   const eventsToGraphPoints = events

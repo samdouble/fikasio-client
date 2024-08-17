@@ -12,13 +12,15 @@ import { calculateNotifications } from 'components/notifications/utils';
 import ResourcesHandler from 'components/ResourcesHandler';
 import UserImage from 'images/user.png';
 import { operations } from 'services';
+import { useGetOrganizationsQuery } from 'services/organizations/api';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { RootState } from 'services/store';
 import links from 'utils/links';
 import './Sidebar.scss';
 
 const Sidebar = () => {
-  const organizations = useSelector((state: RootState) => state.organizations);
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: organizations } = useGetOrganizationsQuery();
+  const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
   const [isExpanded, setIsExpanded] = useState(false);
   const { t } = useTranslation();
@@ -310,10 +312,9 @@ const Sidebar = () => {
     <ResourcesHandler
       getContents={getPage}
       resourceFetchers={[
-        () => dispatch(operations.organizations.fetchOrganizations()),
         () => dispatch(operations.tasks.fetchTasks()),
       ]}
-      resources={[organizations, tasks]}
+      resources={[tasks]}
     />
   );
 };

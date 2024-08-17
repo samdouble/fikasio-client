@@ -1,19 +1,17 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Table } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetOrganizationsQuery, useDeleteOrganizationMutation } from 'services/organizations/api';
 import links from 'utils/links';
 
 const OrganizationsList = () => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const organizations = useSelector((state: RootState) => state.organizations);
+  const { data: organizations } = useGetOrganizationsQuery();
+  const [deleteOrganization] = useDeleteOrganizationMutation();
 
   return organizations ? (
     <Table
@@ -52,7 +50,7 @@ const OrganizationsList = () => {
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => operations.organizations.deleteOrganization(row.id)(dispatch)}
+              onClick={() => deleteOrganization(row.id)}
             >
               <FontAwesomeIcon
                 icon="times"

@@ -9,7 +9,7 @@ import ResourcesHandler from 'components/ResourcesHandler';
 import ProjectsView from 'components/projects/ProjectsView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
-import { useAddProjectMutation } from 'services/projects/api';
+import { useGetProjectsQuery, useAddProjectMutation } from 'services/projects/api';
 import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
@@ -17,8 +17,7 @@ import './style.scss';
 const ProjectsPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const objectives = useSelector((state: RootState) => state.objectives);
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
 
@@ -68,10 +67,9 @@ const ProjectsPage = () => {
     <ResourcesHandler
       getContents={getPage}
       resourceFetchers={[
-        () => dispatch(operations.objectives.fetchObjectives()),
         () => dispatch(operations.tasks.fetchTasks()),
       ]}
-      resources={[objectives, tasks]}
+      resources={[tasks]}
     />
   );
 };

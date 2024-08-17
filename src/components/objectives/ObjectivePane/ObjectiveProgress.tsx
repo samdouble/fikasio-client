@@ -1,23 +1,26 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { operations } from 'services';
+import { usePatchObjectiveMutation } from 'services/objectives/api';
 import { getFormData } from 'utils/forms';
 import 'components/UI/Form.scss';
 
 const ObjectiveStats = ({
   objective,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const [patchObjective] = usePatchObjectiveMutation();
 
   const onSubmit = async () => {
     const formData = getFormData('ObjectiveProgress_form');
-    operations.objectives.patchObjective(objective.id, formData)(dispatch);
+    patchObjective({
+      id: objective.id,
+      ...formData,
+    });
   };
 
   return (

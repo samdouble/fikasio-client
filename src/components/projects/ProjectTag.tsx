@@ -1,14 +1,14 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { invertColor } from 'utils/colors';
 
 const ProjectTag = ({
   projectId,
 }) => {
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const dispatch = useDispatch();
   const project = projects?.find(p => p.id === projectId);
 

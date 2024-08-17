@@ -6,6 +6,8 @@ import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import reducers from 'services/reducers';
 import { apiEvents } from 'services/events/api';
+import { apiObjectives } from './objectives/api';
+import { apiOrganizations } from './organizations/api';
 import { apiProjects } from 'services/projects/api';
 import { apiTasks } from 'services/tasks/api';
 
@@ -21,6 +23,8 @@ const store = configureStore({
   reducer: combineReducers({
     ...reducers,
     [apiEvents.reducerPath]: apiEvents.reducer,
+    [apiObjectives.reducerPath]: apiObjectives.reducer,
+    [apiOrganizations.reducerPath]: apiOrganizations.reducer,
     [apiProjects.reducerPath]: apiProjects.reducer,
     [apiTasks.reducerPath]: apiTasks.reducer,
   }),
@@ -30,6 +34,8 @@ const store = configureStore({
       .concat(
         ...middlewares,
         apiEvents.middleware,
+        apiObjectives.middleware,
+        apiOrganizations.middleware,
         apiProjects.middleware,
         apiTasks.middleware,
       ),

@@ -8,6 +8,7 @@ import { Checkbox, DatePicker, Dot } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { operations } from 'services';
+import { useAddObjectiveMutation, usePatchObjectiveMutation, useDeleteObjectiveMutation } from 'services/objectives/api';
 import { getEstimatedCompletionDate } from './utils';
 
 const ObjectiveRow = ({
@@ -18,6 +19,11 @@ const ObjectiveRow = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
+
+  const [createObjective] = useAddObjectiveMutation();
+  const [patchObjective] = usePatchObjectiveMutation();
+  const [deleteObjective] = useDeleteObjectiveMutation();
+
   const today = DateTime.fromJSDate(new Date());
   const currentProgress = objective.progress || 0;
   const dueDate = DateTime.fromISO(objective.dueDate);
@@ -86,12 +92,18 @@ const ObjectiveRow = ({
           onChange={value => {
             const timestamp = DateTime.fromJSDate(value)
               .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
-            operations.objectives.patchObjective(objective.id, { dueDate: timestamp.toISO() })(dispatch);
+            patchObjective({
+              id: objective.id,
+              dueDate: timestamp.toISO(),
+            });
           }}
           onClose={() => setIsDueAtDatepickerOpen(false)}
           onRemoveValue={e => {
             e.stopPropagation();
-            operations.objectives.patchObjective(objective.id, { dueDate: null })(dispatch);
+            patchObjective({
+              id: objective.id,
+              dueDate: null,
+            });
           }}
           shouldCloseOnSelect
           showRemoveValue
@@ -112,7 +124,7 @@ const ObjectiveRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => operations.objectives.createObjective(objective)(dispatch)}
+              onClick={() => createObjective(objective)}
             >
               <FontAwesomeIcon
                 icon="copy"
@@ -126,7 +138,10 @@ const ObjectiveRow = ({
             <Dropdown.Item
               onClick={() => {
                 const isArchived = objective.isArchived || false;
-                operations.objectives.patchObjective(objective.id, { isArchived: !isArchived })(dispatch);
+                patchObjective({
+                  id: objective.id,
+                  isArchived: !isArchived,
+                });
               }}
             >
               <FontAwesomeIcon
@@ -139,7 +154,7 @@ const ObjectiveRow = ({
               {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => operations.objectives.deleteObjective(objective.id)(dispatch)}
+              onClick={() => deleteObjective(objective.id)}
             >
               <FontAwesomeIcon
                 icon="times"

@@ -5,3 +5,7 @@ export interface Event {
   modifiedAt: Date;
   type: string;
 }
+
+export interface ObjectiveProgressEvent extends Event {
+  progress: number;
+}

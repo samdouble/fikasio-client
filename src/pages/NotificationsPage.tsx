@@ -14,7 +14,7 @@ import ProjectsView from 'components/projects/ProjectsView';
 import TasksView from 'components/tasks/TasksView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
-import { usePatchProjectMutation } from 'services/projects/api';
+import { useGetProjectsQuery, usePatchProjectMutation } from 'services/projects/api';
 import { RootState } from 'services/store';
 import links from 'utils/links';
 import { round } from 'utils/maths';
@@ -23,7 +23,7 @@ import './style.scss';
 const NotificationsPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const projects = useSelector((state: RootState) => state.projects);
+  const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
   const [isProjectDueAtDatepickerOpen, setIsProjectDueAtDatepickerOpen] = useState(false);

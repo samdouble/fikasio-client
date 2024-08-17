@@ -1,24 +1,19 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import ResourcesHandler from 'components/ResourcesHandler';
 import ObjectivesView from 'components/objectives/ObjectivesView';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetObjectivesQuery } from 'services/objectives/api';
 import links from 'utils/links';
 import './style.scss';
 
 const ObjectivesPage = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
-  const objectives = useSelector((state: RootState) => state.objectives);
-  const projects = useSelector((state: RootState) => state.projects);
   const { t } = useTranslation();
+  const { data: objectives } = useGetObjectivesQuery();
 
   useEffect(() => {
     ReactGA.send({
@@ -27,7 +22,7 @@ const ObjectivesPage = () => {
     });
   }, []);
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('objectives')}</title>
@@ -45,16 +40,6 @@ const ObjectivesPage = () => {
         />
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      resources={[objectives]}
-      resourceFetchers={[
-        () => dispatch(operations.objectives.fetchObjectives()),
-      ]}
-      getContents={getPage}
-    />
   );
 };
 

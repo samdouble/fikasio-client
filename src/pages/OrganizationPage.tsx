@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import OrganizationView from 'components/organizations/OrganizationView';
-import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetOrganizationsQuery } from 'services/organizations/api';
 import links from 'utils/links';
 import './style.scss';
 
@@ -17,9 +14,8 @@ const OrganizationPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
-  const organizations = useSelector((state: RootState) => state.organizations);
+  const { data: organizations } = useGetOrganizationsQuery();
   const organization = organizations && organizations.find(temp => temp.id === id);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     ReactGA.send({
@@ -28,7 +24,7 @@ const OrganizationPage = () => {
     });
   }, []);
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('organizations')} - { organization?.name }</title>
@@ -50,16 +46,6 @@ const OrganizationPage = () => {
         }
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      resources={[organizations]}
-      resourceFetchers={[
-        () => dispatch(operations.organizations.fetchOrganizations()),
-      ]}
-      getContents={getPage}
-    />
   );
 };
 

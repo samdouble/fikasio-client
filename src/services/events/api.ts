@@ -12,6 +12,24 @@ export const apiEvents = createApi({
     credentials: 'include',
   }),
   endpoints: builder => ({
+    getEvents: builder.query<Event[], any>({
+      query: ({
+        type,
+        objectiveId,
+      }) => {
+        return {
+          url: 'events',
+          params: {
+            type,
+            objectiveId,
+          },
+        };
+      },
+      transformResponse: (data: { events: Event[] }) => data.events,
+      transformErrorResponse: (response: { status: string | number }) => response.status,
+      providesTags: ['Event'],
+    }),
+
     getEventsForProject: builder.query<Event[], string>({
       query: id => `projects/${id}/events`,
       transformResponse: (data: { events: Event[] }) => data.events,
@@ -22,5 +40,6 @@ export const apiEvents = createApi({
 });
 
 export const {
+  useLazyGetEventsQuery,
   useGetEventsForProjectQuery,
 } = apiEvents;

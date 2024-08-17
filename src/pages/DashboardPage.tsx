@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,11 +7,8 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import ResourcesHandler from 'components/ResourcesHandler';
 import Card from 'components/dashboards/Card';
 import Sidebar from 'components/UI/Sidebar';
-import { operations } from 'services';
-import { RootState } from 'services/store';
 import { getTasks } from 'services/tasks/endpoints';
 import { Task } from 'services/tasks/types';
 import links from 'utils/links';
@@ -21,8 +17,6 @@ import './style.scss';
 const DashboardPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const objectives = useSelector((state: RootState) => state.objectives);
-  const dispatch = useDispatch();
   const [tasks, setTasks] = useState<Task[]>([]);
   const nbTotal = tasks.length;
   const nbDone = tasks.filter(task => task.status === 'Completed').length;
@@ -36,7 +30,7 @@ const DashboardPage = () => {
       .then(res => setTasks(res.tasks));
   }, []);
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('dashboard')}</title>
@@ -76,16 +70,6 @@ const DashboardPage = () => {
         </Row>
       </Container>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      getContents={getPage}
-      resourceFetchers={[
-        () => dispatch(operations.objectives.fetchObjectives()),
-      ]}
-      resources={[objectives]}
-    />
   );
 };
 
