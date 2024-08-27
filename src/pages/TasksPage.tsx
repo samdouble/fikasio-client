@@ -9,6 +9,7 @@ import ResourcesHandler from 'components/ResourcesHandler';
 import TasksView from 'components/tasks/TasksView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { setPaneContent } from 'services/pane/slice';
 import { RootState } from 'services/store';
 // import { useGetTasksQuery } from 'services/tasks/newEndpoints';
 import links from 'utils/links';
@@ -48,10 +49,12 @@ const TasksPage = () => {
           <h4>{t('tasks')}</h4>
           <TasksView
             onTaskClick={
-              taskId => operations.pane.setPaneContent({
-                type: 'TASK',
-                id: taskId,
-              })(dispatch)
+              taskId => dispatch(
+                setPaneContent({
+                  type: 'TASK',
+                  id: taskId,
+                })
+              )
             }
             showAddButton
             showCompletionFilter

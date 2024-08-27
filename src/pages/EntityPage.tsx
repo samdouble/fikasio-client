@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import EntityView from 'components/entities/EntityView';
-import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetEntitiesQuery } from 'services/entities/api';
 import links from 'utils/links';
 import './style.scss';
 
@@ -17,9 +14,8 @@ const EntityPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { id } = useParams<{ id: string; }>();
-  const entities = useSelector((state: RootState) => state.entities);
+  const { data: entities } = useGetEntitiesQuery();
   const entity = entities && entities.find(e => e.id === id);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     ReactGA.send({
@@ -28,14 +24,10 @@ const EntityPage = () => {
     });
   }, []);
 
-  useEffect(() => {
-    dispatch(operations.items.fetchItems(id));
-  }, [id]);
-
-  const getPage = () => (
+  return (
     <>
       <Helmet>
-        <title>{t('entities')} - { entity?.name }</title>
+        <title>{t('entities')} - { entity ? entity.name : '' }</title>
       </Helmet>
       <BasePage>
         <Breadcrumb>
@@ -54,16 +46,6 @@ const EntityPage = () => {
         }
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      getContents={getPage}
-      resourceFetchers={[
-        () => dispatch(operations.entities.fetchEntities()),
-      ]}
-      resources={[entities]}
-    />
   );
 };
 

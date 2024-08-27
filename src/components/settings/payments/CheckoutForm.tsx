@@ -6,7 +6,7 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import { createCard } from 'services/cards/endpoints';
+import { useAddCardMutation } from 'services/cards/api';
 import envvars from 'utils/envvars';
 
 const CheckoutForm = () => {
@@ -15,6 +15,8 @@ const CheckoutForm = () => {
   const elements = useElements();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [createCard] = useAddCardMutation();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -30,7 +32,11 @@ const CheckoutForm = () => {
     }
 
     const clientSecret = await createCard({})
-      .then(res => res.card.stripePaymentIntent.client_secret);
+      .then(({ data }) => {
+        if (data) {
+          return data.stripePaymentIntent.client_secret;
+        }
+      });
 
     if (stripe) {
       const { error } = await stripe.confirmPayment({

@@ -1,13 +1,13 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetEntitiesQuery, useAddFieldToEntityMutation, useUpdateFieldInEntityMutation } from 'services/entities/api';
+import { clearPaneContent } from 'services/pane/slice';
 import 'components/UI/Form.scss';
 
 interface FieldPaneProps {
@@ -19,20 +19,30 @@ const FieldPane = ({
   entityId,
   id,
 }: FieldPaneProps) => {
-  const entities = useSelector((state: RootState) => state.entities);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { data: entities } = useGetEntitiesQuery();
   const entity = (entities || []).find(e => e.id === entityId);
   const field = entity?.fields.find(f => f.id === id);
+
+  const [createField] = useAddFieldToEntityMutation();
+  const [updateField] = useUpdateFieldInEntityMutation();
 
   const onSubmit = async values => {
     const formData = values;
     if (id !== 'NEW') {
-      operations.entities.fields.updateField(entityId, id, formData)(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+      updateField({
+        entityId,
+        id,
+        ...formData,
+      })
+        .then(() => dispatch(clearPaneContent()));
     } else {
-      operations.entities.fields.createField(entityId, formData)(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+      createField({
+        entityId,
+        ...formData,
+      })
+        .then(() => dispatch(clearPaneContent()));
     }
   };
 

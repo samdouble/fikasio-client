@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
@@ -8,8 +7,7 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetTemplatesQuery, useAddTemplateMutation, useUpdateTemplateMutation } from 'services/templates/api';
 import { processFormData } from 'utils/forms';
 
 interface TemplatePaneProps {
@@ -21,10 +19,12 @@ const TemplatePane = ({
   id,
   onClose,
 }: TemplatePaneProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const templates = useSelector((state: RootState) => state.templates);
+  const { data: templates } = useGetTemplatesQuery();
   const template = (templates || []).find(temp => temp.id === id);
+
+  const [createTemplate] = useAddTemplateMutation();
+  const [updateTemplate] = useUpdateTemplateMutation();
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);
@@ -33,12 +33,15 @@ const TemplatePane = ({
     }
     delete formData.durationUnits;
     if (template) {
-      operations.templates.updateTemplate(template.id, formData)(dispatch)
+      updateTemplate({
+        id: template.id,
+        ...formData,
+      })
         .then(() => {
           onClose && onClose();
         });
     } else {
-      operations.templates.createTemplate(formData)(dispatch)
+      createTemplate(formData)
         .then(() => {
           onClose && onClose();
         });

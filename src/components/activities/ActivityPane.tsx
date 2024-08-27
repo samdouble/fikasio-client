@@ -11,10 +11,17 @@ import { DateTime } from 'luxon';
 import uniqBy from 'lodash.uniqby';
 import usePrevious from 'use-previous';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
-import { getActivities } from 'services/activities/endpoints';
+import {
+  useGetActivitiesQuery,
+  useLazyGetActivitiesQuery,
+  useAddActivityMutation,
+  useUpdateActivityMutation,
+  usePatchActivityMutation,
+} from 'services/activities/api';
 import { Activity } from 'services/activities/types';
+import { clearPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery } from 'services/projects/api';
+import { useGetTemplatesQuery } from 'services/templates/api';
 import { TemplateField } from 'services/templates/types';
 import { RootState } from 'services/store';
 import { getFormFieldForType, processFormData } from 'utils/forms';
@@ -29,10 +36,10 @@ const ActivityPane = ({
   activity: activityProp,
 }: ActivityPaneProps) => {
   const dispatch = useDispatch();
-  const activities = useSelector((state: RootState) => state.activities);
+  const { data: activities } = useGetActivitiesQuery({});
   const { data: projects } = useGetProjectsQuery();
   const tasks = useSelector((state: RootState) => state.tasks);
-  const templates = useSelector((state: RootState) => state.templates);
+  const { data: templates } = useGetTemplatesQuery();
   const login = useSelector((state: RootState) => state.login);
   const me = login.user;
   const activity = activityProp.id
@@ -59,6 +66,11 @@ const ActivityPane = ({
 
   const activityTasks = activity && activity.tasks;
 
+  const [getActivities] = useLazyGetActivitiesQuery();
+  const [createActivity] = useAddActivityMutation();
+  const [patchActivity] = usePatchActivityMutation();
+  const [updateActivity] = useUpdateActivityMutation();
+
   const handleChangeComments = e => {
     const text = e.target.value;
     if (text.length >= 3) {
@@ -72,9 +84,13 @@ const ActivityPane = ({
             ))
         );
       } else {
-        getActivities(null, { endTime: -1 }, text)
-          .then((res: { activities: Activity[] }) => {
-            const suggestedActivities = uniqBy(res.activities, el => el.comments)
+        getActivities({
+          filter: null,
+          sort: { endTime: -1 },
+          q: text,
+        })
+          .then(({ data }) => {
+            const suggestedActivities = uniqBy(data, el => el.comments)
               .filter(suggestedActivity => (
                 !me.censoredWords
                   .some(censoredWord => suggestedActivity.comments.toLowerCase().includes(censoredWord.toLowerCase()))
@@ -108,11 +124,14 @@ const ActivityPane = ({
       }));
 
     if (activity?.id) {
-      operations.activities.updateActivity(activity?.id, formData)(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+      updateActivity({
+        id: activity?.id,
+        ...formData,
+      })
+        .then(() => dispatch(clearPaneContent()));
     } else {
-      operations.activities.createActivity(formData)(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+      createActivity(formData)
+        .then(() => dispatch(clearPaneContent()));
     }
   };
 
@@ -159,7 +178,8 @@ const ActivityPane = ({
                         .set({ millisecond: 0 });
                       if (activity?.id) {
                         dispatch(
-                          operations.activities.patchActivity(activity?.id, {
+                          patchActivity({
+                            id: activity?.id,
                             startTime: timestamp.toISO(),
                           }),
                         );
@@ -193,7 +213,10 @@ const ActivityPane = ({
                       const timestamp = DateTime.fromJSDate(date)
                         .set({ millisecond: 0 });
                       if (activity?.id) {
-                        operations.activities.patchActivity(activity?.id, { endTime: timestamp.toISO() })(dispatch);
+                        patchActivity({
+                          id: activity?.id,
+                          endTime: timestamp.toISO(),
+                        });
                       }
                       setEndTime(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
@@ -501,7 +524,7 @@ const ActivityPane = ({
               right: 30,
             }}>
             <Button
-              onClick={() => dispatch(operations.pane.clearPaneContent())}
+              onClick={() => dispatch(clearPaneContent())}
               style={{
                 backgroundColor: 'white',
               }}

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateTime, Duration } from 'luxon';
 import { AutosaveTextarea, Checkbox, DatePicker } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
+import {
+  useAddActivityMutation,
+  useDeleteActivityMutation,
+  usePatchActivityMutation,
+} from 'services/activities/api';
 import { RootState } from 'services/store';
 
 const ActivityRow = ({
@@ -17,7 +21,6 @@ const ActivityRow = ({
   onDelete,
   onSelect,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const login = useSelector((state: RootState) => state.login);
   const me = login.user;
@@ -28,12 +31,16 @@ const ActivityRow = ({
   const startDateTime = activity.startTime && DateTime.fromJSDate(new Date(activity.startTime));
   const endDateTime = activity.endTime && DateTime.fromJSDate(new Date(activity.endTime));
 
+  const [createActivity] = useAddActivityMutation();
+  const [patchActivity] = usePatchActivityMutation();
+  const [deleteActivity] = useDeleteActivityMutation();
+
   useEffect(() => {
     setIComments(activity.comments || '');
   }, [activity]);
 
   const handleDuplicateActivity = originalActivity => {
-    operations.activities.createActivity(originalActivity)(dispatch);
+    createActivity(originalActivity);
   };
 
   const handleKeyDownComments = e => {
@@ -53,12 +60,12 @@ const ActivityRow = ({
   const handleKeyUpComments = (e, updatedActivity) => {
     if (updatedActivity) {
       if (e.key === 'Backspace' && e.target.textContent === '') {
-        operations.activities.deleteActivity(updatedActivity.id)(dispatch);
+        deleteActivity(updatedActivity.id);
       }
     } else if (e.target.textContent !== '') {
-      operations.activities.createActivity({
+      createActivity({
         comments: e.target.textContent,
-      })(dispatch);
+      });
     }
   };
 
@@ -91,9 +98,10 @@ const ActivityRow = ({
                   onKeyDown={e => handleKeyDownComments(e)}
                   onKeyUp={e => handleKeyUpComments(e, activity)}
                   onSave={async value => {
-                    operations.activities.patchActivity(activity.id, {
+                    patchActivity({
+                      id: activity.id,
                       comments: value,
-                    })(dispatch);
+                    });
                   }}
                   style={{
                     float: 'left',
@@ -125,10 +133,11 @@ const ActivityRow = ({
               .set({ millisecond: 0 });
             if (activity.id) {
               const duration = endDateTime.diff(timestamp, 'minutes').minutes;
-              operations.activities.patchActivity(activity.id, {
+              patchActivity({
+                id: activity.id,
                 duration,
                 startTime: timestamp.toISO(),
-              })(dispatch);
+              });
             }
           }}
           shouldCloseOnSelect
@@ -154,10 +163,11 @@ const ActivityRow = ({
               .set({ millisecond: 0 });
             if (activity.id) {
               const duration = timestamp.diff(startDateTime, 'minutes').minutes;
-              operations.activities.patchActivity(activity.id, {
+              patchActivity({
+                id: activity.id,
                 duration,
                 endTime: timestamp.toISO(),
-              })(dispatch);
+              });
             }
           }}
           shouldCloseOnSelect

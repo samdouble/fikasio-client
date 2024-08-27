@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import EntityInformationsForm from 'components/entities/EntityView/EntityInformationsForm';
-import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetEntitiesQuery } from 'services/entities/api';
 import links from 'utils/links';
 import './style.scss';
 
@@ -17,8 +14,7 @@ const EntityUpsertPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { entityId } = useParams<{ entityId: string; }>();
-  const entities = useSelector((state: RootState) => state.entities);
-  const dispatch = useDispatch();
+  const { data: entities } = useGetEntitiesQuery();
 
   useEffect(() => {
     ReactGA.send({
@@ -27,37 +23,26 @@ const EntityUpsertPage = () => {
     });
   }, []);
 
-  const getPage = () => {
-    const entity = entities && entities.find(e => e.id === entityId);
-    // const item = items && items.find(i => i.id === id);
-    return (
-      <>
-        <Helmet>
-          <title>{t('createAnEntity')}</title>
-        </Helmet>
-        <BasePage>
-          <Breadcrumb>
-            <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-            <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
-            <Breadcrumb.Item linkAs={Link} active>{t('createAnEntity')}</Breadcrumb.Item>
-          </Breadcrumb>
-          <h4>{t('createAnEntity')}</h4>
-          <EntityInformationsForm
-            entity={entity}
-          />
-        </BasePage>
-      </>
-    );
-  };
+  const entity = entities && entities.find(e => e.id === entityId);
+  // const item = items && items.find(i => i.id === id);
 
   return (
-    <ResourcesHandler
-      resources={[entities]}
-      resourceFetchers={[
-        () => dispatch(operations.entities.fetchEntities()),
-      ]}
-      getContents={getPage}
-    />
+    <>
+      <Helmet>
+        <title>{t('createAnEntity')}</title>
+      </Helmet>
+      <BasePage>
+        <Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.entities }}>{t('entities')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} active>{t('createAnEntity')}</Breadcrumb.Item>
+        </Breadcrumb>
+        <h4>{t('createAnEntity')}</h4>
+        <EntityInformationsForm
+          entity={entity}
+        />
+      </BasePage>
+    </>
   );
 };
 

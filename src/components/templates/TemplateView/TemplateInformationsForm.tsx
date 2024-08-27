@@ -8,7 +8,8 @@ import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import ClickOutside from 'react-click-outside';
 import { CompactPicker } from 'react-color';
-import { operations } from 'services';
+import { clearPaneContent } from 'services/pane/slice';
+import { useAddTemplateMutation, useUpdateTemplateMutation } from 'services/templates/api';
 import { invertColor } from 'utils/colors';
 import { processFormData } from 'utils/forms';
 import links from 'utils/links';
@@ -22,14 +23,20 @@ const TemplateInformationsForm = ({
   const [color, setColor] = useState(template?.color);
   const [isColorpickerOpen, setIsColorpickerOpen] = useState(false);
 
+  const [createTemplate] = useAddTemplateMutation();
+  const [updateTemplate] = useUpdateTemplateMutation();
+
   const onSubmit = async values => {
     const formData: any = processFormData(values);
     if (template) {
-      operations.templates.updateTemplate(template.id, formData)(dispatch);
+      updateTemplate({
+        id: template.id,
+        ...formData,
+      });
     } else {
-      operations.templates.createTemplate(formData)(dispatch)
+      createTemplate(formData)
         .then(() => {
-          dispatch(operations.pane.clearPaneContent());
+          dispatch(clearPaneContent());
           history.push(links.paths.templates);
         });
     }
@@ -108,7 +115,7 @@ const TemplateInformationsForm = ({
             }}
           >
             <Button
-              onClick={() => dispatch(operations.pane.clearPaneContent())}
+              onClick={() => dispatch(clearPaneContent())}
               style={{
                 backgroundColor: 'white',
               }}

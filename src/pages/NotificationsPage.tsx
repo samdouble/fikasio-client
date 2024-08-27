@@ -14,6 +14,7 @@ import ProjectsView from 'components/projects/ProjectsView';
 import TasksView from 'components/tasks/TasksView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { setPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery, usePatchProjectMutation } from 'services/projects/api';
 import { RootState } from 'services/store';
 import links from 'utils/links';
@@ -70,10 +71,12 @@ const NotificationsPage = () => {
                 </Error>
                 <ProjectsView
                   onProjectClick={
-                    projectId => operations.pane.setPaneContent({
-                      type: 'PROJECT',
-                      id: projectId,
-                    })(dispatch)
+                    projectId => dispatch(
+                      setPaneContent({
+                        type: 'PROJECT',
+                        id: projectId,
+                      })
+                    )
                   }
                   projects={lateProjects}
                 />
@@ -92,10 +95,12 @@ const NotificationsPage = () => {
                 </Error>
                 <TasksView
                   onTaskClick={
-                    taskId => operations.pane.setPaneContent({
-                      type: 'TASK',
-                      id: taskId,
-                    })(dispatch)
+                    taskId => dispatch(
+                      setPaneContent({
+                        type: 'TASK',
+                        id: taskId,
+                      })
+                    )
                   }
                   tasks={lateTasks}
                 />
@@ -114,10 +119,12 @@ const NotificationsPage = () => {
                 </Warning>
                 <TasksView
                   onTaskClick={
-                    taskId => operations.pane.setPaneContent({
-                      type: 'TASK',
-                      id: taskId,
-                    })(dispatch)
+                    taskId => dispatch(
+                      setPaneContent({
+                        type: 'TASK',
+                        id: taskId,
+                      })
+                    )
                   }
                   tasks={tasksWithNoDueDate}
                 />

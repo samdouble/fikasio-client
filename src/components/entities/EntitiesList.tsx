@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import useTimeout from 'use-timeout';
-import { operations } from 'services';
+import { useDeleteEntityMutation } from 'services/entities/api';
 import { Entity } from 'services/entities/types';
 import EntityRow from './EntityRow';
 import './style.scss';
@@ -13,10 +12,11 @@ const EntitiesList = ({
   onEntitySelect,
   selectedEntities,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [delay, setDelay] = useState<number | null>(null);
   const [newEntity, setNewEntity] = useState<Entity | null>(null);
+
+  const [deleteEntity] = useDeleteEntityMutation();
 
   useTimeout(() => {
     if (newEntity) {
@@ -27,7 +27,7 @@ const EntitiesList = ({
   }, delay);
 
   const handleDelete = entity => {
-    operations.entities.deleteEntity(entity.id)(dispatch);
+    deleteEntity(entity.id);
   };
 
   return entities && (

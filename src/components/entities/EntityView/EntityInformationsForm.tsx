@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { operations } from 'services';
+import { useAddEntityMutation, useUpdateEntityMutation } from 'services/entities/api';
+import { clearPaneContent } from 'services/pane/slice';
 import { processFormData } from 'utils/forms';
 import links from 'utils/links';
 
@@ -17,14 +18,20 @@ const EntityInformationsForm = ({
   const history = useHistory();
   const { t } = useTranslation();
 
+  const [createEntity] = useAddEntityMutation();
+  const [updateEntity] = useUpdateEntityMutation();
+
   const onSubmit = async values => {
     const formData: any = processFormData(values);
     if (entity) {
-      operations.entities.updateEntity(entity.id, formData)(dispatch);
+      updateEntity({
+        id: entity.id,
+        ...formData,
+      });
     } else {
-      operations.entities.createEntity(formData)(dispatch)
+      createEntity(formData)
         .then(() => {
-          dispatch(operations.pane.clearPaneContent());
+          dispatch(clearPaneContent());
           history.push(links.paths.entities);
         });
     }
@@ -57,7 +64,7 @@ const EntityInformationsForm = ({
             }}
           >
             <Button
-              onClick={() => dispatch(operations.pane.clearPaneContent())}
+              onClick={() => dispatch(clearPaneContent())}
               style={{
                 backgroundColor: 'white',
               }}

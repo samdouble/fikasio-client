@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { operations } from 'services';
 import { Objective } from 'services/objectives/types';
+import { setPaneContent } from 'services/pane/slice';
 import ObjectivesList from './ObjectivesList';
 import AddObjectiveButton from './AddObjectiveButton';
 import ObjectivesCompletionFilter from './ObjectivesCompletionFilter';
@@ -59,10 +59,12 @@ const ObjectivesView = ({
       {
         showAddButton && (
           <AddObjectiveButton
-            onClick={() => operations.pane.setPaneContent({
-              type: 'OBJECTIVE',
-              id: 'NEW',
-            })(dispatch)}
+            onClick={() => dispatch(
+              setPaneContent({
+                type: 'OBJECTIVE',
+                id: 'NEW',
+              }),
+            )}
             style={{
               float: 'right',
               ...(showAddButton && { marginRight: 0 }),

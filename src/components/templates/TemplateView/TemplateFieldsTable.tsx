@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { operations } from 'services';
+import { setPaneContent } from 'services/pane/slice';
+import { useDeleteFieldFromTemplateMutation } from 'services/templates/api';
 import AddFieldButton from './AddFieldButton';
 
 const TemplateFieldsTable = ({
@@ -12,15 +13,19 @@ const TemplateFieldsTable = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const [deleteTemplateField] = useDeleteFieldFromTemplateMutation();
+
   return (
     <>
       <AddFieldButton
         onClick={
-          () => operations.pane.setPaneContent({
-            type: 'TEMPLATE_FIELD',
-            templateId: template.id,
-            id: 'NEW',
-          })(dispatch)
+          () => dispatch(
+            setPaneContent({
+              type: 'TEMPLATE_FIELD',
+              templateId: template.id,
+              id: 'NEW',
+            })
+          )
         }
         style={{
           float: 'right',
@@ -67,7 +72,10 @@ const TemplateFieldsTable = ({
                       field.isRequired && <FontAwesomeIcon
                         icon="check"
                         size="1x"
-                        onClick={() => operations.templates.fields.deleteField(template.id, field.id)}
+                        onClick={() => deleteTemplateField({
+                          templateId: template.id,
+                          id: field.id,
+                        })}
                         style={{
                           color: 'blue',
                           cursor: 'pointer',
@@ -80,11 +88,13 @@ const TemplateFieldsTable = ({
                     <FontAwesomeIcon
                       icon="edit"
                       onClick={
-                        () => operations.pane.setPaneContent({
-                          type: 'TEMPLATE_FIELD',
-                          templateId: template.id,
-                          id: field.id,
-                        })(dispatch)
+                        () => dispatch(
+                          setPaneContent({
+                            type: 'TEMPLATE_FIELD',
+                            templateId: template.id,
+                            id: field.id,
+                          })
+                        )
                       }
                       size="1x"
                       style={{
@@ -98,7 +108,10 @@ const TemplateFieldsTable = ({
                     <FontAwesomeIcon
                       icon="times"
                       size="1x"
-                      onClick={() => operations.templates.fields.deleteField(template.id, field.id)(dispatch)}
+                      onClick={() => deleteTemplateField({
+                        templateId: template.id,
+                        id: field.id,
+                      })}
                       style={{
                         color: '#ce0000',
                         cursor: 'pointer',

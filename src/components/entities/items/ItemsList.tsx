@@ -1,12 +1,11 @@
 import React, { useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AutosaveTextarea, Checkbox, Table } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
+import { useAddItemMutation, useUpdateFieldValueForItemMutation, useDeleteItemMutation } from 'services/items/api';
 import links from 'utils/links';
 import './ItemsList.scss';
 
@@ -17,10 +16,13 @@ const ItemsList = ({
   onItemSelect,
   selectedItems,
 }) => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation();
   const [rows, setRows] = useState(items);
+
+  const [createItem] = useAddItemMutation();
+  const [updateFieldValueForItem] = useUpdateFieldValueForItemMutation();
+  const [deleteItem] = useDeleteItemMutation();
 
   useEffect(() => {
     setRows([
@@ -45,7 +47,9 @@ const ItemsList = ({
 
   const handleKeyUp = (e, updatedItem) => {
     if (!updatedItem && e.target.textContent !== '') {
-      operations.items.createItem(entity.id, {})(dispatch);
+      createItem({
+        entityId: entity.id,
+      });
     }
   };
 
@@ -75,16 +79,20 @@ const ItemsList = ({
                       onKeyUp={e => handleKeyUp(e, row)}
                       onSave={async value => {
                         if (row.id) {
-                          operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
+                          updateFieldValueForItem({
+                            entityId: entity.id,
+                            itemId: row.id,
+                            fieldId: field.id,
                             value,
-                          })(dispatch);
+                          });
                         } else {
-                          operations.items.createItem(entity.id, {
+                          createItem({
+                            entityId: entity.id,
                             values: [{
                               fieldId: field.id,
                               value,
                             }],
-                          })(dispatch);
+                          });
                         }
                       }}
                       style={{
@@ -107,9 +115,12 @@ const ItemsList = ({
                     <Checkbox
                       defaultIsChecked={defaultValue || false}
                       onClick={async value => {
-                        operations.items.updateFieldValueForItem(entity.id, row.id, field.id, {
+                        updateFieldValueForItem({
+                          entityId: entity.id,
+                          itemId: row.id,
+                          fieldId: field.id,
                           value,
-                        })(dispatch);
+                        });
                       }}
                     />
                   );
@@ -145,7 +156,10 @@ const ItemsList = ({
               {t('edit')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => operations.items.createItem(entity.id, row)(dispatch)}
+              onClick={() => createItem({
+                entityId: entity.id,
+                ...row,
+              })}
             >
               <FontAwesomeIcon
                 icon="copy"
@@ -157,7 +171,10 @@ const ItemsList = ({
               {t('duplicate')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => operations.items.deleteItem(entity.id, row.id)(dispatch)}
+              onClick={() => deleteItem({
+                entityId: entity.id,
+                id: row.id,
+              })}
             >
               <FontAwesomeIcon
                 icon="times"

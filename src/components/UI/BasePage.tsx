@@ -14,14 +14,13 @@ import ProjectPane from 'components/projects/ProjectPane';
 import TaskPane from 'components/tasks/TaskPane';
 import TemplateFieldPane from 'components/templates/fields/FieldPane';
 import Sidebar from 'components/UI/Sidebar';
-import { operations } from 'services';
+import { clearPaneContent, getPaneContent } from 'services/pane/slice';
 import {
   IActivityPane,
   IEntityFieldPane,
   IOrganizationMemberPane,
   ITemplateFieldPane,
 } from 'services/pane/types';
-import { RootState } from 'services/store';
 import 'react-sliding-pane/dist/react-sliding-pane.css';
 import './style.scss';
 
@@ -29,7 +28,7 @@ const BasePage = ({
   children,
 }) => {
   const dispatch = useDispatch();
-  const paneContent = useSelector((state: RootState) => state.pane);
+  const paneContent = useSelector(getPaneContent);
   let pane = <div />;
   if (paneContent && paneContent.type === 'ACTIVITY') {
     const activityPaneContent = paneContent as IActivityPane;
@@ -83,7 +82,7 @@ const BasePage = ({
       <Sidebar />
       <SlidingPane
         isOpen={!!paneContent}
-        onRequestClose={() => operations.pane.clearPaneContent()(dispatch)}
+        onRequestClose={() => dispatch(clearPaneContent())}
         overlayClassName="sliding-pane-overlay"
       >
         { pane }

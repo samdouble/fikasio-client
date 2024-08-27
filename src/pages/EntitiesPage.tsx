@@ -1,23 +1,19 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import EntitiesView from 'components/entities/EntitiesView';
-import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetEntitiesQuery } from 'services/entities/api';
 import links from 'utils/links';
 import './style.scss';
 
 const EntitiesPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const entities = useSelector((state: RootState) => state.entities);
-  const dispatch = useDispatch();
+  const { data: entities } = useGetEntitiesQuery();
 
   useEffect(() => {
     ReactGA.send({
@@ -26,7 +22,7 @@ const EntitiesPage = () => {
     });
   }, []);
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('entities')}</title>
@@ -42,16 +38,6 @@ const EntitiesPage = () => {
         />
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      resources={[entities]}
-      resourceFetchers={[
-        () => dispatch(operations.entities.fetchEntities()),
-      ]}
-      getContents={getPage}
-    />
   );
 };
 

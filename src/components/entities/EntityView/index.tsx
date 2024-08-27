@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { useTranslation } from 'react-i18next';
 import { Entity } from 'services/entities/types';
-import { RootState } from 'services/store';
+import { useLazyGetItemsForEntityQuery } from 'services/items/api';
+import { Item } from 'services/items/types';
 import ItemsView from '../items/ItemsView';
 import EntityInformationsForm from './EntityInformationsForm';
 import EntityFieldsTable from './EntityFieldsTable';
@@ -19,7 +19,17 @@ const EntityView = ({
   entity,
 }: EntityViewProps) => {
   const { t } = useTranslation();
-  const items = useSelector((state: RootState) => state.items);
+  const [getItemsForEntity] = useLazyGetItemsForEntityQuery();
+  const [items, setItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    getItemsForEntity(entity.id)
+      .then(({ data }) => {
+        if (data) {
+          setItems(data);
+        }
+      })
+  }, []);
 
   return (
     <div>

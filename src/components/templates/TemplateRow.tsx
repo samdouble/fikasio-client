@@ -1,14 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { operations } from 'services';
+import { useDeleteTemplateMutation } from 'services/templates/api';
 import links from 'utils/links';
 
 const TemplateRow = ({
   template,
 }) => {
-  const dispatch = useDispatch();
+  const [deleteTemplate] = useDeleteTemplateMutation();
 
   return (
     <tr className="templateRow">
@@ -35,9 +34,7 @@ const TemplateRow = ({
         <FontAwesomeIcon
           icon="times"
           size="1x"
-          onClick={() => {
-            operations.templates.deleteTemplate(template.id)(dispatch);
-          }}
+          onClick={() => deleteTemplate(template.id)}
           style={{
             color: '#ce0000',
             cursor: 'pointer',

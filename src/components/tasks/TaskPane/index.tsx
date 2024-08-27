@@ -5,6 +5,7 @@ import Tab from 'react-bootstrap/Tab';
 import { useTranslation } from 'react-i18next';
 import { AutosaveTextarea } from '@fikasio/react-ui-components';
 import { operations } from 'services';
+import { clearPaneContent } from 'services/pane/slice';
 import { RootState } from 'services/store';
 import TaskDiscussion from './TaskDiscussion';
 import TaskHistory from './TaskHistory';
@@ -59,7 +60,7 @@ const TaskPane = ({
           title={t('informations')}
         >
           <TaskInformationsForm
-            onClose={() => dispatch(operations.pane.clearPaneContent())}
+            onClose={() => dispatch(clearPaneContent())}
             task={task}
           />
         </Tab>

@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { operations } from 'services';
 import { useDeleteMemberFromOrganizationMutation } from 'services/organizations/api';
+import { setPaneContent } from 'services/pane/slice';
 import AddMemberButton from './AddMemberButton';
 
 const OrganizationMembersTable = ({
@@ -19,11 +19,13 @@ const OrganizationMembersTable = ({
     <>
       <AddMemberButton
         onClick={
-          () => operations.pane.setPaneContent({
-            type: 'ORGANIZATION_MEMBER',
-            organizationId: organization.id,
-            id: 'NEW',
-          })(dispatch)
+          () => dispatch(
+            setPaneContent({
+              type: 'ORGANIZATION_MEMBER',
+              organizationId: organization.id,
+              id: 'NEW',
+            })
+          )
         }
         style={{
           float: 'right',
@@ -62,11 +64,13 @@ const OrganizationMembersTable = ({
                     <FontAwesomeIcon
                       icon="edit"
                       onClick={
-                        () => operations.pane.setPaneContent({
-                          type: 'ORGANIZATION_MEMBER',
-                          organizationId: organization.id,
-                          id: member.id,
-                        })(dispatch)
+                        () => dispatch(
+                          setPaneContent({
+                            type: 'ORGANIZATION_MEMBER',
+                            organizationId: organization.id,
+                            id: member.id,
+                          }),
+                        )
                       }
                       size="1x"
                       style={{

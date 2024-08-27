@@ -103,13 +103,15 @@ const LoginPage = () => {
         }}
       >
         <Row>
-          {
-            showLoginError && (
-              <Alert variant="danger" >
-                <strong>{t('invalidConnection')}</strong>
-              </Alert>
-            )
-          }
+          <Col md={12}>
+            {
+              showLoginError && (
+                <Alert variant="danger" >
+                  <strong>{t('invalidConnection')}</strong>
+                </Alert>
+              )
+            }
+          </Col>
         </Row>
         <Row>
           <Col md={12}>

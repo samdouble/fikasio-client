@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { operations } from 'services';
+import { useDeleteFieldFromEntityMutation } from 'services/entities/api';
+import { setPaneContent } from 'services/pane/slice';
 import AddFieldButton from './AddFieldButton';
 
 const EntityFieldsTable = ({
@@ -12,14 +13,18 @@ const EntityFieldsTable = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const [deleteField] = useDeleteFieldFromEntityMutation();
+
   return (
     <>
       <AddFieldButton
-        onClick={() => operations.pane.setPaneContent({
-          type: 'ENTITY_FIELD',
-          entityId: entity.id,
-          id: 'NEW',
-        })(dispatch)}
+        onClick={() => dispatch(
+          setPaneContent({
+            type: 'ENTITY_FIELD',
+            entityId: entity.id,
+            id: 'NEW',
+          })
+        )}
         style={{
           float: 'right',
           marginRight: 0,
@@ -65,7 +70,10 @@ const EntityFieldsTable = ({
                       field.isRequired && <FontAwesomeIcon
                         icon="check"
                         size="1x"
-                        onClick={() => operations.entities.fields.deleteField(entity.id, field.id)}
+                        onClick={() => deleteField({
+                          entityId: entity.id,
+                          id: field.id,
+                        })}
                         style={{
                           color: 'blue',
                           cursor: 'pointer',
@@ -77,11 +85,13 @@ const EntityFieldsTable = ({
                   <td>
                     <FontAwesomeIcon
                       icon="edit"
-                      onClick={() => operations.pane.setPaneContent({
-                        type: 'ENTITY_FIELD',
-                        entityId: entity.id,
-                        id: field.id,
-                      })(dispatch)}
+                      onClick={() => dispatch(
+                        setPaneContent({
+                          type: 'ENTITY_FIELD',
+                          entityId: entity.id,
+                          id: field.id,
+                        })
+                      )}
                       size="1x"
                       style={{
                         color: 'blue',
@@ -94,7 +104,10 @@ const EntityFieldsTable = ({
                     <FontAwesomeIcon
                       icon="times"
                       size="1x"
-                      onClick={() => operations.entities.fields.deleteField(entity.id, field.id)(dispatch)}
+                      onClick={() => deleteField({
+                        entityId: entity.id,
+                        id: field.id,
+                      })}
                       style={{
                         color: '#ce0000',
                         cursor: 'pointer',

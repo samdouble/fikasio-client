@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
@@ -7,18 +6,15 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import AddTemplateButton from 'components/templates/AddTemplateButton';
 import TemplatesView from 'components/templates/TemplatesView';
-import ResourcesHandler from 'components/ResourcesHandler';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useGetTemplatesQuery } from 'services/templates/api';
 import links from 'utils/links';
 import './style.scss';
 
 const TemplatesPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const templates = useSelector((state: RootState) => state.templates);
-  const dispatch = useDispatch();
+  const { data: templates } = useGetTemplatesQuery();
 
   useEffect(() => {
     ReactGA.send({
@@ -27,7 +23,7 @@ const TemplatesPage = () => {
     });
   }, []);
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('templates')}</title>
@@ -50,16 +46,6 @@ const TemplatesPage = () => {
         />
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      resources={[templates]}
-      resourceFetchers={[
-        () => dispatch(operations.templates.fetchTemplates()),
-      ]}
-      getContents={getPage}
-    />
   );
 };
 

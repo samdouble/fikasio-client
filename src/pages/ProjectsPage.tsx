@@ -9,6 +9,7 @@ import ResourcesHandler from 'components/ResourcesHandler';
 import ProjectsView from 'components/projects/ProjectsView';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { setPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery, useAddProjectMutation } from 'services/projects/api';
 import { RootState } from 'services/store';
 import links from 'utils/links';
@@ -48,10 +49,12 @@ const ProjectsPage = () => {
         <ProjectsView
           onAddProject={project => addProject(project)}
           onProjectClick={
-            projectId => operations.pane.setPaneContent({
-              type: 'PROJECT',
-              id: projectId,
-            })(dispatch)
+            projectId => dispatch(
+              setPaneContent({
+                type: 'PROJECT',
+                id: projectId,
+              })
+            )
           }
           projects={projects}
           showAddButton

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { operations } from 'services';
+import { useAddActivityMutation } from 'services/activities/api';
 import { Activity } from 'services/activities/types';
 import ActivitiesList from './ActivitiesList';
 import ActivitiesCalendar from './ActivitiesCalendar/ActivitiesCalendar';
@@ -15,11 +14,12 @@ const ActivitiesView = ({
   onActivityClick,
 }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const [viewMode, setViewMode] = useState('CALENDAR');
   const [selectedActivities, setSelectedActivities] = useState<Activity[]>([]);
 
-  const addActivity = async activity => dispatch(operations.activities.createActivity(activity));
+  const [createActivity] = useAddActivityMutation();
+
+  const addActivity = async activity => createActivity(activity);
 
   const handleSelectActivity = activity => {
     const isActivityAlreadySelected = selectedActivities.find(a => a.id === activity.id);
@@ -51,7 +51,6 @@ const ActivitiesView = ({
   } else {
     activityView = (
       <ActivitiesCalendar
-        activities={activities}
         date={date}
         onActivityClick={onActivityClick}
       />

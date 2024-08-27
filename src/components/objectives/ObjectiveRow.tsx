@@ -7,8 +7,8 @@ import { DateTime } from 'luxon';
 import { Checkbox, DatePicker, Dot } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
 import { useAddObjectiveMutation, usePatchObjectiveMutation, useDeleteObjectiveMutation } from 'services/objectives/api';
+import { setPaneContent } from 'services/pane/slice';
 import { getEstimatedCompletionDate } from './utils';
 
 const ObjectiveRow = ({
@@ -46,10 +46,12 @@ const ObjectiveRow = ({
         />
       </td>
       <td
-        onClick={() => operations.pane.setPaneContent({
-          type: 'OBJECTIVE',
-          id: objective.id,
-        })(dispatch)}
+        onClick={() => dispatch(
+          setPaneContent({
+            type: 'OBJECTIVE',
+            id: objective.id,
+          })
+        )}
         style={{
           cursor: 'pointer',
         }}

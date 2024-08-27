@@ -11,7 +11,7 @@ import ClickOutside from 'react-click-outside';
 import { CompactPicker } from 'react-color';
 import { DateTime } from 'luxon';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
+import { clearPaneContent } from 'services/pane/slice';
 import {
   useGetProjectsQuery,
   useAddProjectMutation,
@@ -51,10 +51,10 @@ const ProjectInformationsForm = ({
         id: project.id,
         ...formData,
       })
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+        .then(() => dispatch(clearPaneContent()));
     } else {
       createProject(formData)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+        .then(() => dispatch(clearPaneContent()));
     }
   };
 

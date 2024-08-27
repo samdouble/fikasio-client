@@ -11,6 +11,7 @@ import TasksView from 'components/tasks/TasksView';
 import { calculateOverloadInTheFuture, filterTasks } from 'components/tasks/utils';
 import BasePage from 'components/UI/BasePage';
 import { operations } from 'services';
+import { setPaneContent } from 'services/pane/slice';
 import { RootState } from 'services/store';
 import { round } from 'utils/maths';
 import './style.scss';
@@ -76,10 +77,12 @@ const HomePage = () => {
         }
         <TasksView
           onTaskClick={
-            taskId => operations.pane.setPaneContent({
-              type: 'TASK',
-              id: taskId,
-            })(dispatch)
+            taskId => dispatch(
+              setPaneContent({
+                type: 'TASK',
+                id: taskId,
+              })
+            )
           }
           showCompletionFilter
           showViewModeButtons
@@ -99,10 +102,12 @@ const HomePage = () => {
         }
         <TasksView
           onTaskClick={
-            taskId => operations.pane.setPaneContent({
-              type: 'TASK',
-              id: taskId,
-            })(dispatch)
+            taskId => dispatch(
+              setPaneContent({
+                type: 'TASK',
+                id: taskId,
+              })
+            )
           }
           showCompletionFilter
           showViewModeButtons

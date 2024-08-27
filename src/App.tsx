@@ -69,11 +69,7 @@ const App = () => {
           <Switch>
             <Route component={LoginPage} path={links.paths.login} />
             <Route component={SignupPage} path={links.paths.signup} />
-            <PrivateRoute
-              component={HomePage}
-              exact
-              path="/"
-            />
+            <PrivateRoute component={HomePage} exact path="/" />
             <PrivateRoute component={HomePage} path={links.paths.home} />
             <PrivateRoute component={DashboardPage} path={links.paths.dashboard} />
             <PrivateRoute component={EntityUpsertPage} path={links.paths.entityUpsert} />

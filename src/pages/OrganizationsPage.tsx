@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import OrganizationsView from 'components/organizations/OrganizationsView';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
+import { setPaneContent } from 'services/pane/slice';
 import links from 'utils/links';
 import './style.scss';
 
@@ -36,10 +36,12 @@ const OrganizationsPage = () => {
         <h4>{t('organizations')}</h4>
         <OrganizationsView
           onOrganizationSelect={
-            organizationId => operations.pane.setPaneContent({
-              type: 'ORGANIZATION',
-              id: organizationId,
-            })(dispatch)
+            organizationId => dispatch(
+              setPaneContent({
+                type: 'ORGANIZATION',
+                id: organizationId,
+              })
+            )
           }
         />
       </BasePage>

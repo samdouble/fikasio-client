@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { operations } from 'services';
+import { useAddItemMutation } from 'services/items/api';
 import { Item } from 'services/items/types';
+import { clearPaneContent } from 'services/pane/slice';
 import ItemsList from './ItemsList';
 import AddItemButton from './AddItemButton';
 
@@ -12,17 +13,21 @@ const ItemsView = ({
   entity,
   items,
 }) => {
-  const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [viewMode, setViewMode] = useState('LIST');
   const [selectedItems, setSelectedItems] = useState<Item[]>([]);
 
+  const [createItem] = useAddItemMutation();
+
   const addItem = async item => {
-    return operations.items.createItem(entity.id, item)(dispatch)
-      .then(res => {
-        const addedItem = res.payload.item;
-        dispatch(operations.pane.clearPaneContent());
-        return addedItem;
+    return createItem({
+      entityId: entity.id,
+      ...item,
+    })
+      .then(({ data }) => {
+        dispatch(clearPaneContent());
+        return data;
       });
   };
 

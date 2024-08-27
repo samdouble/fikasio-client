@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
 import { Checkbox } from '@fikasio/react-ui-components';
-import { operations } from 'services';
+import { useDeleteActivityMutation } from 'services/activities/api';
 import { Activity } from 'services/activities/types';
 import ActivityRow from './ActivityRow';
 import './ActivitiesList.scss';
@@ -19,10 +18,11 @@ const ActivitiesList = ({
   onSelectAllActivities,
   selectedActivities,
 }) => {
-  const dispatch = useDispatch();
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
   const { t } = useTranslation();
+
+  const [deleteActivity] = useDeleteActivityMutation();
 
   const addActivity = async activity => {
     onAddActivity(activity)
@@ -41,7 +41,7 @@ const ActivitiesList = ({
   }, delay);
 
   const handleDeleteActivity = activity => {
-    operations.activities.deleteActivity(activity.id)(dispatch);
+    deleteActivity(activity.id);
   };
 
   const activitiesToShow = activities?.filter(a => {

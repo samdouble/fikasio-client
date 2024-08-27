@@ -6,8 +6,8 @@ import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import ObjectivesView from 'components/objectives/ObjectivesView';
 import TasksView from 'components/tasks/TasksView';
-import { operations } from 'services';
 import { useGetObjectivesQuery } from 'services/objectives/api';
+import { setPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery } from 'services/projects/api';
 import { RootState } from 'services/store';
 import ProjectHistory from './ProjectHistory';
@@ -42,10 +42,12 @@ const ProjectPane = ({
         >
           <TasksView
             onTaskClick={
-              taskId => operations.pane.setPaneContent({
-                type: 'TASK',
-                id: taskId,
-              })(dispatch)
+              taskId => dispatch(
+                setPaneContent({
+                  type: 'TASK',
+                  id: taskId,
+                })
+              )
             }
             projectId={project?.id}
             showAddButton

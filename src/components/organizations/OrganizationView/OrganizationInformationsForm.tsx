@@ -6,8 +6,8 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { operations } from 'services';
 import { useAddOrganizationMutation, useUpdateOrganizationMutation } from 'services/organizations/api';
+import { clearPaneContent } from 'services/pane/slice';
 import { processFormData } from 'utils/forms';
 import links from 'utils/links';
 
@@ -31,7 +31,7 @@ const OrganizationInformationsForm = ({
     } else {
       createOrganization(formData)
         .then(() => {
-          dispatch(operations.pane.clearPaneContent());
+          dispatch(clearPaneContent());
           history.push(links.paths.organizations);
         });
     }
@@ -64,7 +64,7 @@ const OrganizationInformationsForm = ({
             }}
           >
             <Button
-              onClick={() => dispatch(operations.pane.clearPaneContent())}
+              onClick={() => dispatch(clearPaneContent())}
               style={{
                 backgroundColor: 'white',
               }}

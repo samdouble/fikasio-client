@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
 import Color from 'color';
-import { operations } from 'services';
+import { useLazyGetActivitiesQuery, usePatchActivityMutation } from 'services/activities/api';
 import { Activity } from 'services/activities/types';
 import { RootState } from 'services/store';
+import { useGetTemplatesQuery } from 'services/templates/api';
 import Toolbar from './Toolbar';
 import { convertActivitiesToCalendarEvents } from './utils';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -18,18 +19,21 @@ const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = luxonLocalizer(DateTime, { firstDayOfWeek: 1 });
 
 const ActivitiesCalendar = ({
-  activities,
   date,
   onActivityClick,
 }) => {
   const dispatch = useDispatch();
   const loginState = useSelector((state: RootState) => state.login);
-  const templates = useSelector((state: RootState) => state.templates);
+  const { data: templates } = useGetTemplatesQuery();
   const me = loginState.user;
+  const [activities, setActivities] = useState<Activity[]>([]);
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const { t } = useTranslation();
+
+  const [getActivities] = useLazyGetActivitiesQuery();
+  const [patchActivity] = usePatchActivityMutation();
 
   useEffect(() => {
     if (activities) {
@@ -76,45 +80,54 @@ const ActivitiesCalendar = ({
           millisecond: 999,
         }).toISO();
 
-      dispatch(operations.activities.fetchActivities({
-        startTime: startTs,
-        endTime: endTs,
-      }));
+      getActivities({
+        filter: {
+          startTime: startTs,
+          endTime: endTs,
+        },
+      })
+        .then(({ data }) => {
+          if (data) {
+            setActivities(data);
+          }
+        });
     }
   }
 
   const onEventDrop: withDragAndDropProps['onEventDrop'] = ({ event, start, end }) => {
-    const activity = activities.find(a => a.id === event.id);
     const startTime = DateTime.fromJSDate(start);
     const endTime = DateTime.fromJSDate(end);
     const duration = endTime.diff(startTime, 'minutes').minutes;
-    dispatch(
-      operations.activities.patchActivity(activity.id, {
+    const activity = activities.find(a => a.id === event.id);
+    if (activity) {
+      patchActivity({
+        id: activity.id,
         startTime: startTime.toISO(),
         endTime: endTime.toISO(),
         duration,
-      }),
-    );
+      });
+    }
   };
 
   const onEventResize: withDragAndDropProps['onEventResize'] = ({ start, end, event }) => {
-    const activity = activities.find(a => a.id === event.id);
     const hasDraggedStart = event.start !== start;
     const hasDraggedEnd = event.end !== end;
-    const startTime = hasDraggedStart
-      ? DateTime.fromJSDate(start)
-      : DateTime.fromISO(activity.startTime);
-    const endTime = hasDraggedEnd
-      ? DateTime.fromJSDate(end)
-      : DateTime.fromISO(activity.endTime);
-    const duration = endTime.diff(startTime, 'minutes').minutes;
-    dispatch(
-      operations.activities.patchActivity(activity.id, {
+    const activity = activities.find(a => a.id === event.id);
+    if (activity) {
+      const startTime = hasDraggedStart
+        ? DateTime.fromJSDate(start)
+        : DateTime.fromISO(activity.startTime);
+      const endTime = hasDraggedEnd
+        ? DateTime.fromJSDate(end)
+        : DateTime.fromISO(activity.endTime);
+      const duration = endTime.diff(startTime, 'minutes').minutes;
+      patchActivity({
+        id: activity.id,
         ...(hasDraggedStart && { startTime: startTime.toISO() }),
         ...(hasDraggedEnd && { endTime: endTime.toISO() }),
         duration,
-      }),
-    );
+      });
+    }
   };
 
   return events && (

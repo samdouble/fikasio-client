@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
-import { operations } from 'services';
+import { useGetEntitiesQuery } from 'services/entities/api';
 import { EntityField } from 'services/entities/types';
-import { RootState } from 'services/store';
+import { useLazyGetItemsForEntityQuery, useAddItemMutation, useUpdateItemMutation } from 'services/items/api';
+import { Item } from 'services/items/types';
+import { clearPaneContent } from 'services/pane/slice';
 import { getFormFieldForType, processFormData } from 'utils/forms';
 import links from 'utils/links';
 
@@ -22,26 +24,46 @@ const ItemInformationsForm = ({
   entityId,
   id,
 }: ItemInformationsFormProps) => {
-  const entities = useSelector((state: RootState) => state.entities);
-  const items = useSelector((state: RootState) => state.items);
   const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation();
+  const { data: entities } = useGetEntitiesQuery();
   const entity = (entities || []).find(e => e.id === entityId);
+  const [items, setItems] = useState<Item[]>([]);
   const item = (items || []).find(i => i.id === id);
+
+  const [getItemsForEntity] = useLazyGetItemsForEntityQuery();
+  const [createItem] = useAddItemMutation();
+  const [updateItem] = useUpdateItemMutation();
+
+  useEffect(() => {
+    getItemsForEntity(entityId)
+      .then(({ data }) => {
+        if (data) {
+          setItems(data);
+        }
+      });
+  }, [entityId]);
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);
     if (id !== 'NEW') {
-      operations.items.updateItem(entityId, id, formData)(dispatch)
+      updateItem({
+        entityId,
+        id,
+        ...formData,
+      })
         .then(() => {
-          dispatch(operations.pane.clearPaneContent());
+          dispatch(clearPaneContent());
           history.push(links.entity(entityId));
         });
     } else {
-      operations.items.createItem(entityId, formData)(dispatch)
+      createItem({
+        entityId,
+        ...formData,
+      })
         .then(() => {
-          dispatch(operations.pane.clearPaneContent());
+          dispatch(clearPaneContent());
           history.push(links.entity(entityId));
         });
     }
@@ -107,7 +129,7 @@ const ItemInformationsForm = ({
           >
             <Button
               onClick={() => {
-                dispatch(operations.pane.clearPaneContent());
+                dispatch(clearPaneContent());
                 history.push(links.entity(entityId));
               }}
               style={{

@@ -12,6 +12,7 @@ import omit from 'lodash.omit';
 import { DateTime } from 'luxon';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
 import { operations } from 'services';
+import { clearPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery } from 'services/projects/api';
 import { Task } from 'services/tasks/types';
 import { processFormData } from 'utils/forms';
@@ -77,12 +78,12 @@ const TaskInformationsForm = ({
       operations.tasks.updateTask(task.id,
         omit(formData, ['estimatedCompletionTimeUnits']),
       )(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+        .then(() => dispatch(clearPaneContent()));
     } else {
       operations.tasks.createTask(
         omit(formData, ['estimatedCompletionTimeUnits']),
       )(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+        .then(() => dispatch(clearPaneContent()));
     }
   };
 

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
@@ -13,9 +13,9 @@ import { useTranslation } from 'react-i18next';
 import ActivitiesView from 'components/activities/ActivitiesView';
 import { calculateFilledTime } from 'components/activities/utils';
 import BasePage from 'components/UI/BasePage';
-import ResourcesHandler from 'components/ResourcesHandler';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useLazyGetActivitiesQuery } from 'services/activities/api';
+import { Activity } from 'services/activities/types';
+import { setPaneContent } from 'services/pane/slice';
 import links from 'utils/links';
 import { round } from 'utils/maths';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -24,9 +24,8 @@ import './style.scss';
 const TimesheetPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const activities = useSelector((state: RootState) => state.activities);
-  const templates = useSelector((state: RootState) => state.templates);
   const location = useLocation();
+  const [activities, setActivities] = useState<Activity[]>([]);
   const { search } = location;
   const searchParams = new URLSearchParams(search);
   const dateParam = searchParams.get('date');
@@ -34,6 +33,8 @@ const TimesheetPage = () => {
     ? DateTime.fromFormat(dateParam, 'yyyy-MM-dd')
     : DateTime.now();
   const { t } = useTranslation();
+
+  const [getActivities] = useLazyGetActivitiesQuery();
 
   const startTs = date.set({
     hour: 0,
@@ -56,10 +57,17 @@ const TimesheetPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(operations.activities.fetchActivities({
-      startTime: startTs,
-      endTime: endTs,
-    }));
+    getActivities({
+      filter: {
+        startTime: startTs,
+        endTime: endTs,
+      },
+    })
+      .then(({ data }) => {
+        if (data) {
+          setActivities(data);
+        }
+      });
   }, [startTs, endTs]);
 
   const resFilledTime = activities && calculateFilledTime(activities, startTs, endTs);
@@ -83,7 +91,7 @@ const TimesheetPage = () => {
     activityToShow.endTime,
   ]));
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('timesheet')}</title>
@@ -193,7 +201,7 @@ const TimesheetPage = () => {
           activities={activities}
           date={date}
           onActivityClick={activity => dispatch(
-            operations.pane.setPaneContent({
+            setPaneContent({
               type: 'ACTIVITY',
               activity,
             })
@@ -201,16 +209,6 @@ const TimesheetPage = () => {
         />
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      resources={[templates]}
-      resourceFetchers={[
-        () => dispatch(operations.templates.fetchTemplates()),
-      ]}
-      getContents={getPage}
-    />
   );
 };
 

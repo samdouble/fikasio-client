@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
 import {
   useGetOrganizationsQuery,
   useAddMemberToOrganizationMutation,
   useUpdateMemberInOrganizationMutation,
 } from 'services/organizations/api';
+import { clearPaneContent } from 'services/pane/slice';
 import 'components/UI/Form.scss';
 
 interface MemberPaneProps {
@@ -41,13 +41,13 @@ const MemberPane = ({
         id,
         ...formData,
       })
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+        .then(() => dispatch(clearPaneContent()));
     } else {
       createMember({
         organizationId,
         ...formData,
       })
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+        .then(() => dispatch(clearPaneContent()));
     }
   };
 

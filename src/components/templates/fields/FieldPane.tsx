@@ -1,13 +1,13 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { clearPaneContent } from 'services/pane/slice';
+import { useGetTemplatesQuery, useAddFieldToTemplateMutation, useUpdateFieldInTemplateMutation } from 'services/templates/api';
 import 'components/UI/Form.scss';
 
 interface FieldPaneProps {
@@ -19,20 +19,30 @@ const FieldPane = ({
   id,
   templateId,
 }: FieldPaneProps) => {
-  const templates = useSelector((state: RootState) => state.templates);
+  const { data: templates } = useGetTemplatesQuery();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const template = (templates || []).find(e => e.id === templateId);
   const field = template?.fields.find(f => f.id === id);
 
+  const [createTemplateField] = useAddFieldToTemplateMutation();
+  const [updateTemplateField] = useUpdateFieldInTemplateMutation();
+
   const onSubmit = async values => {
     const formData = values;
     if (id !== 'NEW') {
-      operations.templates.fields.updateField(templateId, id, formData)(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+      updateTemplateField({
+        templateId,
+        id,
+        ...formData,
+      })
+        .then(() => dispatch(clearPaneContent()));
     } else {
-      operations.templates.fields.createField(templateId, formData)(dispatch)
-        .then(() => dispatch(operations.pane.clearPaneContent()));
+      createTemplateField({
+        templateId,
+        ...formData,
+      })
+        .then(() => dispatch(clearPaneContent()));
     }
   };
 

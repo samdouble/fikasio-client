@@ -5,11 +5,17 @@ import { createLogger } from 'redux-logger';
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
 import reducers from 'services/reducers';
+import { apiActivities } from 'services/activities/api';
+import { apiEntities } from 'services/entities/api';
 import { apiEvents } from 'services/events/api';
-import { apiObjectives } from './objectives/api';
-import { apiOrganizations } from './organizations/api';
+import { apiItems } from 'services/items/api';
+import { apiObjectives } from 'services/objectives/api';
+import { apiOrganizations } from 'services/organizations/api';
+import paneReducer from 'services/pane/slice';
+import { apiPayments } from 'services/payments/api';
 import { apiProjects } from 'services/projects/api';
 import { apiTasks } from 'services/tasks/api';
+import { apiTemplates } from 'services/templates/api';
 
 let middlewares;
 if (process.env.NODE_ENV === 'production') {
@@ -22,22 +28,33 @@ if (process.env.NODE_ENV === 'production') {
 const store = configureStore({
   reducer: combineReducers({
     ...reducers,
+    pane: paneReducer,
+    [apiActivities.reducerPath]: apiActivities.reducer,
+    [apiEntities.reducerPath]: apiEntities.reducer,
     [apiEvents.reducerPath]: apiEvents.reducer,
+    [apiItems.reducerPath]: apiItems.reducer,
     [apiObjectives.reducerPath]: apiObjectives.reducer,
     [apiOrganizations.reducerPath]: apiOrganizations.reducer,
+    [apiPayments.reducerPath]: apiPayments.reducer,
     [apiProjects.reducerPath]: apiProjects.reducer,
     [apiTasks.reducerPath]: apiTasks.reducer,
+    [apiTemplates.reducerPath]: apiTemplates.reducer,
   }),
   devTools: process.env.NODE_ENV !== 'production',
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
       .concat(
         ...middlewares,
+        apiActivities.middleware,
+        apiEntities.middleware,
         apiEvents.middleware,
+        apiItems.middleware,
         apiObjectives.middleware,
         apiOrganizations.middleware,
+        apiPayments.middleware,
         apiProjects.middleware,
         apiTasks.middleware,
+        apiTemplates.middleware,
       ),
 });
 

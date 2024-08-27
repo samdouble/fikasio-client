@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
-import { operations } from 'services';
+import { setPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery } from 'services/projects/api';
 import { invertColor } from 'utils/colors';
 
@@ -17,10 +17,12 @@ const ProjectTag = ({
       data-tooltip-id={`project_${project.id}`}
       data-tooltip-content={project.name}
       onClick={
-        () => operations.pane.setPaneContent({
+        () => dispatch(
+          setPaneContent({
             type: 'PROJECT',
             id: project.id,
-          })(dispatch)
+          })
+        )
       }
       style={{
         backgroundColor: project.color,

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Tabs from 'react-bootstrap/Tabs';
@@ -9,22 +8,17 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import ResourcesHandler from 'components/ResourcesHandler';
 import SettingsAccount from 'components/settings/SettingsAccount';
 import SettingsAdvanced from 'components/settings/SettingsAdvanced';
 import SettingsBilling from 'components/settings/SettingsBilling';
 import SettingsGeneral from 'components/settings/SettingsGeneral';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
-import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
 const SettingsPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const cards = useSelector((state: RootState) => state.cards);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     ReactGA.send({
@@ -33,7 +27,7 @@ const SettingsPage = () => {
     });
   }, []);
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('settings')}</title>
@@ -91,16 +85,6 @@ const SettingsPage = () => {
         </Tabs>
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      getContents={getPage}
-      resourceFetchers={[
-        () => dispatch(operations.cards.fetchCards()),
-      ]}
-      resources={[cards]}
-    />
   );
 };
 

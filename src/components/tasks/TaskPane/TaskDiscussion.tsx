@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AutosaveTextarea } from '@fikasio/react-ui-components';
+import { usePatchActivityMutation } from 'services/activities/api';
 import { getTaskComments } from 'services/tasks/endpoints';
 import { Task } from 'services/tasks/types';
 
@@ -12,6 +13,8 @@ const TaskDiscussion = ({
 }: TaskDiscussionProps) => {
   const [comments, setComments] = useState([]);
 
+  const [patchActivity] = usePatchActivityMutation();
+
   useEffect(() => {
     getTaskComments(task.id)
       .then(res => setComments(res.comments));
@@ -22,7 +25,8 @@ const TaskDiscussion = ({
       <AutosaveTextarea
         className="form-control"
         onSave={async () => {
-          /*operations.activities.patchActivity(activity.id, {
+          /*patchActivity({
+            id: activity.id,
             comments: value,
           })(dispatch);*/
         }}
