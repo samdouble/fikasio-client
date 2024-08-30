@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -25,7 +25,7 @@ const ItemInformationsForm = ({
   id,
 }: ItemInformationsFormProps) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { data: entities } = useGetEntitiesQuery();
   const entity = (entities || []).find(e => e.id === entityId);
@@ -55,7 +55,7 @@ const ItemInformationsForm = ({
       })
         .then(() => {
           dispatch(clearPaneContent());
-          history.push(links.entity(entityId));
+          navigate(links.entity(entityId));
         });
     } else {
       createItem({
@@ -64,7 +64,7 @@ const ItemInformationsForm = ({
       })
         .then(() => {
           dispatch(clearPaneContent());
-          history.push(links.entity(entityId));
+          navigate(links.entity(entityId));
         });
     }
   };
@@ -130,7 +130,7 @@ const ItemInformationsForm = ({
             <Button
               onClick={() => {
                 dispatch(clearPaneContent());
-                history.push(links.entity(entityId));
+                navigate(links.entity(entityId));
               }}
               style={{
                 backgroundColor: 'white',

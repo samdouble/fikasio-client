@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
@@ -7,19 +6,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { usePatchUserMeMutation } from 'services/login/api';
+import { useAuth } from 'services/login/hooks';
 
 const SettingsAdvanced = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const login = useSelector((state: RootState) => state.login);
-  const { user } = login;
+  const auth = useAuth();
+  const { user } = auth;
+
+  const [patchUserMe] = usePatchUserMeMutation();
 
   const onSubmit = async values => {
-    operations.login.patchUserMe({
+    patchUserMe({
       ...values,
-    })(dispatch);
+    });
   };
 
   return (

@@ -1,6 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,23 +7,24 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchBar from 'components/UI/SearchBar';
-import links from 'utils/links';
 import Logo from 'images/logo.png';
-import { operations } from 'services';
-import { RootState } from 'services/store';
+import { useLogoutMutation } from 'services/login/api';
+import { useAuth } from 'services/login/hooks';
+import links from 'utils/links';
 import envvars from 'utils/envvars';
 import './style.scss';
 
 const TopMenu = () => {
-  const login = useSelector((state: RootState) => state.login);
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const auth = useAuth();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const [logout] = useLogoutMutation();
+
   const handleLogout = () => {
-    operations.login.logout()(dispatch)
+    logout()
       .then(() => {
-        history.go(0);
+        navigate('/');
       });
   };
 
@@ -53,7 +53,7 @@ const TopMenu = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               {
-                login && <SearchBar
+                auth.user && <SearchBar
                   style={{
                     marginTop: 5,
                     marginRight: 50,
@@ -61,8 +61,8 @@ const TopMenu = () => {
                 />
               }
               {
-                login ? (
-                  <NavDropdown align="end" title={login.user && login.user.name}>
+                auth.user ? (
+                  <NavDropdown align="end" title={auth.user && auth.user.name}>
                     <NavDropdown.Item href={links.paths.organizations}>
                       <FontAwesomeIcon
                         icon="sitemap"

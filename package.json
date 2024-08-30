@@ -69,7 +69,7 @@
     "react-overlays": "^5.2.1",
     "react-pro-sidebar": "^1.1.0-alpha.1",
     "react-redux": "^7.2.0",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "6.26",
     "react-scripts": "^5.0.1",
     "react-sliding-pane": "^7.1.0",
     "react-tooltip": "^5.14.0",

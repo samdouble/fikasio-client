@@ -6,12 +6,12 @@ export interface Value {
 export interface Activity {
   comments: string;
   duration: number;
-  endTime: string;
+  endTime: Date;
   id: string;
-  name: string;
-  projects: { id: string; }[];
-  startTime: number;
-  tasks: { id: string; }[];
-  templateId: string;
-  values: Value[];
+  name?: string;
+  projects?: { id: string; }[];
+  startTime: Date;
+  tasks?: { id: string; }[];
+  templateId?: string;
+  values?: Value[];
 }

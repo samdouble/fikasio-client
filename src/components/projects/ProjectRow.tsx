@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,9 +6,9 @@ import { DateTime, Duration } from 'luxon';
 import classNames from 'classnames';
 import { AutosaveTextarea, Checkbox, DatePicker } from '@fikasio/react-ui-components';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
 import { useAddProjectMutation, usePatchProjectMutation, useDeleteProjectMutation } from 'services/projects/api';
 import { Project } from 'services/projects/types';
+import { useAddTaskMutation } from 'services/tasks/api';
 import { isEmpty } from 'utils/isEmpty';
 import { round } from 'utils/maths';
 
@@ -28,7 +27,6 @@ const ProjectRow = ({
   onSelect,
   project: pProject,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const [project, setProject] = useState(pProject);
@@ -39,6 +37,7 @@ const ProjectRow = ({
   const [createProject] = useAddProjectMutation();
   const [patchProject] = usePatchProjectMutation();
   const [deleteProject] = useDeleteProjectMutation();
+  const [createTask] = useAddTaskMutation();
 
   useEffect(() => {
     if (!hasFocus) {
@@ -118,10 +117,10 @@ const ProjectRow = ({
                 name: value,
               });
             } else {
-              operations.tasks.createTask({
+              createTask({
                 ...project,
                 name: value,
-              })(dispatch)
+              })
                 .then(resultProject => setProject(resultProject));
             }
           }}

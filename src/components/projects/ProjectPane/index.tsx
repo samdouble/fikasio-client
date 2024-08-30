@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Table from 'react-bootstrap/Table';
@@ -9,7 +9,7 @@ import TasksView from 'components/tasks/TasksView';
 import { useGetObjectivesQuery } from 'services/objectives/api';
 import { setPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery } from 'services/projects/api';
-import { RootState } from 'services/store';
+import { useGetTasksQuery } from 'services/tasks/api';
 import ProjectHistory from './ProjectHistory';
 import ProjectInformationsForm from './ProjectInformationsForm';
 import ProjectStats from './ProjectStats';
@@ -20,7 +20,7 @@ const ProjectPane = ({
 }) => {
   const { data: objectives } = useGetObjectivesQuery();
   const { data: projects } = useGetProjectsQuery();
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const { data: tasks } = useGetTasksQuery({});
   const dispatch = useDispatch();
   const { t } = useTranslation();
 

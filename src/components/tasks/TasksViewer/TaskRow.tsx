@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import usePrevious from 'use-previous';
@@ -10,7 +9,7 @@ import { DateTime } from 'luxon';
 import { AutosaveTextarea, Checkbox, DatePicker, Select, Selector } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
-import { operations } from 'services';
+import { useAddTaskMutation, usePatchTaskMutation, useDeleteTaskMutation } from 'services/tasks/api';
 import { Task } from 'services/tasks/types';
 import { round } from 'utils/maths';
 import AssigneeButton from './AssigneeButton';
@@ -32,7 +31,6 @@ const TaskRow = ({
   projectId,
   task: pTask,
 }: TaskRowProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const prevPTask = usePrevious(pTask);
@@ -40,6 +38,10 @@ const TaskRow = ({
   const [description, setIDescription] = useState((task && task.description) || '');
   const [hasFocus, setHasFocus] = useState(false);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
+
+  const [createTask] = useAddTaskMutation();
+  const [patchTask] = usePatchTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
 
   useEffect(() => {
     if (!isEqual(pTask, prevPTask)) {
@@ -79,26 +81,27 @@ const TaskRow = ({
   const handleKeyUpDescription = (e, updatedTask) => {
     if (updatedTask) {
       if (e.key === 'Backspace' && e.target.textContent === '') {
-        operations.tasks.deleteTask(updatedTask.id)(dispatch);
+        deleteTask(updatedTask.id);
       }
     } else if (e.target.textContent !== '') {
-      operations.tasks.createTask({
+      createTask({
         description: e.target.textContent,
-      })(dispatch);
+      });
     }
   };
 
   const handleTaskStatusChange = async (updatedTask, status) => {
     if (updatedTask.id) {
-      operations.tasks.patchTask(updatedTask.id, {
+      patchTask({
+        id: updatedTask.id,
         status,
-      })(dispatch);
+      });
     } else {
-      operations.tasks.createTask({
+      createTask({
         ...updatedTask,
         type: 'Instance',
         status,
-      })(dispatch);
+      });
     }
   };
 
@@ -144,15 +147,16 @@ const TaskRow = ({
           onKeyUp={e => handleKeyUpDescription(e, task)}
           onSave={async value => {
             if (task.id) {
-              operations.tasks.patchTask(task.id, {
+              patchTask({
+                id: task.id,
                 ...task,
                 description: value,
-              })(dispatch);
+              });
             } else {
-              operations.tasks.createTask({
+              createTask({
                 ...task,
                 description: value,
-              })(dispatch)
+              })
                 .then(resultTask => setTask(resultTask));
             }
           }}
@@ -183,6 +187,7 @@ const TaskRow = ({
       <td width={140}>
         {
           <Select
+            defaultValue={task.status}
             onChange={value => handleTaskStatusChange(task, value)}
             options={[
               { label: '-', value: null },
@@ -222,9 +227,10 @@ const TaskRow = ({
           onBlur={() => handleBlur()}
           onFocus={() => handleFocus()}
           onSave={async value => {
-            operations.tasks.patchTask(task.id, {
+            patchTask({
+              id: task.id,
               estimatedCompletionTime: parseFloat(value) * 60,
-            })(dispatch);
+            });
           }}
           style={{
             display: 'inline-block',
@@ -254,12 +260,18 @@ const TaskRow = ({
             const timestamp = DateTime.fromJSDate(dueAt)
               .set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
               .toISO();
-            operations.tasks.patchTask(task.id, { dueAt: timestamp })(dispatch);
+            patchTask({
+              id: task.id,
+              dueAt: timestamp,
+            });
           }}
           onClose={() => setIsDueAtDatepickerOpen(false)}
           onRemoveValue={e => {
             e.stopPropagation();
-            operations.tasks.patchTask(task.id, { dueAt: null })(dispatch);
+            patchTask({
+              id: task.id,
+              dueAt: null,
+            });
           }}
           shouldCloseOnSelect
           showRemoveValue
@@ -280,7 +292,7 @@ const TaskRow = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => operations.tasks.createTask(task)(dispatch)}
+              onClick={() => createTask(task)}
             >
               <FontAwesomeIcon
                 icon="copy"
@@ -294,7 +306,10 @@ const TaskRow = ({
             <Dropdown.Item
               onClick={() => {
                 const isArchived = task.isArchived || false;
-                operations.tasks.patchTask(task.id, { isArchived: !isArchived })(dispatch);
+                patchTask({
+                  id: task.id,
+                  isArchived: !isArchived,
+                });
               }}
             >
               <FontAwesomeIcon
@@ -307,7 +322,7 @@ const TaskRow = ({
               {t('archive')}
             </Dropdown.Item>
             <Dropdown.Item
-              onClick={() => operations.tasks.deleteTask(task.id)(dispatch)}
+              onClick={() => deleteTask(task.id)}
             >
               <FontAwesomeIcon
                 icon="times"

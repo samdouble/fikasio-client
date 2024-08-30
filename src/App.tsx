@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { IconPack, library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -9,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Footer } from '@fikasio/react-ui-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { PrivateOutlet } from 'components/PrivateOutlet';
 import TopMenu from 'components/TopMenu';
-import { RootState } from 'services/store';
-import PrivateRoute from './PrivateRoute';
+import { useAuth } from 'services/login/hooks';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
@@ -43,7 +42,7 @@ library.add(
 
 const App = () => {
   const location = useLocation();
-  const loginState = useSelector((state: RootState) => state.login);
+  const auth = useAuth();
   const { t } = useTranslation();
 
   const { lastJsonMessage } = useWebSocket(
@@ -66,33 +65,35 @@ const App = () => {
       <div className="App" id="App">
         <div className="siteContent">
           <TopMenu />
-          <Switch>
-            <Route component={LoginPage} path={links.paths.login} />
-            <Route component={SignupPage} path={links.paths.signup} />
-            <PrivateRoute component={HomePage} exact path="/" />
-            <PrivateRoute component={HomePage} path={links.paths.home} />
-            <PrivateRoute component={DashboardPage} path={links.paths.dashboard} />
-            <PrivateRoute component={EntityUpsertPage} path={links.paths.entityUpsert} />
-            <PrivateRoute component={ItemUpsertPage} path={links.paths.itemUpsert} />
-            <PrivateRoute component={EntityPage} path={links.paths.entity} />
-            <PrivateRoute component={EntitiesPage} path={links.paths.entities} />
-            <PrivateRoute component={NotificationsPage} path={links.paths.notifications} />
-            <PrivateRoute component={ObjectivesPage} path={links.paths.objectives} />
-            <PrivateRoute component={OrganizationPage} path={links.paths.organization} />
-            <PrivateRoute component={OrganizationsPage} path={links.paths.organizations} />
-            <PrivateRoute component={ProjectsPage} path={links.paths.projects} />
-            <PrivateRoute component={SettingsPage} path={links.paths.settings} />
-            <PrivateRoute component={TasksPage} path={links.paths.tasks} />
-            <PrivateRoute component={TemplateUpsertPage} path={links.paths.templateUpsert} />
-            <PrivateRoute component={TemplatePage} path={links.paths.template} />
-            <PrivateRoute component={TemplatesPage} path={links.paths.templates} />
-            <PrivateRoute component={TimesheetPage} path={links.timesheet()} />
-            <Route component={Page404} />
-          </Switch>
+          <Routes>
+            <Route element={<LoginPage />} path={links.paths.login} />
+            <Route element={<SignupPage />} path={links.paths.signup} />
+            <Route element={<PrivateOutlet />}>
+              <Route element={<HomePage />} path="/" />
+              <Route element={<HomePage />} path={links.paths.home} />
+              <Route element={<DashboardPage />} path={links.paths.dashboard} />
+              <Route element={<EntityUpsertPage />} path={links.paths.entityUpsert} />
+              <Route element={<ItemUpsertPage />} path={links.paths.itemUpsert} />
+              <Route element={<EntityPage />} path={links.paths.entity} />
+              <Route element={<EntitiesPage />} path={links.paths.entities} />
+              <Route element={<NotificationsPage />} path={links.paths.notifications} />
+              <Route element={<ObjectivesPage />} path={links.paths.objectives} />
+              <Route element={<OrganizationPage />} path={links.paths.organization} />
+              <Route element={<OrganizationsPage />} path={links.paths.organizations} />
+              <Route element={<ProjectsPage />} path={links.paths.projects} />
+              <Route element={<SettingsPage />} path={links.paths.settings} />
+              <Route element={<TasksPage />} path={links.paths.tasks} />
+              <Route element={<TemplateUpsertPage />} path={links.paths.templateUpsert} />
+              <Route element={<TemplatePage />} path={links.paths.template} />
+              <Route element={<TemplatesPage />} path={links.paths.templates} />
+              <Route element={<TimesheetPage />} path={links.timesheet()} />
+              <Route element={<Page404 />} path="*" />
+            </Route>
+          </Routes>
           {
             (
-              (location.pathname === '/' && !loginState)
-              || (location.pathname === links.paths.home && !loginState)
+              (location.pathname === '/' && !auth.user)
+              || (location.pathname === links.paths.home && !auth.user)
               || location.pathname === links.paths.login
               || location.pathname === links.paths.signup
             ) && (

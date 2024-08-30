@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { useTranslation } from 'react-i18next';
 import { AutosaveTextarea } from '@fikasio/react-ui-components';
-import { operations } from 'services';
 import { clearPaneContent } from 'services/pane/slice';
-import { RootState } from 'services/store';
+import { useGetTasksQuery, useAddTaskMutation, usePatchTaskMutation } from 'services/tasks/api';
 import TaskDiscussion from './TaskDiscussion';
 import TaskHistory from './TaskHistory';
 import TaskInformationsForm from './TaskInformationsForm';
@@ -22,8 +21,11 @@ const TaskPane = ({
 }: TaskPaneProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const { data: tasks } = useGetTasksQuery({});
   const [task, setTask] = useState((tasks || []).find(t1 => t1.id === id));
+
+  const [createTask] = useAddTaskMutation();
+  const [patchTask] = usePatchTaskMutation();
 
   return (
     <>
@@ -31,14 +33,19 @@ const TaskPane = ({
         defaultValue={task?.description}
         onSave={async description => {
           if (task && task.id) {
-            operations.tasks.patchTask(task.id, {
+            patchTask({
+              id: task.id,
               description,
-            })(dispatch);
+            });
           } else {
-            operations.tasks.createTask({
+            createTask({
               description,
-            })(dispatch)
-              .then(resultTask => setTask(resultTask));
+            })
+              .then(({ data }) => {
+                if (data) {
+                  setTask(data);
+                }
+              });
           }
         }}
         style={{

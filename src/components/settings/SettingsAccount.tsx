@@ -1,28 +1,28 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import { useTranslation } from 'react-i18next';
 import { Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
-import { PatchUserMeAction } from 'services/login/actions';
-import { RootState } from 'services/store';
+import { usePatchUserMeMutation } from 'services/login/api';
+import { useAuth } from 'services/login/hooks';
 import { setLanguage } from 'utils/translation';
 
 const SettingsAccount = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const login = useSelector((state: RootState) => state.login);
-  const { user } = login;
+  const auth = useAuth();
+  const { user } = auth;
   const { language } = user;
 
+  const [patchUserMe] = usePatchUserMeMutation();
+
   const handleChangeLanguage = newLanguage => {
-    operations.login.patchUserMe({
+    patchUserMe({
       language: newLanguage,
-    })(dispatch)
-    .then(res => {
-      const patchUserMeResponse = res as PatchUserMeAction;
-      setLanguage(patchUserMeResponse.payload.user.language);
-    });
+    })
+      .then(({ data }) => {
+        if (data) {
+          setLanguage(data.language);
+        }
+      });
   };
 
   return (

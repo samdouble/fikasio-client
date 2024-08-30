@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
+import { Activity } from 'services/activities/types';
 
-const calculateFilledTime = (activities, startTs, endTs) => {
+const calculateFilledTime = (activities: Activity[], startTs, endTs) => {
   const startTsMillis = DateTime.fromISO(startTs).toMillis();
   const endTsMillis = DateTime.fromISO(endTs).toMillis();
   const sortedActivities = activities

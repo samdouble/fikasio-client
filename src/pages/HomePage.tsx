@@ -1,25 +1,23 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import { Warning } from '@fikasio/react-ui-components';
-import ResourcesHandler from 'components/ResourcesHandler';
 import TasksView from 'components/tasks/TasksView';
 import { calculateOverloadInTheFuture, filterTasks } from 'components/tasks/utils';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
 import { setPaneContent } from 'services/pane/slice';
-import { RootState } from 'services/store';
+import { useGetTasksQuery } from 'services/tasks/api';
 import { round } from 'utils/maths';
 import './style.scss';
 
 const HomePage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const { data: tasks } = useGetTasksQuery({});
   const dispatch = useDispatch();
 
   const tasksForToday = filterTasks(tasks, {
@@ -57,7 +55,7 @@ const HomePage = () => {
     });
   }, []);
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('home')}</title>
@@ -115,16 +113,6 @@ const HomePage = () => {
         />
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      getContents={getPage}
-      resourceFetchers={[
-        () => dispatch(operations.tasks.fetchTasks()),
-      ]}
-      resources={[tasks]}
-    />
   );
 }
 

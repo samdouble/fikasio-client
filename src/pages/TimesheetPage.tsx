@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
@@ -23,7 +23,7 @@ import './style.scss';
 
 const TimesheetPage = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [activities, setActivities] = useState<Activity[]>([]);
   const { search } = location;
@@ -70,7 +70,7 @@ const TimesheetPage = () => {
       });
   }, [startTs, endTs]);
 
-  const resFilledTime = activities && calculateFilledTime(activities, startTs, endTs);
+  const resFilledTime = activities && calculateFilledTime([...activities], startTs, endTs);
   const filledTime = resFilledTime ? resFilledTime.filledTime : 0;
   const unfilledTime = resFilledTime ? resFilledTime.unfilledTime : 0;
 
@@ -143,7 +143,7 @@ const TimesheetPage = () => {
             onClick={() => {
               const newDate = date.minus({ days: 1 });
               // setDate(newDate);
-              history.push(links.timesheet({ date: newDate.toFormat('yyyy-MM-dd') }));
+              navigate(links.timesheet({ date: newDate.toFormat('yyyy-MM-dd') }));
             }}
             style={{
               cursor: 'pointer',
@@ -165,7 +165,7 @@ const TimesheetPage = () => {
             onClick={() => {
               const newDate = date.plus({ days: 1 });
               // setDate(newDate);
-              history.push(links.timesheet({ date: newDate.toFormat('yyyy-MM-dd') }));
+              navigate(links.timesheet({ date: newDate.toFormat('yyyy-MM-dd') }));
             }}
             style={{
               cursor: 'pointer',

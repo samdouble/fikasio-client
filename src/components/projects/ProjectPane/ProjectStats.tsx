@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { Warning } from '@fikasio/react-ui-components';
@@ -11,17 +10,17 @@ import {
   getFurthestDueDate,
 } from 'components/tasks/utils';
 import { useGetProjectsQuery } from 'services/projects/api';
+import { useGetTasksQuery } from 'services/tasks/api';
 import { formatYYYYMMDD } from 'utils/date';
 import { round } from 'utils/maths';
 import { convertMinutesToHumanHM } from 'utils/time';
-import { RootState } from 'services/store';
 
 const Stats = ({
   projectId,
 }) => {
   const { t } = useTranslation();
   const { data: projects } = useGetProjectsQuery();
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const { data: tasks } = useGetTasksQuery({});
   const project = (projects || []).find(p => p.id === projectId);
   const projectTasks = tasks?.filter(task => task.projects?.some(tp => tp.id === project?.id));
   const projectTasksIncomplete = projectTasks?.filter(task => task.status !== 'Completed');

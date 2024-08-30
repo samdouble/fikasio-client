@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import ResourcesHandler from 'components/ResourcesHandler';
 import ProjectsView from 'components/projects/ProjectsView';
 import BasePage from 'components/UI/BasePage';
-import { operations } from 'services';
 import { setPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery, useAddProjectMutation } from 'services/projects/api';
-import { RootState } from 'services/store';
 import links from 'utils/links';
 import './style.scss';
 
@@ -19,7 +16,6 @@ const ProjectsPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { data: projects } = useGetProjectsQuery();
-  const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
 
   const [createProject] = useAddProjectMutation();
@@ -35,7 +31,7 @@ const ProjectsPage = () => {
     return createProject(project);
   };
 
-  const getPage = () => (
+  return (
     <>
       <Helmet>
         <title>{t('projects')}</title>
@@ -64,16 +60,6 @@ const ProjectsPage = () => {
         />
       </BasePage>
     </>
-  );
-
-  return (
-    <ResourcesHandler
-      getContents={getPage}
-      resourceFetchers={[
-        () => dispatch(operations.tasks.fetchTasks()),
-      ]}
-      resources={[tasks]}
-    />
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { DateTime } from 'luxon';
-import { getTaskEvents } from 'services/tasks/endpoints';
+import { useLazyGetTaskEventsQuery } from 'services/tasks/api';
 import { Event } from 'services/events/types';
 import { Task } from 'services/tasks/types';
 
@@ -14,9 +14,17 @@ const TaskHistory = ({
 }: TaskHistoryProps) => {
   const [events, setEvents] = useState<Event[]>([]);
 
+  const [getTaskEvents] = useLazyGetTaskEventsQuery();
+
   useEffect(() => {
-    getTaskEvents(task.id)
-      .then(res => setEvents(res.events));
+    if (task.id) {
+      getTaskEvents(task.id)
+        .then(({ data }) => {
+          if (data) {
+            setEvents(data);
+          }
+        });
+    }
   }, []);
 
   return (

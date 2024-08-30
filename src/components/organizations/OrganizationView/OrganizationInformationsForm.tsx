@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -15,7 +15,7 @@ const OrganizationInformationsForm = ({
   organization,
 }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [createOrganization] = useAddOrganizationMutation();
@@ -32,7 +32,7 @@ const OrganizationInformationsForm = ({
       createOrganization(formData)
         .then(() => {
           dispatch(clearPaneContent());
-          history.push(links.paths.organizations);
+          navigate(links.paths.organizations);
         });
     }
   };

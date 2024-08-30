@@ -49,7 +49,7 @@ const ActivitiesList = ({
     const endOfDay = date.endOf('day');
     return DateTime.fromISO(a.startTime) <= endOfDay && DateTime.fromISO(a.endTime) >= startOfDay;
   });
-  const allActivitiesAreChecked = activitiesToShow?.length 
+  const allActivitiesAreChecked = !!activitiesToShow?.length 
     && (activitiesToShow?.length === selectedActivities.length);
 
   return (

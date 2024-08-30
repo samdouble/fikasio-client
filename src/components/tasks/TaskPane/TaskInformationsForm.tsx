@@ -11,9 +11,9 @@ import { FieldArray } from 'react-final-form-arrays';
 import omit from 'lodash.omit';
 import { DateTime } from 'luxon';
 import { DatePicker, Select } from '@fikasio/react-ui-components';
-import { operations } from 'services';
 import { clearPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery } from 'services/projects/api';
+import { useAddTaskMutation, usePatchTaskMutation, useUpdateTaskMutation } from 'services/tasks/api';
 import { Task } from 'services/tasks/types';
 import { processFormData } from 'utils/forms';
 
@@ -42,6 +42,10 @@ const TaskInformationsForm = ({
     ? DateTime.fromISO(task.dueAt).toJSDate()
     : null,
   );
+
+  const [createTask] = useAddTaskMutation();
+  const [patchTask] = usePatchTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   const taskProjects = task
     ? task.projects
@@ -75,14 +79,15 @@ const TaskInformationsForm = ({
       formData.estimatedCompletionTime *= 60;
     }
     if (task && task.id) {
-      operations.tasks.updateTask(task.id,
-        omit(formData, ['estimatedCompletionTimeUnits']),
-      )(dispatch)
+      updateTask({
+        id: task.id,
+        ...omit(formData, ['estimatedCompletionTimeUnits']),
+      })
         .then(() => dispatch(clearPaneContent()));
     } else {
-      operations.tasks.createTask(
+      createTask(
         omit(formData, ['estimatedCompletionTimeUnits']),
-      )(dispatch)
+      )
         .then(() => dispatch(clearPaneContent()));
     }
   };
@@ -132,7 +137,10 @@ const TaskInformationsForm = ({
                       const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 0, minute: 0, second: 0 });
                       if (task && task.id) {
-                        operations.tasks.patchTask(task.id, { startAt: timestamp.toISO() })(dispatch);
+                        patchTask({
+                          id: task.id,
+                          startAt: timestamp.toISO(),
+                        });
                       }
                       setStartAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());
@@ -162,7 +170,10 @@ const TaskInformationsForm = ({
                       const timestamp = DateTime.fromJSDate(value)
                         .set({ hour: 23, minute: 59, second: 59, millisecond: 999 });
                       if (task && task.id) {
-                        operations.tasks.patchTask(task.id, { dueAt: timestamp.toISO() })(dispatch);
+                        patchTask({
+                          id: task.id,
+                          dueAt: timestamp.toISO(),
+                        });
                       }
                       setDueAt(timestamp.toJSDate());
                       input.onChange(timestamp.toJSDate());

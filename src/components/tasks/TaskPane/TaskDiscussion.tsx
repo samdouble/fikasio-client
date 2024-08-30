@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AutosaveTextarea } from '@fikasio/react-ui-components';
-import { usePatchActivityMutation } from 'services/activities/api';
-import { getTaskComments } from 'services/tasks/endpoints';
+import { useLazyGetTaskCommentsQuery } from 'services/tasks/api';
 import { Task } from 'services/tasks/types';
 
 interface TaskDiscussionProps {
@@ -11,13 +10,18 @@ interface TaskDiscussionProps {
 const TaskDiscussion = ({
   task,
 }: TaskDiscussionProps) => {
-  const [comments, setComments] = useState([]);
-
-  const [patchActivity] = usePatchActivityMutation();
+  const [comments, setComments] = useState<string[]>([]);
+  const [getTaskComments] = useLazyGetTaskCommentsQuery();
 
   useEffect(() => {
-    getTaskComments(task.id)
-      .then(res => setComments(res.comments));
+    if (task.id) {
+      getTaskComments(task.id)
+        .then(({ data }) => {
+          if (data) {
+            setComments(data);
+          }
+        });
+    }
   }, []);
 
   return (

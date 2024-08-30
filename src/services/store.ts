@@ -4,11 +4,12 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { createLogger } from 'redux-logger';
 import promise from 'redux-promise';
 import thunk from 'redux-thunk';
-import reducers from 'services/reducers';
 import { apiActivities } from 'services/activities/api';
 import { apiEntities } from 'services/entities/api';
 import { apiEvents } from 'services/events/api';
 import { apiItems } from 'services/items/api';
+import { apiLogin } from 'services/login/api';
+import loginReducer from 'services/login/slice';
 import { apiObjectives } from 'services/objectives/api';
 import { apiOrganizations } from 'services/organizations/api';
 import paneReducer from 'services/pane/slice';
@@ -27,12 +28,13 @@ if (process.env.NODE_ENV === 'production') {
 
 const store = configureStore({
   reducer: combineReducers({
-    ...reducers,
+    auth: loginReducer,
     pane: paneReducer,
     [apiActivities.reducerPath]: apiActivities.reducer,
     [apiEntities.reducerPath]: apiEntities.reducer,
     [apiEvents.reducerPath]: apiEvents.reducer,
     [apiItems.reducerPath]: apiItems.reducer,
+    [apiLogin.reducerPath]: apiLogin.reducer,
     [apiObjectives.reducerPath]: apiObjectives.reducer,
     [apiOrganizations.reducerPath]: apiOrganizations.reducer,
     [apiPayments.reducerPath]: apiPayments.reducer,
@@ -49,6 +51,7 @@ const store = configureStore({
         apiEntities.middleware,
         apiEvents.middleware,
         apiItems.middleware,
+        apiLogin.middleware,
         apiObjectives.middleware,
         apiOrganizations.middleware,
         apiPayments.middleware,

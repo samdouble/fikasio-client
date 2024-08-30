@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
@@ -19,11 +19,12 @@ import {
   usePatchActivityMutation,
 } from 'services/activities/api';
 import { Activity } from 'services/activities/types';
+import { useAuth } from 'services/login/hooks';
 import { clearPaneContent } from 'services/pane/slice';
 import { useGetProjectsQuery } from 'services/projects/api';
+import { useGetTasksQuery } from 'services/tasks/api';
 import { useGetTemplatesQuery } from 'services/templates/api';
 import { TemplateField } from 'services/templates/types';
-import { RootState } from 'services/store';
 import { getFormFieldForType, processFormData } from 'utils/forms';
 import SuggestionsList from './SuggestionsList';
 import './ActivityPane.scss';
@@ -38,10 +39,10 @@ const ActivityPane = ({
   const dispatch = useDispatch();
   const { data: activities } = useGetActivitiesQuery({});
   const { data: projects } = useGetProjectsQuery();
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const { data: tasks } = useGetTasksQuery({});
   const { data: templates } = useGetTemplatesQuery();
-  const login = useSelector((state: RootState) => state.login);
-  const me = login.user;
+  const auth = useAuth();
+  const me = auth.user;
   const activity = activityProp.id
     ? (activities || []).find(a => a.id === activityProp.id)
     : activityProp;
@@ -85,7 +86,7 @@ const ActivityPane = ({
         );
       } else {
         getActivities({
-          filter: null,
+          filter: {},
           sort: { endTime: -1 },
           q: text,
         })

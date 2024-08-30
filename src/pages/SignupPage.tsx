@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@fikasio/react-ui-components';
-import { operations } from 'services';
-import { LoginRequestAction } from 'services/login/actions';
+import { useLoginMutation, useSignupMutation } from 'services/login/api';
 import links from 'utils/links';
 import { getFormData } from 'utils/forms';
 import { initializeSocket } from 'utils/sockets';
@@ -16,36 +14,33 @@ import './style.scss';
 
 const SignupPage = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [showSignupError, setShowSignupError] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
+
+  const [login] = useLoginMutation();
+  const [signup] = useSignupMutation();
 
   useEffect(() => {
     ReactGA.send({
       hitType: 'pageview',
       page: location.pathname,
     });
-    operations.login.login()(dispatch)
-      .then(res => {
-        const loginRequestResponse = res as LoginRequestAction;
-        if (loginRequestResponse && loginRequestResponse.payload) {
-          initializeSocket();
-          history.push(location.state ? location.state.from : links.paths.home);
-        }
+    login({})
+      .then(() => {
+        initializeSocket();
+        navigate(location.state ? location.state.from : links.paths.home);
       })
       .catch(() => {
-        operations.login.login(null)(dispatch);
+        login({});
       });
   }, []);
 
   const handleSignup = () => {
     const formData: any = getFormData('Signup_form');
-    operations.login.signup(formData)(dispatch)
-      .then(res => {
-        if (res && res.user) {
-          history.push(location.state ? location.state.from : links.paths.home);
-        }
+    signup(formData)
+      .then(() => {
+        navigate(location.state ? location.state.from : links.paths.home);
       })
       .catch(() => {
         setShowSignupError(true);

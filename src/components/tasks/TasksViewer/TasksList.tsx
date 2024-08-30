@@ -17,14 +17,14 @@ const TasksList = ({
 }) => {
   const { t } = useTranslation();
 
-  const allTasksAreChecked = tasks?.length
+  const allTasksAreChecked = !!tasks?.length
     && (tasks?.length === selectedTasks.length);
 
   const addTask = async task => {
     onAddTask(task)
-      .then(resultTask => {
+      .then(({ data: resultTask }) => {
         if (resultTask) {
-          const elementsWithClassname = document.getElementsByClassName(resultTask.id!);
+          const elementsWithClassname = document.getElementsByClassName(resultTask.id);
           const nbElementsWithClassname = elementsWithClassname.length;
           if (nbElementsWithClassname) {
             (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();

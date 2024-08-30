@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -18,7 +18,7 @@ const TemplateInformationsForm = ({
   template,
 }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [color, setColor] = useState(template?.color);
   const [isColorpickerOpen, setIsColorpickerOpen] = useState(false);
@@ -37,7 +37,7 @@ const TemplateInformationsForm = ({
       createTemplate(formData)
         .then(() => {
           dispatch(clearPaneContent());
-          history.push(links.paths.templates);
+          navigate(links.paths.templates);
         });
     }
   };

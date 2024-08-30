@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,25 +9,22 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import Card from 'components/dashboards/Card';
 import Sidebar from 'components/UI/Sidebar';
-import { getTasks } from 'services/tasks/endpoints';
-import { Task } from 'services/tasks/types';
+import { useGetTasksQuery } from 'services/tasks/api';
 import links from 'utils/links';
 import './style.scss';
 
 const DashboardPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const nbTotal = tasks.length;
-  const nbDone = tasks.filter(task => task.status === 'Completed').length;
+  const { data: tasks } = useGetTasksQuery({});
+  const nbTotal = tasks?.length;
+  const nbDone = tasks?.filter(task => task.status === 'Completed').length;
 
   useEffect(() => {
     ReactGA.send({
       hitType: 'pageview',
       page: location.pathname,
     });
-    getTasks({})
-      .then(res => setTasks(res.tasks));
   }, []);
 
   return (

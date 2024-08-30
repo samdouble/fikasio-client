@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, luxonLocalizer, Event } from 'react-big-calendar';
 import withDragAndDrop, { withDragAndDropProps } from 'react-big-calendar/lib/addons/dragAndDrop';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +7,7 @@ import useTimeout from 'use-timeout';
 import Color from 'color';
 import { useLazyGetActivitiesQuery, usePatchActivityMutation } from 'services/activities/api';
 import { Activity } from 'services/activities/types';
-import { RootState } from 'services/store';
+import { useAuth } from 'services/login/hooks';
 import { useGetTemplatesQuery } from 'services/templates/api';
 import Toolbar from './Toolbar';
 import { convertActivitiesToCalendarEvents } from './utils';
@@ -22,18 +21,37 @@ const ActivitiesCalendar = ({
   date,
   onActivityClick,
 }) => {
-  const dispatch = useDispatch();
-  const loginState = useSelector((state: RootState) => state.login);
   const { data: templates } = useGetTemplatesQuery();
-  const me = loginState.user;
+  const auth = useAuth();
+  const me = auth.user;
   const [activities, setActivities] = useState<Activity[]>([]);
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const { t } = useTranslation();
+  const startTs = date.startOf('day');
+  const startTsIso = startTs.toISO();
+  const endTs = date.endOf('day');
+  const endTsIso = endTs.toISO();
 
   const [getActivities] = useLazyGetActivitiesQuery();
   const [patchActivity] = usePatchActivityMutation();
+
+  useEffect(() => {
+    console.log(date);
+    getActivities({
+      filter: {
+        startTime: startTsIso,
+        endTime: endTsIso,
+      },
+    })
+      .then(({ data }) => {
+        console.log(data);
+        if (data) {
+          setActivities(data);
+        }
+      });
+  }, [startTsIso, endTsIso]);
 
   useEffect(() => {
     if (activities) {
@@ -87,6 +105,7 @@ const ActivitiesCalendar = ({
         },
       })
         .then(({ data }) => {
+          console.log(data);
           if (data) {
             setActivities(data);
           }

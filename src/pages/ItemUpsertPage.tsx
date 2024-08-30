@@ -25,7 +25,7 @@ const ItemUpsertPage = () => {
 
   const entity = entities && entities.find(e => e.id === entityId);
 
-  return entity && (
+  return (entity && itemId) ? (
     <>
       <Helmet>
         <title>{t('createAnItem')}</title>
@@ -41,12 +41,12 @@ const ItemUpsertPage = () => {
         </Breadcrumb>
         <h4>{t('createAnItem')}</h4>
         <ItemInformationsForm
-          entityId={entityId}
+          entityId={entity.id}
           id={itemId}
         />
       </BasePage>
     </>
-  );
+  ) : null;
 };
 
 export default ItemUpsertPage;

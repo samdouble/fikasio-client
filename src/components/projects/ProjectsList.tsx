@@ -1,9 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from '@fikasio/react-ui-components';
-import { RootState } from 'services/store';
+import { useGetTasksQuery } from 'services/tasks/api';
 import ProjectRow from './ProjectRow';
 import { calculateIncompleteTime, calculateCompletionPercentage } from '../tasks/utils';
 import './style.scss';
@@ -20,7 +19,7 @@ const ProjectsList = ({
   showArchivedProjects,
 }) => {
   const { t } = useTranslation();
-  const tasks = useSelector((state: RootState) => state.tasks);
+  const { data: tasks } = useGetTasksQuery({});
   
   const projectsToShow = projects?.map(project => {
       const projectTasks = tasks?.filter(task => task.projects?.some(p => p.id === project.id));
@@ -39,7 +38,7 @@ const ProjectsList = ({
       || (showArchivedProjects && project.isArchived)
     ));
 
-  const allProjectsAreChecked = projectsToShow?.length
+  const allProjectsAreChecked = !!projectsToShow?.length
     && (projectsToShow?.length === selectedProjects.length);
 
   const addProject = async project => {

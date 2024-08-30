@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import uniqBy from 'lodash.uniqby';
 import { DateTime } from 'luxon';
 import { DatePicker } from '@fikasio/react-ui-components';
-import { operations } from 'services';
+import { useAddTaskMutation, usePatchManyTasksMutation, useDeleteManyTasksMutation } from 'services/tasks/api';
 import { Task } from 'services/tasks/types';
 import AddTaskButton from './AddTaskButton';
 import TasksFilters from './TasksFilters/TasksFilters';
@@ -41,7 +40,6 @@ const TasksView = ({
   showViewModeButtons,
   tasks,
 }: TasksViewProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [filter, setFilter] = useState<TasksViewFilter>({
     complete: false,
@@ -49,8 +47,12 @@ const TasksView = ({
   const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
 
+  const [createTask] = useAddTaskMutation();
+  const [patchManyTasks] = usePatchManyTasksMutation();
+  const [deleteManyTasks] = useDeleteManyTasksMutation();
+
   const addTask = async task => {
-    return operations.tasks.createTask(task)(dispatch);
+    return createTask(task);
   };
 
   const handleChangeCompletionFilter = val => {
@@ -198,12 +200,12 @@ const TasksView = ({
             <FontAwesomeIcon
               icon="times"
               onClick={
-                () => operations.tasks.deleteManyTasks(
-                  selectedTasks
+                () => deleteManyTasks({
+                  ids: selectedTasks
                     .filter(selectedTask => !!selectedTask.id)
                     .map(selectedTask => selectedTask.id!),
-                )(dispatch)
-                .then(() => setSelectedTasks([]))
+                })
+                  .then(() => setSelectedTasks([]))
               }
               size="1x"
               style={{
@@ -233,7 +235,7 @@ const TasksView = ({
                   const selectedTasksIds = selectedTasks
                     .filter(selectedTask => !!selectedTask.id)
                     .map(selectedTask => selectedTask.id!)
-                  operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: timestamp })(dispatch)
+                  patchManyTasks({ ids: selectedTasksIds, infos: { dueAt: timestamp }})
                     .then(() => setSelectedTasks([]));
                 }}
                 onClose={() => setIsDueAtDatepickerOpen(false)}
@@ -242,7 +244,7 @@ const TasksView = ({
                   const selectedTasksIds = selectedTasks
                     .filter(selectedTask => !!selectedTask.id)
                     .map(selectedTask => selectedTask.id!)
-                  operations.tasks.patchManyTasks(selectedTasksIds, { dueAt: null })(dispatch)
+                  patchManyTasks({ ids: selectedTasksIds, infos: { dueAt: null }})
                     .then(() => setSelectedTasks([]));
                 }}
                 shouldCloseOnSelect

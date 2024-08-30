@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -15,7 +15,7 @@ const EntityInformationsForm = ({
   entity,
 }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [createEntity] = useAddEntityMutation();
@@ -32,7 +32,7 @@ const EntityInformationsForm = ({
       createEntity(formData)
         .then(() => {
           dispatch(clearPaneContent());
-          history.push(links.paths.entities);
+          navigate(links.paths.entities);
         });
     }
   };

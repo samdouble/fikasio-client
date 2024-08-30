@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +10,7 @@ import {
   useDeleteActivityMutation,
   usePatchActivityMutation,
 } from 'services/activities/api';
-import { RootState } from 'services/store';
+import { useAuth } from 'services/login/hooks';
 
 const ActivityRow = ({
   activity,
@@ -22,8 +21,8 @@ const ActivityRow = ({
   onSelect,
 }) => {
   const { t } = useTranslation();
-  const login = useSelector((state: RootState) => state.login);
-  const me = login.user;
+  const auth = useAuth();
+  const me = auth.user;
   const [comments, setIComments] = useState((activity && activity.comments) || '');
   const [isStartDateTimeDatepickerOpen, setIsStartDateTimeDatepickerOpen] = useState(false);
   const [isEndDateTimeDatepickerOpen, setIsEndDateTimeDatepickerOpen] = useState(false);

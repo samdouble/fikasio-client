@@ -2,6 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import envvars from 'utils/envvars';
 import { Item } from './types';
 
+interface UpdateFieldValueForItemQueryArgs {
+  entityId: string;
+  itemId: string;
+  fieldId: string;
+  value: any;
+}
+
 export const apiItems = createApi({
   reducerPath: 'itemsApi',
   tagTypes: ['Item'],
@@ -48,7 +55,7 @@ export const apiItems = createApi({
       transformErrorResponse: (response: { status: string | number }) => response.status,
       invalidatesTags: ['Item'],
     }),
-    updateFieldValueForItem: builder.mutation<Item, { entityId: string; itemId: string; fieldId: string; value: any; }>({
+    updateFieldValueForItem: builder.mutation<Item, UpdateFieldValueForItemQueryArgs>({
       query: ({ entityId, itemId, fieldId, ...body }) => ({
         url: `entities/${entityId}/items/${itemId}/values/${fieldId}`,
         method: 'PUT',

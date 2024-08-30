@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from 'react-router-dom';
 import usePrevious from 'use-previous';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
@@ -11,10 +11,9 @@ import Form from 'react-bootstrap/Form';
 import ReactGA from 'react-ga4';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { useGoogleLogin } from '@react-oauth/google';
-import { operations } from 'services';
-import { loginGoogle } from 'services/login/endpoints';
-import { RootState } from 'services/store';
+import { useLoginMutation } from 'services/login/api';
+import { useAuth } from 'services/login/hooks';
+import { setCredentials } from 'services/login/slice';
 import links from 'utils/links';
 import { getFormData } from 'utils/forms';
 import { initializeSocket } from 'utils/sockets';
@@ -24,58 +23,54 @@ import './style.scss';
 const LoginPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const loginState = useSelector((state: RootState) => state.login);
-  const history = useHistory();
+  const auth = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
+  const [login] = useLoginMutation();
   const [showLoginError, setShowLoginError] = useState(false);
-  const prevLoginState = usePrevious(loginState);
 
   useEffect(() => {
     ReactGA.send({
       hitType: 'pageview',
       page: location.pathname,
     });
-    operations.login.login()(dispatch)
+    login({})
       .catch(() => undefined);
   }, []);
 
   useEffect(() => {
-    if (!prevLoginState && loginState) {
-      setLanguage(loginState.user.language);
+    if (auth.user) {
+      setLanguage(auth.user.language);
       initializeSocket();
-      history.push(location.state ? location.state.from : links.paths.home);
+      navigate(location.state ? location.state.from : links.paths.home);
     }
-  }, [loginState]);
+  }, [auth]);
 
-  const handleGoogleSignIn = useGoogleLogin({
-    onSuccess: ({
-      access_token: accessToken,
-      scope,
-      token_type: tokenType,
-    }) => {
-      loginGoogle({
-        accessToken,
-        scope,
-        tokenType,
-      });
-    },
-    onError: error => console.error(error),
-    onNonOAuthError: error => console.error(error),
-  });
+  // const handleGoogleSignIn = useGoogleLogin({
+  //   onSuccess: ({
+  //     access_token: accessToken,
+  //     scope,
+  //     token_type: tokenType,
+  //   }) => {
+  //     // loginGoogle({
+  //     //   accessToken,
+  //     //   scope,
+  //     //   tokenType,
+  //     // });
+  //   },
+  //   onError: error => console.error(error),
+  //   onNonOAuthError: error => console.error(error),
+  // });
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const formData: any = getFormData('Login_form');
-    operations.login.login(formData.emailAddress, formData.password)(dispatch)
-      .then((res: any) => {
-        if (res) {
-          setLanguage(res.user.language);
-          initializeSocket();
-          history.push(location.state ? location.state.from : links.paths.home);
-        }
-      })
-      .catch(() => {
-        setShowLoginError(true);
-      });
+    const user: any = await login({
+      emailAddress: formData.emailAddress,
+      password: formData.password,
+    }).unwrap();
+    dispatch(setCredentials({ user }));
+    initializeSocket();
+    navigate(location.state ? location.state.from : links.paths.home);
 
     if (document.getElementById('password')) {
       const passwordInput = document.getElementById('password') as HTMLInputElement;
@@ -151,15 +146,19 @@ const LoginPage = () => {
             </a>
           </Col>
           <Col md={6}>
-            <Button
-              onClick={() => handleGoogleSignIn()}
-              type="button"
-              variant="danger"
-            >
-              <span className="fa fa-google" />
-              &nbsp;
-              {t('loginWithGoogle')}
-            </Button>
+            {
+              /*
+              <Button
+                onClick={() => handleGoogleSignIn()}
+                type="button"
+                variant="danger"
+              >
+                <span className="fa fa-google" />
+                &nbsp;
+                {t('loginWithGoogle')}
+              </Button>
+              */
+            }
           </Col>
         </Row>
       </Container>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +16,7 @@ const ItemsList = ({
   onItemSelect,
   selectedItems,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [rows, setRows] = useState(items);
 
@@ -144,7 +144,7 @@ const ItemsList = ({
           <Dropdown.Toggle as={DropdownToggle} />
           <Dropdown.Menu>
             <Dropdown.Item
-              onClick={() => history.push(links.itemUpsert(entity.id, row.id))}
+              onClick={() => navigate(links.itemUpsert(entity.id, row.id))}
             >
               <FontAwesomeIcon
                 icon="edit"
