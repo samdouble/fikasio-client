@@ -10,18 +10,18 @@ const calculateFilledTime = (activities: Activity[], startTs, endTs) => {
   let filledTime = 0;
   let movingTs = startTsMillis;
   const getCurrentActivity = ts => activities
-    .find(a => DateTime.fromJSDate(a.startTime).toMillis() <= ts && DateTime.fromJSDate(a.endTime).toMillis() > ts);
+    .find(a => DateTime.fromISO(a.startTime).toMillis() <= ts && DateTime.fromISO(a.endTime).toMillis() > ts);
   const getNextActivity = ts => sortedActivities
-    .find(a => DateTime.fromJSDate(a.startTime).toMillis() > ts);
+    .find(a => DateTime.fromISO(a.startTime).toMillis() > ts);
   while (movingTs < endTsMillis) {
     const activity = getCurrentActivity(movingTs);
     if (activity) {
-      filledTime += (Math.min(endTsMillis, DateTime.fromJSDate(activity.endTime).toMillis()) - movingTs);
-      movingTs = DateTime.fromJSDate(activity.endTime).toMillis();
+      filledTime += (Math.min(endTsMillis, DateTime.fromISO(activity.endTime).toMillis()) - movingTs);
+      movingTs = DateTime.fromISO(activity.endTime).toMillis();
     } else {
       const nextActivity = getNextActivity(movingTs);
       const nextTs = nextActivity
-        ? Math.min(endTsMillis, DateTime.fromJSDate(nextActivity.startTime).toMillis())
+        ? Math.min(endTsMillis, DateTime.fromISO(nextActivity.startTime).toMillis())
         : endTsMillis;
       unfilledTime += (nextTs - movingTs);
       movingTs = nextTs;

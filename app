@@ -41,8 +41,8 @@ case "${cmd}" in
     sudo docker ps -a
     ;;
   clear)
-    sudo docker stop $(sudo docker ps -a -q)
-    sudo docker rm $(sudo docker ps -a -q)
+    sudo docker stop $(sudo docker ps -aq)
+    sudo docker rm $(sudo docker ps -aq)
     ;;
   clean)
     cd client

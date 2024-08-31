@@ -2,7 +2,7 @@ FROM node:20.2.0
 
 WORKDIR /client
 COPY . /client/
-EXPOSE 3000 1880
+EXPOSE 3000
 
 RUN ["chmod", "+x", "/client/entrypoint.sh"]
 ENTRYPOINT ["./entrypoint.sh"]

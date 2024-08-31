@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -13,8 +13,7 @@ import { useTranslation } from 'react-i18next';
 import ActivitiesView from 'components/activities/ActivitiesView';
 import { calculateFilledTime } from 'components/activities/utils';
 import BasePage from 'components/UI/BasePage';
-import { useLazyGetActivitiesQuery } from 'services/activities/api';
-import { Activity } from 'services/activities/types';
+import { useGetActivitiesQuery } from 'services/activities/api';
 import { setPaneContent } from 'services/pane/slice';
 import links from 'utils/links';
 import { round } from 'utils/maths';
@@ -25,7 +24,6 @@ const TimesheetPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [activities, setActivities] = useState<Activity[]>([]);
   const { search } = location;
   const searchParams = new URLSearchParams(search);
   const dateParam = searchParams.get('date');
@@ -33,8 +31,6 @@ const TimesheetPage = () => {
     ? DateTime.fromFormat(dateParam, 'yyyy-MM-dd')
     : DateTime.now();
   const { t } = useTranslation();
-
-  const [getActivities] = useLazyGetActivitiesQuery();
 
   const startTs = date.set({
     hour: 0,
@@ -49,6 +45,13 @@ const TimesheetPage = () => {
     millisecond: 999,
   }).toISO();
 
+  const { data: activities, refetch } = useGetActivitiesQuery({
+    filter: {
+      startTime: startTs,
+      endTime: endTs,
+    },
+  });
+
   useEffect(() => {
     ReactGA.send({
       hitType: 'pageview',
@@ -57,17 +60,7 @@ const TimesheetPage = () => {
   }, []);
 
   useEffect(() => {
-    getActivities({
-      filter: {
-        startTime: startTs,
-        endTime: endTs,
-      },
-    })
-      .then(({ data }) => {
-        if (data) {
-          setActivities(data);
-        }
-      });
+    refetch();
   }, [startTs, endTs]);
 
   const resFilledTime = activities && calculateFilledTime([...activities], startTs, endTs);

@@ -5,12 +5,13 @@ export interface Value {
 
 export interface Activity {
   comments: string;
+  createdAt: string;
   duration: number;
-  endTime: Date;
+  endTime: string;
   id: string;
   name?: string;
   projects?: { id: string; }[];
-  startTime: Date;
+  startTime: string;
   tasks?: { id: string; }[];
   templateId?: string;
   values?: Value[];

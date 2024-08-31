@@ -18,13 +18,6 @@ const TasksPage = () => {
   const { data: tasks } = useGetTasksQuery({});
   const dispatch = useDispatch();
 
-  /*
-  const { data, isFetching } = useGetTasksQuery({});
-  console.log(isFetching, data);
-  useEffect(() => {
-  }, [isFetching]);
-  */
-
   useEffect(() => {
     ReactGA.send({
       hitType: 'pageview',
