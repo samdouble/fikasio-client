@@ -54,7 +54,7 @@ const EntitiesList = ({
       </thead>
       <tbody>
         {
-          entities
+          [...(entities || [])]
             .sort((p1, p2) => (p1.name.toLowerCase().localeCompare(p2.name.toLowerCase())))
             .map(entity => (
               <EntityRow

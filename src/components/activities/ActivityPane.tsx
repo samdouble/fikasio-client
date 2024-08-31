@@ -294,7 +294,7 @@ const ActivityPane = ({
                         handleChangeTemplate(value);
                       }}
                       options={
-                        (templates || [])
+                        [...(templates || [])]
                           .sort((t1, t2) => (t1.name < t2.name ? -1 : 1))
                           .map(t1 => ({
                             label: t1.name,
