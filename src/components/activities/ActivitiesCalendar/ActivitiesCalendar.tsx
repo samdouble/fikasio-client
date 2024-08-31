@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import useTimeout from 'use-timeout';
 import Color from 'color';
-import { useLazyGetActivitiesQuery, usePatchActivityMutation } from 'services/activities/api';
+import { useGetActivitiesQuery, usePatchActivityMutation } from 'services/activities/api';
 import { Activity } from 'services/activities/types';
 import { useAuth } from 'services/login/hooks';
 import { useGetTemplatesQuery } from 'services/templates/api';
@@ -24,33 +24,26 @@ const ActivitiesCalendar = ({
   const { data: templates } = useGetTemplatesQuery();
   const auth = useAuth();
   const me = auth.user;
-  const [activities, setActivities] = useState<Activity[]>([]);
   const [delay, setDelay] = useState<number | null>(null);
   const [newActivity, setNewActivity] = useState<Activity | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const { t } = useTranslation();
-  const startTs = date.startOf('day');
+  const [period, setPeriod] = useState('day');
+  const startTs = date.startOf(period);
   const startTsIso = startTs.toISO();
-  const endTs = date.endOf('day');
+  const endTs = date.endOf(period);
   const endTsIso = endTs.toISO();
+  const { data: activities, refetch } = useGetActivitiesQuery({
+    filter: {
+      startTime: startTsIso,
+      endTime: endTsIso,
+    },
+  });
 
-  const [getActivities] = useLazyGetActivitiesQuery();
   const [patchActivity] = usePatchActivityMutation();
 
   useEffect(() => {
-    console.log(date);
-    getActivities({
-      filter: {
-        startTime: startTsIso,
-        endTime: endTsIso,
-      },
-    })
-      .then(({ data }) => {
-        console.log(data);
-        if (data) {
-          setActivities(data);
-        }
-      });
+    refetch();
   }, [startTsIso, endTsIso]);
 
   useEffect(() => {
@@ -79,45 +72,11 @@ const ActivitiesCalendar = ({
     });
   };
 
-  const handleViewChange = view => {
-    if (view === 'week') {
-      const startOfWeek = date.startOf('week');
-      const startTs = startOfWeek
-        .set({
-          hour: 0,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-        }).toISO();
-      const endTs = startOfWeek
-        .plus({ days: 6 })
-        .set({
-          hour: 23,
-          minute: 59,
-          second: 59,
-          millisecond: 999,
-        }).toISO();
-
-      getActivities({
-        filter: {
-          startTime: startTs,
-          endTime: endTs,
-        },
-      })
-        .then(({ data }) => {
-          console.log(data);
-          if (data) {
-            setActivities(data);
-          }
-        });
-    }
-  }
-
   const onEventDrop: withDragAndDropProps['onEventDrop'] = ({ event, start, end }) => {
     const startTime = DateTime.fromJSDate(start);
     const endTime = DateTime.fromJSDate(end);
     const duration = endTime.diff(startTime, 'minutes').minutes;
-    const activity = activities.find(a => a.id === event.id);
+    const activity = activities?.find(a => a.id === event.id);
     if (activity) {
       patchActivity({
         id: activity.id,
@@ -131,7 +90,7 @@ const ActivitiesCalendar = ({
   const onEventResize: withDragAndDropProps['onEventResize'] = ({ start, end, event }) => {
     const hasDraggedStart = event.start !== start;
     const hasDraggedEnd = event.end !== end;
-    const activity = activities.find(a => a.id === event.id);
+    const activity = activities?.find(a => a.id === event.id);
     if (activity) {
       const startTime = hasDraggedStart
         ? DateTime.fromJSDate(start)
@@ -180,7 +139,7 @@ const ActivitiesCalendar = ({
       onNavigate={() => undefined}
       onSelectEvent={event => onActivityClick({ id: event.id })}
       onSelectSlot={handleSelectSlots}
-      onView={handleViewChange}
+      onView={view => setPeriod(view)}
       resizable
       selectable
       showMultiDayTimes

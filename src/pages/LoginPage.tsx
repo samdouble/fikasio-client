@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import usePrevious from 'use-previous';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -34,8 +33,6 @@ const LoginPage = () => {
       hitType: 'pageview',
       page: location.pathname,
     });
-    login({})
-      .catch(() => undefined);
   }, []);
 
   useEffect(() => {
@@ -64,13 +61,19 @@ const LoginPage = () => {
 
   const handleLogin = async () => {
     const formData: any = getFormData('Login_form');
-    const user: any = await login({
+    login({
       emailAddress: formData.emailAddress,
       password: formData.password,
-    }).unwrap();
-    dispatch(setCredentials({ user }));
-    initializeSocket();
-    navigate(location.state ? location.state.from : links.paths.home);
+    })
+      .then(({ data: user }) => {
+        if (!user) {
+          throw new Error('Login failed');
+        }
+        dispatch(setCredentials({ user }));
+        initializeSocket();
+        navigate(location.state ? location.state.from : links.paths.home);
+      })
+      .catch(() => setShowLoginError(true));
 
     if (document.getElementById('password')) {
       const passwordInput = document.getElementById('password') as HTMLInputElement;
