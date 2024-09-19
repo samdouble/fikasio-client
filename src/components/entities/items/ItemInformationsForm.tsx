@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
@@ -9,8 +9,7 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { useGetEntitiesQuery } from 'services/entities/api';
 import { EntityField } from 'services/entities/types';
-import { useLazyGetItemsForEntityQuery, useAddItemMutation, useUpdateItemMutation } from 'services/items/api';
-import { Item } from 'services/items/types';
+import { useGetItemsForEntityQuery, useAddItemMutation, useUpdateItemMutation } from 'services/items/api';
 import { clearPaneContent } from 'services/pane/slice';
 import { getFormFieldForType, processFormData } from 'utils/forms';
 import links from 'utils/links';
@@ -29,21 +28,11 @@ const ItemInformationsForm = ({
   const { t } = useTranslation();
   const { data: entities } = useGetEntitiesQuery();
   const entity = (entities || []).find(e => e.id === entityId);
-  const [items, setItems] = useState<Item[]>([]);
+  const { data: items } = useGetItemsForEntityQuery(entityId);
   const item = (items || []).find(i => i.id === id);
 
-  const [getItemsForEntity] = useLazyGetItemsForEntityQuery();
   const [createItem] = useAddItemMutation();
   const [updateItem] = useUpdateItemMutation();
-
-  useEffect(() => {
-    getItemsForEntity(entityId)
-      .then(({ data }) => {
-        if (data) {
-          setItems(data);
-        }
-      });
-  }, [entityId]);
 
   const onSubmit = async values => {
     const formData: any = processFormData(values);

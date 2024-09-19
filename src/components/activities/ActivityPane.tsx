@@ -73,7 +73,7 @@ const ActivityPane = ({
         setEndTime(DateTime.fromISO(activity.endTime).toJSDate());
       }
       if (activity.startTime) {
-        setComments(DateTime.fromISO(activity.startTime).toJSDate());
+        setStartTime(DateTime.fromISO(activity.startTime).toJSDate());
       }
       if (activity.templateId) {
         setTemplateId(activity.templateId);
