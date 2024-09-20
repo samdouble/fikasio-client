@@ -31,7 +31,7 @@ const TaskHistory = ({
     <Table>
       <tbody>
         {
-          events
+          [...(events || [])]
             .sort((eventA, eventB) => (eventB.createdAt < eventA.createdAt ? -1 : 1))
             .map(event => (
               <tr key={event.id}>

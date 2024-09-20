@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { useTranslation } from 'react-i18next';
 import { Entity } from 'services/entities/types';
-import { useLazyGetItemsForEntityQuery } from 'services/items/api';
-import { Item } from 'services/items/types';
+import { useGetItemsForEntityQuery } from 'services/items/api';
 import ItemsView from '../items/ItemsView';
 import EntityInformationsForm from './EntityInformationsForm';
 import EntityFieldsTable from './EntityFieldsTable';
@@ -19,17 +18,7 @@ const EntityView = ({
   entity,
 }: EntityViewProps) => {
   const { t } = useTranslation();
-  const [getItemsForEntity] = useLazyGetItemsForEntityQuery();
-  const [items, setItems] = useState<Item[]>([]);
-
-  useEffect(() => {
-    getItemsForEntity(entity.id)
-      .then(({ data }) => {
-        if (data) {
-          setItems(data);
-        }
-      })
-  }, []);
+  const { data: items } = useGetItemsForEntityQuery(entity.id);
 
   return (
     <div>

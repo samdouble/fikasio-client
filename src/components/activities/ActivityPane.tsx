@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -34,7 +34,7 @@ export interface ActivityPaneProps {
 }
 
 const ActivityPane = ({
-  activity: activityProp,
+  activity: pActivity,
 }: ActivityPaneProps) => {
   const dispatch = useDispatch();
   const { data: activities } = useGetActivitiesQuery({});
@@ -43,9 +43,10 @@ const ActivityPane = ({
   const { data: templates } = useGetTemplatesQuery();
   const auth = useAuth();
   const me = auth.user;
-  const activity = activityProp.id
-    ? (activities || []).find(a => a.id === activityProp.id)
-    : activityProp;
+  const activity = pActivity.id
+    ? (activities || []).find(a => a.id === pActivity.id)
+    : pActivity;
+  const prevActivity = usePrevious(activity);
   const [startTime, setStartTime] = useState(
     activity && activity.startTime
       ? DateTime.fromISO(activity.startTime).toJSDate()
@@ -62,6 +63,23 @@ const ActivityPane = ({
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
   const template = templates?.find(t => t.id === templateId);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (activity && !prevActivity) {
+      if (activity.comments) {
+        setComments(activity.comments);
+      }
+      if (activity.endTime) {
+        setEndTime(DateTime.fromISO(activity.endTime).toJSDate());
+      }
+      if (activity.startTime) {
+        setStartTime(DateTime.fromISO(activity.startTime).toJSDate());
+      }
+      if (activity.templateId) {
+        setTemplateId(activity.templateId);
+      }
+    }
+  }, [activity]);
 
   const activityProjects = activity && activity.projects;
 
