@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import ReactGA from 'react-ga4';
@@ -7,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import TemplateInformationsForm from 'components/templates/TemplateView/TemplateInformationsForm';
 import BasePage from 'components/UI/BasePage';
-import { RootState } from 'services/store';
+import { useGetTemplatesQuery } from 'services/templates/api';
 import links from 'utils/links';
 import './style.scss';
 
@@ -15,7 +14,7 @@ const TemplateUpsertPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { templateId } = useParams<{ templateId: string; }>();
-  const templates = useSelector((state: RootState) => state.templates);
+  const { data: templates } = useGetTemplatesQuery();
 
   useEffect(() => {
     ReactGA.send({

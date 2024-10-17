@@ -7,9 +7,7 @@ services:
             dockerfile: Dockerfile.dev
         container_name: fikasio-client
         restart: always
-        environment:
-            - ESLINT_NO_DEV_ERRORS=true
-            - NODE_ENV=development
+        env_file: .env.client
         ports:
             - 3000:3000
         stdin_open: true
@@ -26,13 +24,7 @@ services:
             dockerfile: Dockerfile.prod
         container_name: fikasio-server
         restart: always
-        environment:
-            - GOOGLE_CLIENT_ID=351854975996-sipa9jkarh9o46muoe8sk4ehjh846v1k.apps.googleusercontent.com
-            - GOOGLE_CLIENT_SECRET=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
-            - JWT_SECRET=9e274c25f744410b80cb83005dff7a52
-            - MONGO_URL=mongodb://mongo0:27017,mongo1:27017,mongo2:27017/?replicaSet=rs0
-            - NODE_ENV=development
-            - STRIPE_SECRET_KEY=sk_test_51NsEz8KsWRKy5brscLwrhbZ2kk4IwQGnDI5jMaWJ5VzfAvNtjkCdxsVQrRAFSv4d7lSbEjXXCAvSng9ebKzPjZbV007JfqKd3n
+        env_file: .env.server
         links:
             - mongodb-init
             - mongo0
