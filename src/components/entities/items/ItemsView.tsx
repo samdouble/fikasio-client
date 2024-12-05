@@ -53,6 +53,7 @@ const ItemsView = ({
         items={items}
         onAddItem={item => addItem(item)}
         onItemSelect={handleSelectItem}
+        onSelectAllItems={itemsArray => setSelectedItems(itemsArray)}
         selectedItems={selectedItems}
       />
     );

@@ -20,11 +20,11 @@ import { round } from 'utils/maths';
 import './style.scss';
 
 const NotificationsPage = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { t } = useTranslation();
   const { data: projects } = useGetProjectsQuery();
   const { data: tasks } = useGetTasksQuery({});
-  const dispatch = useDispatch();
   const [isProjectDueAtDatepickerOpen, setIsProjectDueAtDatepickerOpen] = useState(false);
 
   const [patchProject] = usePatchProjectMutation();
