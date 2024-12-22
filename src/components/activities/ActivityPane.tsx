@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import RBForm from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -14,6 +14,7 @@ import { DatePicker, Select } from '@fikasio/react-ui-components';
 import {
   useGetActivitiesQuery,
   useLazyGetActivitiesQuery,
+  useLazyGetActivityQuery,
   useAddActivityMutation,
   useUpdateActivityMutation,
   usePatchActivityMutation,
@@ -37,45 +38,42 @@ const ActivityPane = ({
   activity: activityProp,
 }: ActivityPaneProps) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { data: activities } = useGetActivitiesQuery({});
   const { data: projects } = useGetProjectsQuery();
   const { data: tasks } = useGetTasksQuery({});
   const { data: templates } = useGetTemplatesQuery();
   const auth = useAuth();
   const me = auth.user;
+  const [internalActivity, setInternalActivity] = useState(activityProp);
+  const prevInternalActivity = usePrevious(internalActivity);
   const activity = activityProp.id
     ? (activities || []).find(a => a.id === activityProp.id)
     : activityProp;
-  const [startTime, setStartTime] = useState(
-    activity && activity.startTime
-      ? DateTime.fromISO(activity.startTime).toJSDate()
-      : null,
-  );
-  const [endTime, setEndTime] = useState(
-    activity && activity.endTime
-      ? DateTime.fromISO(activity.endTime).toJSDate()
-      : null,
-  );
-  const [comments, setComments] = useState(activity?.comments);
-  const prevComments = usePrevious(comments);
-  const [templateId, setTemplateId] = useState(activity?.templateId);
   const [commentsSuggestions, setCommentsSuggestions] = useState<Activity[]>([]);
-  const template = templates?.find(t => t.id === templateId);
-  const { t } = useTranslation();
-
-  const activityProjects = activity && activity.projects;
-
-  const activityTasks = activity && activity.tasks;
+  const template = templates?.find(temp => temp.id === internalActivity?.templateId);
 
   const [getActivities] = useLazyGetActivitiesQuery();
+  const [getActivity] = useLazyGetActivityQuery();
   const [createActivity] = useAddActivityMutation();
   const [patchActivity] = usePatchActivityMutation();
   const [updateActivity] = useUpdateActivityMutation();
 
+  useEffect(() => {
+    if (activityProp.id) {
+      getActivity(activityProp.id)
+        .then(({ data }) => {
+          if (data) {
+            // setInternalActivity(data);
+          }
+        });
+    }
+  }, [activityProp]);
+
   const handleChangeComments = e => {
     const text = e.target.value;
     if (text.length >= 3) {
-      if (prevComments?.includes(text)) {
+      if (prevInternalActivity?.comments?.includes(text)) {
         setCommentsSuggestions(
           commentsSuggestions
             .filter(suggestedActivity => suggestedActivity.comments.toLowerCase().includes(text.toLowerCase()))
@@ -102,10 +100,6 @@ const ActivityPane = ({
     } else {
       setCommentsSuggestions([]);
     }
-  };
-
-  const handleChangeTemplate = tId => {
-    setTemplateId(tId);
   };
 
   const onSubmit = async values => {
@@ -163,7 +157,7 @@ const ActivityPane = ({
       onSubmit={onSubmit}
       render={({ form, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          <h4>{ activity && activity.name }</h4>
+          <h4>{ activity?.name }</h4>
           <RBForm.Group>
             <RBForm.Label>{t('time')}</RBForm.Label>
             <br />
@@ -172,7 +166,7 @@ const ActivityPane = ({
                 ({ input }) => (
                   <DatePicker
                     className="form-control"
-                    defaultValue={startTime}
+                    defaultValue={input.value ? new Date(input.value) : null}
                     displayFormat="yyyy-MM-dd HH:mm"
                     onChange={date => {
                       const timestamp = DateTime.fromJSDate(date)
@@ -185,10 +179,8 @@ const ActivityPane = ({
                           }),
                         );
                       }
-                      setStartTime(timestamp.toJSDate());
-                      input.onChange(timestamp.toJSDate());
-                      if (endTime && timestamp) {
-                        const end = DateTime.fromJSDate(endTime);
+                      if (internalActivity?.endTime && timestamp) {
+                        const end = DateTime.fromJSDate(internalActivity.endTime);
                         form.mutators.setDuration(end.diff(timestamp, 'minutes').minutes);
                       }
                     }}
@@ -199,7 +191,11 @@ const ActivityPane = ({
                   />
                 )
               }
-              defaultValue={startTime}
+              defaultValue={
+                internalActivity?.id && internalActivity.startTime
+                  ? DateTime.fromISO(internalActivity.startTime).toJSDate()
+                  : null
+              }
               name="startTime"
             />
             <br />
@@ -209,7 +205,7 @@ const ActivityPane = ({
                   <DatePicker
                     className="form-control"
                     displayFormat="yyyy-MM-dd HH:mm"
-                    defaultValue={endTime}
+                    defaultValue={input.value ? new Date(input.value) : null}
                     onChange={date => {
                       const timestamp = DateTime.fromJSDate(date)
                         .set({ millisecond: 0 });
@@ -219,10 +215,8 @@ const ActivityPane = ({
                           endTime: timestamp.toISO(),
                         });
                       }
-                      setEndTime(timestamp.toJSDate());
-                      input.onChange(timestamp.toJSDate());
-                      if (startTime && timestamp) {
-                        const start = DateTime.fromJSDate(startTime);
+                      if (internalActivity?.startTime && timestamp) {
+                        const start = DateTime.fromJSDate(internalActivity.startTime);
                         form.mutators.setDuration(timestamp.diff(start, 'minutes').minutes);
                       }
                     }}
@@ -233,7 +227,11 @@ const ActivityPane = ({
                   />
                 )
               }
-              defaultValue={endTime}
+              defaultValue={
+                internalActivity?.id && internalActivity.endTime
+                  ? DateTime.fromISO(internalActivity.endTime).toJSDate()
+                  : null
+              }
               name="endTime"
             />
           </RBForm.Group>
@@ -247,7 +245,7 @@ const ActivityPane = ({
                     <Field
                       className="form-control"
                       component="input"
-                      defaultValue={activity && activity.duration}
+                      defaultValue={activity?.duration}
                       name="number:duration"
                       style={{ width: 100 }}
                     />
@@ -266,7 +264,7 @@ const ActivityPane = ({
                                 { label: t('hours'), value: 'hours' },
                               ]}
                               style={{
-                                width: 150,
+                                minWidth: 150,
                               }}
                             />
                           )
@@ -280,8 +278,10 @@ const ActivityPane = ({
               </tbody>
             </table>
           </RBForm.Group>
+          <br />
           <RBForm.Group>
             <RBForm.Label>{t('template')}</RBForm.Label>
+            <br />
             <Field
               component={
                 ({ input }) => {
@@ -291,7 +291,10 @@ const ActivityPane = ({
                       menuPortalTarget={null}
                       onChange={value => {
                         input.onChange(value);
-                        handleChangeTemplate(value);
+                        setInternalActivity({
+                          ...internalActivity,
+                          templateId: value,
+                        });
                       }}
                       options={
                         [...(templates || [])]
@@ -302,13 +305,13 @@ const ActivityPane = ({
                           }))
                       }
                       style={{
-                        width: 250,
+                        minWidth: 250,
                       }}
                     />
                   );
                 }
               }
-              defaultValue={templateId}
+              defaultValue={internalActivity?.templateId}
               name="templateId"
             />
           </RBForm.Group>
@@ -363,13 +366,16 @@ const ActivityPane = ({
               name="comments"
               onInput={handleChangeComments}
               rows={6}
-              value={comments}
+              value={internalActivity?.comments}
             />
           </RBForm.Group>
           <SuggestionsList
             maxLength={10}
             onSelectSuggestion={suggestion => {
-              setComments(suggestion.comments);
+              setInternalActivity({
+                ...internalActivity,
+                comments: suggestion.comments,
+              });
               form.mutators.setComments(suggestion.comments);
             }}
             suggestions={commentsSuggestions}
@@ -378,7 +384,7 @@ const ActivityPane = ({
             <RBForm.Label>{t('projects')}</RBForm.Label>
             <FieldArray
               className="form-control"
-              defaultValue={activityProjects}
+              defaultValue={internalActivity?.projects}
               name="projects"
             >
               {({ fields }) => {
@@ -446,7 +452,7 @@ const ActivityPane = ({
             <RBForm.Label>{t('tasks')}</RBForm.Label>
             <FieldArray
               className="form-control"
-              defaultValue={activityTasks}
+              defaultValue={internalActivity?.tasks}
               name="tasks"
             >
               {({ fields }) => {

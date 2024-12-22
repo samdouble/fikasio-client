@@ -25,7 +25,7 @@ const TasksCompletionFilter = ({
       ]}
       style={{
         ...style,
-        width: 250,
+        minWidth: 200,
       }}
     />
   );

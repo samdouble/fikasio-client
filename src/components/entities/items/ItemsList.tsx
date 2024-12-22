@@ -78,9 +78,9 @@ const ItemsList = ({
         }
         {
           items?.sort((t1, t2) => {
-              if (!t1.dueAt) return -1;
-              if (!t2.dueAt) return 1;
-              return t1.dueAt < t2.dueAt ? -1 : 1;
+              if (!t1.createdAt) return -1;
+              if (!t2.createdAt) return 1;
+              return t1.createdAt < t2.createdAt ? -1 : 1;
             })
             .map(item => (
               <ItemRow
