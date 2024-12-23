@@ -280,11 +280,11 @@ const Sidebar = () => {
                   &nbsp;
                   <Dot
                     color="#ce0000"
+                    size={10}
                     style={{
                       left: 30,
                       position: 'absolute',
                     }}
-                    width={10}
                   />
                 </>
               )

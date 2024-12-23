@@ -17,7 +17,7 @@ const ObjectivesCompletionFilter = ({ onChange, style }) => {
       ]}
       style={{
         ...style,
-        width: 250,
+        minWidth: 250,
       }}
     />
   );

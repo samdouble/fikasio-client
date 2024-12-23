@@ -58,7 +58,7 @@ const ObjectiveRow = ({
       >
         <Dot
           color={color}
-          width={15}
+          size={15}
         />
         { objective.name }
       </td>

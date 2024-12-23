@@ -28,6 +28,7 @@ const SettingsGeneral = () => {
   return (
     <RBForm.Group>
       <RBForm.Label>{t('language')}</RBForm.Label>
+      <br />
       <Select
         defaultValue={language}
         onChange={value => handleChangeLanguage(value)}
