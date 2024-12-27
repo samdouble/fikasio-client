@@ -1,0 +1,155 @@
+html {
+  font-size: 15px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: overlay;
+}
+
+h3, h4 {
+  text-align: left;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.btn {
+  margin: 5px 5px 5px 0;
+  border-radius: 0;
+}
+
+input:hover, 
+input:active,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+select:hover,
+select:active, 
+select:focus,
+textarea:hover,
+textarea:active, 
+textarea:focus,
+label:focus,
+.btn:active,
+.btn.active
+{
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+
+.App {
+  background-color: #ffffff;
+  position: relative;
+  min-height: 100vh;
+}
+
+.container, .container-fluid {
+  padding-top: 30px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.siteContent {
+  padding-bottom: 120px;
+}
+
+.menu-item {
+  padding: 0 40px;
+  margin: 5px 10px;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+}
+.menu-item-wrapper.active {
+  border: 1px blue solid;
+}
+.menu-item.active {
+  border: 1px green solid;
+}
+ 
+.scroll-menu-arrow {
+  padding: 20px;
+  cursor: pointer;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+*,*:focus,*:hover{
+  outline:none;
+}
+
+.breadcrumb {
+  background-color: transparent;
+  padding: 0;
+}
+
+table tr {
+  height: 40px;
+}
+
+table tr td {
+  vertical-align: middle;
+}
+
+.table>:not(caption)>tr>td {
+  padding: .1rem .1rem;
+}
+
+// Tabs
+.nav-tabs {
+  border: none;
+}
+
+.nav-tabs .nav-link {
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  color: black;
+}
+
+.nav-tabs .nav-link:hover {
+  border-bottom: 3px solid #ac95be;
+}
+
+.nav-tabs .nav-link.active {
+  border-bottom: 3px solid #7E5B9A;
+}

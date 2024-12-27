@@ -1,0 +1,35 @@
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+domains:
+- domain: app.fikas.io
+  type: PRIMARY
+  zone: fikas.io
+envs:
+- key: REACT_APP_SERVER
+  scope: RUN_AND_BUILD_TIME
+  value: https://api.fikas.io
+ingress:
+  rules:
+  - component:
+      name: fikasio-client
+    match:
+      path:
+        prefix: /
+name: fikasio-client
+region: tor
+services:
+- envs:
+  - key: REACT_APP_SERVER
+    scope: RUN_AND_BUILD_TIME
+    value: https://api.fikas.io
+  http_port: 3000
+  image:
+    deploy_on_push:
+      enabled: true
+    registry_type: DOCR
+    repository: fikasio-client
+    tag: latest
+  instance_count: 1
+  instance_size_slug: apps-s-1vcpu-0.5gb
+  name: fikasio-client
