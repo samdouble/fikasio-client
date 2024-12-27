@@ -10,13 +10,12 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
     "serve": "serve -s build -l 3000",
     "test": "react-scripts test --env=jsdom --collectCoverage",
-    "test-ci": "react-scripts test --env=jsdom --ci --collectCoverage",
-    "test-ct": "playwright test -c playwright.config.ts",
-    "test-ct:update": "playwright test -c playwright.config.ts --update-snapshots"
+    "test-visual": "playwright test -c playwright.config.ts",
+    "test-visual:update": "playwright test -c playwright.config.ts --update-snapshots"
   },
   "dependencies": {
     "@bitnoi.se/react-scheduler": "^0.2.0",
-    "@fikasio/react-ui-components": "^0.9.9",
+    "@fikasio/react-ui-components": "^0.11.4",
     "@fortawesome/fontawesome-svg-core": "6",
     "@fortawesome/free-brands-svg-icons": "6",
     "@fortawesome/free-regular-svg-icons": "6",
@@ -51,7 +50,6 @@
     "luxon": "3.5.0",
     "popper.js": "^1.16.1",
     "react": "18.2.0",
-    "react-autosuggest": "^10.1.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-big-calendar": "^1.8.1",
     "react-bootstrap": "^2.4.0",

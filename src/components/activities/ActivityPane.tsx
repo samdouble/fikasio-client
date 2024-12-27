@@ -172,15 +172,19 @@ const ActivityPane = ({
                       const timestamp = DateTime.fromJSDate(date)
                         .set({ millisecond: 0 });
                       if (activity?.id) {
-                        dispatch(
-                          patchActivity({
-                            id: activity?.id,
-                            startTime: timestamp.toISO(),
-                          }),
-                        );
+                        patchActivity({
+                          id: activity?.id,
+                          startTime: timestamp.toISO(),
+                        });
+                      } else {
+                        setInternalActivity({
+                          ...internalActivity,
+                          startTime: timestamp.toISO(),
+                        });
                       }
+                      input.onChange(timestamp.toISO());
                       if (internalActivity?.endTime && timestamp) {
-                        const end = DateTime.fromJSDate(internalActivity.endTime);
+                        const end = DateTime.fromISO(internalActivity.endTime);
                         form.mutators.setDuration(end.diff(timestamp, 'minutes').minutes);
                       }
                     }}
@@ -214,9 +218,15 @@ const ActivityPane = ({
                           id: activity?.id,
                           endTime: timestamp.toISO(),
                         });
+                      } else {
+                        setInternalActivity({
+                          ...internalActivity,
+                          endTime: timestamp.toISO(),
+                        });
                       }
+                      input.onChange(timestamp.toISO());
                       if (internalActivity?.startTime && timestamp) {
-                        const start = DateTime.fromJSDate(internalActivity.startTime);
+                        const start = DateTime.fromISO(internalActivity.startTime);
                         form.mutators.setDuration(timestamp.diff(start, 'minutes').minutes);
                       }
                     }}

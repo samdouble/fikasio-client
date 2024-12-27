@@ -99,6 +99,7 @@ const en = {
   saturday: 'Saturday',
   save: 'Save',
   settings: 'Settings',
+  signup: 'Sign up',
   sunday: 'Sunday',
   start: 'Start',
   startDate: 'Start Date',

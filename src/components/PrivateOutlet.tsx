@@ -15,8 +15,8 @@ export function PrivateOutlet() {
   useEffect(() => {
     if (!auth.user) {
       login({}).unwrap()
-        .then(u => {
-          dispatch(setCredentials({ user: u }));
+        .then(user => {
+          dispatch(setCredentials({ user }));
         })
         .catch(() => navigate('/login'));
     }

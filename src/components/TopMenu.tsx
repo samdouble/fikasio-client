@@ -1,21 +1,24 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SearchBar from 'components/UI/SearchBar';
+import MySearchBar from 'components/UI/SearchBar';
 import Logo from 'images/logo.png';
 import { useLogoutMutation } from 'services/login/api';
 import { useAuth } from 'services/login/hooks';
-import links from 'utils/links';
+import { setCredentials } from 'services/login/slice';
 import envvars from 'utils/envvars';
+import links from 'utils/links';
 import './style.scss';
 
 const TopMenu = () => {
   const auth = useAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -24,7 +27,8 @@ const TopMenu = () => {
   const handleLogout = () => {
     logout()
       .then(() => {
-        navigate('/');
+        dispatch(setCredentials({ user: null }));
+        navigate(links.paths.home);
       });
   };
 
@@ -53,12 +57,7 @@ const TopMenu = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               {
-                auth.user && <SearchBar
-                  style={{
-                    marginTop: 5,
-                    marginRight: 50,
-                  }}
-                />
+                auth.user && <MySearchBar />
               }
               {
                 auth.user ? (

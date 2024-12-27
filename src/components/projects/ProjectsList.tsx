@@ -43,8 +43,9 @@ const ProjectsList = ({
 
   const addProject = async project => {
     onAddProject(project)
-      .then(resultProject => {
+      .then(async ({ data: resultProject }) => {
         if (resultProject) {
+          await new Promise(resolve => setTimeout(resolve, 200));
           const elementsWithClassname = document.getElementsByClassName(resultProject.id!);
           const nbElementsWithClassname = elementsWithClassname.length;
           if (nbElementsWithClassname) {

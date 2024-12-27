@@ -22,8 +22,9 @@ const TasksList = ({
 
   const addTask = async task => {
     onAddTask(task)
-      .then(({ data: resultTask }) => {
+      .then(async ({ data: resultTask }) => {
         if (resultTask) {
+          await new Promise(resolve => setTimeout(resolve, 200));
           const elementsWithClassname = document.getElementsByClassName(resultTask.id);
           const nbElementsWithClassname = elementsWithClassname.length;
           if (nbElementsWithClassname) {

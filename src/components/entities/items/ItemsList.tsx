@@ -17,8 +17,9 @@ const ItemsList = ({
 
   const addItem = async item => {
     onAddItem(item)
-      .then(resultItem => {
+      .then(async ({ data: resultItem}) => {
         if (resultItem) {
+          await new Promise(resolve => setTimeout(resolve, 200));
           const elementsWithClassname = document.getElementsByClassName(resultItem.id);
           const nbElementsWithClassname = elementsWithClassname.length;
           if (nbElementsWithClassname) {

@@ -99,6 +99,7 @@ const fr = {
   saturday: 'Samedi',
   save: 'Sauvegarder',
   settings: 'Paramètres',
+  signup: 'Créer un compte',
   start: 'Début',
   startDate: 'Date de début',
   stats: 'Statistiques',

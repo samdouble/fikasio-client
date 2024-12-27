@@ -83,6 +83,7 @@ const ProjectInformationsForm = ({
           </RBForm.Group>
           <RBForm.Group>
             <RBForm.Label>{t('parentProject')}</RBForm.Label>
+            <br />
             <Field
               component={
                 ({ input }) => {

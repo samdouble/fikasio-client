@@ -67,7 +67,7 @@ const ObjectivesView = ({
             )}
             style={{
               float: 'right',
-              ...(showAddButton && { marginRight: 0 }),
+              marginRight: -5,
             }}
           />
         )

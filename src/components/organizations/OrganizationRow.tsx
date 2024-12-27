@@ -128,7 +128,10 @@ const OrganizationRow = ({
               />
             ))
         }
-        <Selector />
+        <Selector
+          options={[]}
+          value={organization.members}
+        />
       </td>
       <td
         style={{

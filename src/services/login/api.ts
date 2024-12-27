@@ -21,7 +21,7 @@ export const apiLogin = createApi({
       }),
       transformResponse: (data: { user: User }) => data.user,
       transformErrorResponse: (response: { status: string | number }) => response.status,
-      //invalidatesTags: ['Login'],
+      // invalidatesTags: ['Login'],
     }),
     logout: builder.mutation<void, void>({
       query: body => ({

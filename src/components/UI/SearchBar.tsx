@@ -1,23 +1,9 @@
 import React, { useState } from 'react';
-import Autosuggest from 'react-autosuggest';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SearchBar } from '@fikasio/react-ui-components';
 import { useGetProjectsQuery } from 'services/projects/api';
 import { useGetTasksQuery } from 'services/tasks/api';
-import './SearchBar.scss';
 
-const renderSuggestion = suggestion => (
-  <div
-    style={{
-      cursor: 'pointer',
-      padding: 5,
-    }}
-  >
-    {suggestion.name}
-  </div>
-);
-
-const SearchBar = ({ style }) => {
-  const [value, setValue] = useState('');
+const MySearchBar = () => {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const { data: projects } = useGetProjectsQuery();
   const { data: tasks } = useGetTasksQuery({});
@@ -50,57 +36,16 @@ const SearchBar = ({ style }) => {
     .slice(0, 10);
   };
 
-  const onChange = (event, { newValue }) => {
-    setValue(newValue);
-  };
-
-  const onSuggestionsFetchRequested = ({ value: text }) => {
-    setSuggestions(getSuggestions(text) || []);
-  };
-
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
   return (
-    <div
+    <SearchBar
+      onChange={value => setSuggestions(getSuggestions(value))}
+      options={suggestions.map(s => s.name)}
       style={{
-        ...style,
+        backgroundColor: 'white',
+        width: 320,
       }}
-    >
-      <FontAwesomeIcon
-        icon="search"
-        size="1x"
-        style={{
-          marginLeft: 10,
-          position: 'relative',
-          left: 25,
-        }}
-      />
-      {/*
-        <input
-          type="text"
-          style={{
-            borderRadius: 0,
-            marginRight: 50,
-            paddingLeft: 30,
-          }}
-        />
-        */
-      }
-      <Autosuggest
-        getSuggestionValue={suggestion => suggestion.name}
-        inputProps={{
-          onChange,
-          value,
-        }}
-        onSuggestionsClearRequested={onSuggestionsClearRequested}
-        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-        renderSuggestion={renderSuggestion}
-        suggestions={suggestions}
-      />
-    </div>
+    />
   );
 }
 
-export default SearchBar;
+export default MySearchBar;

@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Tooltip } from 'react-tooltip';
+import FilterButton from 'components/UI/FilterButton';
 import useIsMobile from 'utils/isMobile';
 import TasksCompletionFilter from './TasksCompletionFilter';
 import TasksDueDateFilter from './TasksDueDateFilter';
@@ -30,24 +28,7 @@ const TasksFilters = ({
       }}
     >
       {
-        isMobile && (
-          <>
-            <Button
-              data-tooltip-content="Filters"
-              data-tooltip-id="filters"
-              style={{
-                float: 'right',
-              }}
-              variant="light"
-            >
-              <FontAwesomeIcon
-                icon="sliders"
-                size="1x"
-              />
-            </Button>
-            <Tooltip id="filters" />
-          </>
-        )
+        isMobile && <FilterButton />
       }
       {
         !isMobile && (
@@ -59,6 +40,7 @@ const TasksFilters = ({
                   style={{
                     float: 'right',
                     margin: 5,
+                    ...(!showDueDateFilter && { marginRight: 0 }),
                   }}
                 />
               )

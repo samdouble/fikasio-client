@@ -9,6 +9,7 @@ import { DateTime } from 'luxon';
 import { AutosaveTextarea, Checkbox, DatePicker, Select, Selector } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
+import { useGetProjectsQuery } from 'services/projects/api';
 import { useAddTaskMutation, usePatchTaskMutation, useDeleteTaskMutation } from 'services/tasks/api';
 import { Task } from 'services/tasks/types';
 import { round } from 'utils/maths';
@@ -32,6 +33,7 @@ const TaskRow = ({
   task: pTask,
 }: TaskRowProps) => {
   const { t } = useTranslation();
+  const { data: projects } = useGetProjectsQuery();
 
   const prevPTask = usePrevious(pTask);
   const [task, setTask] = useState(pTask);
@@ -182,7 +184,20 @@ const TaskRow = ({
               />
             ))
         }
-        <Selector />
+        <Selector
+          Component={(
+            <div style={{
+              backgroundColor: '#e5e5e5',
+              borderRadius: '50%',
+              height: 25,
+              width: 25,
+            }}>
+              +
+            </div>
+          )}
+          options={projects?.map(p => p.name)}
+          value={task.projects}
+        />
       </td>
       <td width={140}>
         {
