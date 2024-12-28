@@ -1,0 +1,8 @@
+.collapse-css-transition {
+  border: 1px #c7c7c7 solid;
+  border-top: none;
+  /* width: 96%; */
+  background-color: white;
+  padding: 5px;
+  transition: height 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}

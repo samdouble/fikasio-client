@@ -1,0 +1,15 @@
+.Login, .Signup {
+  width: 60%;
+  text-align: left;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+@media(max-width: 600px) {
+  .Login, .Signup {
+    width: 80%;
+  }
+}

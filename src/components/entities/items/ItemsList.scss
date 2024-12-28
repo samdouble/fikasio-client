@@ -1,0 +1,24 @@
+.itemRow td {
+  border-left: none;
+  border-right: none;
+}
+
+.itemRow_field_editable {
+  border: 1px solid transparent;
+}
+.itemRow_field:hover > .itemRow_field_editable {
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+}
+
+.itemStaticColumn-left {
+  left: 0;
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+.itemStaticColumn-right {
+  position: -webkit-sticky;
+  position: sticky;
+  right: 0;
+}
