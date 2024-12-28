@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/samdouble/fikasio-client/compare/v0.2.1...v0.2.2) (2024-12-28)
+
+
+### Bug Fixes
+
+* use build-args to pass env vars to React app ([65ee9bb](https://github.com/samdouble/fikasio-client/commit/65ee9bb30e3fd22668b456fff7763f6d3b17bcb2))
+
 ## [0.2.1](https://github.com/samdouble/fikasio-client/compare/v0.2.0...v0.2.1) (2024-12-28)
 
 
