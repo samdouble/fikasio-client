@@ -24,6 +24,18 @@ jobs:
         run: |
           export APP_NAME=fikasio-client
           export IMAGE_NAME=registry.digitalocean.com/samdouble/$APP_NAME
-          docker build -t $IMAGE_NAME -f Dockerfile.prod .
+          docker build \
+            --build-arg REACT_APP_API_SERVER=${{ vars.REACT_APP_API_SERVER }} \
+            --build-arg REACT_APP_GOOGLE_ANALYTICS_ID=${{ vars.REACT_APP_GOOGLE_ANALYTICS_ID }} \
+            --build-arg REACT_APP_GOOGLE_OAUTH_CLIENT_ID=${{ vars.REACT_APP_GOOGLE_OAUTH_CLIENT_ID }} \
+            --build-arg REACT_APP_STRIPE_CONFIRMATION_URL=${{ vars.REACT_APP_STRIPE_CONFIRMATION_URL }} \
+            --build-arg REACT_APP_STRIPE_PUBLISH_KEY=${{ vars.REACT_APP_STRIPE_PUBLISH_KEY }} \
+            --build-arg REACT_APP_URL_DOCUMENTATION=${{ vars.REACT_APP_URL_DOCUMENTATION }} \
+            --build-arg REACT_APP_URL_PRIVACY=${{ vars.REACT_APP_URL_PRIVACY }} \
+            --build-arg REACT_APP_URL_TOS=${{ vars.REACT_APP_URL_TOS }} \
+            --build-arg REACT_APP_URL_WEBSITE=${{ vars.REACT_APP_URL_WEBSITE }} \
+            --build-arg REACT_APP_WEBSOCKET_SERVER=${{ vars.REACT_APP_WEBSOCKET_SERVER }} \
+            -t $IMAGE_NAME \
+            -f Dockerfile.prod .
           docker login -u $DIGITALOCEAN_API_TOKEN -p $DIGITALOCEAN_API_TOKEN registry.digitalocean.com
           docker push $IMAGE_NAME
