@@ -33,6 +33,7 @@ const EntitiesView = ({
       <EntitiesList
         entities={entities}
         onEntitySelect={handleSelectEntity}
+        onSelectAllEntities={entitiesArray => setSelectedEntities(entitiesArray)}
         selectedEntities={selectedEntities}
       />
     );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useTranslation } from 'react-i18next';
 import useTimeout from 'use-timeout';
+import { Checkbox } from '@fikasio/react-ui-components';
 import { useDeleteEntityMutation } from 'services/entities/api';
 import { Entity } from 'services/entities/types';
 import EntityRow from './EntityRow';
@@ -10,6 +11,7 @@ import './style.scss';
 const EntitiesList = ({
   entities,
   onEntitySelect,
+  onSelectAllEntities,
   selectedEntities,
 }) => {
   const { t } = useTranslation();
@@ -17,6 +19,9 @@ const EntitiesList = ({
   const [newEntity, setNewEntity] = useState<Entity | null>(null);
 
   const [deleteEntity] = useDeleteEntityMutation();
+
+  const allEntitiesAreChecked = !!entities?.length
+    && (entities?.length === selectedEntities.length);
 
   useTimeout(() => {
     if (newEntity) {
@@ -42,7 +47,18 @@ const EntitiesList = ({
             style={{
               width: 35,
             }}
-          />
+          >
+            <Checkbox
+              isChecked={allEntitiesAreChecked}
+              onClick={() => {
+                if (allEntitiesAreChecked) {
+                  onSelectAllEntities([]);
+                } else {
+                  onSelectAllEntities(entities);
+                }
+              }}
+            />
+          </th>
           <th>{t('name')}</th>
           <th
             colSpan={2}
