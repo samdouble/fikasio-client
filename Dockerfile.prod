@@ -8,28 +8,22 @@ COPY public /app/public
 COPY src /app/src
 RUN export REACT_APP_VERSION=$(yarn -s run version) && yarn && yarn build
 
-ARG REACT_APP_API_SERVER
-ENV REACT_APP_API_SERVER=$REACT_APP_API_SERVER
-ARG REACT_APP_GOOGLE_ANALYTICS_ID
-ENV REACT_APP_GOOGLE_ANALYTICS_ID=$REACT_APP_GOOGLE_ANALYTICS_ID
-ARG REACT_APP_GOOGLE_OAUTH_CLIENT_ID
-ENV REACT_APP_GOOGLE_OAUTH_CLIENT_ID=$REACT_APP_GOOGLE_OAUTH_CLIENT_ID
-ARG REACT_APP_STRIPE_CONFIRMATION_URL
-ENV REACT_APP_STRIPE_CONFIRMATION_URL=$REACT_APP_STRIPE_CONFIRMATION_URL
-ARG REACT_APP_STRIPE_PUBLISH_KEY
-ENV REACT_APP_STRIPE_PUBLISH_KEY=$REACT_APP_STRIPE_PUBLISH_KEY
-ARG REACT_APP_URL_DOCUMENTATION
-ENV REACT_APP_URL_DOCUMENTATION=$REACT_APP_URL_DOCUMENTATION
-ARG REACT_APP_URL_PRIVACY
-ENV REACT_APP_URL_PRIVACY=$REACT_APP_URL_PRIVACY
-ARG REACT_APP_URL_TOS
-ENV REACT_APP_URL_TOS=$REACT_APP_URL_TOS
-ARG REACT_APP_URL_WEBSITE
-ENV REACT_APP_URL_WEBSITE=$REACT_APP_URL_WEBSITE
-ARG REACT_APP_WEBSOCKET_SERVER
-ENV REACT_APP_WEBSOCKET_SERVER=$REACT_APP_WEBSOCKET_SERVER
-
 RUN yarn global add serve
 EXPOSE 3000
+
+RUN echo '#!/bin/sh' > /app/env.sh && \
+    echo 'echo "window._env_ = {" > /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_API_SERVER: \"$REACT_APP_API_SERVER\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_GOOGLE_ANALYTICS_ID: \"$REACT_APP_GOOGLE_ANALYTICS_ID\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_GOOGLE_OAUTH_CLIENT_ID: \"$REACT_APP_GOOGLE_OAUTH_CLIENT_ID\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_STRIPE_CONFIRMATION_URL: \"$REACT_APP_STRIPE_CONFIRMATION_URL\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_STRIPE_PUBLISH_KEY: \"$REACT_APP_STRIPE_PUBLISH_KEY\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_URL_DOCUMENTATION: \"$REACT_APP_URL_DOCUMENTATION\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_URL_PRIVACY: \"$REACT_APP_URL_PRIVACY\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_URL_TOS: \"$REACT_APP_URL_TOS\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_URL_WEBSITE: \"$REACT_APP_URL_WEBSITE\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "  REACT_APP_WEBSOCKET_SERVER: \"$REACT_APP_WEBSOCKET_SERVER\"," >> /app/build/env.js' >> /app/env.sh && \
+    echo 'echo "}" >> /app/build/env.js' >> /app/env.sh && \
+    chmod +x /app/env.sh
 
 CMD ["yarn", "serve"]
