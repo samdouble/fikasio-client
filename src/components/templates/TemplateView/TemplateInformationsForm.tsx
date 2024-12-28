@@ -115,7 +115,7 @@ const TemplateInformationsForm = ({
             }}
           >
             <Button
-              onClick={() => dispatch(clearPaneContent())}
+              onClick={() => navigate(links.paths.templates)}
               style={{
                 backgroundColor: 'white',
               }}

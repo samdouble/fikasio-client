@@ -35,7 +35,7 @@ const TemplatesList = ({
       </thead>
       <tbody>
         {
-          templates
+          [...(templates || [])]
             .sort((t1, t2) => (t1.startTime < t2.startTime ? -1 : 1))
             .map(template => (
               <TemplateRow

@@ -32,7 +32,7 @@ const TemplatePage = () => {
       <BasePage>
         <Breadcrumb>
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.home }}>{t('home')}</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet }}>{t('timesheet')}</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: links.paths.timesheet({}) }}>{t('timesheet')}</Breadcrumb.Item>
           <Breadcrumb.Item active>{ template?.name }</Breadcrumb.Item>
         </Breadcrumb>
         <h4>{ template?.name }</h4>

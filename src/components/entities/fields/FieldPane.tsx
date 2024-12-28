@@ -68,7 +68,6 @@ const FieldPane = ({
                 ({ input }) => (
                   <Select
                     defaultValue={input.value}
-                    menuPortalTarget={null}
                     onChange={value => input.onChange(value)}
                     options={[
                       { label: t('boolean'), value: 'BOOLEAN' },

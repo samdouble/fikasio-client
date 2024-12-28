@@ -78,7 +78,6 @@ const ObjectiveInformations = ({
                 ({ input }) => (
                   <Select
                     defaultValue={input.value}
-                    menuPortalTarget={null}
                     onChange={value => input.onChange(value)}
                     options={[
                       { label: t('daily'), value: 'DAILY' },

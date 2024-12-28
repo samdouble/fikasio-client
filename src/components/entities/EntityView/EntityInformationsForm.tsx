@@ -64,7 +64,7 @@ const EntityInformationsForm = ({
             }}
           >
             <Button
-              onClick={() => dispatch(clearPaneContent())}
+              onClick={() => navigate(links.paths.entities)}
               style={{
                 backgroundColor: 'white',
               }}

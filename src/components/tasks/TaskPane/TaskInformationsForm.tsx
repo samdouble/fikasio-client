@@ -212,7 +212,6 @@ const TaskInformationsForm = ({
                           return (
                             <Select
                               defaultValue={input.value}
-                              menuPortalTarget={null}
                               onChange={value => input.onChange(value)}
                               options={[
                                 { label: t('minutes'), value: 'minutes' },
@@ -254,7 +253,6 @@ const TaskInformationsForm = ({
                                       return (
                                         <Select
                                           defaultValue={input.value}
-                                          menuPortalTarget={null}
                                           onChange={value => input.onChange(value)}
                                           options={
                                             projects?.filter(p => !p.isArchived)

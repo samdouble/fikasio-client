@@ -47,6 +47,10 @@ export default defineConfig({
       name: 'Mobile Chrome',
       use: {
         ...devices['Pixel 5'],
+        viewport: {
+          width: 393,
+          height: 727,
+        },
       },
     },
     // {
@@ -58,6 +62,19 @@ export default defineConfig({
   ],
   webServer: {
     command: 'yarn start',
+    env: {
+      ...process.env,
+      REACT_APP_API_SERVER: 'https://api.fikas.io',
+      REACT_APP_GOOGLE_ANALYTICS_ID: 'G-ABCDEFGHIJ',
+      REACT_APP_GOOGLE_OAUTH_CLIENT_ID: 'abc123.apps.googleusercontent.com',
+      REACT_APP_STRIPE_CONFIRMATION_URL: 'https://app.fikas.io/settings',
+      REACT_APP_STRIPE_PUBLISH_KEY: 'pk_live_abc123',
+      REACT_APP_URL_DOCUMENTATION: 'https://fikas.io/docs/intro',
+      REACT_APP_URL_PRIVACY: 'https://fikas.io/privacy',
+      REACT_APP_URL_TOS: 'https://fikas.io/tos',
+      REACT_APP_URL_WEBSITE: 'https://fikas.io',
+      REACT_APP_WEBSOCKET_SERVER: 'wss://api.fikas.io/',
+    },
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
     url: 'http://localhost:3000',

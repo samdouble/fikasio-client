@@ -267,7 +267,6 @@ const ActivityPane = ({
                           return (
                             <Select
                               defaultValue={input.value}
-                              menuPortalTarget={null}
                               onChange={value => input.onChange(value)}
                               options={[
                                 { label: t('minutes'), value: 'minutes' },
@@ -298,13 +297,19 @@ const ActivityPane = ({
                   return (
                     <Select
                       defaultValue={input.value}
-                      menuPortalTarget={null}
                       onChange={value => {
+                        if (activity?.id) {
+                          patchActivity({
+                            id: activity?.id,
+                            templateId: value,
+                          });
+                        } else {
+                          setInternalActivity({
+                            ...internalActivity,
+                            templateId: value,
+                          });
+                        }
                         input.onChange(value);
-                        setInternalActivity({
-                          ...internalActivity,
-                          templateId: value,
-                        });
                       }}
                       options={
                         [...(templates || [])]
@@ -412,7 +417,6 @@ const ActivityPane = ({
                                       return (
                                         <Select
                                           defaultValue={input.value}
-                                          menuPortalTarget={null}
                                           onChange={value => input.onChange(value)}
                                           options={
                                             projects?.filter(p => !p.isArchived)

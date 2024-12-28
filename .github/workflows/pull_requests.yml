@@ -36,6 +36,12 @@ jobs:
             libhyphen0 libmanette-0.2-0
           npx playwright install
           yarn test-visual
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-snapshots
+          path: test-results
       - name: Build
         run: |
           yarn build

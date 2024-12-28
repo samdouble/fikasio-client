@@ -6,10 +6,11 @@ import ReactGA from 'react-ga4';
 import store from 'services/store';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { envvars } from './utils/envvars';
 import { initializeTranslation } from './utils/translation';
 import './index.scss';
 
-ReactGA.initialize('G-TVCKXLCYYP');
+ReactGA.initialize(envvars.googleAnalyticsId);
 initializeTranslation();
 
 ReactDOM.render(
