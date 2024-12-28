@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/samdouble/fikasio-client/compare/v0.2.0...v0.2.1) (2024-12-28)
+
+
+### Bug Fixes
+
+* get environment variables from build step ([9fe406f](https://github.com/samdouble/fikasio-client/commit/9fe406feb9b14c9ebad371242dca7acdeca256b0))
+
 ## [0.2.0](https://github.com/samdouble/fikasio-client/compare/0.1.0...v0.2.0) (2024-12-28)
 
 
