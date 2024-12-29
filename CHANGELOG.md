@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/samdouble/fikasio-client/compare/v0.2.4...v0.2.5) (2024-12-29)
+
+
+### Bug Fixes
+
+* change syntax for env vars in Dockerfile ([447485a](https://github.com/samdouble/fikasio-client/commit/447485ae2f19a859c04fae786185285f6dda3a83))
+
 ## [0.2.4](https://github.com/samdouble/fikasio-client/compare/v0.2.3...v0.2.4) (2024-12-29)
 
 
