@@ -4,6 +4,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import envvars from 'utils/envvars';
 import CheckoutForm from './payments/CheckoutForm';
 
+console.info(process.env);
 const stripePromise = loadStripe(envvars.stripePublishKey);
 
 const options = {
