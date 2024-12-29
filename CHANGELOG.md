@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.6](https://github.com/samdouble/fikasio-client/compare/v0.2.5...v0.2.6) (2024-12-29)
+
+
+### Bug Fixes
+
+* define args before yarn build ([554801b](https://github.com/samdouble/fikasio-client/commit/554801befa43c0e609a0b5c646bc751526daeb4b))
+
 ## [0.2.5](https://github.com/samdouble/fikasio-client/compare/v0.2.4...v0.2.5) (2024-12-29)
 
 
