@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.9](https://github.com/samdouble/fikasio-client/compare/v0.2.8...v0.2.9) (2024-12-29)
+
+
+### Bug Fixes
+
+* remove ENV commands in Dockerfile ([a1b2126](https://github.com/samdouble/fikasio-client/commit/a1b2126df0599110cdfd85c297ba52d584edc51f))
+
 ## [0.2.8](https://github.com/samdouble/fikasio-client/compare/v0.2.7...v0.2.8) (2024-12-29)
 
 
