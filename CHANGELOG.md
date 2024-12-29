@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.8](https://github.com/samdouble/fikasio-client/compare/v0.2.7...v0.2.8) (2024-12-29)
+
+
+### Bug Fixes
+
+* clean up unneeded stuff from workflows ([a4b9135](https://github.com/samdouble/fikasio-client/commit/a4b913533cbe51ad0ba5a5879b9adaa7d55cf98c))
+
 ## [0.2.7](https://github.com/samdouble/fikasio-client/compare/v0.2.6...v0.2.7) (2024-12-29)
 
 
