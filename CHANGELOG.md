@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/samdouble/fikasio-client/compare/v0.2.2...v0.2.3) (2024-12-29)
+
+
+### Bug Fixes
+
+* print env vars in publish workflow ([c652838](https://github.com/samdouble/fikasio-client/commit/c652838fde9ab7819b8984d0c337c406dd0d9da0))
+
 ## [0.2.2](https://github.com/samdouble/fikasio-client/compare/v0.2.1...v0.2.2) (2024-12-28)
 
 
