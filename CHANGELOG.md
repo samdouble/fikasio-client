@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.7](https://github.com/samdouble/fikasio-client/compare/v0.2.6...v0.2.7) (2024-12-29)
+
+
+### Bug Fixes
+
+* use export commands in Dockerfile ([7daaf12](https://github.com/samdouble/fikasio-client/commit/7daaf1287dbd7c76fbf7d3e113033f6a3f26f7b0))
+
 ## [0.2.6](https://github.com/samdouble/fikasio-client/compare/v0.2.5...v0.2.6) (2024-12-29)
 
 
