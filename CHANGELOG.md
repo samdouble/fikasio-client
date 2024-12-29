@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/samdouble/fikasio-client/compare/v0.2.3...v0.2.4) (2024-12-29)
+
+
+### Bug Fixes
+
+* create env file during docker build ([c36cf3f](https://github.com/samdouble/fikasio-client/commit/c36cf3f1851ed01b817e90915e07b781ac4c0ef8))
+
 ## [0.2.3](https://github.com/samdouble/fikasio-client/compare/v0.2.2...v0.2.3) (2024-12-29)
 
 
