@@ -13,11 +13,6 @@ jobs:
         with:
           release-type: node
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.13.1
-      - name: Install
-        run: yarn
       - name: Publish
         env:
           DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
@@ -32,10 +27,18 @@ jobs:
           REACT_APP_URL_WEBSITE: ${{ vars.REACT_APP_URL_WEBSITE }}
           REACT_APP_WEBSOCKET_SERVER: ${{ vars.REACT_APP_WEBSOCKET_SERVER }}
         run: |
-          echo $REACT_APP_API_SERVER
-          echo $REACT_APP_GOOGLE_ANALYTICS_ID
           export APP_NAME=fikasio-client
           export IMAGE_NAME=registry.digitalocean.com/samdouble/$APP_NAME
+          echo "REACT_APP_API_SERVER=$REACT_APP_API_SERVER" > .env
+          echo "REACT_APP_GOOGLE_ANALYTICS_ID=$REACT_APP_GOOGLE_ANALYTICS_ID" >> .env
+          echo "REACT_APP_GOOGLE_OAUTH_CLIENT_ID=$REACT_APP_GOOGLE_OAUTH_CLIENT_ID" >> .env
+          echo "REACT_APP_STRIPE_CONFIRMATION_URL=$REACT_APP_STRIPE_CONFIRMATION_URL" >> .env
+          echo "REACT_APP_STRIPE_PUBLISH_KEY=$REACT_APP_STRIPE_PUBLISH_KEY" >> .env
+          echo "REACT_APP_URL_DOCUMENTATION=$REACT_APP_URL_DOCUMENTATION" >> .env
+          echo "REACT_APP_URL_PRIVACY=$REACT_APP_URL_PRIVACY" >> .env
+          echo "REACT_APP_URL_TOS=$REACT_APP_URL_TOS" >> .env
+          echo "REACT_APP_URL_WEBSITE=$REACT_APP_URL_WEBSITE" >> .env
+          echo "REACT_APP_WEBSOCKET_SERVER=$REACT_APP_WEBSOCKET_SERVER" >> .env
           docker build \
             --build-arg REACT_APP_API_SERVER=$REACT_APP_API_SERVER \
             --build-arg REACT_APP_GOOGLE_ANALYTICS_ID=$REACT_APP_GOOGLE_ANALYTICS_ID \
