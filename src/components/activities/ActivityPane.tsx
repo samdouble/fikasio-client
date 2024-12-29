@@ -296,7 +296,6 @@ const ActivityPane = ({
                 ({ input }) => {
                   return (
                     <Select
-                      defaultValue={input.value}
                       onChange={value => {
                         if (activity?.id) {
                           patchActivity({
@@ -322,12 +321,13 @@ const ActivityPane = ({
                       style={{
                         minWidth: 250,
                       }}
+                      value={input.value}
                     />
                   );
                 }
               }
-              defaultValue={internalActivity?.templateId}
               name="templateId"
+              value={internalActivity?.templateId}
             />
           </RBForm.Group>
           {
