@@ -24,7 +24,7 @@ const ProjectsDueDateFilter = ({
       ]}
       style={{
         ...style,
-        minWidth: 250,
+        minWidth: 200,
       }}
     />
   );

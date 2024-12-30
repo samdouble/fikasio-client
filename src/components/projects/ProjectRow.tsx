@@ -161,7 +161,10 @@ const ProjectRow = ({
       >
         <DatePicker
           defaultValue={project.dueAt ? DateTime.fromISO(project.dueAt).toJSDate() : null}
-          displayFormat="yyyy-MM-dd"
+          displayFunction={date => {
+            const dateTime = DateTime.fromJSDate(date);
+            return `${dateTime.monthShort} ${dateTime.day}`;
+          }}
           isOpen={isDueAtDatepickerOpen}
           onChange={value => {
             const timestamp = DateTime
