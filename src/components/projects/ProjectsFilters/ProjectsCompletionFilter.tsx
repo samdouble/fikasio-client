@@ -25,7 +25,7 @@ const ProjectsCompletionFilter = ({
       ]}
       style={{
         ...style,
-        minWidth: 250,
+        minWidth: 200,
       }}
     />
   );

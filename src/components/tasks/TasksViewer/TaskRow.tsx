@@ -270,6 +270,10 @@ const TaskRow = ({
       >
         <DatePicker
           defaultValue={task.dueAt ? DateTime.fromISO(task.dueAt).toJSDate() : null}
+          displayFunction={date => {
+            const dateTime = DateTime.fromJSDate(date);
+            return `${dateTime.monthShort} ${dateTime.day}`;
+          }}
           isOpen={isDueAtDatepickerOpen}
           onChange={dueAt => {
             const timestamp = DateTime.fromJSDate(dueAt)
