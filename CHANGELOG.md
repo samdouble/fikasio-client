@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://github.com/samdouble/fikasio-client/compare/v0.2.9...v0.3.0) (2024-12-30)
+
+
+### Features
+
+* show dates in the Tasks page in human format instead of yyyy-MM-dd ([fd18453](https://github.com/samdouble/fikasio-client/commit/fd18453b5fbe511ff054b466c846accc4763a5d3))
+
+
+### Bug Fixes
+
+* **activities:** adjust height of timeslots in ActivitiesCalendar ([2954040](https://github.com/samdouble/fikasio-client/commit/2954040ad0d74ba51a2bcf111d025cc550c1218f))
+* **activities:** fix bug where templates could not be assigned to activities ([3cabcc9](https://github.com/samdouble/fikasio-client/commit/3cabcc93fae6b5773b889a23a78f43b105f05ade))
+
 ## [0.2.9](https://github.com/samdouble/fikasio-client/compare/v0.2.8...v0.2.9) (2024-12-29)
 
 
