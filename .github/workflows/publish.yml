@@ -40,7 +40,8 @@ jobs:
             --build-arg REACT_APP_URL_TOS=$REACT_APP_URL_TOS \
             --build-arg REACT_APP_URL_WEBSITE=$REACT_APP_URL_WEBSITE \
             --build-arg REACT_APP_WEBSOCKET_SERVER=$REACT_APP_WEBSOCKET_SERVER \
-            -t $IMAGE_NAME \
+            -t $IMAGE_NAME:${{ github.ref_name:1 }}" \
+            -t $IMAGE_NAME:latest \
             -f Dockerfile.prod .
           docker login -u $DIGITALOCEAN_API_TOKEN -p $DIGITALOCEAN_API_TOKEN registry.digitalocean.com
-          docker push $IMAGE_NAME
+          docker push $IMAGE_NAME --all-tags
