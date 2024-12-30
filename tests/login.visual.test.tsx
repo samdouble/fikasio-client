@@ -1,14 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Application', () => {
-  test('x', async ({ page }, testInfo) => {
+test.describe('Login Page', () => {
+  test('Login Page should display correctly', async ({ page }, testInfo) => {
     testInfo.snapshotSuffix = '';
 
     await page.goto('http://localhost:3000/');
-    // await page.waitForSelector('#root');
-    await expect(page.locator('#root')).toHaveCount(1);
+    await page.waitForSelector('#root');
 
-    await expect(page).toHaveScreenshot('select-with-two-options.png');
+    await expect(page).toHaveScreenshot('login-page.png');
   });
 
   // test('y', async ({ page }) => {
