@@ -74,6 +74,7 @@ const ProjectPane = ({
             projectId={project?.id}
             showAddButton
             showCompletionFilter
+            showDueDateFilter
             showViewModeButtons
           />
         </Tab>

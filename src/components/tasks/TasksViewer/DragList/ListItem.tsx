@@ -1,14 +1,7 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { generateFromString } from "generate-avatar";
 import styled from "styled-components";
-
-const Avatar = styled.img`
-  height: 30px;
-  width: 30px;
-  border: 3px solid white;
-  border-radius: 50%;
-`;
+import AssigneeButton from 'components/tasks/TasksViewer/AssigneeButton';
 
 const CardHeader = styled.div`
   font-weight: 500;
@@ -36,7 +29,15 @@ const DragItem = styled.div`
   flex-direction: column;
 `;
 
-const ListItem = ({ item, index }) => {
+interface ListItemProps {
+  item: any;
+  index: number;
+}
+
+const ListItem = ({
+  item,
+  index,
+}: ListItemProps) => {
   return (
     <Draggable
       draggableId={item.id}
@@ -50,14 +51,22 @@ const ListItem = ({ item, index }) => {
               snapshot={snapshot}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
+              style={{
+                position: 'relative',
+              }}
             >
               <CardHeader>{item.content}</CardHeader>
               <span>Content</span>
               <CardFooter>
                 <Author>
                   {item.id}
-                  <Avatar
-                    src={`data:image/svg+xml;utf8,${generateFromString(item.id)}`}
+                  <AssigneeButton
+                    assigneeId={item.assigneeId}
+                    style={{
+                      bottom: 10,
+                      position: 'absolute',
+                      right: 10,
+                    }}
                   />
                 </Author>
               </CardFooter>

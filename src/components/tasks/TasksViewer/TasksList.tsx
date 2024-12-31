@@ -62,9 +62,9 @@ const TasksList = ({
           <th style={{ minWidth: 500 }}>{t('description')}</th>
           <th style={{ minWidth: 150 }}>{t('projects')}</th>
           <th style={{ minWidth: 140 }}>{t('status')}</th>
-          <th style={{ minWidth: 140 }}>{t('assignee')}</th>
           <th style={{ minWidth: 90 }}>{t('progress')}</th>
           <th style={{ minWidth: 120 }}>{t('deadline')}</th>
+          <th style={{ width: 30 }} />
           <th style={{ width: 35 }} />
         </tr>
       </thead>
