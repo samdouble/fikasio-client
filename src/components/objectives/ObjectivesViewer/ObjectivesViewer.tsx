@@ -1,50 +1,39 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TasksBoard from './TasksBoard';
-import TasksList from './TasksList';
-import './TasksList.scss';
+import ObjectivesList from './ObjectivesList';
+import './ObjectivesList.scss';
 
-const TasksViewer = ({
-  onAddTask,
-  onSelectAllTasks,
-  onTaskClick,
-  onTaskSelect,
+const ObjectivesViewer = ({
+  objectives,
+  onAddObjective,
+  onObjectiveClick,
+  onObjectiveSelect,
+  onSelectAllObjectives,
   projectId,
-  selectedTasks,
+  selectedObjectives,
   showViewModeButtons,
-  tasks,
 }) => {
   const [viewMode, setViewMode] = useState('LIST');
 
-  let taskView;
-  if (viewMode === 'BOARD') {
-    taskView = (
-      <TasksBoard
-        // onAddTask={onAddTask}
-        // onTaskClick={onTaskClick}
-        // onTaskSelect={onTaskSelect}
-        // selectedTasks={selectedTasks}
-        tasks={tasks}
-      />
-    );
-  } else if (viewMode === 'LIST') {
-    taskView = (
-      <TasksList
-        onAddTask={onAddTask}
-        onSelectAllTasks={onSelectAllTasks}
-        onTaskClick={onTaskClick}
-        onTaskSelect={onTaskSelect}
+  let objectiveView;
+  if (viewMode === 'LIST') {
+    objectiveView = (
+      <ObjectivesList
+        onAddObjective={onAddObjective}
+        onObjectiveClick={onObjectiveClick}
+        onSelectAllObjectives={onSelectAllObjectives}
+        onObjectiveSelect={onObjectiveSelect}
         projectId={projectId}
-        selectedTasks={selectedTasks}
-        tasks={tasks}
+        selectedObjectives={selectedObjectives}
+        objectives={objectives}
       />
     );
   } else {
-    taskView = null;
+    objectiveView = null;
   }
 
-  return tasks && (
+  return objectives && (
     <>
       {
         showViewModeButtons && (
@@ -66,9 +55,9 @@ const TasksViewer = ({
           </div>
         )
       }
-      { taskView }
+      { objectiveView }
     </>
   );
 };
 
-export default TasksViewer;
+export default ObjectivesViewer;

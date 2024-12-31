@@ -64,6 +64,7 @@ const en = {
   home: 'Home',
   hour: 'Hour',
   icon: 'Icon',
+  incompleteObjectives: 'Incomplete Objectives',
   incompleteTasks: 'Incomplete Tasks',
   informations: 'Informations',
   invalidConnection: 'Invalid connection',

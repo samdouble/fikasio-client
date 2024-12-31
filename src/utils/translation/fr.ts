@@ -64,6 +64,7 @@ const fr = {
   home: 'Accueil',
   hour: 'Heure',
   icon: 'Icône',
+  incompleteObjectives: 'Objectifs non complétés',
   incompleteTasks: 'Tâches non complétées',
   informations: 'Informations',
   invalidConnection: 'Connexion invalide',

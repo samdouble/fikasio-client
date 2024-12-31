@@ -63,8 +63,18 @@ const ProjectPane = ({
         >
           <ObjectivesView
             objectives={projectObjectives}
+            onObjectiveClick={
+              taskId => dispatch(
+                setPaneContent({
+                  type: 'TASK',
+                  id: taskId,
+                })
+              )
+            }
+            projectId={project?.id}
             showAddButton
             showCompletionFilter
+            showViewModeButtons
           />
         </Tab>
         <Tab

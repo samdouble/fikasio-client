@@ -1573,10 +1573,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@fikasio/react-ui-components@^0.11.4":
-  version "0.11.4"
-  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.11.4.tgz#c0c6209f3224d0c6ccefdf4f5b3ebfc39c577db7"
-  integrity sha512-yeJaQsjO5ej+UDNdizxdy9LFrNvIQZPgjAazbXWtWi8Bi+mgjoDhQDGjNd5uOsFrFLpt7kgLEHyGUBrKD5g5Tw==
+"@fikasio/react-ui-components@^0.11.5":
+  version "0.11.5"
+  resolved "https://registry.yarnpkg.com/@fikasio/react-ui-components/-/react-ui-components-0.11.5.tgz#1055a953b687ab30b929743269ac49c1ede5890c"
+  integrity sha512-2Zls/kQ1cSmm8d98JAB4xXEO97vr2ZT6fWn5kFWTrWCw3Hk9KTQU/tvM3ktdD3OlhX67hbizS7ZbbhqV2P/AqQ==
   dependencies:
     "@emotion/react" "^11.13.5"
     "@emotion/styled" "^11.13.5"

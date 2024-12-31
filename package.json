@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@bitnoi.se/react-scheduler": "^0.2.0",
-    "@fikasio/react-ui-components": "^0.11.4",
+    "@fikasio/react-ui-components": "^0.11.5",
     "@fortawesome/fontawesome-svg-core": "6",
     "@fortawesome/free-brands-svg-icons": "6",
     "@fortawesome/free-regular-svg-icons": "6",

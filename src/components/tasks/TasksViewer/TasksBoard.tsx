@@ -1,6 +1,6 @@
 import React from 'react';
 import DragList from './DragList/DragList';
-import './style.scss';
+import './TasksList.scss';
 
 const TasksBoard = ({
   // onAddTask,
