@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DateTime } from 'luxon';
 import { Checkbox } from '@fikasio/react-ui-components';
 import TaskRow from './TaskRow';
-import './style.scss';
+import './TasksList.scss';
 
 const TasksList = ({
   onAddTask,
@@ -64,7 +64,7 @@ const TasksList = ({
           <th style={{ minWidth: 140 }}>{t('status')}</th>
           <th style={{ minWidth: 140 }}>{t('assignee')}</th>
           <th style={{ minWidth: 90 }}>{t('progress')}</th>
-          <th style={{ minWidth: 140 }}>{t('deadline')}</th>
+          <th style={{ minWidth: 120 }}>{t('deadline')}</th>
           <th style={{ width: 35 }} />
         </tr>
       </thead>

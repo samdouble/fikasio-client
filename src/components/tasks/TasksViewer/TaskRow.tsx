@@ -264,8 +264,7 @@ const TaskRow = ({
         style={{
           cursor: 'pointer',
           ...(hasdueAtPassed && { color: '#ff0000' }),
-          minWidth: 150,
-          width: 150,
+          width: 120,
         }}
       >
         <DatePicker

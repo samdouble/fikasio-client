@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,16 +7,30 @@ import { Checkbox, DatePicker, Dot } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { useAddObjectiveMutation, usePatchObjectiveMutation, useDeleteObjectiveMutation } from 'services/objectives/api';
-import { setPaneContent } from 'services/pane/slice';
+import { Objective } from 'services/objectives/types';
+// import { useGetProjectsQuery } from 'services/projects/api';
 import { getEstimatedCompletionDate } from './utils';
+
+export interface ObjectiveRowProps {
+  isSelected?: boolean;
+  onAddObjective: (objective: Objective) => Promise<void>;
+  onClick: (objectiveId: string) => Promise<void>;
+  onSelect: (objective: Objective) => Promise<void>;
+  objective: any;
+  projectId?: string;
+}
 
 const ObjectiveRow = ({
   isSelected,
   objective,
+  onAddObjective: _onAddObjective,
+  onClick,
   onSelect,
+  projectId: _projectId,
 }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
+  // const { data: projects } = useGetProjectsQuery();
+
   const [isDueAtDatepickerOpen, setIsDueAtDatepickerOpen] = useState(false);
 
   const [createObjective] = useAddObjectiveMutation();
@@ -46,12 +59,7 @@ const ObjectiveRow = ({
         />
       </td>
       <td
-        onClick={() => dispatch(
-          setPaneContent({
-            type: 'OBJECTIVE',
-            id: objective.id,
-          })
-        )}
+        onClick={() => onClick && onClick(objective.id)}
         style={{
           cursor: 'pointer',
         }}
@@ -85,11 +93,15 @@ const ObjectiveRow = ({
         style={{
           cursor: 'pointer',
           ...(isLate && { color: '#ff0000' }),
-          minWidth: 150,
+          width: 120,
         }}
       >
         <DatePicker
           defaultValue={objective.dueDate ? DateTime.fromISO(objective.dueDate).toJSDate() : null}
+          displayFunction={date => {
+            const dateTime = DateTime.fromJSDate(date);
+            return `${dateTime.monthShort} ${dateTime.day}`;
+          }}
           isOpen={isDueAtDatepickerOpen}
           onChange={value => {
             const timestamp = DateTime.fromJSDate(value)

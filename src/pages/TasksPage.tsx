@@ -10,7 +10,6 @@ import BasePage from 'components/UI/BasePage';
 import { setPaneContent } from 'services/pane/slice';
 import { useGetTasksQuery } from 'services/tasks/api';
 import links from 'utils/links';
-import './style.scss';
 
 const TasksPage = () => {
   const location = useLocation();

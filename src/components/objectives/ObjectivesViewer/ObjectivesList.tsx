@@ -7,26 +7,31 @@ import './ObjectivesList.scss';
 
 const ObjectivesList = ({
   objectives,
+  onAddObjective,
+  onObjectiveClick,
   onObjectiveSelect,
   onSelectAllObjectives,
+  projectId,
   selectedObjectives,
-  showArchivedObjectives,
-  showCompleteObjectives,
-  showIncompleteObjectives,
 }) => {
   const { t } = useTranslation();
 
-  const objectivesToShow = objectives?.filter(o => {
-    return (
-      (
-        (showCompleteObjectives && o.status === 'Completed' && !o.isArchived)
-        || (showIncompleteObjectives && o.status !== 'Completed' && !o.isArchived)
-        || (showArchivedObjectives && o.isArchived)
-      )
-    );
-  });
-  const allObjectivesAreChecked = objectivesToShow?.length
-    && (objectivesToShow?.length === selectedObjectives.length);
+  const allObjectivesAreChecked = !!objectives?.length
+    && (objectives?.length === selectedObjectives.length);
+
+  const addObjective = async objective => {
+    onAddObjective(objective)
+      .then(async ({ data: resultObjective }) => {
+        if (resultObjective) {
+          await new Promise(resolve => setTimeout(resolve, 200));
+          const elementsWithClassname = document.getElementsByClassName(resultObjective.id);
+          const nbElementsWithClassname = elementsWithClassname.length;
+          if (nbElementsWithClassname) {
+            (elementsWithClassname[nbElementsWithClassname - 1] as HTMLElement).focus();
+          }
+        }
+      });
+  };
 
   return (
     <Table
@@ -43,7 +48,7 @@ const ObjectivesList = ({
                 if (allObjectivesAreChecked) {
                   onSelectAllObjectives([]);
                 } else {
-                  onSelectAllObjectives(objectivesToShow);
+                  onSelectAllObjectives(objectives);
                 }
               }}
             />
@@ -51,13 +56,13 @@ const ObjectivesList = ({
           <th>{t('description')}</th>
           <th style={{ width: 150 }}>{t('projects')}</th>
           <th style={{ width: 90 }}>{t('progress')}</th>
-          <th style={{ width: 140 }}>{t('deadline')}</th>
+          <th style={{ width: 120 }}>{t('deadline')}</th>
           <th style={{ width: 35 }} />
         </tr>
       </thead>
       <tbody>
         {
-          objectivesToShow?.sort((o1, o2) => (
+          objectives?.sort((o1, o2) => (
             o1.dueDate < o2.dueDate ? -1 : 1
           ))
             .map(objective => (
@@ -65,7 +70,10 @@ const ObjectivesList = ({
                 isSelected={!!selectedObjectives.find(o => objective.id === o.id)}
                 key={objective.id}
                 objective={objective}
+                onAddObjective={addObjective}
+                onClick={onObjectiveClick}
                 onSelect={onObjectiveSelect}
+                projectId={projectId}
               />
             ))
         }

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import 'components/UI/Form.scss';
 import { useLazyGetEventsQuery } from 'services/events/api';
 import LineChart from '../../dashboards/LineChart';
-import { getEstimatedCompletionDate } from '../utils';
+import { getEstimatedCompletionDate } from '../ObjectivesViewer/utils';
 
 const ObjectiveStats = ({
   objective,
