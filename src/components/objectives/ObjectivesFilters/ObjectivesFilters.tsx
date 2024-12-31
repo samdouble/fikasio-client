@@ -40,7 +40,7 @@ const ObjectivesFilters = ({
                   style={{
                     float: 'right',
                     margin: 5,
-                    marginRight: 0,
+                    ...(!showDueDateFilter && { marginRight: 0 }),
                   }}
                 />
               )

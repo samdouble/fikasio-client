@@ -8,12 +8,12 @@ import isEqual from 'lodash.isequal';
 import { DateTime } from 'luxon';
 import { AutosaveTextarea, Checkbox, DatePicker, Select, Selector } from '@fikasio/react-ui-components';
 import ProjectTag from 'components/projects/ProjectTag';
+import AssigneeButton from 'components/tasks/TasksViewer/AssigneeButton';
 import DropdownToggle from 'components/UI/DropdownToggle';
 import { useGetProjectsQuery } from 'services/projects/api';
 import { useAddTaskMutation, usePatchTaskMutation, useDeleteTaskMutation } from 'services/tasks/api';
 import { Task } from 'services/tasks/types';
 import { round } from 'utils/maths';
-import AssigneeButton from './AssigneeButton';
 
 export interface TaskRowProps {
   isSelected?: boolean;
@@ -186,13 +186,26 @@ const TaskRow = ({
         }
         <Selector
           Component={(
-            <div style={{
-              backgroundColor: '#e5e5e5',
-              borderRadius: '50%',
-              height: 25,
-              width: 25,
-            }}>
-              +
+            <div
+              style={{
+                border: '1px solid #cecece',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                height: 25,
+                marginTop: 3,
+                padding: 5,
+                width: 25,
+              }}
+            >
+              <span
+                style={{
+                  position: 'relative',
+                  top: -5,
+                  left: 2,
+                }}
+              >
+                +
+              </span>
             </div>
           )}
           options={projects?.map(p => p.name)}
@@ -216,11 +229,6 @@ const TaskRow = ({
             }}
           />
         }
-      </td>
-      <td width={140}>
-        <AssigneeButton
-          assigneeId={task.assignee}
-        />
       </td>
       <td
         style={{
@@ -296,11 +304,16 @@ const TaskRow = ({
           showTimeSelect={false}
         />
       </td>
+      <td width={35}>
+        <AssigneeButton
+          assigneeId={task.assignee}
+        />
+      </td>
       <td
         style={{
           textAlign: 'center',
         }}
-        width={35}
+        width={30}
       >
         <Dropdown
           style={{
