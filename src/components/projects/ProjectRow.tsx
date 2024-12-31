@@ -156,7 +156,7 @@ const ProjectRow = ({
         style={{
           cursor: 'pointer',
           ...(!project.isCompleted && hasdueAtPassed && { color: '#ff0000' }),
-          minWidth: 150,
+          minWidth: 120,
         }}
       >
         <DatePicker

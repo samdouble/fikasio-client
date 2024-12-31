@@ -47,6 +47,7 @@ const ObjectivesPage = () => {
           }
           showAddButton
           showCompletionFilter
+          showDueDateFilter
           showViewModeButtons
         />
       </BasePage>
