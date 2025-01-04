@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://github.com/samdouble/fikasio-client/compare/v0.3.0...v0.4.0) (2025-01-04)
+
+
+### Features
+
+* **objectives:** make Objectives page uniform with Projects and Tasks ([30e2f3c](https://github.com/samdouble/fikasio-client/commit/30e2f3c6f5c7de84565e6289c4a06fb00b6c6d9f))
+* **Tasks:** only show user icon in the list of tasks ([e76726b](https://github.com/samdouble/fikasio-client/commit/e76726b2c1df0a91b0f043fc02eb284a52e238e3))
+
 ## [0.3.0](https://github.com/samdouble/fikasio-client/compare/v0.2.9...v0.3.0) (2024-12-30)
 
 
