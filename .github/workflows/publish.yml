@@ -9,9 +9,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
-        with:
-          release-type: node
       - uses: actions/checkout@v4
       - name: Publish
         env:
@@ -40,7 +37,7 @@ jobs:
             --build-arg REACT_APP_URL_TOS=$REACT_APP_URL_TOS \
             --build-arg REACT_APP_URL_WEBSITE=$REACT_APP_URL_WEBSITE \
             --build-arg REACT_APP_WEBSOCKET_SERVER=$REACT_APP_WEBSOCKET_SERVER \
-            -t $IMAGE_NAME:${{ github.ref_name:1 }}" \
+            -t $IMAGE_NAME:${{ github.ref_name:1 }} \
             -t $IMAGE_NAME:latest \
             -f Dockerfile.prod .
           docker login -u $DIGITALOCEAN_API_TOKEN -p $DIGITALOCEAN_API_TOKEN registry.digitalocean.com
