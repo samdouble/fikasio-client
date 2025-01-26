@@ -1,0 +1,41 @@
+.rbc-calendar {
+  display: block !important;
+}
+.rbc-month-row {
+  min-height: 80px;
+}
+
+.rbc-slot-selection {
+  background-color: rgba(126, 91, 154, 0.5) !important;
+}
+
+.rbc-today {
+  background-color: rgb(239, 231, 245) !important;
+}
+
+.rbc-current-time-indicator {
+  z-index: 0 !important;
+}
+
+.rbc-time-gutter .rbc-time-slot {
+  min-height: 12px;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  min-height: 14.64px;
+}
+
+.rbc-toolbar {
+  display: block !important;
+}
+
+.rbc-toolbar button {
+  border-radius: 0 !important;
+}
+
+.rbc-toolbar button.rbc-active, .rbc-toolbar button:hover {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+}

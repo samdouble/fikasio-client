@@ -1,0 +1,44 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish
+        env:
+          DIGITALOCEAN_API_TOKEN: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
+          REACT_APP_API_SERVER: ${{ vars.REACT_APP_API_SERVER }}
+          REACT_APP_GOOGLE_ANALYTICS_ID: ${{ vars.REACT_APP_GOOGLE_ANALYTICS_ID }}
+          REACT_APP_GOOGLE_OAUTH_CLIENT_ID: ${{ vars.REACT_APP_GOOGLE_OAUTH_CLIENT_ID }}
+          REACT_APP_STRIPE_CONFIRMATION_URL: ${{ vars.REACT_APP_STRIPE_CONFIRMATION_URL }}
+          REACT_APP_STRIPE_PUBLISH_KEY: ${{ vars.REACT_APP_STRIPE_PUBLISH_KEY }}
+          REACT_APP_URL_DOCUMENTATION: ${{ vars.REACT_APP_URL_DOCUMENTATION }}
+          REACT_APP_URL_PRIVACY: ${{ vars.REACT_APP_URL_PRIVACY }}
+          REACT_APP_URL_TOS: ${{ vars.REACT_APP_URL_TOS }}
+          REACT_APP_URL_WEBSITE: ${{ vars.REACT_APP_URL_WEBSITE }}
+          REACT_APP_WEBSOCKET_SERVER: ${{ vars.REACT_APP_WEBSOCKET_SERVER }}
+        run: |
+          export APP_NAME=fikasio-client
+          export IMAGE_NAME=registry.digitalocean.com/samdouble/$APP_NAME
+          docker build \
+            --build-arg REACT_APP_API_SERVER=$REACT_APP_API_SERVER \
+            --build-arg REACT_APP_GOOGLE_ANALYTICS_ID=$REACT_APP_GOOGLE_ANALYTICS_ID \
+            --build-arg REACT_APP_GOOGLE_OAUTH_CLIENT_ID=$REACT_APP_GOOGLE_OAUTH_CLIENT_ID \
+            --build-arg REACT_APP_STRIPE_CONFIRMATION_URL=$REACT_APP_STRIPE_CONFIRMATION_URL \
+            --build-arg REACT_APP_STRIPE_PUBLISH_KEY=$REACT_APP_STRIPE_PUBLISH_KEY \
+            --build-arg REACT_APP_URL_DOCUMENTATION=$REACT_APP_URL_DOCUMENTATION \
+            --build-arg REACT_APP_URL_PRIVACY=$REACT_APP_URL_PRIVACY \
+            --build-arg REACT_APP_URL_TOS=$REACT_APP_URL_TOS \
+            --build-arg REACT_APP_URL_WEBSITE=$REACT_APP_URL_WEBSITE \
+            --build-arg REACT_APP_WEBSOCKET_SERVER=$REACT_APP_WEBSOCKET_SERVER \
+            -t $IMAGE_NAME:${{ github.ref_name:1 }} \
+            -t $IMAGE_NAME:latest \
+            -f Dockerfile.prod .
+          docker login -u $DIGITALOCEAN_API_TOKEN -p $DIGITALOCEAN_API_TOKEN registry.digitalocean.com
+          docker push $IMAGE_NAME --all-tags

@@ -1,0 +1,48 @@
+name: Checks
+
+on: [pull_request]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Commitlint
+        uses: wagoid/commitlint-github-action@v6
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.13.1"
+      - name: Install
+        run: |
+          yarn
+      - name: Lint
+        run: |
+          yarn lint
+      - name: Tests
+        run: |
+          yarn test
+      - name: Visual Regression Tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.0-37 libwoff1 libharfbuzz-icu0 \
+            libgstreamer-plugins-base1.0-0 libgstreamer-gl1.0-0 libgstreamer1.0-0 \
+            libegl1 libopus0 libxslt1.1 libgstreamer-plugins-bad1.0-0 \
+            libgstreamer-plugins-good1.0-0 libvpx7 libenchant-2-2 libsecret-1-0 \
+            libhyphen0 libmanette-0.2-0
+          npx playwright install
+          yarn test-visual
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-snapshots
+          path: test-results
+      - name: Build
+        run: |
+          yarn build
