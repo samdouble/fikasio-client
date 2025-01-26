@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0 (2025-01-26)
+
+
+### Features
+
+* imported project ([85ff4e3](https://github.com/samdouble/fikasio-client2/commit/85ff4e395cb03f0018ddf8722fb9de22cfe427f5))
+
 ## [0.3.0](https://github.com/samdouble/fikasio-client/compare/v0.2.9...v0.3.0) (2024-12-30)
 
 
