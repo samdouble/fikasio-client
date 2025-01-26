@@ -1,0 +1,29 @@
+tr.done {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+
+.tasksBoard_section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 8px;
+  background-color: #ffffff;
+}
+
+.tasksBoard_section > div {
+  background-color: #d3d3d3;
+}
+
+.taskRow td {
+  border-left: none;
+  border-right: none;
+}
+
+.taskRow_description_editable {
+  border: 1px solid transparent;
+}
+
+.taskRow_description:hover > .taskRow_description_editable {
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+}
