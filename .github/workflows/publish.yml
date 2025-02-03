@@ -26,6 +26,8 @@ jobs:
         run: |
           export APP_NAME=fikasio-client
           export IMAGE_NAME=registry.digitalocean.com/samdouble/$APP_NAME
+          export VERSION=${{ github.ref_name }}
+          export TAG="${VERSION:1}"
           docker build \
             --build-arg REACT_APP_API_SERVER=$REACT_APP_API_SERVER \
             --build-arg REACT_APP_GOOGLE_ANALYTICS_ID=$REACT_APP_GOOGLE_ANALYTICS_ID \
@@ -37,7 +39,7 @@ jobs:
             --build-arg REACT_APP_URL_TOS=$REACT_APP_URL_TOS \
             --build-arg REACT_APP_URL_WEBSITE=$REACT_APP_URL_WEBSITE \
             --build-arg REACT_APP_WEBSOCKET_SERVER=$REACT_APP_WEBSOCKET_SERVER \
-            -t $IMAGE_NAME:${{ github.ref_name:1 }} \
+            -t $IMAGE_NAME:$TAG \
             -t $IMAGE_NAME:latest \
             -f Dockerfile.prod .
           docker login -u $DIGITALOCEAN_API_TOKEN -p $DIGITALOCEAN_API_TOKEN registry.digitalocean.com
